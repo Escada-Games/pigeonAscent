@@ -18,6 +18,10 @@ func _ready():
 	$twnAttack.connect("tween_completed",self,"attackFinished")
 	playerDefaultPos=playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
+	var pos=$marginCtn.rect_global_position
+	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
+	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	$twnSelfPos.start()
 	set_process(true)
 func _process(delta):
 	if fighting:
@@ -88,17 +92,21 @@ func attackFinished(h,m):
 	
 func register(string):
 	var message="#"+String(turn)+"> "+string+"\n"
-	$marginCtn/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
+	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
 	turn+=1
 
 func registerSameTurn(string):
 	var message= " "+string+"\n"
-	$marginCtn/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
+	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
 	turn+=1
 
 func registerFast(string):
 	var message="#"+String(turn)+"> "+string
-	$marginCtn/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
+	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
 
 func exitBattle():
-	print("adfsdgsfhsf")
+	self.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	$twnSelfPos.start()
+	yield(get_tree().create_timer(5.0),"timeout")
+	self.queue_free()

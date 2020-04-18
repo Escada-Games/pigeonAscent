@@ -28,11 +28,13 @@ var scaling={
 }
 var shopDescription
 var opponents=preload("res://scenes/opponentPanel.tscn")
-
+var battleScene=preload("res://scenes/battleScene.tscn")
 func _ready():set_process(true)
 func _process(delta):
 	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
 func fight():
 	get_tree().root.add_child(opponents.instance())
-func battle(enemy):
-	print(enemy.enemyName)
+func battle(nextEnemy):
+	
+	var i=battleScene.instance()
+	get_tree().root.add_child(i)

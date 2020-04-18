@@ -40,7 +40,8 @@ func twnShrink():
 func battle():
 	global.battle(self)
 	get_tree().root.get_node(\"/root/opponentControl/marginContainer/opponentPanel/btnExit\").exit()
-	"
+	
+"
 
 [node name="opponentModel" type="PanelContainer"]
 margin_top = 110.0
@@ -48,6 +49,9 @@ margin_right = 590.0
 margin_bottom = 188.0
 size_flags_vertical = 5
 script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="twnScale" type="Tween" parent="."]
 
