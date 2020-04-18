@@ -18,5 +18,6 @@ func _ready():set_process(true)
 func _process(delta):
 	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
 func fight():
-	print("hei")
 	get_tree().root.add_child(opponents.instance())
+func battle(enemy):
+	print(enemy.enemyName)

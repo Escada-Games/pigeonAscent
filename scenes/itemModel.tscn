@@ -80,6 +80,7 @@ valign = 1
 margin_left = 240.0
 margin_right = 312.0
 margin_bottom = 64.0
+mouse_filter = 1
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0

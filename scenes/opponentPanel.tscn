@@ -83,10 +83,12 @@ alignment = 1
 [node name="opponentModel" parent="marginContainer/opponentPanel/marginContainer/vbox/vboxOpponents" instance=ExtResource( 1 )]
 
 [node name="btnExit" type="Button" parent="marginContainer/opponentPanel"]
+editor/display_folded = true
 margin_left = 597.0
 margin_top = 7.0
 margin_right = 617.0
 margin_bottom = 27.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "X"
