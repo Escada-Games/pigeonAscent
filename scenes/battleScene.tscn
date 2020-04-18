@@ -1,10 +1,43 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=2]
-[ext_resource path="res://resource/Test.png" type="Texture" id=3]
+[ext_resource path="res://resource/fonts/mago1.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://resource/fonts/mago2.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://resource/Test.png" type="Texture" id=6]
+[ext_resource path="res://scenes/battleScene/battleScene.gd" type="Script" id=7]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 4 )
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends RichTextLabel
+
+var bufferedMessage=\"\"
+
+func _ready():set_process(true)
+func _process(delta):
+	if bufferedMessage!=\"\":
+		self.append_bbcode(bufferedMessage[0])
+		bufferedMessage.erase(0,1)
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends ProgressBar
+
+func _ready():set_process(true)
+func _process(delta):
+	self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
+"
+
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureRect
 
 func _ready():
@@ -16,7 +49,9 @@ func _process(delta):
 [node name="battleScene" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 7 )
 __meta__ = {
+"_edit_use_anchors_": false,
 "_edit_vertical_guides_": [ 250.909 ]
 }
 
@@ -63,6 +98,12 @@ margin_top = 7.0
 margin_right = 298.0
 margin_bottom = 193.0
 size_flags_horizontal = 3
+custom_fonts/italics_font = SubResource( 1 )
+custom_fonts/bold_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+scroll_following = true
+script = SubResource( 4 )
 
 [node name="vsepR" type="VSeparator" parent="marginCtn/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
@@ -71,20 +112,18 @@ margin_right = 719.0
 margin_bottom = 200.0
 size_flags_horizontal = 3
 
-[node name="enemyStats" parent="marginCtn/vboxCtn/hboxCtnTop" instance=ExtResource( 2 )]
+[node name="enemyStats" parent="marginCtn/vboxCtn/hboxCtnTop" instance=ExtResource( 5 )]
 margin_left = 723.0
 margin_right = 973.0
 margin_bottom = 200.0
 
 [node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/vboxCtn"]
-editor/display_folded = true
 margin_top = 204.0
 margin_right = 974.0
 margin_bottom = 350.0
 size_flags_vertical = 3
 
 [node name="playerCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid"]
-editor/display_folded = true
 margin_right = 250.0
 margin_bottom = 146.0
 
@@ -95,7 +134,6 @@ rect_min_size = Vector2( 250, 0 )
 alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-editor/display_folded = true
 margin_right = 250.0
 margin_bottom = 14.0
 custom_constants/margin_right = 10
@@ -106,6 +144,7 @@ margin_left = 10.0
 margin_right = 240.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
+script = SubResource( 5 )
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
@@ -120,7 +159,7 @@ margin_right = 250.0
 margin_bottom = 146.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 3 )
+texture = ExtResource( 6 )
 stretch_mode = 6
 
 [node name="vsep" type="VSeparator" parent="marginCtn/vboxCtn/hboxCtnMid"]
@@ -142,7 +181,6 @@ rect_min_size = Vector2( 250, 0 )
 alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
-editor/display_folded = true
 margin_right = 250.0
 margin_bottom = 14.0
 custom_constants/margin_right = 10
@@ -168,9 +206,9 @@ margin_bottom = 146.0
 rect_pivot_offset = Vector2( 125, 82 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 3 )
+texture = ExtResource( 6 )
 stretch_mode = 6
-script = SubResource( 1 )
+script = SubResource( 6 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/vboxCtn"]
 margin_top = 354.0

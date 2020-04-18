@@ -4,20 +4,20 @@
 [ext_resource path="res://resource/Test.png" type="Texture" id=2]
 [ext_resource path="res://scenes/itemModel.tscn" type="PackedScene" id=3]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.pointsLeft)
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=2]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.strength)"
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=3]
 resource_name = "btnUpgStr"
 script/source = "extends Button
 
@@ -49,13 +49,13 @@ func twnShrink():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
 	$twnScale.start()"
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.defense)"
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Button
 
 const tweenParameters={
@@ -86,13 +86,13 @@ func twnShrink():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
 	$twnScale.start()"
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.speed)"
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Button
 
 const tweenParameters={
@@ -123,19 +123,19 @@ func twnShrink():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
 	$twnScale.start()"
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=8]
 resource_name = "fightBtn"
 script/source = "extends Button
 
 func _ready():self.connect(\"pressed\",global,\"fight\")"
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.gold)"
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=10]
 script/source = "extends PanelContainer
 func _ready():global.shopDescription=$label"
 
@@ -200,7 +200,7 @@ size_flags_vertical = 6
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 4 )
+script = SubResource( 1 )
 
 [node name="invSep" type="HSeparator" parent="hbox/vboxL/perks/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -253,7 +253,7 @@ size_flags_vertical = 6
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 5 )
+script = SubResource( 2 )
 
 [node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats"]
 margin_top = 32.0
@@ -269,7 +269,7 @@ margin_right = 146.0
 margin_bottom = 27.0
 mouse_default_cursor_shape = 2
 text = "Upgrade!"
-script = SubResource( 6 )
+script = SubResource( 3 )
 
 [node name="defPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
 margin_top = 180.0
@@ -315,7 +315,7 @@ size_flags_vertical = 6
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 7 )
+script = SubResource( 4 )
 
 [node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats"]
 margin_top = 32.0
@@ -331,7 +331,7 @@ margin_right = 146.0
 margin_bottom = 27.0
 mouse_default_cursor_shape = 2
 text = "Upgrade!"
-script = SubResource( 8 )
+script = SubResource( 5 )
 
 [node name="spdPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
 margin_top = 264.0
@@ -377,7 +377,7 @@ size_flags_vertical = 6
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 9 )
+script = SubResource( 6 )
 
 [node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats"]
 margin_top = 32.0
@@ -393,7 +393,7 @@ margin_right = 146.0
 margin_bottom = 27.0
 mouse_default_cursor_shape = 2
 text = "Upgrade!"
-script = SubResource( 10 )
+script = SubResource( 7 )
 
 [node name="vboxC" type="VBoxContainer" parent="hbox"]
 margin_left = 342.0
@@ -419,7 +419,7 @@ margin_bottom = 100.0
 rect_min_size = Vector2( 324, 100 )
 mouse_default_cursor_shape = 2
 text = "FIGHT!"
-script = SubResource( 13 )
+script = SubResource( 8 )
 
 [node name="progressPanel" type="PanelContainer" parent="hbox/vboxC/fightContainer/vbox"]
 margin_top = 104.0
@@ -444,7 +444,6 @@ expand = true
 stretch_mode = 6
 
 [node name="goldContainer" type="PanelContainer" parent="hbox/vboxC"]
-editor/display_folded = true
 margin_top = 572.0
 margin_right = 338.0
 margin_bottom = 600.0
@@ -469,7 +468,7 @@ margin_right = 118.0
 margin_bottom = 14.0
 text = "0123456789"
 align = 1
-script = SubResource( 11 )
+script = SubResource( 9 )
 
 [node name="vboxR" type="VBoxContainer" parent="hbox"]
 margin_left = 684.0
@@ -534,7 +533,7 @@ margin_right = 326.0
 margin_bottom = 586.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-script = SubResource( 12 )
+script = SubResource( 10 )
 
 [node name="label" type="Label" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer"]
 margin_left = 7.0

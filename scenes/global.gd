@@ -8,9 +8,24 @@ var player={
 	"pointsLeft":3,
 	"strength":1,
 	"defense":1,
-	"speed":1
+	"speed":1.0
 }
 
+var enemy={
+	"name":"Pombo",
+	"gold":300,
+	"hp":10,"maxHp":10,
+	"energy":10,"maxEnergy":10,
+	"pointsLeft":3,
+	"strength":1,
+	"defense":1,
+	"speed":1.0
+}
+
+var scaling={
+	"strength":1.2,
+	"speed":63
+}
 var shopDescription
 var opponents=preload("res://scenes/opponentPanel.tscn")
 
