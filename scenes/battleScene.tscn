@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/mago1.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://resource/fonts/mago2.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resource/Test.png" type="Texture" id=6]
 [ext_resource path="res://scenes/battleScene/battleScene.gd" type="Script" id=7]
@@ -18,18 +17,20 @@ font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 32
-font_data = ExtResource( 4 )
+outline_color = Color( 0.0862745, 0.0313726, 0.0313726, 1 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="GDScript" id=4]
 script/source = "extends RichTextLabel
 
 var bufferedMessage=\"\"
 
-func _ready():set_process(true)
+func _ready():
+	self.bbcode_text=\"\"
+	set_process(true)
 func _process(delta):
 	if bufferedMessage!=\"\":
 		self.bbcode_text+=bufferedMessage[0]
-#		self.append_bbcode(bufferedMessage[0])
 		bufferedMessage.erase(0,1)
 "
 
@@ -147,6 +148,8 @@ custom_fonts/italics_font = SubResource( 1 )
 custom_fonts/bold_font = SubResource( 2 )
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
+bbcode_text = "#123> TESTE"
+text = "#123> TESTE"
 scroll_following = true
 script = SubResource( 4 )
 

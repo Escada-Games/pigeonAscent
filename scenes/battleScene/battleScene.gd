@@ -13,6 +13,7 @@ var turn=1
 var fighting=true
 var ended=false
 var exitButton
+var goldToWin=0
 func _ready():
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
@@ -22,6 +23,7 @@ func _ready():
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
+	goldToWin=100
 	set_process(true)
 func _process(delta):
 	if fighting:
@@ -38,7 +40,9 @@ func _process(delta):
 	else:
 		exitButton.modulate.a+=0.1
 		if not ended:
-			registerSameTurn("[center][wave amp=100 freq=5]"+global.player.name + " won! [/wave][/center]")
+			global.player.gold+=goldToWin
+			registerSameTurn("[center][wave amp=100 freq=5]"+global.player.name + " won! [/wave][/center]\n")
+			registerSameTurn("[center]You got [color=#ffe478]" + String(goldToWin) + "[/color] gold.[/center]")#
 			ended=true
 			$twnBackButton.interpolate_property(exitButton,"rect_global_position:y",OS.window_size.y*1.2,OS.window_size.y*0.66,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
 			$twnBackButton.start()
