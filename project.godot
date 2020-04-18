@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="Pigeon Ascent"
 config/icon="res://icon.png"
 
+[node]
+
+name_casing=1
+
 [rendering]
 
 quality/driver/driver_name="GLES2"

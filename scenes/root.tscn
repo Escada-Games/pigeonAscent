@@ -1,7 +1,347 @@
 [gd_scene format=2]
 
-[node name="root" type="Node2D"]
+[node name="root" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="root" type="Control" parent="."]
-margin_right = 40.0
+[node name="hbox" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="vboxL" type="VBoxContainer" parent="hbox"]
+margin_right = 338.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="nameStats" type="PanelContainer" parent="hbox/vboxL"]
+margin_right = 338.0
+margin_bottom = 238.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="vbox" type="VBoxContainer" parent="hbox/vboxL/nameStats"]
+editor/display_folded = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 331.0
+margin_bottom = 231.0
+
+[node name="name" type="Label" parent="hbox/vboxL/nameStats/vbox"]
+margin_right = 324.0
+margin_bottom = 14.0
+size_flags_vertical = 1
+text = "NOME"
+align = 1
+
+[node name="invSep" type="HSeparator" parent="hbox/vboxL/nameStats/vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 18.0
+margin_right = 324.0
+margin_bottom = 28.0
+custom_constants/separation = 10
+
+[node name="hpBox" type="HBoxContainer" parent="hbox/vboxL/nameStats/vbox"]
+margin_top = 32.0
+margin_right = 324.0
+margin_bottom = 46.0
+
+[node name="hp" type="Label" parent="hbox/vboxL/nameStats/vbox/hpBox"]
+margin_right = 18.0
+margin_bottom = 14.0
+size_flags_vertical = 1
+text = "HP"
+align = 1
+
+[node name="progressBar" type="ProgressBar" parent="hbox/vboxL/nameStats/vbox/hpBox"]
+margin_left = 22.0
+margin_right = 324.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="foodBox" type="HBoxContainer" parent="hbox/vboxL/nameStats/vbox"]
+margin_top = 50.0
+margin_right = 324.0
+margin_bottom = 64.0
+
+[node name="food" type="Label" parent="hbox/vboxL/nameStats/vbox/foodBox"]
+margin_right = 39.0
+margin_bottom = 14.0
+size_flags_vertical = 1
+text = "FOOD"
+align = 1
+
+[node name="progressBar" type="ProgressBar" parent="hbox/vboxL/nameStats/vbox/foodBox"]
+margin_left = 43.0
+margin_right = 324.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="invSep2" type="HSeparator" parent="hbox/vboxL/nameStats/vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 68.0
+margin_right = 324.0
+margin_bottom = 78.0
+custom_constants/separation = 10
+
+[node name="abilities" type="Label" parent="hbox/vboxL/nameStats/vbox"]
+margin_top = 82.0
+margin_right = 324.0
+margin_bottom = 96.0
+size_flags_vertical = 1
+text = "ABILITIES"
+align = 1
+
+[node name="abilitiesText" type="Label" parent="hbox/vboxL/nameStats/vbox"]
+margin_top = 100.0
+margin_right = 324.0
+margin_bottom = 224.0
+size_flags_vertical = 3
+text = "LOREM IPSUM"
+align = 1
+valign = 1
+
+[node name="perks" type="PanelContainer" parent="hbox/vboxL"]
+margin_top = 242.0
+margin_right = 338.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="vbox" type="VBoxContainer" parent="hbox/vboxL/perks"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 331.0
+margin_bottom = 351.0
+
+[node name="statPointsBox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox"]
+editor/display_folded = true
+margin_right = 324.0
+margin_bottom = 78.0
+size_flags_vertical = 3
+
+[node name="string" type="Label" parent="hbox/vboxL/perks/vbox/statPointsBox"]
+margin_top = 32.0
+margin_right = 160.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+text = "Stat points left"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/statPointsBox"]
+margin_left = 164.0
+margin_right = 324.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/statPointsBox/intContainer"]
+margin_left = 7.0
+margin_top = 32.0
+margin_right = 153.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "0"
+align = 1
+valign = 1
+
+[node name="invSep" type="HSeparator" parent="hbox/vboxL/perks/vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 82.0
+margin_right = 324.0
+margin_bottom = 92.0
+custom_constants/separation = 10
+
+[node name="strPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
+editor/display_folded = true
+margin_top = 96.0
+margin_right = 324.0
+margin_bottom = 176.0
+size_flags_vertical = 3
+
+[node name="strHbox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox/strPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 317.0
+margin_bottom = 73.0
+
+[node name="strLabel" type="Label" parent="hbox/vboxL/perks/vbox/strPanel/strHbox"]
+margin_top = 26.0
+margin_right = 153.0
 margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Strength"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="vboxStats" type="VBoxContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox"]
+margin_left = 157.0
+margin_right = 310.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+
+[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats"]
+margin_right = 153.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats/intContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 146.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "0"
+align = 1
+valign = 1
+
+[node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats"]
+margin_top = 32.0
+margin_right = 153.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn" type="Button" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats/btnContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 146.0
+margin_bottom = 27.0
+text = "Upgrade!"
+
+[node name="defPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
+editor/display_folded = true
+margin_top = 180.0
+margin_right = 324.0
+margin_bottom = 260.0
+size_flags_vertical = 3
+
+[node name="defHbox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox/defPanel"]
+editor/display_folded = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 317.0
+margin_bottom = 73.0
+
+[node name="defLabel" type="Label" parent="hbox/vboxL/perks/vbox/defPanel/defHbox"]
+margin_top = 26.0
+margin_right = 153.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Defense"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="vboxStats" type="VBoxContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox"]
+margin_left = 157.0
+margin_right = 310.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+
+[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats"]
+margin_right = 153.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats/intContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 146.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "0"
+align = 1
+valign = 1
+
+[node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats"]
+margin_top = 32.0
+margin_right = 153.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn" type="Button" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats/btnContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 146.0
+margin_bottom = 27.0
+text = "Upgrade!"
+
+[node name="spdPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
+margin_top = 264.0
+margin_right = 324.0
+margin_bottom = 344.0
+size_flags_vertical = 3
+
+[node name="spdHbox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox/spdPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 317.0
+margin_bottom = 73.0
+
+[node name="spdLabel" type="Label" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
+margin_top = 26.0
+margin_right = 153.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Speed"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="vboxStats" type="VBoxContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
+margin_left = 157.0
+margin_right = 310.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+
+[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats"]
+margin_right = 153.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats/intContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 146.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "0"
+align = 1
+valign = 1
+
+[node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats"]
+margin_top = 32.0
+margin_right = 153.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn" type="Button" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats/btnContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 146.0
+margin_bottom = 27.0
+text = "Upgrade!"
+
+[node name="vboxC" type="VBoxContainer" parent="hbox"]
+margin_left = 342.0
+margin_right = 680.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="vboxR" type="VBoxContainer" parent="hbox"]
+margin_left = 684.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
