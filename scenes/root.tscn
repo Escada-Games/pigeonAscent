@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
 
 [node name="root" type="Control"]
 anchor_right = 1.0
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="vboxL" type="VBoxContainer" parent="hbox"]
+editor/display_folded = true
 margin_right = 338.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -339,6 +342,69 @@ margin_left = 342.0
 margin_right = 680.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
+
+[node name="fightContainer" type="PanelContainer" parent="hbox/vboxC"]
+margin_right = 338.0
+margin_bottom = 52.0
+
+[node name="vbox" type="VBoxContainer" parent="hbox/vboxC/fightContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 331.0
+margin_bottom = 45.0
+
+[node name="fightBtn" type="Button" parent="hbox/vboxC/fightContainer/vbox"]
+margin_right = 324.0
+margin_bottom = 20.0
+text = "FIGHT!"
+
+[node name="progressPanel" type="PanelContainer" parent="hbox/vboxC/fightContainer/vbox"]
+margin_top = 24.0
+margin_right = 324.0
+margin_bottom = 38.0
+
+[node name="playerContainer" type="PanelContainer" parent="hbox/vboxC"]
+margin_top = 56.0
+margin_right = 338.0
+margin_bottom = 568.0
+size_flags_vertical = 3
+
+[node name="textureRect" type="TextureRect" parent="hbox/vboxC/playerContainer"]
+margin_left = 137.0
+margin_top = 224.0
+margin_right = 201.0
+margin_bottom = 288.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 1 )
+
+[node name="goldContainer" type="PanelContainer" parent="hbox/vboxC"]
+editor/display_folded = true
+margin_top = 572.0
+margin_right = 338.0
+margin_bottom = 600.0
+
+[node name="hbox" type="HBoxContainer" parent="hbox/vboxC/goldContainer"]
+editor/display_folded = true
+margin_left = 110.0
+margin_top = 7.0
+margin_right = 228.0
+margin_bottom = 21.0
+size_flags_horizontal = 4
+
+[node name="goldLabel" type="Label" parent="hbox/vboxC/goldContainer/hbox"]
+margin_right = 34.0
+margin_bottom = 14.0
+text = "Gold:"
+align = 1
+valign = 1
+
+[node name="valueLabel" type="Label" parent="hbox/vboxC/goldContainer/hbox"]
+margin_left = 38.0
+margin_right = 118.0
+margin_bottom = 14.0
+text = "0123456789"
+align = 1
 
 [node name="vboxR" type="VBoxContainer" parent="hbox"]
 margin_left = 684.0
