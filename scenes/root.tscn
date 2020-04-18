@@ -1,31 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://resource/Test.png" type="Texture" id=1]
-[ext_resource path="res://scenes/itemModel.tscn" type="PackedScene" id=2]
-
-[sub_resource type="GDScript" id=1]
-resource_name = "playerName"
-script/source = "extends Label
-func _ready():self.text=global.player.name
-"
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends ProgressBar
-
-func _ready():set_process(true)
-func _process(delta):
-	self.max_value=global.player.maxHp
-	self.value=global.player.hp
-	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)"
-
-[sub_resource type="GDScript" id=3]
-script/source = "extends ProgressBar
-
-func _ready():set_process(true)
-func _process(delta):
-	self.max_value=global.player.maxEnergy
-	self.value=global.player.energy
-	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)"
+[ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resource/Test.png" type="Texture" id=2]
+[ext_resource path="res://scenes/itemModel.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=4]
 script/source = "extends Label
@@ -175,98 +152,8 @@ margin_right = 338.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
-[node name="nameStats" type="PanelContainer" parent="hbox/vboxL"]
-margin_right = 338.0
-margin_bottom = 238.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="vbox" type="VBoxContainer" parent="hbox/vboxL/nameStats"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 331.0
-margin_bottom = 231.0
-
-[node name="name" type="Label" parent="hbox/vboxL/nameStats/vbox"]
-margin_right = 324.0
-margin_bottom = 14.0
-size_flags_vertical = 1
-text = "NOME"
-align = 1
-script = SubResource( 1 )
-
-[node name="invSep" type="HSeparator" parent="hbox/vboxL/nameStats/vbox"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 18.0
-margin_right = 324.0
-margin_bottom = 28.0
-custom_constants/separation = 10
-
-[node name="hpBox" type="HBoxContainer" parent="hbox/vboxL/nameStats/vbox"]
-margin_top = 32.0
-margin_right = 324.0
-margin_bottom = 46.0
-
-[node name="hp" type="Label" parent="hbox/vboxL/nameStats/vbox/hpBox"]
-margin_right = 53.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-size_flags_vertical = 1
-size_flags_stretch_ratio = 0.2
-text = "HP"
-align = 1
-
-[node name="progressBar" type="ProgressBar" parent="hbox/vboxL/nameStats/vbox/hpBox"]
-margin_left = 57.0
-margin_right = 324.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-script = SubResource( 2 )
-
-[node name="foodBox" type="HBoxContainer" parent="hbox/vboxL/nameStats/vbox"]
-margin_top = 50.0
-margin_right = 324.0
-margin_bottom = 64.0
-
-[node name="food" type="Label" parent="hbox/vboxL/nameStats/vbox/foodBox"]
-margin_right = 53.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-size_flags_vertical = 1
-size_flags_stretch_ratio = 0.2
-text = "FOOD"
-align = 1
-
-[node name="progressBar" type="ProgressBar" parent="hbox/vboxL/nameStats/vbox/foodBox"]
-margin_left = 57.0
-margin_right = 324.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-script = SubResource( 3 )
-
-[node name="invSep2" type="HSeparator" parent="hbox/vboxL/nameStats/vbox"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 68.0
-margin_right = 324.0
-margin_bottom = 78.0
-custom_constants/separation = 10
-
-[node name="abilities" type="Label" parent="hbox/vboxL/nameStats/vbox"]
-margin_top = 82.0
-margin_right = 324.0
-margin_bottom = 96.0
-size_flags_vertical = 1
-text = "ABILITIES"
-align = 1
-
-[node name="abilitiesText" type="Label" parent="hbox/vboxL/nameStats/vbox"]
-margin_top = 100.0
-margin_right = 324.0
-margin_bottom = 224.0
-size_flags_vertical = 3
-text = "LOREM IPSUM"
-align = 1
-valign = 1
+[node name="nameStats" parent="hbox/vboxL" instance=ExtResource( 1 )]
+rect_min_size = Vector2( 250, 0 )
 
 [node name="perks" type="PanelContainer" parent="hbox/vboxL"]
 margin_top = 242.0
@@ -552,7 +439,7 @@ margin_right = 331.0
 margin_bottom = 425.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
 
@@ -638,7 +525,7 @@ margin_bottom = 442.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="itemModel" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/marginCtn/vboxShop" instance=ExtResource( 2 )]
+[node name="itemModel" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/marginCtn/vboxShop" instance=ExtResource( 3 )]
 margin_right = 296.0
 
 [node name="descriptionContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox"]

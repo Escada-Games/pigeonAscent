@@ -1,5 +1,179 @@
-[gd_scene format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resource/Test.png" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureRect
+
+func _ready():
+	self.rect_pivot_offset=self.rect_size/2
+	set_process(true)
+func _process(delta):
+	self.rect_scale.x=-1#Yeah, this is quite ugly"
 
 [node name="battleScene" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_vertical_guides_": [ 250.909 ]
+}
+
+[node name="marginCtn" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 50
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 50
+
+[node name="vboxCtn" type="VBoxContainer" parent="marginCtn"]
+margin_left = 25.0
+margin_top = 50.0
+margin_right = 999.0
+margin_bottom = 550.0
+
+[node name="hboxCtnTop" type="HBoxContainer" parent="marginCtn/vboxCtn"]
+margin_right = 974.0
+margin_bottom = 200.0
+size_flags_vertical = 3
+
+[node name="nameStats" parent="marginCtn/vboxCtn/hboxCtnTop" instance=ExtResource( 1 )]
+margin_right = 250.0
+margin_bottom = 200.0
+
+[node name="vsepL" type="VSeparator" parent="marginCtn/vboxCtn/hboxCtnTop"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 254.0
+margin_right = 330.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+
+[node name="panelContainer" type="PanelContainer" parent="marginCtn/vboxCtn/hboxCtnTop"]
+margin_left = 334.0
+margin_right = 639.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="richTextLabel" type="RichTextLabel" parent="marginCtn/vboxCtn/hboxCtnTop/panelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 298.0
+margin_bottom = 193.0
+size_flags_horizontal = 3
+
+[node name="vsepR" type="VSeparator" parent="marginCtn/vboxCtn/hboxCtnTop"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 643.0
+margin_right = 719.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+
+[node name="enemyStats" parent="marginCtn/vboxCtn/hboxCtnTop" instance=ExtResource( 2 )]
+margin_left = 723.0
+margin_right = 973.0
+margin_bottom = 200.0
+
+[node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/vboxCtn"]
+editor/display_folded = true
+margin_top = 204.0
+margin_right = 974.0
+margin_bottom = 350.0
+size_flags_vertical = 3
+
+[node name="playerCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid"]
+editor/display_folded = true
+margin_right = 250.0
+margin_bottom = 146.0
+
+[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn"]
+margin_right = 250.0
+margin_bottom = 146.0
+rect_min_size = Vector2( 250, 0 )
+alignment = 1
+
+[node name="barCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
+editor/display_folded = true
+margin_right = 250.0
+margin_bottom = 14.0
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="actionBar" type="ProgressBar" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/barCtn"]
+margin_left = 10.0
+margin_right = 240.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="hSeparator" type="HSeparator" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 18.0
+margin_right = 250.0
+margin_bottom = 28.0
+custom_constants/separation = 10
+
+[node name="textureRect" type="TextureRect" parent="marginCtn/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
+margin_top = 32.0
+margin_right = 250.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+stretch_mode = 6
+
+[node name="vsep" type="VSeparator" parent="marginCtn/vboxCtn/hboxCtnMid"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 254.0
+margin_right = 720.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+
+[node name="enemyCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid"]
+margin_left = 724.0
+margin_right = 974.0
+margin_bottom = 146.0
+
+[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/vboxCtn/hboxCtnMid/enemyCtn"]
+margin_right = 250.0
+margin_bottom = 146.0
+rect_min_size = Vector2( 250, 0 )
+alignment = 1
+
+[node name="barCtn" type="MarginContainer" parent="marginCtn/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
+editor/display_folded = true
+margin_right = 250.0
+margin_bottom = 14.0
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="actionBar" type="ProgressBar" parent="marginCtn/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/barCtn"]
+margin_left = 10.0
+margin_right = 240.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="hSeparator" type="HSeparator" parent="marginCtn/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 18.0
+margin_right = 250.0
+margin_bottom = 28.0
+custom_constants/separation = 10
+
+[node name="textureRect" type="TextureRect" parent="marginCtn/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
+margin_top = 32.0
+margin_right = 250.0
+margin_bottom = 146.0
+rect_pivot_offset = Vector2( 125, 82 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+stretch_mode = 6
+script = SubResource( 1 )
+
+[node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/vboxCtn"]
+margin_top = 354.0
+margin_right = 974.0
+margin_bottom = 500.0
+size_flags_vertical = 3
