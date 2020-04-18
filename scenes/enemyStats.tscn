@@ -1,28 +1,29 @@
 [gd_scene load_steps=4 format=2]
 
 [sub_resource type="GDScript" id=1]
-resource_name = "playerName"
 script/source = "extends Label
-func _ready():self.text=global.player.name
+func _ready():self.text=global.enemy.name
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=4]
 script/source = "extends ProgressBar
 
 func _ready():set_process(true)
 func _process(delta):
-	self.max_value=global.player.maxHp
-	self.value=global.player.hp
-	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)"
+	self.max_value=global.enemy.maxHp
+	self.value=global.enemy.hp
+	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+"
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=5]
 script/source = "extends ProgressBar
 
 func _ready():set_process(true)
 func _process(delta):
-	self.max_value=global.player.maxEnergy
-	self.value=global.player.energy
-	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)"
+	self.max_value=global.enemy.maxEnergy
+	self.value=global.enemy.energy
+	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+"
 
 [node name="enemyStats" type="PanelContainer"]
 margin_right = 338.0
@@ -71,7 +72,7 @@ margin_left = 57.0
 margin_right = 324.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-script = SubResource( 2 )
+script = SubResource( 4 )
 
 [node name="foodBox" type="HBoxContainer" parent="vbox"]
 margin_top = 50.0
@@ -92,7 +93,7 @@ margin_left = 57.0
 margin_right = 324.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-script = SubResource( 3 )
+script = SubResource( 5 )
 
 [node name="invSep2" type="HSeparator" parent="vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
