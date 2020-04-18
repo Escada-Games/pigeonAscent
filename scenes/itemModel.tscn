@@ -21,6 +21,7 @@ func _ready():
 	$hboxItem/label.text=self.itemName
 	$hboxItem/btn.text=String(self.itemPrice)
 	self.rect_pivot_offset=self.rect_size/2
+#	self.rect_scale=0.9*Vector2(1,1)
 	connect(\"mouse_entered\",self,\"updateDescription\")
 	connect(\"mouse_entered\",self,\"twnGrow\")
 	connect(\"mouse_exited\",self,\"twnShrink\")
@@ -79,6 +80,7 @@ valign = 1
 margin_left = 240.0
 margin_right = 312.0
 margin_bottom = 64.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "50"

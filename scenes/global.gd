@@ -10,9 +10,13 @@ var player={
 	"defense":1,
 	"speed":1
 }
+
 var shopDescription
+var opponents=preload("res://scenes/opponentPanel.tscn")
 
 func _ready():set_process(true)
 func _process(delta):
 	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
-	pass
+func fight():
+	print("hei")
+	get_tree().root.add_child(opponents.instance())
