@@ -10,10 +10,20 @@ export(int) var itemPrice=\"100\"
 export(String) var itemDescription=\"Lorem ipsum\"
 export(bool) var unique=false
 
+const tweenParameters={
+	\"duration\":0.3,
+	\"rect_scale_max\":1.1*Vector2(1,1),
+	\"type\":Tween.TRANS_QUINT,
+	\"easing\":Tween.EASE_OUT
+}
+
 func _ready():
 	$hboxItem/label.text=self.itemName
 	$hboxItem/btn.text=String(self.itemPrice)
+	self.rect_pivot_offset=self.rect_size/2
 	connect(\"mouse_entered\",self,\"updateDescription\")
+	connect(\"mouse_entered\",self,\"twnGrow\")
+	connect(\"mouse_exited\",self,\"twnShrink\")
 	$hboxItem/btn.connect(\"pressed\",self,\"buy\")
 	
 func updateDescription():
@@ -24,12 +34,24 @@ func buy():
 		global.player.gold-=self.itemPrice
 		#Effect here
 		
-		if self.unique:self.queue_free()"
+		if self.unique:self.queue_free()
+	
+func twnGrow():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+
+func twnShrink():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+	
+	"
 
 [node name="itemModel" type="PanelContainer"]
 margin_right = 326.0
 margin_bottom = 78.0
 script = SubResource( 1 )
+
+[node name="twnScale" type="Tween" parent="."]
 
 [node name="hboxItem" type="HBoxContainer" parent="."]
 margin_left = 7.0
