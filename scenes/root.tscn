@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 
@@ -83,6 +83,12 @@ func upgrade():
 		global.player.pointsLeft-=1
 		global.player.speed+=1"
 
+[sub_resource type="GDScript" id=11]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):self.text=String(global.player.gold)"
+
 [node name="root" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -92,6 +98,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="vboxL" type="VBoxContainer" parent="hbox"]
+editor/display_folded = true
 margin_right = 338.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -438,6 +445,7 @@ margin_right = 338.0
 margin_bottom = 52.0
 
 [node name="vbox" type="VBoxContainer" parent="hbox/vboxC/fightContainer"]
+editor/display_folded = true
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 331.0
@@ -454,6 +462,7 @@ margin_right = 324.0
 margin_bottom = 38.0
 
 [node name="playerContainer" type="PanelContainer" parent="hbox/vboxC"]
+editor/display_folded = true
 margin_top = 56.0
 margin_right = 338.0
 margin_bottom = 568.0
@@ -475,7 +484,6 @@ margin_right = 338.0
 margin_bottom = 600.0
 
 [node name="hbox" type="HBoxContainer" parent="hbox/vboxC/goldContainer"]
-editor/display_folded = true
 margin_left = 110.0
 margin_top = 7.0
 margin_right = 228.0
@@ -495,9 +503,9 @@ margin_right = 118.0
 margin_bottom = 14.0
 text = "0123456789"
 align = 1
+script = SubResource( 11 )
 
 [node name="vboxR" type="VBoxContainer" parent="hbox"]
-editor/display_folded = true
 margin_left = 684.0
 margin_right = 1024.0
 margin_bottom = 600.0
