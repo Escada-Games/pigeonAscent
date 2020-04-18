@@ -554,6 +554,13 @@ size_flags_vertical = 3
 
 [node name="itemModel" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/vboxShop" instance=ExtResource( 2 )]
 
+[node name="itemModel2" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/vboxShop" instance=ExtResource( 2 )]
+margin_top = 82.0
+margin_bottom = 160.0
+itemName = "Teste"
+itemPrice = 150
+itemDescription = "YOOOOOOOOOOOO"
+
 [node name="descriptionContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox"]
 margin_top = 469.0
 margin_right = 326.0
