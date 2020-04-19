@@ -1,7 +1,18 @@
 [gd_scene load_steps=3 format=2]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends PanelContainer
+script/source = "#		LV1		2W 1M
+#		LV2		2W 1M
+#		LV3		1W 2M
+#		LV4		1W 2M
+#		LV5		1W 2M/1W 1M 1S/MIDBOSS
+#		LV6		2M 1S
+#		LV7		2M 1S
+#		LV8		1M 2S?
+#		LV9		3S
+#		LV10	FINALBOSS
+
+extends PanelContainer
 
 var enemyPanel=preload(\"res://scenes/opponentModel.tscn\")
 var targetPos=0
@@ -13,18 +24,16 @@ func _ready():
 	$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,self.duration,Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnPosition.start()
 	var level=global.level
-	if level in [1,2]:
-		for iter in range(3):
-			var i=enemyPanel.instance()
-			i.enemyName=selectName()
-			distributePoints(i,(level*3)-1)
-			$marginContainer/vbox/vboxOpponents.add_child(i)
+	if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
+	elif level in [2]:addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
 	elif level in [3,4,5]:
-		pass
+		addEnemies([createEnemy(level-1),createEnemy(level),createEnemy(level)])
 	elif level in [6,7]:
-		pass
-	elif level in [8,9]:
-		pass
+		addEnemies([createEnemy(level),createEnemy(level),createEnemy(level+1)])
+	elif level in [8]:
+		addEnemies([createEnemy(level),createEnemy(level+1),createEnemy(level+1)])
+	elif level in [9]:
+		addEnemies([createEnemy(level+1),createEnemy(level+1),createEnemy(level+1)])
 	elif level in [10]:
 		pass
 
@@ -43,9 +52,16 @@ func distributePoints(obj,numberOfPoints):
 	obj.enemyDef=attributes[1]
 	obj.enemySpd=attributes[2]
 
+func createEnemy(level,handicap=0):
+	var i=enemyPanel.instance()
+	i.enemyName=selectName()
+	i.enemyLevel=level
+	var points=(level*3)-handicap
+	distributePoints(i,points)
+	return i
 
-
-
+func addEnemies(enemyArray=[]):
+	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
 
 
 var thoughts=\"\"\"

@@ -16,6 +16,7 @@ var exitButton
 var resetButton
 var goldToWin=0
 onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
+var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 func _ready():
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
@@ -41,6 +42,13 @@ func _process(delta):
 			enemyStamina=0
 			global.enemy.energy-=1
 			enemyAttack()
+		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
+			var i=particlesImpact.instance()
+			i.global_position.x=(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
+			i.global_position.y=playerSpr.rect_global_position.y
+			i.emitting=true
+			add_child(i)
+			print("?")
 	else:
 		if not ended:
 			if global.player.hp>0:
