@@ -23,6 +23,11 @@ config/icon="res://icon.png"
 
 global="*res://scenes/global.gd"
 
+[display]
+
+window/size/width=896
+window/size/height=504
+
 [node]
 
 name_casing=1

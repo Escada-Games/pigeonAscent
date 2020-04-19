@@ -14,6 +14,7 @@ var fighting=true
 var ended=false
 var exitButton
 var goldToWin=0
+onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 func _ready():
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
@@ -96,17 +97,17 @@ func attackFinished(h,m):
 	
 func register(string):
 	var message="#"+String(turn)+"> "+string+"\n"
-	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
+	richtextLabel.bbcode_text+=message
 	turn+=1
 
 func registerSameTurn(string):
 	var message= " "+string+"\n"
-	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
+	richtextLabel.bbcode_text+=message
 	turn+=1
 
 func registerFast(string):
 	var message="#"+String(turn)+"> "+string
-	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/richTextLabel.bbcode_text+=message
+	richtextLabel.bbcode_text+=message
 
 func exitBattle():
 	self.mouse_filter=Control.MOUSE_FILTER_IGNORE
