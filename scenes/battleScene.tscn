@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/mago1.ttf" type="DynamicFontData" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resource/Test.png" type="Texture" id=6]
 [ext_resource path="res://scenes/battleScene/battleScene.gd" type="Script" id=7]
+[ext_resource path="res://resource/Barra_Base.png" type="Texture" id=8]
+[ext_resource path="res://resource/Bar_Attack.png" type="Texture" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -35,7 +37,7 @@ func _process(delta):
 "
 
 [sub_resource type="GDScript" id=5]
-script/source = "extends ProgressBar
+script/source = "extends TextureProgress
 
 func _ready():set_process(true)
 func _process(delta):
@@ -50,7 +52,7 @@ func _ready():
 "
 
 [sub_resource type="GDScript" id=8]
-script/source = "extends ProgressBar
+script/source = "extends TextureProgress
 
 func _ready():set_process(true)
 func _process(delta):
@@ -220,30 +222,35 @@ alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
 margin_right = 250.0
-margin_bottom = 14.0
+margin_bottom = 16.0
+size_flags_vertical = 3
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
-[node name="actionBar" type="ProgressBar" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/barCtn"]
+[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
-margin_bottom = 14.0
+margin_bottom = 16.0
 size_flags_horizontal = 3
+texture_over = ExtResource( 8 )
+texture_progress = ExtResource( 9 )
+nine_patch_stretch = true
 script = SubResource( 5 )
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 18.0
+margin_top = 20.0
 margin_right = 250.0
-margin_bottom = 28.0
-custom_constants/separation = 10
+margin_bottom = 25.0
+custom_constants/separation = 5
 
 [node name="playerSpr" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-margin_top = 32.0
+margin_top = 29.0
 margin_right = 250.0
 margin_bottom = 162.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
 script = SubResource( 7 )
@@ -264,35 +271,44 @@ margin_bottom = 162.0
 margin_right = 250.0
 margin_bottom = 162.0
 rect_min_size = Vector2( 250, 0 )
+size_flags_vertical = 3
 alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
 margin_right = 250.0
-margin_bottom = 14.0
+margin_bottom = 16.0
+size_flags_vertical = 3
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
-[node name="actionBar" type="ProgressBar" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/barCtn"]
+[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
-margin_bottom = 14.0
+margin_bottom = 16.0
 size_flags_horizontal = 3
+texture_over = ExtResource( 8 )
+texture_progress = ExtResource( 9 )
+nine_patch_stretch = true
 script = SubResource( 8 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 18.0
+margin_top = 20.0
 margin_right = 250.0
-margin_bottom = 28.0
-custom_constants/separation = 10
+margin_bottom = 25.0
+custom_constants/separation = 5
 
 [node name="textureRect" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
-margin_top = 32.0
+margin_top = 29.0
 margin_right = 250.0
 margin_bottom = 162.0
 rect_pivot_offset = Vector2( 125, 82 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
 script = SubResource( 6 )

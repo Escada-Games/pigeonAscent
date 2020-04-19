@@ -26,6 +26,7 @@ var scaling={
 	"strength":1.2,
 	"speed":63
 }
+var currentUpgrade
 var shopDescription
 var opponents=preload("res://scenes/opponentPanel.tscn")
 var battleScene=preload("res://scenes/battleScene.tscn")

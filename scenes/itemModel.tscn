@@ -25,7 +25,6 @@ const tweenParameters={
 
 func _ready():
 	$marginContainer/hboxItem/label.text=self.itemName
-#	$hboxItem/btn.text=String(self.itemPrice)
 	self.rect_pivot_offset=self.rect_size/2
 #	self.rect_scale=0.9*Vector2(1,1)
 	connect(\"mouse_entered\",self,\"updateDescription\")
@@ -34,7 +33,10 @@ func _ready():
 #	$hboxItem/btn.connect(\"pressed\",self,\"buy\")
 	
 func updateDescription():
+	global.currentUpgrade=self
 	global.shopDescription.text=self.itemDescription
+#	global.shopDescription.get_parent().get_node(\"hBoxContainer\")
+	global.shopDescription.get_parent().get_node(\"hBoxContainer/price\").text=String(self.itemPrice)
 
 func buy():
 	if global.player.gold>self.itemPrice:
