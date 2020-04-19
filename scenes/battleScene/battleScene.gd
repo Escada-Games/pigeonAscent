@@ -13,6 +13,7 @@ var turn=1
 var fighting=true
 var ended=false
 var exitButton
+var resetButton
 var goldToWin=0
 onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 func _ready():
@@ -26,6 +27,7 @@ func _ready():
 	$twnSelfPos.start()
 	goldToWin=100
 	set_process(true)
+	
 func _process(delta):
 	if fighting:
 		playerStamina+=global.player.speed*delta*global.scaling.speed
@@ -39,29 +41,47 @@ func _process(delta):
 			global.enemy.energy-=1
 			enemyAttack()
 	else:
-		exitButton.modulate.a+=0.1
 		if not ended:
-			global.player.gold+=goldToWin
-			registerSameTurn("[center][wave amp=100 freq=5]"+global.player.name + " won! [/wave][/center]\n")
-			registerSameTurn("[center]You got [color=#ffe478]" + String(goldToWin) + "[/color] gold.[/center]")#
-			ended=true
-			$twnBackButton.interpolate_property(exitButton,"rect_global_position:y",OS.window_size.y*1.2,OS.window_size.y*0.66,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
-			$twnBackButton.start()
-			exitButton.modulate.a=0
-			exitButton.visible=true
+			if global.player.hp>0:
+				global.player.gold+=goldToWin
+				global.level+=1
+				global.player.pointsLeft+=3
+				registerSameTurn("[center][wave amp=100 freq=5]"+global.player.name + " won! [/wave][/center]\n")
+				registerSameTurn("[center]You got [color=#ffe478]" + String(goldToWin) + "[/color] gold.[/center]")#
+				ended=true
+				$twnBackButton.interpolate_property(exitButton,"rect_global_position:y",OS.window_size.y*1.2,OS.window_size.y*0.66,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
+				$twnBackButton.start()
+				exitButton.modulate.a=0
+				exitButton.visible=true
+				resetButton.queue_free()
+			else:
+				registerSameTurn("[center][shake rate=5 level=10]"+global.enemy.name + " won... [/shake][/center]\n")
+				registerSameTurn("[center][color=#b0305c]" + "Game Over." + "[/color][/center]\n\n")
+				registerSameTurn("[center] Retry? [/center]")
+				ended=true
+				$twnBackButton.interpolate_property(resetButton,"rect_global_position:y",OS.window_size.y*1.2,OS.window_size.y*0.66,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
+				$twnBackButton.start()
+				resetButton.modulate.a=0
+				resetButton.visible=true
+				exitButton.queue_free()
+		else:
+			if global.player.hp>0:
+				exitButton.modulate.a+=0.1
+			else:
+				resetButton.modulate.a+=0.1
 
 func playerAttack():
-	var damage=int(rand_range(1.0,1.2)*global.player.strength*global.scaling.strength)
-	damage*=10
+	var damage=calculateDamage(global.player.strength,global.enemy.defense)
 	var bbName=global.player.name
 	if randf()>0.9 or global.enemy.energy<=0:
 		damage*=2
-		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
+		register("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
+		shakeEnemyHpBar(15)
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
-	$twnAttack.interpolate_property(playerSpr,"rect_global_position:x",playerDefaultPos.x,enemyDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-	$twnAttack.start()
+		shakeEnemyHpBar()
+	playerAttackAnim()
 	global.enemy.hp-=damage
 	if global.enemy.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
@@ -69,21 +89,25 @@ func playerAttack():
 	playerAttacked=true
 	
 func enemyAttack():
-	var damage=int(rand_range(1.0,1.2)*global.enemy.strength*global.scaling.strength)
+	var damage=calculateDamage(global.enemy.strength,global.player.defense)
 	var bbName="[color=#eb564b]"+global.enemy.name+"[/color]"
 	if randf()>0.9 or global.player.energy<=0:
 		damage*=2
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		registerSameTurn( bbName + " attacks for " +String(damage)+ " damage")
+		shakePlayerHpBar(15)
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
-	$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x,playerDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-	$twnAttack.start()
+		shakePlayerHpBar()
+	enemyAttackAnim()
 	global.player.hp-=damage
 	if global.player.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
 	enemyAttacked=true
+
+func calculateDamage(strength,defense,minDamage=1):
+	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 
 func attackFinished(h,m):
 	if playerAttacked:
@@ -94,7 +118,16 @@ func attackFinished(h,m):
 		$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x+1.33*enemySpr.rect_size.x,enemyDefaultPos.x,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnAttack.start()
 		enemyAttacked=false
-	
+func playerAttackAnim():
+	$twnAttack.interpolate_property(playerSpr,"rect_global_position:x",playerDefaultPos.x,enemyDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnAttack.start()
+func enemyAttackAnim():
+	$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x,playerDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnAttack.start()
+func shakePlayerHpBar(intensity=5):
+	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/playerStats.shakeHp(intensity)
+func shakeEnemyHpBar(intensity=5):
+	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/enemyStats.shakeHp(intensity)
 func register(string):
 	var message="#"+String(turn)+"> "+string+"\n"
 	richtextLabel.bbcode_text+=message
@@ -115,3 +148,7 @@ func exitBattle():
 	$twnSelfPos.start()
 	yield(get_tree().create_timer(5.0),"timeout")
 	self.queue_free()
+
+func gameOver():
+	#TODO:CHANGE TO GOING BACK TO THE TITLE SCREEN
+	get_tree().quit()

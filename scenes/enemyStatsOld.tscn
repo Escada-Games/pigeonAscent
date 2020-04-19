@@ -1,0 +1,146 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PanelContainer
+var offset=0
+var duration=0.75
+var defaultPos=Vector2()
+func _ready():
+	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
+	defaultPos=$marginContainer/vbox/hpBox.rect_position
+	set_process(false)
+func _process(delta):
+	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+func shakeHp(newOffset=5):
+	offset=newOffset
+	$twnOffset.interpolate_property(self,\"offset\",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
+	$twnOffset.start()
+	set_process(true)
+func resetProcess():
+	set_process(false)
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+func _ready():self.text=global.enemy.name
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends ProgressBar
+
+func _ready():set_process(true)
+func _process(delta):
+	self.max_value=global.enemy.maxHp
+	self.value=global.enemy.hp
+	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends ProgressBar
+
+func _ready():set_process(true)
+func _process(delta):
+	self.max_value=global.enemy.maxEnergy
+	self.value=global.enemy.energy
+	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+"
+
+[node name="enemyStats" type="PanelContainer"]
+margin_right = 338.0
+margin_bottom = 238.0
+rect_min_size = Vector2( 250, 200 )
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="twnOffset" type="Tween" parent="."]
+
+[node name="vbox" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 331.0
+margin_bottom = 231.0
+
+[node name="name" type="Label" parent="vbox"]
+margin_right = 324.0
+margin_bottom = 14.0
+size_flags_vertical = 1
+text = "NOME"
+align = 1
+script = SubResource( 2 )
+
+[node name="invSep" type="HSeparator" parent="vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 18.0
+margin_right = 324.0
+margin_bottom = 28.0
+custom_constants/separation = 10
+
+[node name="hpBox" type="HBoxContainer" parent="vbox"]
+margin_top = 32.0
+margin_right = 324.0
+margin_bottom = 46.0
+
+[node name="hp" type="Label" parent="vbox/hpBox"]
+margin_right = 53.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.2
+text = "HP"
+align = 1
+
+[node name="progressBar" type="ProgressBar" parent="vbox/hpBox"]
+margin_left = 57.0
+margin_right = 324.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+script = SubResource( 3 )
+
+[node name="foodBox" type="HBoxContainer" parent="vbox"]
+margin_top = 50.0
+margin_right = 324.0
+margin_bottom = 64.0
+
+[node name="food" type="Label" parent="vbox/foodBox"]
+margin_right = 53.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.2
+text = "FOOD"
+align = 1
+
+[node name="progressBar" type="ProgressBar" parent="vbox/foodBox"]
+margin_left = 57.0
+margin_right = 324.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+script = SubResource( 4 )
+
+[node name="invSep2" type="HSeparator" parent="vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 68.0
+margin_right = 324.0
+margin_bottom = 78.0
+custom_constants/separation = 10
+
+[node name="abilities" type="Label" parent="vbox"]
+margin_top = 82.0
+margin_right = 324.0
+margin_bottom = 96.0
+size_flags_vertical = 1
+text = "ABILITIES"
+align = 1
+
+[node name="abilitiesText" type="Label" parent="vbox"]
+margin_top = 100.0
+margin_right = 324.0
+margin_bottom = 224.0
+size_flags_vertical = 3
+text = "LOREM IPSUM"
+align = 1
+valign = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/mago1.ttf" type="DynamicFontData" id=2]
@@ -44,14 +44,14 @@ func _process(delta):
 	self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureRect
 
 func _ready():
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
 "
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=7]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -59,7 +59,7 @@ func _process(delta):
 	self.value=get_tree().root.get_node(\"/root/battleScene\").enemyStamina
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=8]
 script/source = "extends TextureRect
 
 func _ready():
@@ -77,6 +77,15 @@ func _ready():
 	self.rect_global_position.y=2*OS.window_size.y
 	get_tree().root.get_node(\"/root/battleScene\").exitButton=self
 	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
+"
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Button
+func _ready():
+	self.visible=false
+	self.rect_global_position.y=2*OS.window_size.y
+	get_tree().root.get_node(\"/root/battleScene\").resetButton=self
+	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"gameOver\")
 "
 
 [node name="battleScene" type="Control"]
@@ -122,9 +131,7 @@ margin_right = 832.0
 margin_bottom = 200.0
 size_flags_vertical = 3
 
-[node name="nameStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 1 )]
-margin_right = 250.0
-margin_bottom = 200.0
+[node name="playerStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 1 )]
 
 [node name="vsepL" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
@@ -202,7 +209,6 @@ size_flags_horizontal = 3
 [node name="enemyStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 5 )]
 margin_left = 581.0
 margin_right = 831.0
-margin_bottom = 200.0
 
 [node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 204.0
@@ -253,7 +259,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
-script = SubResource( 7 )
+script = SubResource( 6 )
 
 [node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
 modulate = Color( 1, 1, 1, 0 )
@@ -289,7 +295,7 @@ size_flags_horizontal = 3
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
-script = SubResource( 8 )
+script = SubResource( 7 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -311,7 +317,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
-script = SubResource( 6 )
+script = SubResource( 8 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 370.0
@@ -320,10 +326,22 @@ margin_bottom = 390.0
 size_flags_vertical = 5
 alignment = 1
 
-[node name="btnGoBack" type="Button" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot"]
+[node name="vBoxContainer" type="CenterContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot"]
 margin_left = 389.0
 margin_right = 443.0
+margin_bottom = 20.0
+
+[node name="btnGoBack" type="Button" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot/vBoxContainer"]
+margin_right = 54.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "Return"
 script = SubResource( 9 )
+
+[node name="btnReset" type="Button" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot/vBoxContainer"]
+margin_left = 2.0
+margin_right = 51.0
+margin_bottom = 20.0
+mouse_default_cursor_shape = 2
+text = "Retry!"
+script = SubResource( 10 )

@@ -22,9 +22,12 @@ var enemy={
 	"speed":1.0
 }
 
+var level=1
+
 var scaling={
 	"strength":1.2,
-	"speed":63
+	"defense":1,
+	"speed":33
 }
 var currentUpgrade
 var shopDescription
@@ -35,7 +38,34 @@ func _process(delta):
 	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
 func fight():
 	get_tree().root.add_child(opponents.instance())
-func battle(nextEnemy):
-	
+func battle(nextEnemyDict):
+	self.enemy=nextEnemyDict
 	var i=battleScene.instance()
 	get_tree().root.add_child(i)
+
+var listOfNames=[
+	"Rick Jim",
+	"Sucraiso",
+	"Drachydios",
+	"Boon Obatsug",
+	"Delta Chave",
+	"Clyde",
+	"Chaos",
+	"Master P.",
+	"B.O.B.",
+	"G-Pots",
+	"Bonnie",
+	"Discordia",
+	"Cocoa",
+	"Gaia",
+	"Steve",
+	"Recks Finkel",
+	"Andreas",
+	"Gabs",
+	"Arkansas",
+	"Sabin",
+	"Ladder",
+	"Allllan",
+	"Tobias",
+	"Funke"
+]

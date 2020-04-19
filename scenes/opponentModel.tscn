@@ -6,10 +6,17 @@
 script/source = "extends PanelContainer
 
 var enemyName=\"Name\"
+var enemyClass=\"Standard\"
+var enemyLevel=1
 var enemyDescription=\"\"
+var enemyHp=10
+var enemyMaxHp=10
+var enemyEnergy=10
+var enemyMaxEnergy=10
 var enemyStr=1
 var enemyDef=1
 var enemySpd=1
+var enemyGold=100
 
 const tweenParameters={
 	\"duration\":0.3,
@@ -19,12 +26,12 @@ const tweenParameters={
 }
 
 func _ready():
+	enemyDescription=\"Strength: \"+String(self.enemyStr)+\", Defense: \"+String(self.enemyDef)+\", Speed: \"+String(self.enemySpd)
 	$hboxEnemy/vboxDescription/name.text=self.enemyName
+	$hboxEnemy/vboxDescription/title.text=self.enemyClass+\", Lv.\"+String(self.enemyLevel)
 	$hboxEnemy/vboxDescription/description.text=self.enemyDescription
-	
-	$hboxEnemy/vboxDescription/name.name=self.enemyName
+#	$hboxEnemy/vboxDescription/name.name=self.enemyName
 	self.rect_pivot_offset=self.rect_size/2
-#	self.rect_scale=0.9*Vector2(1,1)
 	connect(\"mouse_entered\",self,\"twnGrow\")
 	connect(\"mouse_exited\",self,\"twnShrink\")
 	$hboxEnemy/btn.connect(\"pressed\",self,\"battle\")
@@ -38,7 +45,17 @@ func twnShrink():
 	$twnScale.start()
 
 func battle():
-	global.battle(self)
+	var enemyDict={
+	\"name\":self.enemyName,
+	\"gold\":self.enemyGold,
+	\"hp\":self.enemyHp,\"maxHp\":self.enemyMaxHp,
+	\"energy\":self.enemyEnergy,\"maxEnergy\":self.enemyMaxEnergy,
+	\"pointsLeft\":0,
+	\"strength\":self.enemyStr,
+	\"defense\":self.enemyDef,
+	\"speed\":self.enemySpd
+	}
+	global.battle(enemyDict)
 	get_tree().root.get_node(\"/root/opponentControl/marginContainer/opponentPanel/btnExit\").exit()
 	
 "
