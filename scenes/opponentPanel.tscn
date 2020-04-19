@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
 
 [sub_resource type="GDScript" id=1]
 script/source = "#		LV1		2W 1M
@@ -199,14 +201,15 @@ alignment = 1
 
 [node name="title" type="Label" parent="marginContainer/opponentPanel/marginContainer/vbox"]
 margin_right = 462.0
-margin_bottom = 14.0
+margin_bottom = 25.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
+custom_fonts/font = ExtResource( 1 )
 text = "Choose your opponent!"
 align = 1
 
 [node name="vboxOpponents" type="VBoxContainer" parent="marginContainer/opponentPanel/marginContainer/vbox"]
-margin_top = 18.0
+margin_top = 29.0
 margin_right = 462.0
 margin_bottom = 220.0
 size_flags_vertical = 3

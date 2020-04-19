@@ -7,14 +7,17 @@ var playerDefaultPos
 var enemyDefaultPos
 var playerAttacked=false
 var enemyAttacked=false
-var durationAttack=0.5
+var durationAttack=0.7
 var durationReturn=0.3
+var durationShake=0.5
+var defaultDurationShake=0.5
 var turn=1
 var fighting=true
 var ended=false
 var exitButton
 var resetButton
 var goldToWin=0
+var offset=0
 onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 func _ready():
@@ -31,6 +34,8 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	if self.offset!=0:
+		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
 		playerStamina+=global.player.speed*delta*global.scaling.speed
 		if playerStamina>100:
@@ -42,13 +47,8 @@ func _process(delta):
 			enemyStamina=0
 			global.enemy.energy-=1
 			enemyAttack()
-		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
-			var i=particlesImpact.instance()
-			i.global_position.x=(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
-			i.global_position.y=playerSpr.rect_global_position.y
-			i.emitting=true
-			add_child(i)
-			print("?")
+#		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
+#			print("?")
 	else:
 		if not ended:
 			if global.player.hp>0:
@@ -161,3 +161,19 @@ func killMe(h,m):
 func gameOver():
 	#TODO:CHANGE TO GOING BACK TO THE TITLE SCREEN
 	get_tree().quit()
+func effects(area):
+	particlesAndWindowshake(area)
+func particlesAndWindowshake(area):
+	particles(area)
+	windowShake()
+func particles(area):
+	var i=particlesImpact.instance()
+	i.global_position.x=(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
+	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
+	i.emitting=true
+	add_child(i)
+func windowShake(newOffset=10):
+	self.offset=newOffset
+	$twnShake.interpolate_property(self,"offset",self.offset,0,self.durationShake,Tween.TRANS_QUAD,Tween.EASE_OUT)
+	$twnShake.start()
+	durationShake=defaultDurationShake*rand_range(0.7,1.0)

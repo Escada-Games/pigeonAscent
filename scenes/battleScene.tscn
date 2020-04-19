@@ -1,11 +1,11 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/mago1.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://resource/Panel_Battle_Log.png" type="Texture" id=4]
 [ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=5]
-[ext_resource path="res://resource/Test.png" type="Texture" id=6]
+[ext_resource path="res://resource/Pigeon_Basic.png" type="Texture" id=6]
 [ext_resource path="res://scenes/battleScene/battleScene.gd" type="Script" id=7]
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=8]
 [ext_resource path="res://resource/Bar_Attack.png" type="Texture" id=9]
@@ -49,7 +49,12 @@ script/source = "extends TextureRect
 
 func _ready():
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
+	$area2D.position=self.rect_size/2
+	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 "
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 44.3355
 
 [sub_resource type="GDScript" id=7]
 script/source = "extends TextureProgress
@@ -65,6 +70,8 @@ script/source = "extends TextureRect
 func _ready():
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
 	self.rect_pivot_offset=self.rect_size/2
+	$area2D.position=self.rect_size/2
+	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	set_process(true)
 func _process(delta):
 	self.rect_scale.x=-1#Yeah, this is quite ugly
@@ -98,6 +105,8 @@ __meta__ = {
 }
 
 [node name="twnAttack" type="Tween" parent="."]
+
+[node name="twnShake" type="Tween" parent="."]
 
 [node name="twnSelfPos" type="Tween" parent="."]
 
@@ -261,6 +270,11 @@ texture = ExtResource( 6 )
 stretch_mode = 6
 script = SubResource( 6 )
 
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr"]
+
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D"]
+shape = SubResource( 11 )
+
 [node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 254.0
@@ -318,6 +332,11 @@ size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
 script = SubResource( 8 )
+
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect"]
+
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect/area2D"]
+shape = SubResource( 11 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 370.0
