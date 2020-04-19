@@ -45,11 +45,13 @@ func twnShrink():
 	$twnScale.start()
 
 func battle():
+	var maxHp=global.calculateHp(self.enemyStr,self.enemyDef)
+	var maxEnergy=global.calculateHp(self.enemyStr,self.enemySpd)
 	var enemyDict={
 	\"name\":self.enemyName,
 	\"gold\":self.enemyGold,
-	\"hp\":self.enemyHp,\"maxHp\":self.enemyMaxHp,
-	\"energy\":self.enemyEnergy,\"maxEnergy\":self.enemyMaxEnergy,
+	\"hp\":maxHp,\"maxHp\":maxHp,
+	\"energy\":maxEnergy,\"maxEnergy\":maxEnergy,
 	\"pointsLeft\":0,
 	\"strength\":self.enemyStr,
 	\"defense\":self.enemyDef,
