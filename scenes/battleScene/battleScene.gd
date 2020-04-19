@@ -19,6 +19,7 @@ onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContain
 func _ready():
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
+	$twnBack
 	playerDefaultPos=playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
 	var pos=$marginCtn.rect_global_position
@@ -67,7 +68,7 @@ func _process(delta):
 		else:
 			if global.player.hp>0:
 				exitButton.modulate.a+=0.1
-			else:
+			elif global.enemy.hp>0:
 				resetButton.modulate.a+=0.1
 
 func playerAttack():
@@ -144,11 +145,11 @@ func registerFast(string):
 
 func exitBattle():
 	self.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	$twnSelfPos.connect("tween_completed",self,"killMe")
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
-	yield(get_tree().create_timer(5.0),"timeout")
+func killMe(h,m):
 	self.queue_free()
-
 func gameOver():
 	#TODO:CHANGE TO GOING BACK TO THE TITLE SCREEN
 	get_tree().quit()

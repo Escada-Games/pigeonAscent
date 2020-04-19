@@ -93,6 +93,7 @@ func upgrade():
 	if global.player.pointsLeft>0:
 		global.player.pointsLeft-=1
 		global.player.strength+=1
+		global.updatePlayerHpAndFood()
 
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
@@ -135,6 +136,7 @@ func upgrade():
 	if global.player.pointsLeft>0:
 		global.player.pointsLeft-=1
 		global.player.defense+=1
+		global.updatePlayerHpAndFood()
 
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
@@ -174,6 +176,7 @@ func upgrade():
 	if global.player.pointsLeft>0:
 		global.player.pointsLeft-=1
 		global.player.speed+=1
+		global.updatePlayerHpAndFood()
 
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
