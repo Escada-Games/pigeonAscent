@@ -327,6 +327,9 @@ var items=[
 	preload(\"res://scenes/items/healsFoodAndDef.tscn\"),
 	preload(\"res://scenes/items/healsFoodAndSpd.tscn\"),
 	preload(\"res://scenes/items/healsFoodAndAllBoosts.tscn\"),
+	preload(\"res://scenes/items/ice.tscn\"),
+	preload(\"res://scenes/items/sword.tscn\"),
+	preload(\"res://scenes/items/wing.tscn\"),
 ]
 func _ready():
 	for item in items:

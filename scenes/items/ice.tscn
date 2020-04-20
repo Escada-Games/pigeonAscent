@@ -12,7 +12,7 @@ region_rect = Rect2( 0, 0, 83, 20 )
 script/source = "extends PanelContainer
 
 export(String) var itemName=\"Ice\"
-export(int) var itemPrice=\"1000\"
+export(int) var itemPrice=\"10000\"
 export(String) var itemDescription=\"A strange ice cube. It ressonates when near high defenses.\"
 export(bool) var unique=true
 export(bool) var clickable=false

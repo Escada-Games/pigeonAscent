@@ -12,7 +12,7 @@ region_rect = Rect2( 0, 0, 83, 20 )
 script/source = "extends PanelContainer
 
 export(String) var itemName=\"Wyvern Wing\"
-export(int) var itemPrice=\"1000\"
+export(int) var itemPrice=\"10000\"
 export(String) var itemDescription=\"A wyvern wing. Only great strength might make it usable.\"
 export(bool) var unique=true
 export(bool) var clickable=false
@@ -48,7 +48,7 @@ func buy():
 	if global.player.gold>=self.itemPrice:
 		global.player.gold-=self.itemPrice
 		#Effect here
-		global.hasWing=true
+		global.hasWings=true
 		global.createSelectSfx()
 		if self.unique:self.queue_free()
 	else:
