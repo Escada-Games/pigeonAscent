@@ -193,7 +193,8 @@ func registerFast(string):
 
 func exitBattle():
 	self.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	if(global.level==4):global.firstEvolution()
+	if(global.level==4):
+		global.createEvolvePanel()
 	elif(global.level==7):global.secondEvolution()
 	$twnSelfPos.connect("tween_completed",self,"killMe")
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)

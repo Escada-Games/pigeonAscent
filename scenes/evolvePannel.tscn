@@ -7,17 +7,39 @@
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Control
-
+var counter=1
+var otherCounter=25
+var target
+var defaultPos
 func _ready():
-	var target=$marginContainer/opponentPanel/marginContainer/vbox/marginContainer/pigeon
-	$twnBlack.interpolate_property(target,\"modulate\",target.modulate,Color(\"#000000\"),1.0,Tween.TRANS_QUAD,Tween.EASE_IN,0.5)
+	target=$marginContainer/opponentPanel/marginContainer/vbox/marginContainer/pigeon
+	defaultPos=target.rect_global_position
+	$twnBlack.interpolate_property(target,\"modulate\",target.modulate,Color(\"#000000\"),1.0,Tween.TRANS_QUAD,Tween.EASE_IN,0.4)
 	$twnBlack.start()
-	$twnMov.interpolate_property(target,\"rect_global_position:x\",target.rect_global_position.x,1.5*OS.window_size.x,2.0,Tween.TRANS_BACK,Tween.EASE_IN,2.0)
+	$twnMov.interpolate_property(target,\"rect_global_position:x\",target.rect_global_position.x,1.0*OS.window_size.x,1.0,Tween.TRANS_BACK,Tween.EASE_IN,2.0)
 	$twnMov.start()
 	$twnMov.connect(\"tween_completed\",self,\"loopEvo\")
+	if global.level<6:
+		global.firstEvolution()
 
-func loopEvo():
-	pass
+func loopEvo(h,m):
+	if counter<=25:
+		$twnMov.interpolate_property(target,\"rect_global_position:x\",-self.rect_size.x,OS.window_size.x,1.0/min(counter,10),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnMov.start()
+		counter+=1
+	else:
+		target.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
+		$twnMov.interpolate_property(target,\"rect_global_position:x\",-self.rect_size.x,OS.window_size.x,1.0/min(counter,otherCounter),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnMov.start()
+		otherCounter-=1
+		if otherCounter<=0:otherCounter=1
+	if otherCounter<=1:
+		$twnBlack.interpolate_property(target,\"modulate\",target.modulate,Color(\"#ffffff\"),1.0,Tween.TRANS_QUAD,Tween.EASE_IN,0.4)
+		$twnBlack.start()
+		$twnMov.interpolate_property(target,\"rect_global_position:x\",-self.rect_size.x,defaultPos.x,1.0,Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnMov.start()
+		$twnMov.disconnect(\"tween_completed\",self,\"loopEvo\")
+		
 "
 
 [sub_resource type="GDScript" id=2]

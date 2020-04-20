@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=2]
@@ -274,6 +274,18 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="GDScript" id=30]
+script/source = "extends TextureRect
+var textureNormal=preload(\"res://resource/Tunnel.png\")
+var textureGod=preload(\"res://resource/Boss_Board.png\")
+func _ready():set_process(true)
+func _process(delta):
+	if global.level==10:
+		self.texture=textureGod
+	else:
+		self.texture=textureNormal
+"
 
 [sub_resource type="GDScript" id=15]
 script/source = "extends TextureRect
@@ -784,6 +796,7 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource( 13 )
 expand = true
 stretch_mode = 6
+script = SubResource( 30 )
 
 [node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
@@ -985,7 +998,7 @@ size_flags_vertical = 3
 
 [node name="price" type="Label" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
 margin_top = 3.0
-margin_right = 150.0
+margin_right = 260.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -998,6 +1011,7 @@ __meta__ = {
 }
 
 [node name="priceBtn" type="TextureButton" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
+visible = false
 margin_left = 154.0
 margin_right = 260.0
 margin_bottom = 20.0

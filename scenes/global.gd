@@ -163,8 +163,8 @@ var player={
 	"gold":0,
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
-	"pointsLeft":20,
-	"strength":1,"extraStrength":0,
+	"pointsLeft":3,
+	"strength":50,"extraStrength":0,
 	"defense":1,"extraDefense":0,
 	"speed":1,"extraSpeed":0,
 	"class":self.c_normal
@@ -184,7 +184,7 @@ var enemy={
 	"class":"normal"
 }
 
-var level=6
+var level=3
 
 var scaling={
 	"strength":1.2,
@@ -194,6 +194,9 @@ var scaling={
 	"food":2
 }
 var currentItem
+var evolvePanel=preload("res://scenes/evolvePannel.tscn")
+func createEvolvePanel():
+	get_tree().root.get_node("/root/root").add_child(evolvePanel.instance())
 func firstEvolution():
 	if self.player.strength>self.player.defense and self.player.strength>self.player.speed:
 		self.player["class"]=self.c_stronga
