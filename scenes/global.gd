@@ -3,8 +3,8 @@ extends Node
 var player={
 	"name":"Pombo",
 	"gold":300,
-	"hp":10,"maxHp":20,
-	"energy":10,"maxEnergy":20,
+	"hp":10,"maxHp":10,
+	"energy":10,"maxEnergy":10,
 	"pointsLeft":30,
 	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
@@ -15,7 +15,7 @@ var hasWings=false
 var hasIce=false
 var hasSword=false
 var enemy={
-	"name":"Pombo",
+	"name":"PomboEnemy",
 	"gold":100,
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
@@ -126,8 +126,8 @@ var pigeonClassesAndSprites={
 		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
 	},
 	"platy":
-		{"sprite":"res://resource/portraits/Selfie_Pigeon_Port.png",
-		"portrait":"res://resource/sprites/Platypigeon.png"
+		{"sprite":"res://resource/sprites/Platypigeon.png",
+		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
 	}
 }
 
@@ -199,7 +199,8 @@ func firstEvolution():
 		self.player["class"]=self.c_knight
 	elif self.player.speed>self.player.strength and self.player.speed>self.player.defense:
 		self.player["class"]=self.c_winged
-	pass#TODO ORNITOPOMBO
+	else:
+		self.player["class"]=self.c_platy
 func secondEvolution():
 	pass
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
@@ -233,7 +234,8 @@ var opponents=preload("res://scenes/opponentPanel.tscn")
 var battleScene=preload("res://scenes/battleScene.tscn")
 func _ready():set_process(true)
 func _process(delta):
-	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
+	pass
+#	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
 func fight():
 	get_tree().root.add_child(opponents.instance())
 func battle(nextEnemyDict):

@@ -22,6 +22,7 @@ var offset=0
 onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
+var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
 func _ready():
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
@@ -46,12 +47,14 @@ func _process(delta):
 		if playerStamina>100:
 			playerStamina=0
 			global.player.energy-=1
-			playerAttack()
+			playerAttacked=true
+			playerAttackAnim()
 		enemyStamina+=global.enemy.speed*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=1
-			enemyAttack()
+			enemyAttacked=true
+			enemyAttackAnim()
 #		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
 #			print("?")
 	else:
@@ -87,38 +90,44 @@ func _process(delta):
 func playerAttack():
 	var damage=calculateDamage(global.player.strength,global.enemy.defense)
 	var bbName=global.player.name
+	var isCritical=false
 	if randf()>0.9 or global.enemy.energy<=0:
 		damage*=2
+		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar(15)
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar()
-	playerAttackAnim()
+#	playerAttackAnim()
 	global.enemy.hp-=damage
+	createDamageNumbers(enemySpr.rect_global_position+enemySpr.rect_size/2,1,damage,isCritical)
 	if global.enemy.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
-	playerAttacked=true
+#	playerAttacked=true
 	
 func enemyAttack():
 	var damage=calculateDamage(global.enemy.strength,global.player.defense)
 	var bbName=colorizeString(global.enemy.name,"#eb564b")#"[color=#eb564b]"+global.enemy.name+"[/color]"
+	var isCritical=false
 	if randf()>0.9 or global.player.energy<=0:
 		damage*=2
+		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		registerSameTurn( bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar(15)
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar()
-	enemyAttackAnim()
+#	enemyAttackAnim()
 	global.player.hp-=damage
+	createDamageNumbers(playerSpr.rect_global_position+playerSpr.rect_size/2,-1,damage,isCritical)
 	if global.player.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
-	enemyAttacked=true
+#	enemyAttacked=true
 
 func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
@@ -127,10 +136,12 @@ func attackFinished(h,m):
 	if playerAttacked:
 		$twnAttack.interpolate_property(playerSpr,"rect_global_position:x",-1.33*playerSpr.rect_size.x,playerDefaultPos.x,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnAttack.start()
+		playerAttack()
 		playerAttacked=false
 	if enemyAttacked:
 		$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x+1.33*enemySpr.rect_size.x,enemyDefaultPos.x,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnAttack.start()
+		enemyAttack()
 		enemyAttacked=false
 func playerAttackAnim():
 	$twnAttack.interpolate_property(playerSpr,"rect_global_position:x",playerDefaultPos.x,enemyDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
@@ -165,6 +176,8 @@ func exitBattle():
 	$twnSelfPos.start()
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0.85,0,0.3,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
+func applyDamage(target,damage):
+	target.hp-=damage
 func killMe(h,m):
 	self.queue_free()
 func gameOver():
@@ -173,7 +186,21 @@ func gameOver():
 func effects(area):
 	particlesAndWindowshake(area)
 	knockback()
+#	createDamageNumbers()
+func createDamageNumbers(position,direction,damage,critical=false):
+	var i=damageNumbers.instance()
+	i.global_position=position
+	i.direction=direction
+	i.damage=damage
+	i.critical=critical
+	add_child(i)
 func knockback():
+	if playerAttacked:
+		playerAttack()
+		playerAttacked=false
+	elif enemyAttacked:
+		enemyAttack()
+		enemyAttacked=false
 	$twnAttack.stop_all()
 	randomize()
 	playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
@@ -181,7 +208,6 @@ func knockback():
 	enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
 	$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnRecoil.start()
-	pass
 func particlesAndWindowshake(area):
 	createHitSfx()
 	particles(area)

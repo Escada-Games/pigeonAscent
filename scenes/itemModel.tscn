@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://resource/portraits/Baker_Pigeon_Port.png" type="Texture" id=1]
 [ext_resource path="res://resource/Shop_Panel.png" type="Texture" id=2]
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=3]
 
@@ -92,10 +92,10 @@ margin_bottom = 99.0
 size_flags_horizontal = 3
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/hboxItem/centerContainer"]
-margin_left = 16.0
-margin_top = 17.0
-margin_right = 80.0
-margin_bottom = 81.0
+margin_left = 33.0
+margin_top = 34.0
+margin_right = 64.0
+margin_bottom = 65.0
 texture = ExtResource( 1 )
 stretch_mode = 6
 

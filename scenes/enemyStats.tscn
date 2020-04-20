@@ -1,11 +1,13 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=2]
 [ext_resource path="res://resource/Bar_Life.png" type="Texture" id=3]
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=4]
 [ext_resource path="res://resource/Bar_Food.png" type="Texture" id=5]
-[ext_resource path="res://resource/fonts/defeated32Shadow.tres" type="DynamicFont" id=6]
+[ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=6]
+[ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=7]
+[ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.494118, 0.494118, 0.560784, 1 )
@@ -104,15 +106,15 @@ func _process(delta):self.text=String(global.enemy.energy)+\"/\"+String(global.e
 "
 
 [node name="enemyStats" type="PanelContainer"]
-margin_right = 250.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 250, 200 )
-size_flags_vertical = 3
+margin_right = 232.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 250, 0 )
 size_flags_stretch_ratio = 4.0
 custom_styles/panel = SubResource( 1 )
 script = SubResource( 2 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": ""
 }
 
 [node name="twnOffset" type="Tween" parent="."]
@@ -121,7 +123,7 @@ __meta__ = {
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 245.0
-margin_bottom = 195.0
+margin_bottom = 157.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -131,37 +133,48 @@ custom_constants/margin_bottom = 5
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 235.0
-margin_bottom = 185.0
+margin_bottom = 147.0
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
 margin_right = 230.0
-margin_bottom = 25.0
+margin_bottom = 28.0
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 2
 text = "NOME"
 align = 1
 script = SubResource( 3 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 29.0
+margin_top = 32.0
 margin_right = 230.0
-margin_bottom = 39.0
+margin_bottom = 42.0
 custom_constants/separation = 10
 
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 43.0
+margin_top = 46.0
 margin_right = 230.0
-margin_bottom = 98.0
+margin_bottom = 92.0
 
 [node name="hp" type="Label" parent="marginContainer/vbox/hpBox"]
 margin_right = 61.0
-margin_bottom = 55.0
+margin_bottom = 46.0
 rect_min_size = Vector2( 61, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.3
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
 text = "HP"
 align = 1
 valign = 1
@@ -169,7 +182,7 @@ valign = 1
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/hpBox"]
 margin_left = 65.0
 margin_right = 230.0
-margin_bottom = 55.0
+margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -191,39 +204,47 @@ script = SubResource( 4 )
 [node name="label" type="Label" parent="marginContainer/vbox/hpBox/vBoxContainer"]
 margin_top = 29.0
 margin_right = 165.0
-margin_bottom = 55.0
+margin_bottom = 46.0
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
 script = SubResource( 5 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 102.0
+margin_top = 96.0
 margin_right = 230.0
-margin_bottom = 157.0
+margin_bottom = 142.0
 
 [node name="food" type="Label" parent="marginContainer/vbox/foodBox"]
-margin_right = 61.0
-margin_bottom = 55.0
+margin_right = 56.0
+margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.3
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
 text = "FOOD"
 align = 1
 valign = 1
 
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/foodBox"]
-margin_left = 65.0
+margin_left = 60.0
 margin_right = 230.0
-margin_bottom = 55.0
+margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/foodBox/vBoxContainer"]
-margin_right = 165.0
+margin_right = 170.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -234,19 +255,24 @@ script = SubResource( 6 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/foodBox/vBoxContainer"]
 margin_top = 29.0
-margin_right = 165.0
-margin_bottom = 55.0
+margin_right = 170.0
+margin_bottom = 46.0
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
 script = SubResource( 7 )
 
 [node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 161.0
+margin_top = 146.0
 margin_right = 230.0
-margin_bottom = 171.0
+margin_bottom = 156.0
 custom_constants/separation = 10
 
 [node name="abilities" type="Label" parent="marginContainer/vbox"]
