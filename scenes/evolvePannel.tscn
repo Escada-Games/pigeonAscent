@@ -14,6 +14,7 @@ var defaultPos
 func _ready():
 	target=$marginContainer/opponentPanel/marginContainer/vbox/marginContainer/pigeon
 	defaultPos=target.rect_global_position
+	target.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
 	$twnBlack.interpolate_property(target,\"modulate\",target.modulate,Color(\"#000000\"),1.0,Tween.TRANS_QUAD,Tween.EASE_IN,0.4)
 	$twnBlack.start()
 	$twnMov.interpolate_property(target,\"rect_global_position:x\",target.rect_global_position.x,1.0*OS.window_size.x,1.0,Tween.TRANS_BACK,Tween.EASE_IN,2.0)
@@ -21,6 +22,8 @@ func _ready():
 	$twnMov.connect(\"tween_completed\",self,\"loopEvo\")
 	if global.level<6:
 		global.firstEvolution()
+	else:
+		global.secondEvolution()
 
 func loopEvo(h,m):
 	if counter<=25:
@@ -89,7 +92,7 @@ size_flags_vertical = 3
 custom_styles/panel = ExtResource( 2 )
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/opponentPanel"]
-modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+modulate = Color( 0.756863, 0.756863, 0.756863, 1 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 686.0

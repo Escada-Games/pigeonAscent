@@ -31,15 +31,15 @@ func _ready():
 	if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
 	elif level in [2]:addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
 	elif level in [3,4,5]:
-		addEnemies([createEnemy(level-1),createEnemy(level),createEnemy(level)])
+		addEnemies([createEnemy(level-1,2),createEnemy(level,2),createEnemy(level)])
 	elif level in [6,7]:
-		addEnemies([createEnemy(level),createEnemy(level),createEnemy(level+1)])
+		addEnemies([createEnemy(level,2),createEnemy(level,2),createEnemy(level+1,2)])
 	elif level in [8]:
-		addEnemies([createEnemy(level),createEnemy(level+1),createEnemy(level+1)])
+		addEnemies([createEnemy(level,3),createEnemy(level+1,2),createEnemy(level+1,1)])
 	elif level in [9]:
-		addEnemies([createEnemy(level+1),createEnemy(level+1),createEnemy(level+1)])
+		addEnemies([createEnemy(level+1,2),createEnemy(level+1,2),createEnemy(level+1,1)])
 	elif level in [10]:
-		pass
+		addEnemies([createEnemy(level,0,true)])
 
 func selectName():
 	var name=global.listOfNames[randi()%global.listOfNames.size()]
@@ -56,7 +56,7 @@ func distributePoints(obj,numberOfPoints,addedPoints=[0,0,0]):
 	obj.enemyDef=attributes[1]+addedPoints[1]
 	obj.enemySpd=attributes[2]+addedPoints[2]
 
-func createEnemy(level,handicap=0):
+func createEnemy(level,handicap=0,boss=false):
 	randomize()
 	var i=enemyPanel.instance()
 	i.enemyName=selectName()
@@ -103,9 +103,10 @@ func createEnemy(level,handicap=0):
 				i.enemyClass=global.c_knight
 			elif focus==2:#Agi
 				i.enemyClass=global.c_winged
-	elif level in [10]:
+	elif level in [10] and boss:
 		points+=3
-		addedPoints=[2,2,2]
+		addedPoints+=[2,2,2]
+		i.enemyName=\"Pigod\"
 		i.enemyLevel=\"???\"
 		i.enemyClass=global.c_godPigeon
 	distributePoints(i,points,addedPoints)

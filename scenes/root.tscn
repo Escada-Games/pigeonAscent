@@ -318,7 +318,10 @@ var items=[
 ]
 func _ready():
 	for item in items:
-		add_child(item.instance())
+		var i=item.instance()
+		i.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
+		i.clickable=true
+		add_child(i)
 	global.currentItem=get_children()[0]
 "
 

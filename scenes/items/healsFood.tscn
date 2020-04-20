@@ -33,7 +33,7 @@ func _ready():
 	connect(\"mouse_exited\",self,\"twnShrink\")
 	connect(\"mouse_entered\",global,\"createHoverSfx\")
 #	$hboxItem/btn.connect(\"pressed\",self,\"buy\")
-	
+
 func updateDescription():
 	global.currentUpgrade=self
 	global.shopDescription.text=self.itemDescription
@@ -83,6 +83,7 @@ script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+clickable = true
 
 [node name="twnScale" type="Tween" parent="."]
 

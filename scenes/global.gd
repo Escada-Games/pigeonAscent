@@ -26,7 +26,7 @@ var pigeonClassesAndSprites={
 		"portrait":"res://resource/portraits/Fridgeon_Port.png"
 	},
 	"godPigeon":
-		{"sprite":"res://resource/sprites/God_Pigeon.png",
+		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
 		"portrait":"res://resource/portraits/God_Pigeon_Port.png"
 	},
 	"hatoshi":
@@ -166,8 +166,8 @@ var player={
 	"pointsLeft":3,
 	"strength":50,"extraStrength":0,
 	"defense":1,"extraDefense":0,
-	"speed":1,"extraSpeed":0,
-	"class":self.c_normal
+	"speed":30,"extraSpeed":0,
+	"class":self.c_winged
 }
 var hasWings=false
 var hasIce=false
@@ -184,7 +184,7 @@ var enemy={
 	"class":"normal"
 }
 
-var level=3
+var level=10
 
 var scaling={
 	"strength":1.2,
