@@ -3,15 +3,17 @@ extends Node
 var player={
 	"name":"Pombo",
 	"gold":300,
-	"hp":10,"maxHp":10,
-	"energy":10,"maxEnergy":10,
+	"hp":10,"maxHp":20,
+	"energy":10,"maxEnergy":20,
 	"pointsLeft":30,
-	"strength":1,
-	"defense":1,
-	"speed":1.0,
+	"strength":1,"extraStrength":0,
+	"defense":1,"extraDefense":0,
+	"speed":1.0,"extraSpeed":0,
 	"class":"normal"
 }
-
+var hasWings=false
+var hasIce=false
+var hasSword=false
 var enemy={
 	"name":"Pombo",
 	"gold":100,
@@ -33,6 +35,7 @@ var scaling={
 	"hp":5,
 	"food":2
 }
+var currentItem
 var pigeonClassesAndSprites={
 	"baker":
 		{"sprite":"res://resource/sprites/Baker_Pigeon.png",

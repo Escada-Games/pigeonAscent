@@ -72,7 +72,7 @@ func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.enemy.maxHp
 	self.value=global.enemy.hp
-	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+#	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 "
 
 [sub_resource type="GDScript" id=6]
@@ -89,7 +89,7 @@ func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.enemy.maxEnergy
 	self.value=global.enemy.energy
-	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+#	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 "
 
 [sub_resource type="GDScript" id=7]

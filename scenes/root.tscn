@@ -1,8 +1,7 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/Pigeon_Basic.png" type="Texture" id=2]
-[ext_resource path="res://scenes/itemModel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://resource/Stats_Buttom_13X10_Frame2.png" type="Texture" id=4]
 [ext_resource path="res://resource/Stats_Buttom_13X10_Frame1.png" type="Texture" id=5]
 [ext_resource path="res://resource/Shop_Panel.png" type="Texture" id=6]
@@ -32,7 +31,7 @@ outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 22 )
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=2]
 script/source = "extends RichTextLabel
 var waveAmp=50
 const maxWaveAmp=50
@@ -57,24 +56,24 @@ func _process(delta):
 			self.bbcode_text=stringNormal
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.pointsLeft)
 "
 
-[sub_resource type="StyleBoxEmpty" id=3]
+[sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.strength)"
 
-[sub_resource type="StyleBoxEmpty" id=5]
+[sub_resource type="StyleBoxEmpty" id=6]
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=7]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -109,17 +108,17 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="StyleBoxEmpty" id=7]
+[sub_resource type="StyleBoxEmpty" id=8]
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.defense)"
 
-[sub_resource type="StyleBoxEmpty" id=9]
+[sub_resource type="StyleBoxEmpty" id=10]
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=11]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -154,13 +153,13 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.speed)"
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=13]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -196,7 +195,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=14]
 script/source = "extends TextureButton
 
 func _ready():
@@ -205,45 +204,51 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=15]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=\"Gold: \"+String(global.player.gold)
 "
 
-[sub_resource type="StyleBoxTexture" id=15]
+[sub_resource type="StyleBoxTexture" id=16]
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 83, 20 )
 
-[sub_resource type="GDScript" id=21]
+[sub_resource type="GDScript" id=17]
 script/source = "extends VBoxContainer
 
 var items=[
-	preload(\"res://scenes/items/healsHp.tscn\")
+	preload(\"res://scenes/items/healsHp.tscn\"),
+	preload(\"res://scenes/items/healsFood.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndStr.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndDef.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndSpd.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndAllBoosts.tscn\"),
 ]
 func _ready():
 	for item in items:
 		add_child(item.instance())
+	global.currentItem=get_children()[0]
 "
 
-[sub_resource type="StyleBoxTexture" id=16]
+[sub_resource type="StyleBoxTexture" id=18]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 82, 49 )
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=19]
 script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 "
 
-[sub_resource type="GDScript" id=18]
+[sub_resource type="GDScript" id=20]
 script/source = "extends Label
 
 func _ready():pass#set_process(true)
 #func _process(delta):self.text=String(global.currentUpgrade.itemPrice)
 "
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=21]
 script/source = "extends TextureButton
 
 func _ready():
@@ -251,8 +256,7 @@ func _ready():
 	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 func buy():
-	if global.player.gold>=global.currentUpgrade.itemPrice:
-		global.player.gold-=global.currentUpgrade.itemPrice
+	global.currentItem.buy()
 		#Effect here
 "
 
@@ -326,7 +330,7 @@ left[/wave][/center]"
 text = "Stat points
 left"
 scroll_active = false
-script = SubResource( 20 )
+script = SubResource( 2 )
 
 [node name="twnBB" type="Tween" parent="hbox/vboxL/perks/vbox/statPointsBox/richtextStatPoints"]
 
@@ -348,7 +352,7 @@ custom_fonts/font = ExtResource( 21 )
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="invSep" type="HSeparator" parent="hbox/vboxL/perks/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -393,7 +397,7 @@ margin_right = 75.0
 margin_bottom = 26.0
 size_flags_horizontal = 4
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 4 )
 
 [node name="points" type="Label" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats/intContainer"]
 margin_right = 18.0
@@ -404,7 +408,7 @@ custom_fonts/font = ExtResource( 21 )
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 4 )
+script = SubResource( 5 )
 
 [node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats"]
 margin_top = 30.0
@@ -412,7 +416,7 @@ margin_right = 132.0
 margin_bottom = 43.0
 size_flags_horizontal = 7
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 6 )
 
 [node name="btn" type="TextureButton" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/vboxStats/btnContainer"]
 margin_right = 132.0
@@ -426,7 +430,7 @@ texture_hover = ExtResource( 8 )
 texture_disabled = ExtResource( 4 )
 expand = true
 stretch_mode = 5
-script = SubResource( 6 )
+script = SubResource( 7 )
 
 [node name="defPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
 margin_top = 129.0
@@ -463,7 +467,7 @@ margin_right = 132.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="points" type="Label" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats/intContainer"]
 margin_right = 132.0
@@ -474,7 +478,7 @@ custom_fonts/font = ExtResource( 21 )
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 9 )
 
 [node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats"]
 margin_top = 30.0
@@ -482,7 +486,7 @@ margin_right = 132.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 10 )
 
 [node name="btn" type="TextureButton" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats/btnContainer"]
 margin_right = 132.0
@@ -494,7 +498,7 @@ texture_normal = ExtResource( 5 )
 texture_disabled = ExtResource( 4 )
 expand = true
 stretch_mode = 5
-script = SubResource( 10 )
+script = SubResource( 11 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -534,7 +538,7 @@ margin_right = 132.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="points" type="Label" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats/intContainer"]
 margin_right = 132.0
@@ -545,7 +549,7 @@ custom_fonts/font = ExtResource( 21 )
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 11 )
+script = SubResource( 12 )
 
 [node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats"]
 margin_top = 30.0
@@ -553,7 +557,7 @@ margin_right = 132.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 10 )
 
 [node name="btn" type="TextureButton" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats/btnContainer"]
 margin_right = 132.0
@@ -565,7 +569,7 @@ texture_normal = ExtResource( 5 )
 texture_disabled = ExtResource( 4 )
 expand = true
 stretch_mode = 5
-script = SubResource( 12 )
+script = SubResource( 13 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -601,7 +605,7 @@ texture_pressed = ExtResource( 15 )
 texture_hover = ExtResource( 17 )
 expand = true
 stretch_mode = 5
-script = SubResource( 13 )
+script = SubResource( 14 )
 
 [node name="progressPanel" type="PanelContainer" parent="hbox/vboxC/fightContainer/vbox"]
 visible = false
@@ -667,7 +671,7 @@ margin_bottom = 47.0
 custom_fonts/font = ExtResource( 7 )
 text = "0123456789"
 align = 1
-script = SubResource( 14 )
+script = SubResource( 15 )
 
 [node name="vboxR" type="VBoxContainer" parent="hbox"]
 margin_left = 600.0
@@ -737,7 +741,7 @@ size_flags_stretch_ratio = 8.0
 [node name="panelContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop"]
 margin_right = 282.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 15 )
+custom_styles/panel = SubResource( 16 )
 
 [node name="marginContainer" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 282.0
@@ -782,11 +786,7 @@ margin_right = 267.0
 margin_bottom = 334.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 21 )
-
-[node name="itemModel" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/marginCtn/vboxShop" instance=ExtResource( 3 )]
-margin_right = 252.0
-margin_bottom = 64.0
+script = SubResource( 17 )
 
 [node name="descriptionContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox"]
 margin_top = 392.0
@@ -794,8 +794,8 @@ margin_right = 282.0
 margin_bottom = 490.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 16 )
-script = SubResource( 17 )
+custom_styles/panel = SubResource( 18 )
+script = SubResource( 19 )
 
 [node name="marginContainer" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer"]
 margin_right = 282.0
@@ -838,7 +838,7 @@ size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 19 )
 text = "-"
 align = 1
-script = SubResource( 18 )
+script = SubResource( 20 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -847,6 +847,7 @@ __meta__ = {
 margin_left = 155.0
 margin_right = 262.0
 margin_bottom = 20.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.4
 texture_normal = ExtResource( 12 )
@@ -854,4 +855,4 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 10 )
 texture_disabled = ExtResource( 13 )
 expand = true
-script = SubResource( 19 )
+script = SubResource( 21 )
