@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=2]
@@ -28,8 +28,10 @@
 [ext_resource path="res://resource/fonts/m6x11-32SpacedAlt.tres" type="DynamicFont" id=26]
 [ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=27]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=28]
+[ext_resource path="res://resource/Panel_Stat_Atk.png" type="Texture" id=29]
+[ext_resource path="res://resource/Panel_Stat_Def.png" type="Texture" id=30]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 script/source = "extends RichTextLabel
 var waveAmp=50
 const maxWaveAmp=50
@@ -54,7 +56,7 @@ func _process(delta):
 			self.bbcode_text=stringNormal
 "
 
-[sub_resource type="StyleBoxEmpty" id=2]
+[sub_resource type="StyleBoxEmpty" id=23]
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Label
@@ -63,7 +65,16 @@ func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.pointsLeft)
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="StyleBoxTexture" id=28]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 29 )
+region_rect = Rect2( 0, 0, 86, 35 )
+expand_margin_top = 15.0
+
+[sub_resource type="GDScript" id=24]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -75,9 +86,9 @@ func _process(delta):
 #		self.text=\"Strength: \"
 "
 
-[sub_resource type="StyleBoxEmpty" id=5]
+[sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -86,9 +97,9 @@ func _process(delta):
 	if global.player.extraStrength!=0: self.text+= \" + \" + String(global.player.extraStrength)
 "
 
-[sub_resource type="StyleBoxEmpty" id=7]
+[sub_resource type="StyleBoxEmpty" id=6]
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=7]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -123,7 +134,16 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="StyleBoxTexture" id=29]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 86, 35 )
+expand_margin_top = 15.0
+
+[sub_resource type="GDScript" id=25]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -135,17 +155,17 @@ func _process(delta):
 		self.text=\"Defense: \"
 "
 
-[sub_resource type="StyleBoxEmpty" id=10]
+[sub_resource type="StyleBoxEmpty" id=8]
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.defense)"
 
-[sub_resource type="StyleBoxEmpty" id=12]
+[sub_resource type="StyleBoxEmpty" id=10]
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=11]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -180,7 +200,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=26]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -192,13 +212,13 @@ func _process(delta):
 		self.text=\"Speed: \"
 "
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.speed)"
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=13]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -234,7 +254,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=14]
 script/source = "extends TextureButton
 
 func _ready():
@@ -243,7 +263,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=27]
 bg_color = Color( 0.152941, 0.152941, 0.211765, 1 )
 border_width_left = 10
 border_width_top = 10
@@ -255,25 +275,25 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=15]
 script/source = "extends TextureRect
 
 func _ready():set_process(true)
 func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
 "
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=16]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=\"Gold: \"+String(global.player.gold)
 "
 
-[sub_resource type="StyleBoxTexture" id=21]
+[sub_resource type="StyleBoxTexture" id=17]
 texture = ExtResource( 17 )
 region_rect = Rect2( 0, 0, 83, 20 )
 
-[sub_resource type="GDScript" id=22]
+[sub_resource type="GDScript" id=18]
 script/source = "extends VBoxContainer
 
 var items=[
@@ -290,23 +310,23 @@ func _ready():
 	global.currentItem=get_children()[0]
 "
 
-[sub_resource type="StyleBoxTexture" id=23]
+[sub_resource type="StyleBoxTexture" id=19]
 texture = ExtResource( 18 )
 region_rect = Rect2( 0, 0, 82, 49 )
 
-[sub_resource type="GDScript" id=24]
+[sub_resource type="GDScript" id=20]
 script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 "
 
-[sub_resource type="GDScript" id=25]
+[sub_resource type="GDScript" id=21]
 script/source = "extends Label
 
 func _ready():pass#set_process(true)
 #func _process(delta):self.text=String(global.currentUpgrade.itemPrice)
 "
 
-[sub_resource type="GDScript" id=26]
+[sub_resource type="GDScript" id=22]
 script/source = "extends TextureButton
 
 func _ready():
@@ -340,56 +360,80 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hbox" type="HBoxContainer" parent="."]
+[node name="marginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="vboxL" type="VBoxContainer" parent="hbox"]
-margin_right = 296.0
-margin_bottom = 504.0
+[node name="hbox" type="HBoxContainer" parent="marginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 891.0
+margin_bottom = 499.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vboxL" type="VBoxContainer" parent="marginContainer/hbox"]
+margin_right = 292.0
+margin_bottom = 494.0
 size_flags_horizontal = 3
 
-[node name="nameStats" parent="hbox/vboxL" instance=ExtResource( 1 )]
-margin_right = 296.0
+[node name="nameStats" parent="marginContainer/hbox/vboxL" instance=ExtResource( 1 )]
+margin_right = 292.0
 margin_bottom = 181.0
 compact = true
 
-[node name="perks" type="PanelContainer" parent="hbox/vboxL"]
+[node name="perks" type="PanelContainer" parent="marginContainer/hbox/vboxL"]
 margin_top = 185.0
-margin_right = 296.0
-margin_bottom = 504.0
+margin_right = 292.0
+margin_bottom = 494.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 custom_styles/panel = ExtResource( 28 )
 
-[node name="textureRectBG" type="TextureRect" parent="hbox/vboxL/perks"]
+[node name="textureRectBG" type="TextureRect" parent="marginContainer/hbox/vboxL/perks"]
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 286.0
-margin_bottom = 309.0
+margin_right = 282.0
+margin_bottom = 299.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
 
-[node name="vbox" type="VBoxContainer" parent="hbox/vboxL/perks"]
+[node name="vbox" type="VBoxContainer" parent="marginContainer/hbox/vboxL/perks"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 286.0
-margin_bottom = 309.0
+margin_right = 282.0
+margin_bottom = 299.0
 
-[node name="statPointsBox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox"]
-margin_right = 276.0
-margin_bottom = 39.0
+[node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxL/perks/vbox"]
+margin_right = 272.0
+margin_bottom = 66.0
+custom_constants/margin_right = 0
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="statPointsBox" type="HBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/marginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 272.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="richtextStatPoints" type="RichTextLabel" parent="hbox/vboxL/perks/vbox/statPointsBox"]
-margin_right = 136.0
-margin_bottom = 39.0
+[node name="richtextStatPoints" type="RichTextLabel" parent="marginContainer/hbox/vboxL/perks/vbox/marginContainer/statPointsBox"]
+margin_right = 124.0
+margin_bottom = 26.0
 rect_clip_content = false
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -404,21 +448,21 @@ left[/wave][/center]"
 text = "Stat points
 left"
 scroll_active = false
-script = SubResource( 1 )
+script = SubResource( 2 )
 
-[node name="twnBB" type="Tween" parent="hbox/vboxL/perks/vbox/statPointsBox/richtextStatPoints"]
+[node name="twnBB" type="Tween" parent="marginContainer/hbox/vboxL/perks/vbox/marginContainer/statPointsBox/richtextStatPoints"]
 
-[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/statPointsBox"]
-margin_left = 140.0
-margin_right = 276.0
-margin_bottom = 39.0
+[node name="intContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/marginContainer/statPointsBox"]
+margin_left = 128.0
+margin_right = 252.0
+margin_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 23 )
 
-[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/statPointsBox/intContainer"]
-margin_right = 136.0
-margin_bottom = 39.0
+[node name="points" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/marginContainer/statPointsBox/intContainer"]
+margin_right = 124.0
+margin_bottom = 26.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 4 )
 text = "0"
@@ -426,28 +470,29 @@ align = 1
 valign = 1
 script = SubResource( 3 )
 
-[node name="invSep" type="HSeparator" parent="hbox/vboxL/perks/vbox"]
+[node name="invSep" type="HSeparator" parent="marginContainer/hbox/vboxL/perks/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 43.0
-margin_right = 276.0
-margin_bottom = 53.0
+margin_top = 70.0
+margin_right = 272.0
+margin_bottom = 80.0
 custom_constants/separation = 10
 
-[node name="strPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
-margin_top = 57.0
-margin_right = 276.0
-margin_bottom = 135.0
+[node name="strPanel" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox"]
+margin_top = 84.0
+margin_right = 272.0
+margin_bottom = 149.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = ExtResource( 25 )
+custom_styles/panel = SubResource( 28 )
 
-[node name="strHbox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox/strPanel"]
+[node name="strHbox" type="HBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel"]
 margin_left = 20.0
-margin_right = 256.0
-margin_bottom = 78.0
+margin_right = 252.0
+margin_bottom = 65.0
 alignment = 1
 
-[node name="strLabel" type="Label" parent="hbox/vboxL/perks/vbox/strPanel/strHbox"]
+[node name="strLabel" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel/strHbox"]
+visible = false
 margin_top = 25.0
 margin_right = 73.0
 margin_bottom = 53.0
@@ -461,20 +506,20 @@ text = "STR: "
 align = 1
 valign = 1
 autowrap = true
-script = SubResource( 4 )
+script = SubResource( 24 )
 
-[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox"]
-margin_left = 77.0
-margin_right = 182.0
-margin_bottom = 78.0
+[node name="intContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel/strHbox"]
+margin_left = 36.0
+margin_right = 141.0
+margin_bottom = 65.0
 size_flags_horizontal = 4
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 4 )
 
-[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/intContainer"]
-margin_top = 18.0
+[node name="points" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel/strHbox/intContainer"]
+margin_top = 11.0
 margin_right = 105.0
-margin_bottom = 60.0
+margin_bottom = 53.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 27 )
@@ -485,18 +530,18 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 6 )
+script = SubResource( 5 )
 
-[node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox"]
-margin_left = 186.0
-margin_right = 236.0
-margin_bottom = 78.0
+[node name="btnContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel/strHbox"]
+margin_left = 145.0
+margin_right = 195.0
+margin_bottom = 65.0
 rect_min_size = Vector2( 50, 0 )
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 6 )
 
-[node name="btn" type="TextureButton" parent="hbox/vboxL/perks/vbox/strPanel/strHbox/btnContainer"]
+[node name="btn" type="TextureButton" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel/strHbox/btnContainer"]
 margin_right = 50.0
-margin_bottom = 78.0
+margin_bottom = 65.0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
@@ -504,29 +549,31 @@ texture_hover = ExtResource( 8 )
 texture_disabled = ExtResource( 9 )
 expand = true
 stretch_mode = 5
-script = SubResource( 8 )
+script = SubResource( 7 )
 
-[node name="vboxStats" type="VBoxContainer" parent="hbox/vboxL/perks/vbox/strPanel/strHbox"]
+[node name="vboxStats" type="VBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/strPanel/strHbox"]
 visible = false
 margin_left = 232.0
 margin_right = 232.0
 margin_bottom = 75.0
 alignment = 1
 
-[node name="defPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
-margin_top = 139.0
-margin_right = 276.0
-margin_bottom = 217.0
+[node name="defPanel" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox"]
+margin_top = 153.0
+margin_right = 272.0
+margin_bottom = 218.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = ExtResource( 25 )
+custom_styles/panel = SubResource( 29 )
 
-[node name="defHbox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox/defPanel"]
+[node name="defHbox" type="HBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel"]
 margin_left = 20.0
-margin_right = 256.0
-margin_bottom = 78.0
+margin_right = 252.0
+margin_bottom = 65.0
+alignment = 1
 
-[node name="defLabel" type="Label" parent="hbox/vboxL/perks/vbox/defPanel/defHbox"]
+[node name="defLabel" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel/defHbox"]
+visible = false
 margin_top = 25.0
 margin_right = 73.0
 margin_bottom = 53.0
@@ -540,20 +587,20 @@ text = "DEF: "
 align = 1
 valign = 1
 autowrap = true
-script = SubResource( 9 )
+script = SubResource( 25 )
 
-[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox"]
-margin_left = 77.0
-margin_right = 182.0
-margin_bottom = 78.0
+[node name="intContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel/defHbox"]
+margin_left = 36.0
+margin_right = 141.0
+margin_bottom = 65.0
 size_flags_horizontal = 0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 8 )
 
-[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/intContainer"]
-margin_top = 18.0
+[node name="points" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel/defHbox/intContainer"]
+margin_top = 11.0
 margin_right = 105.0
-margin_bottom = 60.0
+margin_bottom = 53.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 27 )
@@ -564,24 +611,24 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 11 )
+script = SubResource( 9 )
 
-[node name="vboxStats" type="VBoxContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox"]
-margin_left = 186.0
-margin_right = 236.0
-margin_bottom = 78.0
+[node name="vboxStats" type="VBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel/defHbox"]
+margin_left = 145.0
+margin_right = 195.0
+margin_bottom = 65.0
 alignment = 1
 
-[node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats"]
+[node name="btnContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats"]
 margin_right = 50.0
-margin_bottom = 78.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 12 )
+custom_styles/panel = SubResource( 10 )
 
-[node name="btn" type="TextureButton" parent="hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats/btnContainer"]
+[node name="btn" type="TextureButton" parent="marginContainer/hbox/vboxL/perks/vbox/defPanel/defHbox/vboxStats/btnContainer"]
 margin_right = 50.0
-margin_bottom = 78.0
+margin_bottom = 65.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
@@ -590,25 +637,27 @@ texture_normal = ExtResource( 6 )
 texture_disabled = ExtResource( 9 )
 expand = true
 stretch_mode = 5
-script = SubResource( 13 )
+script = SubResource( 11 )
 __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="spdPanel" type="PanelContainer" parent="hbox/vboxL/perks/vbox"]
-margin_top = 221.0
-margin_right = 276.0
-margin_bottom = 299.0
+[node name="spdPanel" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox"]
+margin_top = 222.0
+margin_right = 272.0
+margin_bottom = 289.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = ExtResource( 25 )
 
-[node name="spdHbox" type="HBoxContainer" parent="hbox/vboxL/perks/vbox/spdPanel"]
+[node name="spdHbox" type="HBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel"]
 margin_left = 20.0
-margin_right = 256.0
-margin_bottom = 78.0
+margin_right = 252.0
+margin_bottom = 67.0
+alignment = 1
 
-[node name="spdLabel" type="Label" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
+[node name="spdLabel" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
+visible = false
 margin_top = 25.0
 margin_right = 73.0
 margin_bottom = 53.0
@@ -622,19 +671,19 @@ text = "SPD: "
 align = 1
 valign = 1
 autowrap = true
-script = SubResource( 14 )
+script = SubResource( 26 )
 
-[node name="intContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
-margin_left = 77.0
-margin_right = 182.0
-margin_bottom = 78.0
+[node name="intContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
+margin_left = 36.0
+margin_right = 141.0
+margin_bottom = 67.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 8 )
 
-[node name="points" type="Label" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/intContainer"]
-margin_top = 18.0
+[node name="points" type="Label" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel/spdHbox/intContainer"]
+margin_top = 12.0
 margin_right = 105.0
-margin_bottom = 60.0
+margin_bottom = 54.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 27 )
@@ -645,24 +694,24 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 15 )
+script = SubResource( 12 )
 
-[node name="vboxStats" type="VBoxContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
-margin_left = 186.0
-margin_right = 236.0
-margin_bottom = 78.0
+[node name="vboxStats" type="VBoxContainer" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel/spdHbox"]
+margin_left = 145.0
+margin_right = 195.0
+margin_bottom = 67.0
 alignment = 1
 
-[node name="btnContainer" type="PanelContainer" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats"]
+[node name="btnContainer" type="PanelContainer" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats"]
 margin_right = 50.0
-margin_bottom = 78.0
+margin_bottom = 67.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 12 )
+custom_styles/panel = SubResource( 10 )
 
-[node name="btn" type="TextureButton" parent="hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats/btnContainer"]
+[node name="btn" type="TextureButton" parent="marginContainer/hbox/vboxL/perks/vbox/spdPanel/spdHbox/vboxStats/btnContainer"]
 margin_right = 50.0
-margin_bottom = 78.0
+margin_bottom = 67.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
@@ -671,34 +720,34 @@ texture_normal = ExtResource( 6 )
 texture_disabled = ExtResource( 9 )
 expand = true
 stretch_mode = 5
-script = SubResource( 16 )
+script = SubResource( 13 )
 __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="vboxC" type="VBoxContainer" parent="hbox"]
-margin_left = 300.0
-margin_right = 596.0
-margin_bottom = 504.0
+[node name="vboxC" type="VBoxContainer" parent="marginContainer/hbox"]
+margin_left = 296.0
+margin_right = 588.0
+margin_bottom = 494.0
 size_flags_horizontal = 3
 
-[node name="fightContainer" type="PanelContainer" parent="hbox/vboxC"]
-margin_right = 296.0
-margin_bottom = 82.0
+[node name="fightContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
+margin_right = 292.0
+margin_bottom = 81.0
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 28 )
 
-[node name="vbox" type="VBoxContainer" parent="hbox/vboxC/fightContainer"]
+[node name="vbox" type="VBoxContainer" parent="marginContainer/hbox/vboxC/fightContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 286.0
-margin_bottom = 72.0
+margin_right = 282.0
+margin_bottom = 71.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="fightBtn" type="TextureButton" parent="hbox/vboxC/fightContainer/vbox"]
-margin_right = 276.0
-margin_bottom = 62.0
+[node name="fightBtn" type="TextureButton" parent="marginContainer/hbox/vboxC/fightContainer/vbox"]
+margin_right = 272.0
+margin_bottom = 61.0
 rect_min_size = Vector2( 90, 30 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
@@ -708,27 +757,27 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 12 )
 expand = true
 stretch_mode = 5
-script = SubResource( 17 )
+script = SubResource( 14 )
 
-[node name="progressPanel" type="PanelContainer" parent="hbox/vboxC/fightContainer/vbox"]
+[node name="progressPanel" type="PanelContainer" parent="marginContainer/hbox/vboxC/fightContainer/vbox"]
 visible = false
 margin_top = 34.0
 margin_right = 282.0
 margin_bottom = 48.0
 
-[node name="playerContainer" type="PanelContainer" parent="hbox/vboxC"]
-margin_top = 86.0
-margin_right = 296.0
-margin_bottom = 416.0
+[node name="playerContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
+margin_top = 85.0
+margin_right = 292.0
+margin_bottom = 409.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
-custom_styles/panel = SubResource( 18 )
+custom_styles/panel = SubResource( 27 )
 
-[node name="textureRectBG" type="TextureRect" parent="hbox/vboxC/playerContainer"]
+[node name="textureRectBG" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 286.0
-margin_bottom = 320.0
+margin_right = 282.0
+margin_bottom = 314.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
@@ -736,131 +785,131 @@ texture = ExtResource( 13 )
 expand = true
 stretch_mode = 6
 
-[node name="marginContainer" type="MarginContainer" parent="hbox/vboxC/playerContainer"]
+[node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 286.0
-margin_bottom = 320.0
+margin_right = 282.0
+margin_bottom = 314.0
 custom_constants/margin_top = 150
 custom_constants/margin_bottom = 20
 
-[node name="textureRect" type="TextureRect" parent="hbox/vboxC/playerContainer/marginContainer"]
+[node name="textureRect" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer/marginContainer"]
 margin_top = 150.0
-margin_right = 276.0
-margin_bottom = 290.0
+margin_right = 272.0
+margin_bottom = 284.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = ExtResource( 14 )
 expand = true
 stretch_mode = 6
-script = SubResource( 19 )
+script = SubResource( 15 )
 
-[node name="goldContainer" type="PanelContainer" parent="hbox/vboxC"]
-margin_top = 420.0
-margin_right = 296.0
-margin_bottom = 504.0
+[node name="goldContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
+margin_top = 413.0
+margin_right = 292.0
+margin_bottom = 494.0
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 28 )
 
-[node name="hbox" type="HBoxContainer" parent="hbox/vboxC/goldContainer"]
-margin_left = 74.0
+[node name="hbox" type="HBoxContainer" parent="marginContainer/hbox/vboxC/goldContainer"]
+margin_left = 72.0
 margin_top = 10.0
-margin_right = 221.0
-margin_bottom = 74.0
+margin_right = 219.0
+margin_bottom = 71.0
 size_flags_horizontal = 4
 
-[node name="valueLabel" type="Label" parent="hbox/vboxC/goldContainer/hbox"]
-margin_top = 19.0
+[node name="valueLabel" type="Label" parent="marginContainer/hbox/vboxC/goldContainer/hbox"]
+margin_top = 18.0
 margin_right = 147.0
-margin_bottom = 44.0
+margin_bottom = 43.0
 custom_fonts/font = ExtResource( 5 )
 text = "0123456789"
 align = 1
-script = SubResource( 20 )
+script = SubResource( 16 )
 
-[node name="vboxR" type="VBoxContainer" parent="hbox"]
-margin_left = 600.0
-margin_right = 896.0
-margin_bottom = 504.0
+[node name="vboxR" type="VBoxContainer" parent="marginContainer/hbox"]
+margin_left = 592.0
+margin_right = 886.0
+margin_bottom = 494.0
 size_flags_horizontal = 3
 
-[node name="panelRContainer" type="PanelContainer" parent="hbox/vboxR"]
-margin_right = 296.0
-margin_bottom = 504.0
+[node name="panelRContainer" type="PanelContainer" parent="marginContainer/hbox/vboxR"]
+margin_right = 294.0
+margin_bottom = 494.0
 size_flags_vertical = 3
 
-[node name="textureRect" type="TextureRect" parent="hbox/vboxR/panelRContainer"]
+[node name="textureRect" type="TextureRect" parent="marginContainer/hbox/vboxR/panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 289.0
-margin_bottom = 497.0
+margin_right = 287.0
+margin_bottom = 487.0
 texture = ExtResource( 15 )
 expand = true
 stretch_mode = 2
 
-[node name="marginBox" type="MarginContainer" parent="hbox/vboxR/panelRContainer"]
+[node name="marginBox" type="MarginContainer" parent="marginContainer/hbox/vboxR/panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 289.0
-margin_bottom = 497.0
+margin_right = 287.0
+margin_bottom = 487.0
 custom_constants/margin_top = 10
 custom_constants/margin_bottom = 10
 
-[node name="hboxChain" type="HBoxContainer" parent="hbox/vboxR/panelRContainer/marginBox"]
+[node name="hboxChain" type="HBoxContainer" parent="marginContainer/hbox/vboxR/panelRContainer/marginBox"]
 margin_top = 10.0
-margin_right = 282.0
-margin_bottom = 480.0
+margin_right = 280.0
+margin_bottom = 470.0
 alignment = 1
 
-[node name="1" type="TextureRect" parent="hbox/vboxR/panelRContainer/marginBox/hboxChain"]
+[node name="1" type="TextureRect" parent="marginContainer/hbox/vboxR/panelRContainer/marginBox/hboxChain"]
 margin_left = 58.0
 margin_right = 80.0
-margin_bottom = 470.0
+margin_bottom = 460.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 16 )
 stretch_mode = 2
 
-[node name="2" type="TextureRect" parent="hbox/vboxR/panelRContainer/marginBox/hboxChain"]
-margin_left = 201.0
-margin_right = 223.0
-margin_bottom = 470.0
+[node name="2" type="TextureRect" parent="marginContainer/hbox/vboxR/panelRContainer/marginBox/hboxChain"]
+margin_left = 200.0
+margin_right = 222.0
+margin_bottom = 460.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 16 )
 stretch_mode = 2
 
-[node name="vbox" type="VBoxContainer" parent="hbox/vboxR/panelRContainer"]
+[node name="vbox" type="VBoxContainer" parent="marginContainer/hbox/vboxR/panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 289.0
-margin_bottom = 497.0
+margin_right = 287.0
+margin_bottom = 487.0
 size_flags_vertical = 3
 
-[node name="vboxShop" type="VBoxContainer" parent="hbox/vboxR/panelRContainer/vbox"]
-margin_right = 282.0
-margin_bottom = 388.0
+[node name="vboxShop" type="VBoxContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox"]
+margin_right = 280.0
+margin_bottom = 380.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
-[node name="panelContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop"]
-margin_right = 282.0
+[node name="panelContainer" type="PanelContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/vboxShop"]
+margin_right = 280.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 21 )
+custom_styles/panel = SubResource( 17 )
 
-[node name="marginContainer" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelContainer"]
-margin_right = 282.0
+[node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/vboxShop/panelContainer"]
+margin_right = 280.0
 margin_bottom = 45.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
-[node name="shopLabel" type="Label" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelContainer/marginContainer"]
+[node name="shopLabel" type="Label" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/vboxShop/panelContainer/marginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 272.0
+margin_right = 270.0
 margin_bottom = 35.0
 custom_fonts/font = ExtResource( 5 )
 text = "Shop!"
@@ -869,15 +918,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="panelShop" type="ScrollContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop"]
+[node name="panelShop" type="ScrollContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/vboxShop"]
 margin_top = 49.0
-margin_right = 282.0
-margin_bottom = 388.0
+margin_right = 280.0
+margin_bottom = 380.0
 size_flags_vertical = 3
 
-[node name="marginCtn" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop"]
-margin_right = 282.0
-margin_bottom = 339.0
+[node name="marginCtn" type="MarginContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop"]
+margin_right = 280.0
+margin_bottom = 331.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 15
@@ -885,41 +934,41 @@ custom_constants/margin_top = 5
 custom_constants/margin_left = 15
 custom_constants/margin_bottom = 5
 
-[node name="vboxShop" type="VBoxContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/marginCtn"]
+[node name="vboxShop" type="VBoxContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/vboxShop/panelShop/marginCtn"]
 margin_left = 15.0
 margin_top = 5.0
-margin_right = 267.0
-margin_bottom = 334.0
+margin_right = 265.0
+margin_bottom = 326.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 22 )
+script = SubResource( 18 )
 
-[node name="descriptionContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox"]
-margin_top = 392.0
-margin_right = 282.0
-margin_bottom = 490.0
+[node name="descriptionContainer" type="PanelContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox"]
+margin_top = 384.0
+margin_right = 280.0
+margin_bottom = 480.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 23 )
-script = SubResource( 24 )
+custom_styles/panel = SubResource( 19 )
+script = SubResource( 20 )
 
-[node name="marginContainer" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer"]
-margin_right = 282.0
-margin_bottom = 98.0
+[node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer"]
+margin_right = 280.0
+margin_bottom = 96.0
 custom_constants/margin_right = 7
 custom_constants/margin_top = 10
 custom_constants/margin_left = 13
 custom_constants/margin_bottom = 4
 
-[node name="vBoxContainer" type="VBoxContainer" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer"]
 margin_left = 13.0
 margin_top = 10.0
-margin_right = 275.0
-margin_bottom = 94.0
+margin_right = 273.0
+margin_bottom = 92.0
 
-[node name="label" type="Label" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_right = 262.0
-margin_bottom = 60.0
+[node name="label" type="Label" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
+margin_right = 260.0
+margin_bottom = 58.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
@@ -927,30 +976,30 @@ custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 autowrap = true
 
-[node name="hBoxContainer" type="HBoxContainer" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_top = 64.0
-margin_right = 262.0
-margin_bottom = 84.0
+[node name="hBoxContainer" type="HBoxContainer" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
+margin_top = 62.0
+margin_right = 260.0
+margin_bottom = 82.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="price" type="Label" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
+[node name="price" type="Label" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
 margin_top = 3.0
-margin_right = 151.0
+margin_right = 150.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 20 )
 text = "-"
 align = 1
-script = SubResource( 25 )
+script = SubResource( 21 )
 __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="priceBtn" type="TextureButton" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
-margin_left = 155.0
-margin_right = 262.0
+[node name="priceBtn" type="TextureButton" parent="marginContainer/hbox/vboxR/panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
+margin_left = 154.0
+margin_right = 260.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
@@ -960,4 +1009,4 @@ texture_pressed = ExtResource( 22 )
 texture_hover = ExtResource( 23 )
 texture_disabled = ExtResource( 24 )
 expand = true
-script = SubResource( 26 )
+script = SubResource( 22 )
