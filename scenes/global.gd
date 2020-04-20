@@ -160,7 +160,7 @@ var uncommonEvoPigeons=[
 
 var player={
 	"name":"Pombo",
-	"gold":300,
+	"gold":0,
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":20,

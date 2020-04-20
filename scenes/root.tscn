@@ -388,8 +388,6 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="richtextStatPoints" type="RichTextLabel" parent="hbox/vboxL/perks/vbox/statPointsBox"]
-anchor_left = 0.0615942
-anchor_right = 0.0615942
 margin_right = 136.0
 margin_bottom = 39.0
 rect_clip_content = false
