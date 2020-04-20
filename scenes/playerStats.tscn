@@ -25,10 +25,23 @@ script/source = "extends PanelContainer
 var offset=0
 var duration=0.75
 var defaultPos=Vector2()
+export(bool) var entering=false
+var targetPos=Vector2()
+var durationEnter=2
 func _ready():
 	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
 	defaultPos=$marginContainer/vbox/hpBox.rect_position
 	set_process(false)
+	if entering:
+		randomize()
+		duration*=rand_range(0.5,1.5)
+		targetPos=self.rect_global_position
+		self.rect_global_position.y=-1.5*self.rect_size.y
+		var twnEnter=Tween.new()
+		add_child(twnEnter)
+		twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,durationEnter,Tween.TRANS_QUART,Tween.EASE_OUT)
+		twnEnter.start()
+
 func _process(delta):
 	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
 func shakeHp(newOffset=5):
@@ -52,6 +65,7 @@ func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.player.maxHp
 	self.value=lerp(self.value,global.player.hp,0.1)
+#	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 "
 

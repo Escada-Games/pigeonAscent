@@ -4,11 +4,11 @@
 [ext_resource path="res://resource/Shop_Panel_Item.png" type="Texture" id=2]
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=3]
 
-[sub_resource type="StyleBoxTexture" id=2]
+[sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 83, 28 )
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 script/source = "extends PanelContainer
 
 export(String) var itemName=\"Name\"
@@ -30,6 +30,7 @@ func _ready():
 	connect(\"mouse_entered\",self,\"updateDescription\")
 	connect(\"mouse_entered\",self,\"twnGrow\")
 	connect(\"mouse_exited\",self,\"twnShrink\")
+	connect(\"mouse_entered\",global,\"createHoverSfx\")
 #	$hboxItem/btn.connect(\"pressed\",self,\"buy\")
 	
 func updateDescription():
@@ -65,8 +66,8 @@ font_data = ExtResource( 3 )
 [node name="itemModel" type="PanelContainer"]
 margin_right = 308.0
 margin_bottom = 99.0
-custom_styles/panel = SubResource( 2 )
-script = SubResource( 1 )
+custom_styles/panel = SubResource( 1 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

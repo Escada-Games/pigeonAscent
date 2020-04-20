@@ -31,7 +31,12 @@ var scaling={
 	"hp":5,
 	"food":2
 }
-
+var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
+var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
+func createHoverSfx():
+	add_child(hoverSfx.instance())
+func createSelectSfx():
+	add_child(selectSfx.instance())
 func calculateHp(strength,defense):
 	strength-=1
 	defense-=1

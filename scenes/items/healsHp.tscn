@@ -1,0 +1,116 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://resource/Shop_Panel_Item.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 83, 28 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends PanelContainer
+
+export(String) var itemName=\"Name\"
+export(int) var itemPrice=\"100\"
+export(String) var itemDescription=\"Lorem ipsum ipsum\"
+export(bool) var unique=false
+
+const tweenParameters={
+	\"duration\":0.3,
+	\"rect_scale_max\":1.1*Vector2(1,1),
+	\"type\":Tween.TRANS_QUINT,
+	\"easing\":Tween.EASE_OUT
+}
+
+func _ready():
+	$marginContainer/hboxItem/label.text=self.itemName
+	self.rect_pivot_offset=self.rect_size/2
+#	self.rect_scale=0.9*Vector2(1,1)
+	connect(\"mouse_entered\",self,\"updateDescription\")
+	connect(\"mouse_entered\",self,\"twnGrow\")
+	connect(\"mouse_exited\",self,\"twnShrink\")
+	connect(\"mouse_entered\",global,\"createHoverSfx\")
+#	$hboxItem/btn.connect(\"pressed\",self,\"buy\")
+	
+func updateDescription():
+	global.currentUpgrade=self
+	global.shopDescription.text=self.itemDescription
+#	global.shopDescription.get_parent().get_node(\"hBoxContainer\")
+	global.shopDescription.get_parent().get_node(\"hBoxContainer/price\").text=String(self.itemPrice)
+
+func buy():
+	if global.player.gold>self.itemPrice:
+		global.player.gold-=self.itemPrice
+		#Effect here
+		global.player.hp+=20
+		global.player.hp=clamp(global.player.hp,0,global.player.maxHp)
+		if self.unique:self.queue_free()
+	
+func twnGrow():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+
+func twnShrink():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+	
+	
+"
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[node name="itemModel" type="PanelContainer"]
+margin_right = 308.0
+margin_bottom = 99.0
+custom_styles/panel = SubResource( 1 )
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+itemName = "Popcorn"
+itemDescription = "Heals 20 HP."
+
+[node name="twnScale" type="Tween" parent="."]
+
+[node name="marginContainer" type="MarginContainer" parent="."]
+margin_right = 308.0
+margin_bottom = 99.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_left = 3
+
+[node name="hboxItem" type="HBoxContainer" parent="marginContainer"]
+margin_left = 3.0
+margin_right = 298.0
+margin_bottom = 99.0
+
+[node name="centerContainer" type="CenterContainer" parent="marginContainer/hboxItem"]
+margin_right = 97.0
+margin_bottom = 99.0
+size_flags_horizontal = 3
+
+[node name="textureRect" type="TextureRect" parent="marginContainer/hboxItem/centerContainer"]
+margin_left = 16.0
+margin_top = 17.0
+margin_right = 80.0
+margin_bottom = 81.0
+texture = ExtResource( 1 )
+stretch_mode = 6
+
+[node name="label" type="Label" parent="marginContainer/hboxItem"]
+margin_left = 101.0
+margin_top = 36.0
+margin_right = 295.0
+margin_bottom = 62.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "GODOTINHO"
+align = 1
+valign = 1
