@@ -47,14 +47,14 @@ func selectName():
 	return name
 
 func distributePoints(obj,numberOfPoints,addedPoints=[0,0,0]):
-	var attributes=[obj.enemyStr,obj.enemyDef,obj.enemySpd]+addedPoints
+	var attributes=[obj.enemyStr,obj.enemyDef,obj.enemySpd]
 	while(numberOfPoints>0):
 		var index=randi()%attributes.size()
 		attributes[index]+=1
 		numberOfPoints-=1
-	obj.enemyStr=attributes[0]
-	obj.enemyDef=attributes[1]
-	obj.enemySpd=attributes[2]
+	obj.enemyStr=attributes[0]+addedPoints[0]
+	obj.enemyDef=attributes[1]+addedPoints[1]
+	obj.enemySpd=attributes[2]+addedPoints[2]
 
 func createEnemy(level,handicap=0):
 	randomize()
