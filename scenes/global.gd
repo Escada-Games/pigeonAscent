@@ -163,10 +163,10 @@ var player={
 	"gold":300,
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
-	"pointsLeft":30,
+	"pointsLeft":20,
 	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
-	"speed":3.0,"extraSpeed":0,
+	"speed":1,"extraSpeed":0,
 	"class":self.c_normal
 }
 var hasWings=false
@@ -301,12 +301,10 @@ var listOfNames=[
 	"Robert Pigeon Jr.",
 	"Scarlet Pigeoson",
 	"Peewee",
-	#        "Subject Pigeon #564",
 	"Gordon Pigeon",
 	"Pigeonvanni",
 	"DIO",
 	"JOTARO",
-	#        "Wolfeschlegelsteinhausenbergerdorff",
 	"Geralt of Osasco",
-	"Noegip"
+	"Noegip",
 ]
