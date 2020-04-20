@@ -184,7 +184,7 @@ var enemy={
 	"class":"normal"
 }
 
-var level=10
+var level=1
 
 var scaling={
 	"strength":1.2,
