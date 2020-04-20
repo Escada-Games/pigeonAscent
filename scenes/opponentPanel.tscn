@@ -44,8 +44,8 @@ func selectName():
 	global.listOfNames.erase(name)
 	return name
 
-func distributePoints(obj,numberOfPoints):
-	var attributes=[obj.enemyStr,obj.enemyDef,obj.enemySpd]
+func distributePoints(obj,numberOfPoints,addedPoints=[0,0,0]):
+	var attributes=[obj.enemyStr,obj.enemyDef,obj.enemySpd]+addedPoints
 	while(numberOfPoints>0):
 		var index=randi()%attributes.size()
 		attributes[index]+=1
@@ -55,11 +55,59 @@ func distributePoints(obj,numberOfPoints):
 	obj.enemySpd=attributes[2]
 
 func createEnemy(level,handicap=0):
+	randomize()
 	var i=enemyPanel.instance()
 	i.enemyName=selectName()
 	i.enemyLevel=level
 	var points=(level*3)-handicap
-	distributePoints(i,points)
+	var addedPoints=[0,0,0]
+	if level in [1,2]:
+		i.enemyClass=global.commonEnemyPigeons[randi()%global.commonEnemyPigeons.size()]
+	elif level in [3,4,5]:
+		if((level-randi()%6)>0):
+			var focus=randi()%3
+			var usedPoints=ceil(points/2.0)
+			points-=usedPoints
+			addedPoints[focus]=usedPoints
+			if focus==0:#Str
+				i.enemyClass=global.c_stronga
+			elif focus==1:#Def
+				i.enemyClass=global.c_knight
+			elif focus==2:#Agi
+				i.enemyClass=global.c_winged
+		else:
+			i.enemyClass=global.commonEnemyPigeons[randi()%global.commonEnemyPigeons.size()]
+	elif level in [7,8,9]:
+		if((level-randi()%7)>0):
+			var focus=randi()%3
+			var usedPoints=ceil(points/2.0)
+			var randomFactor=randf()<.40
+			points-=usedPoints
+			addedPoints[focus]=usedPoints
+			if focus==0:#Str
+				i.enemyClass=global.c_wyrm if(randomFactor) else global.c_whey
+			elif focus==1:#Def
+				i.enemyClass=global.c_fridgeon if(randomFactor) else global.c_crusader
+			elif focus==2:#Agi
+				i.enemyClass=global.c_hatoshi if(randomFactor) else global.c_winged2
+		else:
+			var focus=randi()%3
+			var usedPoints=ceil(points/2.0)
+			points-=usedPoints
+			addedPoints[focus]=usedPoints
+			if focus==0:#Str
+				i.enemyClass=global.c_stronga
+			elif focus==1:#Def
+				i.enemyClass=global.c_knight
+			elif focus==2:#Agi
+				i.enemyClass=global.c_winged
+	elif level in [10]:
+		points+=3
+		addedPoints=[2,2,2]
+		i.enemyLevel=\"???\"
+		i.enemyClass=global.c_godPigeon
+	distributePoints(i,points,addedPoints)
+	i.enemyGold=100+200*(level-handicap)
 	return i
 
 func addEnemies(enemyArray=[]):
@@ -208,8 +256,16 @@ custom_fonts/font = ExtResource( 1 )
 text = "Choose your opponent!"
 align = 1
 
-[node name="vboxOpponents" type="VBoxContainer" parent="marginContainer/opponentPanel/marginContainer/vbox"]
+[node name="hSeparator" type="HSeparator" parent="marginContainer/opponentPanel/marginContainer/vbox"]
 margin_top = 29.0
+margin_right = 462.0
+margin_bottom = 33.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vboxOpponents" type="VBoxContainer" parent="marginContainer/opponentPanel/marginContainer/vbox"]
+margin_top = 37.0
 margin_right = 462.0
 margin_bottom = 220.0
 size_flags_vertical = 3

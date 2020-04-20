@@ -35,11 +35,10 @@ func _ready():
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
-	goldToWin=100
+	goldToWin=global.enemy.gold
 	set_process(true)
 	
 func _process(delta):
-	print(playerSpr.rect_global_position)
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
@@ -187,7 +186,7 @@ func particlesAndWindowshake(area):
 	windowShake()
 func particles(area):
 	var i=particlesImpact.instance()
-	i.global_position.x=(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
+	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
 	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
 	i.emitting=true
 	add_child(i)

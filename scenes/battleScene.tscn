@@ -122,6 +122,7 @@ script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
 func _ready():
+	self.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
 	randomize()
 	duration*=rand_range(0.5,1.5)
 	targetPos=self.rect_global_position
@@ -225,6 +226,7 @@ size_flags_vertical = 3
 
 [node name="playerStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 1 )]
 entering = true
+compact = true
 
 [node name="vsepL" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
@@ -304,6 +306,7 @@ size_flags_horizontal = 3
 margin_left = 531.0
 margin_right = 781.0
 entering = true
+compact = true
 
 [node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 204.0
