@@ -160,14 +160,14 @@ var uncommonEvoPigeons=[
 
 var player={
 	"name":"Pombo",
-	"gold":100000,
+	"gold":100,
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
-	"strength":50,"extraStrength":0,
+	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
-	"speed":30,"extraSpeed":0,
-	"class":self.c_winged
+	"speed":1,"extraSpeed":0,
+	"class":self.c_normal
 }
 var hasWings=false
 var hasIce=false
@@ -244,7 +244,10 @@ var currentUpgrade
 var shopDescription
 var opponents=preload("res://scenes/opponentPanel.tscn")
 var battleScene=preload("res://scenes/battleScene.tscn")
-func _ready():set_process(true)
+var music=preload("res://scenes/music.tscn")
+func _ready():
+	add_child(music.instance())
+	set_process(true)
 func _process(delta):
 	pass
 #	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Fire Sword (Burnout Culture).ogg-0d2724cfdf7340d497430880074b3037.oggstr"
+
+[deps]
+
+source_file="res://resource/music/Fire Sword (Burnout Culture).ogg"
+dest_files=[ "res://.import/Fire Sword (Burnout Culture).ogg-0d2724cfdf7340d497430880074b3037.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

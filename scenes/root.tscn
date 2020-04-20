@@ -299,10 +299,10 @@ func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.pla
 "
 
 [sub_resource type="StyleBoxTexture" id=31]
-content_margin_bottom = 25.0
+content_margin_bottom = 10.0
 texture = ExtResource( 31 )
 region_rect = Rect2( 0, 0, 63, 32 )
-expand_margin_top = 50.0
+expand_margin_top = 35.0
 
 [sub_resource type="GDScript" id=16]
 script/source = "extends Label
@@ -342,7 +342,7 @@ func _ready():
 
 [sub_resource type="StyleBoxTexture" id=19]
 texture = ExtResource( 18 )
-region_rect = Rect2( 0, 0, 82, 49 )
+region_rect = Rect2( 0, 0, 107, 49 )
 
 [sub_resource type="GDScript" id=20]
 script/source = "extends PanelContainer
@@ -779,7 +779,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 2 )
 expand = true
-stretch_mode = 1
+stretch_mode = 2
 
 [node name="vbox" type="VBoxContainer" parent="marginContainer/hbox/vboxC/fightContainer"]
 margin_left = 10.0
@@ -860,13 +860,13 @@ custom_styles/panel = SubResource( 31 )
 [node name="hbox" type="HBoxContainer" parent="marginContainer/hbox/vboxC/goldContainer"]
 margin_left = 41.0
 margin_right = 251.0
-margin_bottom = 56.0
+margin_bottom = 71.0
 size_flags_horizontal = 4
 
 [node name="valueLabel" type="Label" parent="marginContainer/hbox/vboxC/goldContainer/hbox"]
-margin_top = 7.0
+margin_top = 14.0
 margin_right = 210.0
-margin_bottom = 49.0
+margin_bottom = 56.0
 custom_fonts/font = ExtResource( 27 )
 custom_colors/font_color = Color( 1, 0.894118, 0.470588, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
