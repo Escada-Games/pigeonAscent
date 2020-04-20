@@ -1,8 +1,8 @@
 extends Control
 var playerStamina=0
 var enemyStamina=0
-var playerSpr
-var enemySpr
+var playerSpr=TextureRect.new()
+var enemySpr=TextureRect.new()
 var playerDefaultPos
 var enemyDefaultPos
 var playerAttacked=false
@@ -10,6 +10,7 @@ var enemyAttacked=false
 var durationAttack=0.7
 var durationReturn=0.3
 var durationShake=0.5
+var durationRecoil=0.6
 var defaultDurationShake=0.5
 var turn=1
 var fighting=true
@@ -20,7 +21,11 @@ var goldToWin=0
 var offset=0
 onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
+var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
 func _ready():
+	$colorRect.modulate.a=0
+	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
+	$twnColorRectTransparency.start()
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
 	$twnBack
@@ -30,7 +35,7 @@ func _ready():
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
-	goldToWin=100
+	goldToWin=global.enemy.gold
 	set_process(true)
 	
 func _process(delta):
@@ -84,7 +89,7 @@ func playerAttack():
 	var bbName=global.player.name
 	if randf()>0.9 or global.enemy.energy<=0:
 		damage*=2
-		register("[shake rate=20 level=10]CRITICAL HIT![/shake]")
+		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar(15)
 	else:
@@ -99,7 +104,7 @@ func playerAttack():
 	
 func enemyAttack():
 	var damage=calculateDamage(global.enemy.strength,global.player.defense)
-	var bbName="[color=#eb564b]"+global.enemy.name+"[/color]"
+	var bbName=colorizeString(global.enemy.name,"#eb564b")#"[color=#eb564b]"+global.enemy.name+"[/color]"
 	if randf()>0.9 or global.player.energy<=0:
 		damage*=2
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
@@ -138,7 +143,7 @@ func shakePlayerHpBar(intensity=5):
 func shakeEnemyHpBar(intensity=5):
 	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/enemyStats.shakeHp(intensity)
 func register(string):
-	var message="#"+String(turn)+"> "+string+"\n"
+	var message="#"+String(turn)+"> "+string+"\n"#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
 	richtextLabel.bbcode_text+=message
 	turn+=1
 
@@ -156,6 +161,8 @@ func exitBattle():
 	$twnSelfPos.connect("tween_completed",self,"killMe")
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
+	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0.85,0,0.3,Tween.TRANS_CUBIC,Tween.EASE_OUT)
+	$twnColorRectTransparency.start()
 func killMe(h,m):
 	self.queue_free()
 func gameOver():
@@ -163,12 +170,23 @@ func gameOver():
 	get_tree().quit()
 func effects(area):
 	particlesAndWindowshake(area)
+	knockback()
+func knockback():
+	$twnAttack.stop_all()
+	randomize()
+	playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
+	$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
+	$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.start()
+	pass
 func particlesAndWindowshake(area):
+	createHitSfx()
 	particles(area)
 	windowShake()
 func particles(area):
 	var i=particlesImpact.instance()
-	i.global_position.x=(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
+	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
 	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
 	i.emitting=true
 	add_child(i)
@@ -177,3 +195,7 @@ func windowShake(newOffset=10):
 	$twnShake.interpolate_property(self,"offset",self.offset,0,self.durationShake,Tween.TRANS_QUAD,Tween.EASE_OUT)
 	$twnShake.start()
 	durationShake=defaultDurationShake*rand_range(0.7,1.0)
+func createHitSfx():
+	self.add_child(hitSfx.instance())
+func colorizeString(string,color="#ffffff"):
+	return "[color="+color+"]"+String(string)+"[/color] "

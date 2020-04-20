@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resource/sfx/damage1.wav" type="AudioStream" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends AudioStreamPlayer
+
+var sampleList=[
+	\"res://resource/sfx/damage1.wav\",
+	\"res://resource/sfx/damage2.wav\",
+	\"res://resource/sfx/damage3.wav\",
+	\"res://resource/sfx/damage4.wav\",
+	\"res://resource/sfx/damage5.wav\"
+]
+func _ready():
+	self.pitch_scale=rand_range(0.9,1.1)
+	self.stream=load(sampleList[randi()%sampleList.size()])
+	self.connect(\"finished\",self,\"killMe\")
+	self.playing=true
+func killMe():
+	yield(get_tree().create_timer(2.0),\"timeout\")
+	self.queue_free()
+"
+
+[node name="hitSfx" type="AudioStreamPlayer"]
+stream = ExtResource( 1 )
+bus = "SFX"
+script = SubResource( 1 )

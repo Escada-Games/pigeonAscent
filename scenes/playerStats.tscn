@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=2]
 [ext_resource path="res://resource/Bar_Life.png" type="Texture" id=3]
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=4]
 [ext_resource path="res://resource/Bar_Food.png" type="Texture" id=5]
+[ext_resource path="res://resource/Stats_Panel_Battle.png" type="Texture" id=6]
+[ext_resource path="res://resource/fonts/defeated32Shadow.tres" type="DynamicFont" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.494118, 0.494118, 0.560784, 1 )
@@ -25,10 +27,29 @@ script/source = "extends PanelContainer
 var offset=0
 var duration=0.75
 var defaultPos=Vector2()
+export(bool) var entering=false
+export(bool) var showStats=false
+export(bool) var compact=false
+var targetPos=Vector2()
+var durationEnter=2
 func _ready():
 	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
 	defaultPos=$marginContainer/vbox/hpBox.rect_position
 	set_process(false)
+	if compact:
+		$marginContainer/vbox/invSep2.visible=false
+		$marginContainer/vbox/abilities.visible=false
+		$marginContainer/vbox/abilitiesText.visible=false
+	if entering:
+		randomize()
+		duration*=rand_range(0.5,1.5)
+		targetPos=self.rect_global_position
+		self.rect_global_position.y=-1.5*self.rect_size.y
+		var twnEnter=Tween.new()
+		add_child(twnEnter)
+		twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,durationEnter,Tween.TRANS_QUART,Tween.EASE_OUT)
+		twnEnter.start()
+
 func _process(delta):
 	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
 func shakeHp(newOffset=5):
@@ -52,7 +73,15 @@ func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.player.maxHp
 	self.value=lerp(self.value,global.player.hp,0.1)
-	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
+#	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+#	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
+"
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
 "
 
 [sub_resource type="GDScript" id=5]
@@ -62,14 +91,22 @@ func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.player.maxEnergy
 	self.value=lerp(self.value,global.player.energy,0.1)
-	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
+#	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
+"
+
+[sub_resource type="StyleBoxEmpty" id=6]
 
 [node name="playerStats" type="PanelContainer"]
 margin_right = 250.0
 margin_bottom = 200.0
 rect_min_size = Vector2( 250, 200 )
-size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 custom_styles/panel = SubResource( 1 )
 script = SubResource( 2 )
@@ -83,7 +120,7 @@ __meta__ = {
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 245.0
-margin_bottom = 195.0
+margin_bottom = 232.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -93,7 +130,8 @@ custom_constants/margin_bottom = 5
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 235.0
-margin_bottom = 185.0
+margin_bottom = 222.0
+alignment = 1
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
 margin_right = 230.0
@@ -114,23 +152,33 @@ custom_constants/separation = 10
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox"]
 margin_top = 43.0
 margin_right = 230.0
-margin_bottom = 68.0
+margin_bottom = 98.0
 
 [node name="hp" type="Label" parent="marginContainer/vbox/hpBox"]
-margin_right = 52.0
-margin_bottom = 25.0
+margin_right = 61.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 61, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.3
 custom_fonts/font = ExtResource( 1 )
 text = "HP"
 align = 1
+valign = 1
 
-[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/hpBox"]
-margin_left = 56.0
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/hpBox"]
+margin_left = 65.0
 margin_right = 230.0
-margin_bottom = 25.0
+margin_bottom = 55.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/hpBox/vBoxContainer"]
+margin_right = 165.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 step = 0.1
 value = 50.0
 texture_over = ExtResource( 4 )
@@ -138,25 +186,43 @@ texture_progress = ExtResource( 3 )
 nine_patch_stretch = true
 script = SubResource( 4 )
 
+[node name="label" type="Label" parent="marginContainer/vbox/hpBox/vBoxContainer"]
+margin_top = 29.0
+margin_right = 165.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 7 )
+text = "10/10"
+align = 1
+valign = 1
+script = SubResource( 7 )
+
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 72.0
+margin_top = 102.0
 margin_right = 230.0
-margin_bottom = 97.0
+margin_bottom = 157.0
 
 [node name="food" type="Label" parent="marginContainer/vbox/foodBox"]
 margin_right = 61.0
-margin_bottom = 25.0
+margin_bottom = 55.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.3
 custom_fonts/font = ExtResource( 1 )
 text = "FOOD"
 align = 1
+valign = 1
 
-[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/foodBox"]
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/foodBox"]
 margin_left = 65.0
 margin_right = 230.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/foodBox/vBoxContainer"]
+margin_right = 165.0
 margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
 step = 0.1
 value = 25.0
@@ -165,26 +231,55 @@ texture_progress = ExtResource( 5 )
 nine_patch_stretch = true
 script = SubResource( 5 )
 
+[node name="label" type="Label" parent="marginContainer/vbox/foodBox/vBoxContainer"]
+margin_top = 29.0
+margin_right = 165.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 7 )
+text = "10/10"
+align = 1
+valign = 1
+script = SubResource( 8 )
+
 [node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 101.0
+margin_top = 161.0
 margin_right = 230.0
-margin_bottom = 111.0
+margin_bottom = 171.0
 custom_constants/separation = 10
 
-[node name="abilities" type="Label" parent="marginContainer/vbox"]
+[node name="centerContainer" type="PanelContainer" parent="marginContainer/vbox"]
+visible = false
 margin_top = 115.0
 margin_right = 230.0
-margin_bottom = 140.0
+margin_bottom = 141.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 50.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
+margin_right = 230.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="abilities" type="Label" parent="marginContainer/vbox"]
+margin_top = 175.0
+margin_right = 230.0
+margin_bottom = 200.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 1 )
 text = "ABILITIES"
 align = 1
 
 [node name="abilitiesText" type="Label" parent="marginContainer/vbox"]
-margin_top = 144.0
+margin_top = 204.0
 margin_right = 230.0
-margin_bottom = 180.0
+margin_bottom = 217.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
 text = "LOREM IPSUM"

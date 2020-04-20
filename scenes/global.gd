@@ -8,18 +8,20 @@ var player={
 	"pointsLeft":30,
 	"strength":1,
 	"defense":1,
-	"speed":1.0
+	"speed":1.0,
+	"class":"normal"
 }
 
 var enemy={
 	"name":"Pombo",
-	"gold":300,
+	"gold":100,
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
 	"strength":1,
 	"defense":1,
-	"speed":1.0
+	"speed":1.0,
+	"class":"normal"
 }
 
 var level=1
@@ -31,7 +33,163 @@ var scaling={
 	"hp":5,
 	"food":2
 }
+var pigeonClassesAndSprites={
+	"baker":
+		{"sprite":"res://resource/sprites/Baker_Pigeon.png",
+		"portrait":"res://resource/portraits/Baker_Pigeon_Port.png"
+	},
+	"batPigeon":
+		{"sprite":"res://resource/sprites/BatPigeon.png",
+		"portrait":"res://resource/portraits/BatPigeon_Port.png"
+	},
+	"charlie":
+		{"sprite":"res://resource/sprites/Charlie_Pigeon.png",
+		"portrait":"res://resource/portraits/Charlie_Pigeon_Port.png"
+	},
+	"crusader":
+		{"sprite":"res://resource/sprites/Crusader_Pigeon.png",
+		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png"
+	},
+	"e-girl":
+		{"sprite":"res://resource/sprites/E-girl_Pigeon.png",
+		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png"
+	},
+	"fridgeon":
+		{"sprite":"res://resource/sprites/Fridgeon.png",
+		"portrait":"res://resource/portraits/Fridgeon_Port.png"
+	},
+	"godPigeon":
+		{"sprite":"res://resource/sprites/God_Pigeon.png",
+		"portrait":"res://resource/portraits/God_Pigeon_Port.png"
+	},
+	"hatoshi":
+		{"sprite":"res://resource/sprites/Hatoshi.png",
+		"portrait":"res://resource/portraits/Hatoshi_Port.png"
+	},
+	"infiltrator":
+		{"sprite":"res://resource/sprites/Infiltrator.png",
+		"portrait":"res://resource/portraits/Infiltrator_Port.png"
+	},
+	"kawaii":
+		{"sprite":"res://resource/sprites/Kawaii_Pigeon.png",
+		"portrait":"res://resource/portraits/Kawaii_Pigeon_Port.png"
+	},
+	"knight":
+		{"sprite":"res://resource/sprites/Knight_Pigeon.png",
+		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png"
+	},
+	"mimic":
+		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
+		"portrait":"res://resource/portraits/Mimic_Pigeon_Port.png"
+	},
+	"normal":
+		{"sprite":"res://resource/sprites/Normal_Pigeon.png",
+		"portrait":"res://resource/portraits/Normal_Pigeon_Port.png"
+	},
+	"PIgeon":
+		{"sprite":"res://resource/sprites/PIgeon.png",
+		"portrait":"res://resource/portraits/PIgeon_Port.png"
+	},
+	"selfie":
+		{"sprite":"res://resource/sprites/Selfie_Pigeon.png",
+		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
+	},
+	"sink":
+		{"sprite":"res://resource/sprites/Sink_Pigeon.png",
+		"portrait":"res://resource/portraits/Sink_Pigeon_Port.png"
+	},
+	"stronga":
+		{"sprite":"res://resource/sprites/Stronga_Pigeon.png",
+		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png"
+	},
+	"whey":
+		{"sprite":"res://resource/sprites/Whey_Pigeon.png",
+		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png"
+	},
+	"winged":
+		{"sprite":"res://resource/sprites/Winged_Pigeon.png",
+		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png"
+	},
+	"winged2":
+		{"sprite":"res://resource/sprites/Winged_Pigeon_With_Wings.png",
+		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png"
+	},
+	"wizard":
+		{"sprite":"res://resource/sprites/Wizard_Pigeon.png",
+		"portrait":"res://resource/portraits/Wizard_Pigeon_Port.png"
+	},
+	"wyrm":
+		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
+		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
+	}
+}
 
+var c_baker="baker"
+var c_batPigeon="batPigeon"
+var c_charlie="charlie"
+var c_crusader="crusader"
+var c_egirl="e-girl"
+var c_fridgeon="fridgeon"
+var c_godPigeon="godPigeon"
+var c_hatoshi="hatoshi"
+var c_infiltrator="infiltrator"
+var c_kawaii="kawaii"
+var c_knight="knight"
+var c_mimic="mimic"
+var c_normal="normal"
+var c_PIgeon="PIgeon"
+var c_selfie="selfie"
+var c_sink="sink"
+var c_stronga="stronga"
+var c_whey="whey"
+var c_winged="winged"
+var c_winged2="winged2"
+var c_wizard="wizard"
+var c_wyrm="wyrm"
+
+var commonEnemyPigeons=[
+	self.c_baker,
+	self.c_charlie,
+	self.c_egirl,
+	self.c_wizard,
+	self.c_kawaii,
+	self.c_selfie,
+	self.c_sink,
+	self.c_wizard,
+	self.c_normal
+]
+
+var firstEvoPigeons=[
+	self.c_winged,
+	self.c_PIgeon,
+	self.c_stronga,
+	self.c_knight
+]
+
+var secondEvoPigeons=[
+	self.c_winged2,
+	self.c_hatoshi,
+	self.c_whey,
+	self.c_wyrm,
+	self.c_crusader,
+	self.c_fridgeon,
+	self.c_batPigeon
+]
+
+var uncommonEvoPigeons=[
+	self.c_hatoshi,
+	self.c_wyrm,
+	self.c_fridgeon,
+	self.c_batPigeon
+]
+
+
+var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
+var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
+func createHoverSfx():
+	add_child(hoverSfx.instance())
+func createSelectSfx():
+	add_child(selectSfx.instance())
 func calculateHp(strength,defense):
 	strength-=1
 	defense-=1
@@ -85,7 +243,7 @@ var listOfNames=[
 	"Andreas",
 	"Gabs",
 	"Arkansas",
-	"Sabin",
+#	"Sabin",
 	"Ladder",
 	"Allllan",
 	"Tobias",
