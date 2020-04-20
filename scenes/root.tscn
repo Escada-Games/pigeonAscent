@@ -207,25 +207,25 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=22]
+[sub_resource type="GDScript" id=15]
 script/source = "extends TextureRect
 
 func _ready():set_process(true)
 func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
 "
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=16]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=\"Gold: \"+String(global.player.gold)
 "
 
-[sub_resource type="StyleBoxTexture" id=16]
+[sub_resource type="StyleBoxTexture" id=17]
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 83, 20 )
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=18]
 script/source = "extends VBoxContainer
 
 var items=[
@@ -242,23 +242,23 @@ func _ready():
 	global.currentItem=get_children()[0]
 "
 
-[sub_resource type="StyleBoxTexture" id=18]
+[sub_resource type="StyleBoxTexture" id=19]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 82, 49 )
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=20]
 script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 "
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=21]
 script/source = "extends Label
 
 func _ready():pass#set_process(true)
 #func _process(delta):self.text=String(global.currentUpgrade.itemPrice)
 "
 
-[sub_resource type="GDScript" id=21]
+[sub_resource type="GDScript" id=22]
 script/source = "extends TextureButton
 
 func _ready():
@@ -660,7 +660,7 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
-script = SubResource( 22 )
+script = SubResource( 15 )
 
 [node name="goldContainer" type="PanelContainer" parent="hbox/vboxC"]
 margin_top = 420.0
@@ -682,7 +682,7 @@ margin_bottom = 47.0
 custom_fonts/font = ExtResource( 7 )
 text = "0123456789"
 align = 1
-script = SubResource( 15 )
+script = SubResource( 16 )
 
 [node name="vboxR" type="VBoxContainer" parent="hbox"]
 margin_left = 600.0
@@ -752,7 +752,7 @@ size_flags_stretch_ratio = 8.0
 [node name="panelContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop"]
 margin_right = 282.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 16 )
+custom_styles/panel = SubResource( 17 )
 
 [node name="marginContainer" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 282.0
@@ -797,7 +797,7 @@ margin_right = 267.0
 margin_bottom = 334.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 17 )
+script = SubResource( 18 )
 
 [node name="descriptionContainer" type="PanelContainer" parent="hbox/vboxR/panelRContainer/vbox"]
 margin_top = 392.0
@@ -805,8 +805,8 @@ margin_right = 282.0
 margin_bottom = 490.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 18 )
-script = SubResource( 19 )
+custom_styles/panel = SubResource( 19 )
+script = SubResource( 20 )
 
 [node name="marginContainer" type="MarginContainer" parent="hbox/vboxR/panelRContainer/vbox/descriptionContainer"]
 margin_right = 282.0
@@ -849,7 +849,7 @@ size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 19 )
 text = "-"
 align = 1
-script = SubResource( 20 )
+script = SubResource( 21 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -866,4 +866,4 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 10 )
 texture_disabled = ExtResource( 13 )
 expand = true
-script = SubResource( 21 )
+script = SubResource( 22 )
