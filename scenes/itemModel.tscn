@@ -36,7 +36,6 @@ func _ready():
 func updateDescription():
 	global.currentUpgrade=self
 	global.shopDescription.text=self.itemDescription
-#	global.shopDescription.get_parent().get_node(\"hBoxContainer\")
 	global.shopDescription.get_parent().get_node(\"hBoxContainer/price\").text=String(self.itemPrice)
 
 func buy():

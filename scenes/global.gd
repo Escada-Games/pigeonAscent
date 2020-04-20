@@ -8,7 +8,7 @@ var player={
 	"pointsLeft":30,
 	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
-	"speed":1.0,"extraSpeed":0,
+	"speed":4.0,"extraSpeed":0,
 	"class":"normal"
 }
 var hasWings=false
@@ -31,7 +31,7 @@ var level=3
 var scaling={
 	"strength":1.2,
 	"defense":1,
-	"speed":33,
+	"speed":30,#33
 	"hp":5,
 	"food":2
 }

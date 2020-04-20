@@ -10,7 +10,7 @@ var enemyAttacked=false
 var durationAttack=0.7
 var durationReturn=0.3
 var durationShake=0.5
-var durationRecoil=0.6
+var durationRecoil=1
 var defaultDurationShake=0.5
 var turn=1
 var fighting=true
@@ -23,6 +23,8 @@ onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContain
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
 var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
+func calculateStaminaIncrement(x):
+	return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
 func _ready():
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
@@ -43,13 +45,13 @@ func _process(delta):
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
-		playerStamina+=global.player.speed*delta*global.scaling.speed
+		playerStamina+=calculateStaminaIncrement(global.player.speed)*delta*global.scaling.speed
 		if playerStamina>100:
 			playerStamina=0
 			global.player.energy-=1
 			playerAttacked=true
 			playerAttackAnim()
-		enemyStamina+=global.enemy.speed*delta*global.scaling.speed
+		enemyStamina+=calculateStaminaIncrement(global.enemy.speed)*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=1
@@ -134,20 +136,32 @@ func calculateDamage(strength,defense,minDamage=1):
 
 func attackFinished(h,m):
 	if playerAttacked:
-		$twnAttack.interpolate_property(playerSpr,"rect_global_position:x",-1.33*playerSpr.rect_size.x,playerDefaultPos.x,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
-		$twnAttack.start()
+#		$twnAttack.interpolate_property(playerSpr,"rect_global_position",Vector2(-1.33,1)*playerSpr.rect_size,playerDefaultPos,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
+#		$twnAttack.start()
 		playerAttack()
 		playerAttacked=false
+		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
+		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnRecoil.start()
+		effects('a')
 	if enemyAttacked:
-		$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x+1.33*enemySpr.rect_size.x,enemyDefaultPos.x,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
-		$twnAttack.start()
+#		$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x+1.33*enemySpr.rect_size.x,enemyDefaultPos.x,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
+#		$twnAttack.start()
 		enemyAttack()
+		enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
+		$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnRecoil.start()
+		effects('a')
 		enemyAttacked=false
 func playerAttackAnim():
-	$twnAttack.interpolate_property(playerSpr,"rect_global_position:x",playerDefaultPos.x,enemyDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnRecoil.stop(playerSpr)
+#	$twnAttack.stop_all()
+	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnAttack.start()
 func enemyAttackAnim():
-	$twnAttack.interpolate_property(enemySpr,"rect_global_position:x",enemyDefaultPos.x,playerDefaultPos.x,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnRecoil.stop(enemySpr)
+#	$twnAttack.stop_all()
+	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerSpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnAttack.start()
 func shakePlayerHpBar(intensity=5):
 	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/playerStats.shakeHp(intensity)
@@ -226,4 +240,4 @@ func windowShake(newOffset=10):
 func createHitSfx():
 	self.add_child(hitSfx.instance())
 func colorizeString(string,color="#ffffff"):
-	return "[color="+color+"]"+String(string)+"[/color] "
+	return "[color="+color+"]"+String(string)+"[/color]"

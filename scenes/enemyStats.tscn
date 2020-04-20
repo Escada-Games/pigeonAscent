@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=2]
@@ -8,20 +8,8 @@
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=6]
 [ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=7]
 [ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=8]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.494118, 0.494118, 0.560784, 1 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 0.376471, 0.376471, 0.439216, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-anti_aliasing = false
-anti_aliasing_size = 5
+[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=9]
+[ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=10]
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends PanelContainer
@@ -110,7 +98,7 @@ margin_right = 232.0
 margin_bottom = 162.0
 rect_min_size = Vector2( 250, 0 )
 size_flags_stretch_ratio = 4.0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = ExtResource( 10 )
 script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false,
@@ -119,10 +107,20 @@ __meta__ = {
 
 [node name="twnOffset" type="Tween" parent="."]
 
+[node name="textureRect" type="TextureRect" parent="."]
+modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 240.0
+margin_bottom = 157.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
 [node name="marginContainer" type="MarginContainer" parent="."]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 245.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 240.0
 margin_bottom = 157.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
@@ -132,11 +130,11 @@ custom_constants/margin_bottom = 5
 [node name="vbox" type="VBoxContainer" parent="marginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 235.0
-margin_bottom = 147.0
+margin_right = 225.0
+margin_bottom = 142.0
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
-margin_right = 230.0
+margin_right = 220.0
 margin_bottom = 28.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 7 )
@@ -154,14 +152,14 @@ __meta__ = {
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 32.0
-margin_right = 230.0
-margin_bottom = 42.0
-custom_constants/separation = 10
+margin_right = 220.0
+margin_bottom = 37.0
+custom_constants/separation = 5
 
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 46.0
-margin_right = 230.0
-margin_bottom = 92.0
+margin_top = 41.0
+margin_right = 220.0
+margin_bottom = 87.0
 
 [node name="hp" type="Label" parent="marginContainer/vbox/hpBox"]
 margin_right = 61.0
@@ -181,7 +179,7 @@ valign = 1
 
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/hpBox"]
 margin_left = 65.0
-margin_right = 230.0
+margin_right = 220.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -190,7 +188,7 @@ __meta__ = {
 }
 
 [node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/hpBox/vBoxContainer"]
-margin_right = 165.0
+margin_right = 155.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -203,7 +201,7 @@ script = SubResource( 4 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/hpBox/vBoxContainer"]
 margin_top = 29.0
-margin_right = 165.0
+margin_right = 155.0
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -216,9 +214,9 @@ valign = 1
 script = SubResource( 5 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 96.0
-margin_right = 230.0
-margin_bottom = 142.0
+margin_top = 91.0
+margin_right = 220.0
+margin_bottom = 137.0
 
 [node name="food" type="Label" parent="marginContainer/vbox/foodBox"]
 margin_right = 56.0
@@ -237,14 +235,14 @@ valign = 1
 
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/foodBox"]
 margin_left = 60.0
-margin_right = 230.0
+margin_right = 220.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/foodBox/vBoxContainer"]
-margin_right = 170.0
+margin_right = 160.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -255,7 +253,7 @@ script = SubResource( 6 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/foodBox/vBoxContainer"]
 margin_top = 29.0
-margin_right = 170.0
+margin_right = 160.0
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
