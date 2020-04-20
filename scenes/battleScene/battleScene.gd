@@ -33,7 +33,12 @@ func calculateStaminaIncrement(x):
 func _ready():
 	if global.level in [1,2,3,4]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[0])
 	elif global.level in [5,6,7,8,9]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[1])
-	elif global.level in [10]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[2])
+	elif global.level in [10]:
+		$marginCtn/battlePanel/BG.texture=load(arenaFiles[2])
+		$marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer.alignment=BoxContainer.ALIGN_END
+		playerSpr.rect_min_size=Vector2(20,20)
+		enemySpr.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
@@ -50,6 +55,7 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	update()
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:

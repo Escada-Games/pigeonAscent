@@ -157,6 +157,8 @@ func _ready():
 	self.rect_pivot_offset=self.rect_size/2
 	$area2D.position=self.rect_size/2
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	
+	self.size_flags_vertical=SIZE_EXPAND
 
 "
 
@@ -363,17 +365,17 @@ rect_min_size = Vector2( 250, 0 )
 alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
+margin_top = 43.0
 margin_right = 250.0
-margin_bottom = 23.0
-size_flags_vertical = 3
+margin_bottom = 68.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
 [node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
-margin_bottom = 23.0
-size_flags_horizontal = 3
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
@@ -381,17 +383,16 @@ script = SubResource( 6 )
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 27.0
+margin_top = 72.0
 margin_right = 250.0
-margin_bottom = 32.0
+margin_bottom = 77.0
 custom_constants/separation = 5
 
 [node name="playerSpr" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-margin_top = 36.0
+margin_top = 81.0
 margin_right = 250.0
-margin_bottom = 225.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+margin_bottom = 181.0
+rect_min_size = Vector2( 100, 100 )
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
@@ -423,16 +424,15 @@ alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
 margin_right = 250.0
-margin_bottom = 23.0
-size_flags_vertical = 3
+margin_bottom = 25.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
 [node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
-margin_bottom = 23.0
-size_flags_horizontal = 3
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
@@ -443,17 +443,17 @@ __meta__ = {
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 27.0
+margin_top = 29.0
 margin_right = 250.0
-margin_bottom = 32.0
+margin_bottom = 34.0
 custom_constants/separation = 5
 
 [node name="textureRect" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
-margin_top = 36.0
+margin_top = 38.0
 margin_right = 250.0
 margin_bottom = 225.0
+rect_min_size = Vector2( 100, 100 )
 rect_pivot_offset = Vector2( 125, 82 )
-size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
