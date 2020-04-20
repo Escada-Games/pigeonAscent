@@ -164,10 +164,10 @@ var player={
 	"hp":10,"maxHp":10,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":30,
-	"strength":100,"extraStrength":0,
+	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
-	"speed":30.0,"extraSpeed":0,
-	"class":self.c_winged
+	"speed":3.0,"extraSpeed":0,
+	"class":self.c_normal
 }
 var hasWings=false
 var hasIce=false
