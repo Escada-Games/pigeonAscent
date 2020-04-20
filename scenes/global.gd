@@ -26,7 +26,7 @@ var enemy={
 	"class":"normal"
 }
 
-var level=1
+var level=3
 
 var scaling={
 	"strength":1.2,
@@ -124,6 +124,10 @@ var pigeonClassesAndSprites={
 	"wyrm":
 		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
 		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
+	},
+	"platy":
+		{"sprite":"res://resource/portraits/Selfie_Pigeon_Port.png",
+		"portrait":"res://resource/sprites/Platypigeon.png"
 	}
 }
 
@@ -149,6 +153,7 @@ var c_winged="winged"
 var c_winged2="winged2"
 var c_wizard="wizard"
 var c_wyrm="wyrm"
+var c_platy="platy"
 
 var commonEnemyPigeons=[
 	self.c_baker,
@@ -166,7 +171,8 @@ var firstEvoPigeons=[
 	self.c_winged,
 	self.c_PIgeon,
 	self.c_stronga,
-	self.c_knight
+	self.c_knight,
+	self.c_platy
 ]
 
 var secondEvoPigeons=[
@@ -186,7 +192,16 @@ var uncommonEvoPigeons=[
 	self.c_batPigeon
 ]
 
-
+func firstEvolution():
+	if self.player.strength>self.player.defense and self.player.strength>self.player.speed:
+		self.player["class"]=self.c_stronga
+	elif self.player.defense>self.player.strength and self.player.defense>self.player.speed:
+		self.player["class"]=self.c_knight
+	elif self.player.speed>self.player.strength and self.player.speed>self.player.defense:
+		self.player["class"]=self.c_winged
+	pass#TODO ORNITOPOMBO
+func secondEvolution():
+	pass
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
 var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
 func createHoverSfx():

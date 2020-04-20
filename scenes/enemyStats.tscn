@@ -21,7 +21,7 @@ corner_radius_bottom_left = 15
 anti_aliasing = false
 anti_aliasing_size = 5
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=2]
 script/source = "extends PanelContainer
 var offset=0
 var duration=0.75
@@ -39,6 +39,10 @@ func _ready():
 		$marginContainer/vbox/invSep2.visible=false
 		$marginContainer/vbox/abilities.visible=false
 		$marginContainer/vbox/abilitiesText.visible=false
+	else:
+		$marginContainer/vbox/invSep2.visible=true
+		$marginContainer/vbox/abilities.visible=true
+		$marginContainer/vbox/abilitiesText.visible=true
 	if entering:
 		randomize()
 		duration*=rand_range(0.5,1.5)
@@ -60,12 +64,12 @@ func resetProcess():
 	set_process(false)
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Label
 func _ready():self.text=global.enemy.name
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -75,14 +79,14 @@ func _process(delta):
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.enemy.hp)+\"/\"+String(global.enemy.maxHp)
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -106,7 +110,7 @@ rect_min_size = Vector2( 250, 200 )
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 custom_styles/panel = SubResource( 1 )
-script = SubResource( 5 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -117,7 +121,7 @@ __meta__ = {
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 245.0
-margin_bottom = 232.0
+margin_bottom = 195.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -127,7 +131,7 @@ custom_constants/margin_bottom = 5
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 235.0
-margin_bottom = 222.0
+margin_bottom = 185.0
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
 margin_right = 230.0
@@ -136,7 +140,7 @@ size_flags_vertical = 1
 custom_fonts/font = ExtResource( 1 )
 text = "NOME"
 align = 1
-script = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -182,7 +186,7 @@ value = 50.0
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 3 )
 nine_patch_stretch = true
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/hpBox/vBoxContainer"]
 margin_top = 29.0
@@ -192,7 +196,7 @@ custom_fonts/font = ExtResource( 6 )
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 6 )
+script = SubResource( 5 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox"]
 margin_top = 102.0
@@ -226,7 +230,7 @@ size_flags_horizontal = 3
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 nine_patch_stretch = true
-script = SubResource( 4 )
+script = SubResource( 6 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/foodBox/vBoxContainer"]
 margin_top = 29.0
@@ -246,6 +250,7 @@ margin_bottom = 171.0
 custom_constants/separation = 10
 
 [node name="abilities" type="Label" parent="marginContainer/vbox"]
+visible = false
 margin_top = 175.0
 margin_right = 230.0
 margin_bottom = 200.0
@@ -255,7 +260,8 @@ text = "ABILITIES"
 align = 1
 
 [node name="abilitiesText" type="Label" parent="marginContainer/vbox"]
-margin_top = 204.0
+visible = false
+margin_top = 175.0
 margin_right = 230.0
 margin_bottom = 217.0
 size_flags_vertical = 3

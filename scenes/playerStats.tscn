@@ -40,6 +40,10 @@ func _ready():
 		$marginContainer/vbox/invSep2.visible=false
 		$marginContainer/vbox/abilities.visible=false
 		$marginContainer/vbox/abilitiesText.visible=false
+	else:
+		$marginContainer/vbox/invSep2.visible=true
+		$marginContainer/vbox/abilities.visible=true
+		$marginContainer/vbox/abilitiesText.visible=true
 	if entering:
 		randomize()
 		duration*=rand_range(0.5,1.5)
@@ -77,14 +81,14 @@ func _process(delta):
 #	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -94,14 +98,14 @@ func _process(delta):
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
 "
 
-[sub_resource type="StyleBoxEmpty" id=6]
+[sub_resource type="StyleBoxEmpty" id=8]
 
 [node name="playerStats" type="PanelContainer"]
 margin_right = 250.0
@@ -120,7 +124,7 @@ __meta__ = {
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 245.0
-margin_bottom = 232.0
+margin_bottom = 195.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -130,12 +134,13 @@ custom_constants/margin_bottom = 5
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 235.0
-margin_bottom = 222.0
+margin_bottom = 185.0
 alignment = 1
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
+margin_top = 4.0
 margin_right = 230.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 1 )
 text = "NOME"
@@ -144,15 +149,15 @@ script = SubResource( 3 )
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 29.0
+margin_top = 33.0
 margin_right = 230.0
-margin_bottom = 39.0
+margin_bottom = 43.0
 custom_constants/separation = 10
 
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 43.0
+margin_top = 47.0
 margin_right = 230.0
-margin_bottom = 98.0
+margin_bottom = 102.0
 
 [node name="hp" type="Label" parent="marginContainer/vbox/hpBox"]
 margin_right = 61.0
@@ -194,12 +199,12 @@ custom_fonts/font = ExtResource( 7 )
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 7 )
+script = SubResource( 5 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox"]
-margin_top = 102.0
+margin_top = 106.0
 margin_right = 230.0
-margin_bottom = 157.0
+margin_bottom = 161.0
 
 [node name="food" type="Label" parent="marginContainer/vbox/foodBox"]
 margin_right = 61.0
@@ -229,7 +234,7 @@ value = 25.0
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 nine_patch_stretch = true
-script = SubResource( 5 )
+script = SubResource( 6 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/foodBox/vBoxContainer"]
 margin_top = 29.0
@@ -239,13 +244,13 @@ custom_fonts/font = ExtResource( 7 )
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 7 )
 
 [node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 161.0
+margin_top = 165.0
 margin_right = 230.0
-margin_bottom = 171.0
+margin_bottom = 175.0
 custom_constants/separation = 10
 
 [node name="centerContainer" type="PanelContainer" parent="marginContainer/vbox"]
@@ -256,7 +261,7 @@ margin_bottom = 141.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 50.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
 margin_right = 230.0
@@ -268,6 +273,7 @@ expand = true
 stretch_mode = 6
 
 [node name="abilities" type="Label" parent="marginContainer/vbox"]
+visible = false
 margin_top = 175.0
 margin_right = 230.0
 margin_bottom = 200.0
@@ -277,7 +283,8 @@ text = "ABILITIES"
 align = 1
 
 [node name="abilitiesText" type="Label" parent="marginContainer/vbox"]
-margin_top = 204.0
+visible = false
+margin_top = 175.0
 margin_right = 230.0
 margin_bottom = 217.0
 size_flags_vertical = 3
