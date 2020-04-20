@@ -71,8 +71,8 @@ func _process(delta):
 	print(self.get_line_count())
 	if self.get_line_count()>1:
 		self.text=\"STR: \"
-	else:
-		self.text=\"Strength: \"
+#	else:
+#		self.text=\"Strength: \"
 "
 
 [sub_resource type="StyleBoxEmpty" id=4]

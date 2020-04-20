@@ -19,6 +19,11 @@ var exitButton
 var resetButton
 var goldToWin=0
 var offset=0
+var arenaFiles=[
+	"res://resource/Arena_Sand.png",
+	"res://resource/Arena_Grass.png",
+	"res://resource/Arena_Godfight.png"
+]
 onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
@@ -26,6 +31,9 @@ var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
 func calculateStaminaIncrement(x):
 	return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
 func _ready():
+	if global.level in [1,2,3,4]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[0])
+	elif global.level in [5,6,7,8,9]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[1])
+	elif global.level in [10]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[2])
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
@@ -102,6 +110,7 @@ func playerAttack():
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar()
+		enemySpr.hit()
 #	playerAttackAnim()
 	global.enemy.hp-=damage
 	createDamageNumbers(enemySpr.rect_global_position+enemySpr.rect_size/2,1,damage,isCritical)
@@ -123,6 +132,7 @@ func enemyAttack():
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar()
+		playerSpr.hit()
 #	enemyAttackAnim()
 	global.player.hp-=damage
 	createDamageNumbers(playerSpr.rect_global_position+playerSpr.rect_size/2,-1,damage,isCritical)

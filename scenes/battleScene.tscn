@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/monogram.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=8]
 [ext_resource path="res://resource/Bar_Attack.png" type="Texture" id=9]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=10]
+[ext_resource path="res://resource/Arena_Sand.png" type="Texture" id=11]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends NinePatchRect
@@ -78,6 +79,10 @@ func _process(delta):
 script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
+var twnHit=Tween.new()
+func hit():
+	twnHit.interpolate_property(self,\"rect_scale\",Vector2(0.8,1.2)*self.rect_scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	twnHit.start()
 func _ready():
 	self.texture=load(global.pigeonClassesAndSprites[global.player.class].sprite)
 	randomize()
@@ -88,6 +93,11 @@ func _ready():
 	add_child(twnEnter)
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	twnEnter.start()
+	
+	twnHit=Tween.new()
+	add_child(twnHit)
+	twnHit.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
 	$area2D.position=self.rect_size/2
@@ -123,6 +133,10 @@ func _process(delta):
 script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
+var twnHit=Tween.new()
+func hit():
+	twnHit.interpolate_property(self,\"rect_scale\",Vector2(0.8,1.2)*self.rect_scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	twnHit.start()
 func _ready():
 	self.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
 	randomize()
@@ -133,6 +147,11 @@ func _ready():
 	add_child(twnEnter)
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	twnEnter.start()
+	
+	twnHit=Tween.new()
+	add_child(twnHit)
+	twnHit.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
 	self.rect_pivot_offset=self.rect_size/2
@@ -215,6 +234,15 @@ margin_right = 871.0
 margin_bottom = 479.0
 rect_clip_content = true
 custom_styles/panel = ExtResource( 10 )
+
+[node name="BG" type="TextureRect" parent="marginCtn/battlePanel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 836.0
+margin_bottom = 444.0
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 1
 
 [node name="vboxCtn" type="VBoxContainer" parent="marginCtn/battlePanel"]
 margin_left = 10.0
@@ -319,6 +347,7 @@ compact = true
 margin_top = 185.0
 margin_right = 826.0
 margin_bottom = 410.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 alignment = 1

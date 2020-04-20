@@ -1,41 +1,5 @@
 extends Node
 
-var player={
-	"name":"Pombo",
-	"gold":300,
-	"hp":10,"maxHp":10,
-	"energy":10,"maxEnergy":10,
-	"pointsLeft":30,
-	"strength":1,"extraStrength":0,
-	"defense":1,"extraDefense":0,
-	"speed":4.0,"extraSpeed":0,
-	"class":"normal"
-}
-var hasWings=false
-var hasIce=false
-var hasSword=false
-var enemy={
-	"name":"PomboEnemy",
-	"gold":100,
-	"hp":10,"maxHp":10,
-	"energy":10,"maxEnergy":10,
-	"pointsLeft":3,
-	"strength":1,
-	"defense":1,
-	"speed":1.0,
-	"class":"normal"
-}
-
-var level=3
-
-var scaling={
-	"strength":1.2,
-	"defense":1,
-	"speed":30,#33
-	"hp":5,
-	"food":2
-}
-var currentItem
 var pigeonClassesAndSprites={
 	"baker":
 		{"sprite":"res://resource/sprites/Baker_Pigeon.png",
@@ -192,6 +156,44 @@ var uncommonEvoPigeons=[
 	self.c_batPigeon
 ]
 
+
+
+var player={
+	"name":"Pombo",
+	"gold":300,
+	"hp":10,"maxHp":10,
+	"energy":10,"maxEnergy":10,
+	"pointsLeft":30,
+	"strength":100,"extraStrength":0,
+	"defense":1,"extraDefense":0,
+	"speed":30.0,"extraSpeed":0,
+	"class":self.c_winged
+}
+var hasWings=false
+var hasIce=false
+var hasSword=true
+var enemy={
+	"name":"PomboEnemy",
+	"gold":100,
+	"hp":10,"maxHp":10,
+	"energy":10,"maxEnergy":10,
+	"pointsLeft":3,
+	"strength":1,
+	"defense":1,
+	"speed":1.0,
+	"class":"normal"
+}
+
+var level=6
+
+var scaling={
+	"strength":1.2,
+	"defense":1,
+	"speed":30,#33
+	"hp":5,
+	"food":2
+}
+var currentItem
 func firstEvolution():
 	if self.player.strength>self.player.defense and self.player.strength>self.player.speed:
 		self.player["class"]=self.c_stronga
@@ -202,7 +204,14 @@ func firstEvolution():
 	else:
 		self.player["class"]=self.c_platy
 func secondEvolution():
-	pass
+	if self.player["class"]==self.c_stronga:
+		self.player["class"]=self.c_wyrm if self.hasWings else self.c_whey
+	elif self.player["class"]==self.c_knight:
+		self.player["class"]=self.c_fridgeon if self.hasIce else self.c_crusader
+	if self.player["class"]==self.c_winged:
+		self.player["class"]=self.c_hatoshi if self.hasSword else self.c_winged2
+	else:
+		self.player["class"]=self.c_platy
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
 var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
 func createHoverSfx():
@@ -263,10 +272,41 @@ var listOfNames=[
 	"Andreas",
 	"Gabs",
 	"Arkansas",
-#	"Sabin",
 	"Ladder",
 	"Allllan",
 	"Tobias",
 	"Funke",
-	"Fleetwood"
+	"Fleetwood",
+	"Big Pedro", 
+	"Uncle Sam",
+	"Ice Head",
+	"Adam Carl",
+	"Narcejo",
+	"Prupru",
+	"Mayoral",
+	"Solino",
+	"Papagalo",
+	"Shuri",
+	"Gustavo",
+	"Piombo",
+	"Mizuni",
+	"Pericles",
+	"Angry Pigeon",
+	"CJ",
+	"Dr.P.Ombo",
+	"Astera",
+	"Pigeon Gates",
+	"Mark Pigeonberg",
+	"Pigeon Crews",
+	"Robert Pigeon Jr.",
+	"Scarlet Pigeoson",
+	"Peewee",
+	#        "Subject Pigeon #564",
+	"Gordon Pigeon",
+	"Pigeonvanni",
+	"DIO",
+	"JOTARO",
+	#        "Wolfeschlegelsteinhausenbergerdorff",
+	"Geralt of Osasco",
+	"Noegip"
 ]
