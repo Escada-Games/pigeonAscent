@@ -108,6 +108,7 @@ func createEnemy(level,handicap=0,boss=false):
 		addedPoints+=[2,2,2]
 		i.enemyName=\"Pigod\"
 		i.enemyLevel=\"???\"
+		i.enemyGold=9999
 		i.enemyClass=global.c_godPigeon
 	distributePoints(i,points,addedPoints)
 	i.enemyGold=100+200*(level-handicap)

@@ -1,0 +1,161 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
+[ext_resource path="res://resource/Fight_Buttom_Press.png" type="Texture" id=2]
+[ext_resource path="res://resource/Fight_Buttom_Normal.png" type="Texture" id=3]
+[ext_resource path="res://resource/Fight_Buttom_Over.png" type="Texture" id=4]
+[ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=5]
+[ext_resource path="res://resource/fonts/m6x11-16.tres" type="DynamicFont" id=6]
+[ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=7]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+var string=\"\"
+var player=\"\"
+var t=0
+func _ready():
+	player=global.player.name
+	string=\"As \"+player+\" defeats the Pigeon God, his aura slowly dissipates, only to envelop \"+player+\" suddenly...\\n ...there is a new Pigeon God for those who seek to prove their worth.\"
+	self.text=string
+	self.modulate.a=0
+	set_process(true)
+func _process(delta):
+	t+=1
+	if t%2==0:
+		self.visible_characters+=1
+	self.modulate.a+=delta*5
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends TextureButton
+
+func _ready():
+	randomize()
+	global.player={
+		\"name\":global.listOfNames[randi()%global.listOfNames.size()],
+		\"gold\":100,
+		\"hp\":5,\"maxHp\":5,
+		\"energy\":10,\"maxEnergy\":10,
+		\"pointsLeft\":3,
+		\"strength\":1,\"extraStrength\":0,
+		\"defense\":1,\"extraDefense\":0,
+		\"speed\":1,\"extraSpeed\":0,
+		\"class\":global.c_normal
+	}
+	connect(\"pressed\",self,\"startGame\")
+func startGame():
+	get_tree().change_scene(\"res://scenes/root.tscn\")
+"
+
+[node name="intro" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="textureRect" type="TextureRect" parent="."]
+modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="marginContainer2" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="label2" type="Label" parent="marginContainer2"]
+margin_top = 436.0
+margin_right = 896.0
+margin_bottom = 484.0
+size_flags_vertical = 8
+custom_fonts/font = ExtResource( 6 )
+text = "Thanks a whole bunch for finishing our game!
+Really, wow! Thanks again!
+-Escada Games"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="marginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 100
+custom_constants/margin_top = 50
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer"]
+margin_left = 100.0
+margin_top = 50.0
+margin_right = 796.0
+margin_bottom = 404.0
+alignment = 1
+
+[node name="label" type="Label" parent="marginContainer/vBoxContainer"]
+margin_top = 129.0
+margin_right = 696.0
+margin_bottom = 171.0
+custom_fonts/font = ExtResource( 7 )
+align = 1
+autowrap = true
+script = SubResource( 2 )
+
+[node name="hSeparator" type="HSeparator" parent="marginContainer/vBoxContainer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 142.0
+margin_right = 496.0
+margin_bottom = 146.0
+
+[node name="textEdit" type="TextEdit" parent="marginContainer/vBoxContainer"]
+visible = false
+margin_left = 148.0
+margin_top = 133.0
+margin_right = 348.0
+margin_bottom = 163.0
+rect_min_size = Vector2( 200, 30 )
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 5 )
+text = "Pombo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hSeparator2" type="HSeparator" parent="marginContainer/vBoxContainer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 146.0
+margin_right = 496.0
+margin_bottom = 150.0
+
+[node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
+modulate = Color( 0.364706, 0.364706, 0.364706, 1 )
+margin_top = 175.0
+margin_right = 696.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 120, 50 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )
+texture_hover = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+script = SubResource( 3 )
+__meta__ = {
+"_editor_description_": ""
+}
