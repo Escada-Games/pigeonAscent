@@ -21,7 +21,7 @@ func _ready():
 		\"strength\":1,\"extraStrength\":0,
 		\"defense\":1,\"extraDefense\":0,
 		\"speed\":1,\"extraSpeed\":0,
-		\"class\":self.c_normal
+		\"class\":global.c_normal
 	}
 	connect(\"pressed\",self,\"startGame\")
 func startGame():
