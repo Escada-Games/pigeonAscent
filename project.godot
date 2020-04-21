@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Pigeon Ascent"
-run/main_scene="res://scenes/root.tscn"
+run/main_scene="res://scenes/intro.tscn"
 config/icon="res://icon.png"
 
 [autoload]

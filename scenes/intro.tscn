@@ -1,0 +1,100 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
+[ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=3]
+[ext_resource path="res://resource/Fight_Buttom_Press.png" type="Texture" id=4]
+[ext_resource path="res://resource/Fight_Buttom_Normal.png" type="Texture" id=5]
+[ext_resource path="res://resource/Fight_Buttom_Over.png" type="Texture" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureButton
+
+func _ready():
+	connect(\"pressed\",self,\"startGame\")
+func startGame():
+	global.player.name=get_parent().get_node(\"textEdit\").text
+	get_tree().change_scene(\"res://scenes/root.tscn\")
+"
+
+[node name="intro" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="textureRect" type="TextureRect" parent="."]
+modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="marginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 200
+custom_constants/margin_top = 100
+custom_constants/margin_left = 200
+custom_constants/margin_bottom = 100
+
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer"]
+margin_left = 200.0
+margin_top = 100.0
+margin_right = 696.0
+margin_bottom = 404.0
+alignment = 1
+
+[node name="label" type="Label" parent="marginContainer/vBoxContainer"]
+margin_top = 79.0
+margin_right = 496.0
+margin_bottom = 121.0
+custom_fonts/font = ExtResource( 3 )
+text = "Chose your pigeon name."
+align = 1
+
+[node name="hSeparator" type="HSeparator" parent="marginContainer/vBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 125.0
+margin_right = 496.0
+margin_bottom = 129.0
+
+[node name="textEdit" type="TextEdit" parent="marginContainer/vBoxContainer"]
+margin_left = 148.0
+margin_top = 133.0
+margin_right = 348.0
+margin_bottom = 163.0
+rect_min_size = Vector2( 200, 30 )
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 2 )
+text = "Pombo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hSeparator2" type="HSeparator" parent="marginContainer/vBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 167.0
+margin_right = 496.0
+margin_bottom = 171.0
+
+[node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
+margin_top = 175.0
+margin_right = 496.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 120, 50 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+script = SubResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}

@@ -43,7 +43,7 @@ func _ready():
 
 func selectName():
 	var name=global.listOfNames[randi()%global.listOfNames.size()]
-	global.listOfNames.erase(name)
+#	global.listOfNames.erase(name)
 	return name
 
 func distributePoints(obj,numberOfPoints,addedPoints=[0,0,0]):
