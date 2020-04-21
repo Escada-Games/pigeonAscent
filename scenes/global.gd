@@ -161,7 +161,7 @@ var uncommonEvoPigeons=[
 var player={
 	"name":"Pombo",
 	"gold":100,
-	"hp":10,"maxHp":10,
+	"hp":5,"maxHp":5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
 	"strength":1,"extraStrength":0,
@@ -175,7 +175,7 @@ var hasSword=true
 var enemy={
 	"name":"PomboEnemy",
 	"gold":100,
-	"hp":10,"maxHp":10,
+	"hp":5,"maxHp":5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
 	"strength":1,
@@ -190,7 +190,7 @@ var scaling={
 	"strength":1.2,
 	"defense":1,
 	"speed":30,#33
-	"hp":2,
+	"hp":1,
 	"food":2
 }
 var currentItem

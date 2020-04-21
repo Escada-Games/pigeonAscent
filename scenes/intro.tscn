@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://resource/Fight_Buttom_Press.png" type="Texture" id=4]
 [ext_resource path="res://resource/Fight_Buttom_Normal.png" type="Texture" id=5]
 [ext_resource path="res://resource/Fight_Buttom_Over.png" type="Texture" id=6]
+[ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=7]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends TextureButton
@@ -33,6 +34,27 @@ expand = true
 stretch_mode = 2
 __meta__ = {
 "_editor_description_": ""
+}
+
+[node name="marginContainer2" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="label2" type="Label" parent="marginContainer2"]
+margin_top = 456.0
+margin_right = 896.0
+margin_bottom = 484.0
+size_flags_vertical = 8
+custom_fonts/font = ExtResource( 7 )
+text = "Press M to mute the game anytime."
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [node name="marginContainer" type="MarginContainer" parent="."]
