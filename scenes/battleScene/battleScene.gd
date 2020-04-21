@@ -226,6 +226,7 @@ func gameOver():
 	#TODO:CHANGE TO GOING BACK TO THE TITLE SCREEN
 #	get_tree().quit()
 	get_tree().change_scene("res://scenes/intro.tscn")
+	self.queue_free()
 func effects(area):
 	particlesAndWindowshake(area)
 	knockback()
