@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/monogram.ttf" type="DynamicFontData" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://resource/Bar_Attack.png" type="Texture" id=9]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=10]
 [ext_resource path="res://resource/Arena_Sand.png" type="Texture" id=11]
+[ext_resource path="res://resource/sprites/God_Pigeon.png" type="Texture" id=12]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends NinePatchRect
@@ -160,6 +161,19 @@ func _ready():
 	
 	self.size_flags_vertical=SIZE_EXPAND
 
+"
+
+[sub_resource type="GDScript" id=13]
+script/source = "extends Sprite
+var defaultY=0
+var t=0
+var omega=PI
+func _ready():
+	var defaultY=self.position.y
+	set_process(true)
+func _process(delta):
+	t+=delta
+	self.position.y=defaultY+20*sin(t*omega)
 "
 
 [sub_resource type="GDScript" id=11]
@@ -465,6 +479,13 @@ script = SubResource( 10 )
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect/area2D"]
 shape = SubResource( 8 )
+
+[node name="sprite" type="Sprite" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect"]
+visible = false
+position = Vector2( 159.79, 1.16635 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 12 )
+script = SubResource( 13 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 414.0

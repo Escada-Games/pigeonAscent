@@ -4,7 +4,7 @@ var damage=1
 var critical=false
 func _ready():
 	set_process(true)
-	self.linear_velocity.x=direction*rand_range(10,200)
+	self.linear_velocity.x=direction*rand_range(200,400)
 	self.linear_velocity.y=-rand_range(200,500)
 	$label.text=String(damage)
 	if critical:

@@ -35,9 +35,11 @@ func _ready():
 	elif global.level in [5,6,7,8,9]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[1])
 	elif global.level in [10]:
 		$marginCtn/battlePanel/BG.texture=load(arenaFiles[2])
-		$marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer.alignment=BoxContainer.ALIGN_END
-		playerSpr.rect_min_size=Vector2(20,20)
-		enemySpr.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		enemySpr.self_modulate.a=0
+		enemySpr.get_node("sprite").visible=true
+#		$marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer.alignment=BoxContainer.ALIGN_END
+#		playerSpr.rect_min_size=Vector2(20,20)
+#		enemySpr.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
@@ -62,13 +64,13 @@ func _process(delta):
 		playerStamina+=calculateStaminaIncrement(global.player.speed)*delta*global.scaling.speed
 		if playerStamina>100:
 			playerStamina=0
-			global.player.energy-=1
+			global.player.energy-=global.level
 			playerAttacked=true
 			playerAttackAnim()
 		enemyStamina+=calculateStaminaIncrement(global.enemy.speed)*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
-			global.enemy.energy-=1
+			global.enemy.energy-=global.level
 			enemyAttacked=true
 			enemyAttackAnim()
 #		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
@@ -198,6 +200,9 @@ func registerFast(string):
 	richtextLabel.bbcode_text+=message
 
 func exitBattle():
+	global.player.extraStrength=0
+	global.player.extraDefense=0
+	global.player.extraSpeed=0
 	self.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	if(global.level==4):
 		global.createEvolvePanel()

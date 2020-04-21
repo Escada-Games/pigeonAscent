@@ -161,6 +161,8 @@ custom_constants/separation = 5
 margin_top = 41.0
 margin_right = 220.0
 margin_bottom = 87.0
+hint_tooltip = "Every attack you take lowers your HP. At zero, you lose your pigeon!"
+mouse_default_cursor_shape = 16
 
 [node name="hp" type="Label" parent="marginContainer/vbox/hpBox"]
 margin_right = 61.0
@@ -216,6 +218,8 @@ script = SubResource( 5 )
 margin_top = 91.0
 margin_right = 220.0
 margin_bottom = 137.0
+hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, all attacks you take are critical hits (deal double damage)."
+mouse_default_cursor_shape = 16
 
 [node name="food" type="Label" parent="marginContainer/vbox/foodBox"]
 margin_right = 61.0

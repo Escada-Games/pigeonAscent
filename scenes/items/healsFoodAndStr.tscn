@@ -45,7 +45,7 @@ func _input(event):
 		buy()
 
 func buy():
-	if global.player.gold>=self.itemPrice and global.player.energy!=global.player.maxEnergy:
+	if global.player.gold>=self.itemPrice:# and global.player.energy!=global.player.maxEnergy:
 		global.player.gold-=self.itemPrice
 		#Effect here
 		global.player.energy=clamp(global.player.energy+5,0,global.player.maxEnergy)

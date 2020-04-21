@@ -69,6 +69,7 @@ func battle():
 	\"speed\":self.enemySpd,
 	\"class\":self.enemyClass
 	}
+	global.listOfNames.erase(enemyDict.name)
 	global.battle(enemyDict)
 	get_tree().root.get_node(\"/root/opponentControl/marginContainer/opponentPanel/btnExit\").exit()
 	
