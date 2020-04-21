@@ -189,7 +189,7 @@ var level=1
 var scaling={
 	"strength":1.2,
 	"defense":1,
-	"speed":30,#33
+	"speed":60,#30,#33
 	"hp":1,
 	"food":2
 }
