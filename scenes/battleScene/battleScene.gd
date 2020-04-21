@@ -202,6 +202,8 @@ func registerFast(string):
 	richtextLabel.bbcode_text+=message
 
 func exitBattle():
+	if global.level==11:
+		get_tree().change_scene("res://scenes/end.tscn")
 	global.player.extraStrength=0
 	global.player.extraDefense=0
 	global.player.extraSpeed=0

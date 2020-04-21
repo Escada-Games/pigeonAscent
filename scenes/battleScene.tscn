@@ -163,7 +163,7 @@ func _ready():
 
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Sprite
 var defaultY=0
 var t=0
@@ -176,7 +176,7 @@ func _process(delta):
 	self.position.y=defaultY+20*sin(t*omega)
 "
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -187,7 +187,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -485,7 +485,7 @@ visible = false
 position = Vector2( 159.79, 1.16635 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 12 )
-script = SubResource( 13 )
+script = SubResource( 11 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 414.0
@@ -504,7 +504,7 @@ margin_right = 54.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "Return"
-script = SubResource( 11 )
+script = SubResource( 12 )
 
 [node name="btnReset" type="Button" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot/vBoxContainer"]
 margin_left = 2.0
@@ -512,4 +512,4 @@ margin_right = 51.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "Retry!"
-script = SubResource( 12 )
+script = SubResource( 13 )
