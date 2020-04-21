@@ -11,7 +11,7 @@ region_rect = Rect2( 0, 0, 83, 20 )
 [sub_resource type="GDScript" id=2]
 script/source = "extends PanelContainer
 
-export(String) var itemName=\"Onigir\"
+export(String) var itemName=\"Onigiri\"
 export(int) var itemPrice=\"100\"
 export(String) var itemDescription=\"Heals 5 hunger and gives you a speed bonus for the next fight.\"
 export(bool) var unique=false

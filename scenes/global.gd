@@ -190,7 +190,7 @@ var scaling={
 	"strength":1.2,
 	"defense":1,
 	"speed":30,#33
-	"hp":5,
+	"hp":2,
 	"food":2
 }
 var currentItem
@@ -248,8 +248,11 @@ var music=preload("res://scenes/music.tscn")
 func _ready():
 	add_child(music.instance())
 	set_process(true)
+var muted=false
 func _process(delta):
-	pass
+	if Input.is_action_just_pressed("ui_mute"):
+		muted=!muted
+		AudioServer.set_bus_mute(0,muted)
 #	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
 func fight():
 	get_tree().root.add_child(opponents.instance())

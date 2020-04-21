@@ -165,7 +165,10 @@ func _process(delta):
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.defense)"
+func _process(delta):
+	self.text=String(global.player.defense)
+	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
+"
 
 [sub_resource type="StyleBoxEmpty" id=10]
 
@@ -223,7 +226,10 @@ func _process(delta):
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.speed)"
+func _process(delta):
+	self.text=String(global.player.speed)
+	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
+"
 
 [sub_resource type="GDScript" id=13]
 script/source = "extends TextureButton

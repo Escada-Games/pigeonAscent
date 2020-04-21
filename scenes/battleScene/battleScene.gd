@@ -65,12 +65,14 @@ func _process(delta):
 		if playerStamina>100:
 			playerStamina=0
 			global.player.energy-=global.level
+			global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
 			playerAttacked=true
 			playerAttackAnim()
 		enemyStamina+=calculateStaminaIncrement(global.enemy.speed)*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=global.level
+			global.enemy.energy=clamp(global.enemy.energy,0,global.enemy.maxEnergy)
 			enemyAttacked=true
 			enemyAttackAnim()
 #		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
