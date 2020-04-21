@@ -12,7 +12,7 @@ region_rect = Rect2( 0, 0, 83, 20 )
 script/source = "extends PanelContainer
 
 export(String) var itemName=\"Hotdog\"
-export(int) var itemPrice=\"100\"
+export(int) var itemPrice=\"200\"
 export(String) var itemDescription=\"Heals 10 hunger and gives you a small boost on all your status for your next fight.\"
 export(bool) var unique=false
 export(bool) var clickable=false
