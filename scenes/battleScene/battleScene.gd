@@ -90,7 +90,7 @@ func _process(delta):
 				$twnBackButton.start()
 				exitButton.modulate.a=0
 				exitButton.visible=true
-				resetButton.queue_free()
+				resetButton.visible=false
 			else:
 				registerSameTurn("[center][shake rate=5 level=10]"+global.enemy.name + " won... [/shake][/center]\n")
 				registerSameTurn("[center][color=#b0305c]" + "Game Over." + "[/color][/center]\n\n")
@@ -100,7 +100,7 @@ func _process(delta):
 				$twnBackButton.start()
 				resetButton.modulate.a=0
 				resetButton.visible=true
-				exitButton.queue_free()
+				exitButton.visible=false
 		else:
 			if global.player.hp>0:
 				exitButton.modulate.a+=0.1
