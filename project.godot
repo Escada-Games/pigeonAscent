@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="Pigeon Ascent"
 run/main_scene="res://scenes/intro.tscn"
+boot_splash/image="res://resource/EscadaSplash.png"
 config/icon="res://icon.png"
 
 [autoload]
