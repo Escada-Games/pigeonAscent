@@ -211,10 +211,8 @@ func secondEvolution():
 		self.player["class"]=self.c_wyrm if self.hasWings else self.c_whey
 	elif self.player["class"]==self.c_knight:
 		self.player["class"]=self.c_fridgeon if self.hasIce else self.c_crusader
-	if self.player["class"]==self.c_winged:
+	elif self.player["class"]==self.c_winged:
 		self.player["class"]=self.c_hatoshi if self.hasSword else self.c_winged2
-	else:
-		self.player["class"]=self.c_platy
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
 var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
 func createHoverSfx():
