@@ -61,7 +61,7 @@ func _process(delta):
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
-		playerStamina+=calculateStaminaIncrement(global.player.speed)*delta*global.scaling.speed
+		playerStamina+=calculateStaminaIncrement(global.player.speed+global.player.extraSpeed)*delta*global.scaling.speed
 		if playerStamina>100:
 			playerStamina=0
 			global.player.energy-=global.level
@@ -108,7 +108,7 @@ func _process(delta):
 				resetButton.modulate.a+=0.1
 
 func playerAttack():
-	var damage=calculateDamage(global.player.strength,global.enemy.defense)
+	var damage=calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)
 	var bbName=global.player.name
 	var isCritical=false
 	if randf()>0.9 or global.enemy.energy<=0:
@@ -130,7 +130,7 @@ func playerAttack():
 #	playerAttacked=true
 	
 func enemyAttack():
-	var damage=calculateDamage(global.enemy.strength,global.player.defense)
+	var damage=calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)
 	var bbName=colorizeString(global.enemy.name,"#eb564b")#"[color=#eb564b]"+global.enemy.name+"[/color]"
 	var isCritical=false
 	if randf()>0.9 or global.player.energy<=0:
