@@ -8,7 +8,7 @@
 [ext_resource path="res://resource/fonts/m6x11-16.tres" type="DynamicFont" id=6]
 [ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=7]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Label
 var string=\"\"
 var player=\"\"
@@ -26,7 +26,7 @@ func _process(delta):
 	self.modulate.a+=delta*5
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureButton
 
 func _ready():
@@ -42,6 +42,7 @@ func _ready():
 		\"speed\":1,\"extraSpeed\":0,
 		\"class\":global.c_normal
 	}
+	global.level=1
 	connect(\"pressed\",self,\"startGame\")
 func startGame():
 	get_tree().change_scene(\"res://scenes/root.tscn\")
@@ -113,7 +114,7 @@ margin_bottom = 171.0
 custom_fonts/font = ExtResource( 7 )
 align = 1
 autowrap = true
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="hSeparator" type="HSeparator" parent="marginContainer/vBoxContainer"]
 visible = false
@@ -144,7 +145,7 @@ margin_right = 496.0
 margin_bottom = 150.0
 
 [node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
-modulate = Color( 0.364706, 0.364706, 0.364706, 1 )
+modulate = Color( 0.898039, 0.898039, 0.898039, 1 )
 margin_top = 175.0
 margin_right = 696.0
 margin_bottom = 225.0
@@ -155,7 +156,7 @@ texture_pressed = ExtResource( 2 )
 texture_hover = ExtResource( 4 )
 expand = true
 stretch_mode = 5
-script = SubResource( 3 )
+script = SubResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }

@@ -23,6 +23,7 @@ func _ready():
 		\"speed\":1,\"extraSpeed\":0,
 		\"class\":global.c_normal
 	}
+	global.level=1
 	connect(\"pressed\",self,\"startGame\")
 func startGame():
 	global.player.name=get_parent().get_node(\"textEdit\").text
