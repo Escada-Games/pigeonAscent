@@ -102,10 +102,12 @@ func _process(delta):
 				resetButton.visible=true
 				exitButton.visible=false
 		else:
-			if global.player.hp>0:
-				exitButton.modulate.a+=0.1
-			elif global.enemy.hp>0:
-				resetButton.modulate.a+=0.1
+			exitButton.modulate.a+=0.1
+			resetButton.modulate.a+=0.1
+#			if global.player.hp>0:
+#				exitButton.modulate.a+=0.1
+#			elif global.enemy.hp>0:
+#				resetButton.modulate.a+=0.1
 
 func playerAttack():
 	var damage=calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)
