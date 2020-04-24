@@ -12,7 +12,7 @@ region_rect = Rect2( 0, 0, 83, 20 )
 script/source = "extends PanelContainer
 
 export(String) var itemName=\"Wyvern Wing\"
-export(int) var itemPrice=\"1000\"
+export(int) var itemPrice=1000
 export(String) var itemDescription=\"A wyvern wing. Only great strength might make it usable.\"
 export(bool) var unique=true
 export(bool) var clickable=false
