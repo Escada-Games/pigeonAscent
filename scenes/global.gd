@@ -171,7 +171,7 @@ var player={
 }
 var hasWings=false
 var hasIce=false
-var hasSword=true
+var hasSword=false
 var enemy={
 	"name":"PomboEnemy",
 	"gold":100,
