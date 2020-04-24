@@ -260,8 +260,9 @@ func particlesAndWindowshake(area):
 	windowShake()
 func particles(area):
 	var i=particlesImpact.instance()
-	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
-	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
+#	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
+#	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
+	i.global_position=0.5*($marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D.global_position+$marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect/area2D.global_position)
 	i.emitting=true
 	add_child(i)
 func windowShake(newOffset=10):
