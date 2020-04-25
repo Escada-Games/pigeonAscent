@@ -21,9 +21,12 @@ var defaultPos=Vector2()
 export(bool) var entering=false
 export(bool) var showStats=false
 export(bool) var compact=false
+export(bool) var checkVisibility=false
 var targetPos=Vector2()
 var durationEnter=2
 func _ready():
+	if checkVisibility:
+		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
 	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
 	defaultPos=$marginContainer/vbox/hpBox.rect_position
 	set_process(false)
