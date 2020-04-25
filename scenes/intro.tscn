@@ -57,14 +57,15 @@ __meta__ = {
 }
 
 [node name="label2" type="Label" parent="marginContainer2"]
-margin_top = 456.0
-margin_right = 896.0
-margin_bottom = 484.0
+margin_top = 561.0
+margin_right = 360.0
+margin_bottom = 620.0
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 7 )
 text = "Press M to mute the game anytime."
 align = 1
 valign = 2
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -72,37 +73,39 @@ __meta__ = {
 [node name="marginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/margin_right = 200
-custom_constants/margin_top = 100
-custom_constants/margin_left = 200
-custom_constants/margin_bottom = 100
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer"]
-margin_left = 200.0
-margin_top = 100.0
-margin_right = 696.0
-margin_bottom = 404.0
+margin_right = 360.0
+margin_bottom = 640.0
 alignment = 1
 
 [node name="label" type="Label" parent="marginContainer/vBoxContainer"]
-margin_top = 79.0
-margin_right = 496.0
-margin_bottom = 121.0
+margin_top = 224.0
+margin_right = 360.0
+margin_bottom = 311.0
 custom_fonts/font = ExtResource( 3 )
 text = "Chose your pigeon name."
 align = 1
+autowrap = true
 
 [node name="hSeparator" type="HSeparator" parent="marginContainer/vBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 125.0
-margin_right = 496.0
-margin_bottom = 129.0
+margin_top = 315.0
+margin_right = 360.0
+margin_bottom = 319.0
 
 [node name="textEdit" type="TextEdit" parent="marginContainer/vBoxContainer"]
-margin_left = 148.0
-margin_top = 133.0
-margin_right = 348.0
-margin_bottom = 163.0
+margin_left = 80.0
+margin_top = 323.0
+margin_right = 280.0
+margin_bottom = 353.0
 rect_min_size = Vector2( 200, 30 )
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
@@ -113,14 +116,14 @@ __meta__ = {
 
 [node name="hSeparator2" type="HSeparator" parent="marginContainer/vBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 167.0
-margin_right = 496.0
-margin_bottom = 171.0
+margin_top = 357.0
+margin_right = 360.0
+margin_bottom = 361.0
 
 [node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
-margin_top = 175.0
-margin_right = 496.0
-margin_bottom = 225.0
+margin_top = 365.0
+margin_right = 360.0
+margin_bottom = 415.0
 rect_min_size = Vector2( 120, 50 )
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
