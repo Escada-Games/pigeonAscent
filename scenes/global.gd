@@ -244,6 +244,7 @@ var opponents=preload("res://scenes/opponentPanel.tscn")
 var battleScene=preload("res://scenes/battleScene.tscn")
 var music=preload("res://scenes/music.tscn")
 func _ready():
+	OS.min_window_size=Vector2(360,640)
 	add_child(music.instance())
 	set_process(true)
 var muted=false

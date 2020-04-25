@@ -28,6 +28,8 @@ global="*res://scenes/global.gd"
 
 window/size/width=896
 window/size/height=504
+window/size/test_width=896
+window/size/test_height=504
 
 [input]
 
