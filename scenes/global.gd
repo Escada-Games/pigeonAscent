@@ -238,6 +238,7 @@ func updatePlayerFood():
 func updatePlayerHpAndFood():
 	self.updatePlayerHp()
 	self.updatePlayerFood()
+func isGameCompact():return OS.window_size.x<OS.min_window_size.y
 func shouldIBeVisible(node):node.visible=node.get_viewport_rect().size.x>OS.min_window_size.y
 func shouldIBeInvisible(node):node.visible=node.get_viewport_rect().size.x<OS.min_window_size.y
 const resolution=Vector2(16,9)

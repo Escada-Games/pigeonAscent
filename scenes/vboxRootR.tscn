@@ -1,0 +1,260 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resource/fonts/ghouls16Shadow.tres" type="DynamicFont" id=3]
+[ext_resource path="res://resource/Shop_Chainx2.png" type="Texture" id=4]
+[ext_resource path="res://resource/Shop_Buttom_Locked.png" type="Texture" id=5]
+[ext_resource path="res://resource/BG_Shop.png" type="Texture" id=6]
+[ext_resource path="res://resource/Shop_Panel.png" type="Texture" id=7]
+[ext_resource path="res://resource/Shop_Buttom_Over.png" type="Texture" id=8]
+[ext_resource path="res://resource/Shop_Buttom_Normal.png" type="Texture" id=9]
+[ext_resource path="res://resource/Shop_Panel_Decr.png" type="Texture" id=10]
+[ext_resource path="res://resource/Shop_Buttom_Press.png" type="Texture" id=11]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends VBoxContainer
+func _ready():get_tree().root.connect(\"size_changed\",global,\"shouldIBeVisible\",[self])
+"
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 83, 20 )
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends VBoxContainer
+
+var items=[
+	preload(\"res://scenes/items/healsHp.tscn\"),
+	preload(\"res://scenes/items/healsFood.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndStr.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndDef.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndSpd.tscn\"),
+	preload(\"res://scenes/items/healsFoodAndAllBoosts.tscn\"),
+	preload(\"res://scenes/items/ice.tscn\"),
+	preload(\"res://scenes/items/sword.tscn\"),
+	preload(\"res://scenes/items/wing.tscn\"),
+]
+func _ready():
+	for item in items:
+		var i=item.instance()
+		i.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
+		i.clickable=true
+		add_child(i)
+	global.currentItem=get_children()[0]
+"
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 10 )
+region_rect = Rect2( 0, 0, 107, 49 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends PanelContainer
+func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Label
+
+func _ready():pass#set_process(true)
+#func _process(delta):self.text=String(global.currentUpgrade.itemPrice)
+"
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends TextureButton
+
+func _ready():
+	connect(\"pressed\",self,\"buy\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+func buy():
+	global.currentItem.buy()
+		#Effect here
+"
+
+[node name="vboxRootR" type="VBoxContainer"]
+margin_right = 108.0
+margin_bottom = 630.0
+size_flags_horizontal = 3
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="panelRContainer" type="PanelContainer" parent="."]
+margin_right = 108.0
+margin_bottom = 630.0
+size_flags_vertical = 3
+
+[node name="textureRect" type="TextureRect" parent="panelRContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 101.0
+margin_bottom = 623.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 2
+
+[node name="marginBox" type="MarginContainer" parent="panelRContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 101.0
+margin_bottom = 623.0
+custom_constants/margin_top = 10
+custom_constants/margin_bottom = 10
+
+[node name="hboxChain" type="HBoxContainer" parent="panelRContainer/marginBox"]
+margin_top = 10.0
+margin_right = 94.0
+margin_bottom = 606.0
+alignment = 1
+
+[node name="1" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
+margin_left = 11.0
+margin_right = 33.0
+margin_bottom = 596.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+stretch_mode = 2
+
+[node name="2" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
+margin_left = 60.0
+margin_right = 82.0
+margin_bottom = 596.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+stretch_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="panelRContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 101.0
+margin_bottom = 623.0
+size_flags_vertical = 3
+
+[node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox"]
+margin_right = 94.0
+margin_bottom = 489.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+
+[node name="panelContainer" type="PanelContainer" parent="panelRContainer/vbox/vboxShop"]
+margin_right = 94.0
+margin_bottom = 45.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
+margin_right = 94.0
+margin_bottom = 45.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="shopLabel" type="Label" parent="panelRContainer/vbox/vboxShop/panelContainer/marginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 84.0
+margin_bottom = 35.0
+custom_fonts/font = ExtResource( 2 )
+text = "Shop!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="panelShop" type="ScrollContainer" parent="panelRContainer/vbox/vboxShop"]
+margin_top = 49.0
+margin_right = 94.0
+margin_bottom = 489.0
+size_flags_vertical = 3
+
+[node name="marginCtn" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelShop"]
+margin_right = 94.0
+margin_bottom = 440.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 15
+custom_constants/margin_top = 5
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 5
+
+[node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox/vboxShop/panelShop/marginCtn"]
+margin_left = 15.0
+margin_top = 5.0
+margin_right = 79.0
+margin_bottom = 435.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource( 3 )
+
+[node name="descriptionContainer" type="PanelContainer" parent="panelRContainer/vbox"]
+margin_top = 493.0
+margin_right = 94.0
+margin_bottom = 616.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_styles/panel = SubResource( 4 )
+script = SubResource( 5 )
+
+[node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
+margin_right = 94.0
+margin_bottom = 123.0
+custom_constants/margin_right = 7
+custom_constants/margin_top = 10
+custom_constants/margin_left = 13
+custom_constants/margin_bottom = 4
+
+[node name="vBoxContainer" type="VBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer"]
+margin_left = 13.0
+margin_top = 10.0
+margin_right = 87.0
+margin_bottom = 119.0
+
+[node name="label" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
+margin_right = 74.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+autowrap = true
+
+[node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
+margin_top = 82.0
+margin_right = 74.0
+margin_bottom = 109.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="price" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
+margin_top = 7.0
+margin_right = 74.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+custom_fonts/font = ExtResource( 3 )
+text = "-"
+align = 1
+script = SubResource( 6 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="priceBtn" type="TextureButton" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
+visible = false
+margin_left = 154.0
+margin_right = 260.0
+margin_bottom = 20.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.4
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 11 )
+texture_hover = ExtResource( 8 )
+texture_disabled = ExtResource( 5 )
+expand = true
+script = SubResource( 7 )

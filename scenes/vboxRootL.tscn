@@ -1,0 +1,633 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
+[ext_resource path="res://resource/fonts/m6x11-32SpacedAlt.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=3]
+[ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=4]
+[ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://resource/Stat_Buttom_Press.png" type="Texture" id=6]
+[ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=7]
+[ext_resource path="res://resource/fonts/ghouls32Shadow.tres" type="DynamicFont" id=8]
+[ext_resource path="res://resource/Stat_Buttom_Over.png" type="Texture" id=9]
+[ext_resource path="res://resource/Stats_Buttom_13X10_Frame1.png" type="Texture" id=10]
+[ext_resource path="res://resource/Stats_Buttom_13X10_Frame2.png" type="Texture" id=11]
+[ext_resource path="res://resource/Panel_Stat_Atk.png" type="Texture" id=12]
+[ext_resource path="res://resource/Panel_Stat_Def.png" type="Texture" id=13]
+[ext_resource path="res://resource/tres/panelStats.tres" type="StyleBox" id=14]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends VBoxContainer
+func _ready():get_tree().root.connect(\"size_changed\",global,\"shouldIBeVisible\",[self])
+"
+
+[sub_resource type="GDScript" id=18]
+script/source = "extends PanelContainer
+var offset=0
+var duration=0.75
+var defaultPos=Vector2()
+export(bool) var entering=false
+export(bool) var showStats=false
+export(bool) var compact=false
+export(bool) var checkVisibility=false
+var targetPos=Vector2()
+var durationEnter=2
+func _ready():
+	if checkVisibility:
+		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
+	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
+	defaultPos=$marginContainer/vbox/hpBox.rect_position
+	set_process(false)
+	if compact:
+		$marginContainer/vbox/invSep2.visible=false
+		$marginContainer/vbox/abilities.visible=false
+		$marginContainer/vbox/abilitiesText.visible=false
+	else:
+		$marginContainer/vbox/invSep2.visible=true
+		$marginContainer/vbox/abilities.visible=true
+		$marginContainer/vbox/abilitiesText.visible=true
+	if entering:
+		randomize()
+		duration*=rand_range(0.5,1.5)
+		targetPos=self.rect_global_position
+		self.rect_global_position.y=-1.5*self.rect_size.y
+		var twnEnter=Tween.new()
+		add_child(twnEnter)
+		twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,durationEnter,Tween.TRANS_QUART,Tween.EASE_OUT)
+		twnEnter.start()
+
+func _process(delta):
+	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+func shakeHp(newOffset=5):
+	offset=newOffset
+	$twnOffset.interpolate_property(self,\"offset\",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
+	$twnOffset.start()
+	set_process(true)
+func resetProcess():
+	set_process(false)
+"
+
+[sub_resource type="GDScript" id=19]
+script/source = "extends RichTextLabel
+var waveAmp=50
+const maxWaveAmp=50
+var stringNormal=\"[center]Stat points \\nleft[/center]\"
+var stringWavy=\"[center][wave amp=50 freq=5]Stat points \\nleft[/wave][/center]\"
+var stringWavySlowed
+var slowing
+func _ready():set_process(true)
+func _process(delta):
+	if global.player.pointsLeft>0 and self.bbcode_text==stringWavy:
+		slowing=true
+	
+	if slowing:
+		pass
+		
+	
+	if global.player.pointsLeft>0:
+		if self.bbcode_text!=stringWavy:
+			self.bbcode_text=stringWavy
+	else:
+		if self.bbcode_text!=stringNormal:
+			self.bbcode_text=stringNormal
+"
+
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="GDScript" id=21]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):self.text=String(global.player.pointsLeft)
+"
+
+[sub_resource type="StyleBoxTexture" id=22]
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 86, 35 )
+
+[sub_resource type="GDScript" id=23]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):
+	self.text=String(global.player.strength)
+	if global.player.extraStrength!=0: self.text+= \" + \" + String(global.player.extraStrength)
+"
+
+[sub_resource type="GDScript" id=24]
+script/source = "extends TextureButton
+
+const tweenParameters={
+	\"duration\":0.3,
+	\"rect_scale_max\":1.1*Vector2(1,1),
+	\"type\":Tween.TRANS_QUINT,
+	\"easing\":Tween.EASE_OUT
+}
+
+func _ready():
+	var twn=Tween.new()
+	twn.name=\"twnScale\"
+	add_child(twn)
+	self.rect_pivot_offset=self.rect_size/2
+	self.connect(\"pressed\",self,\"upgrade\")
+	self.connect(\"mouse_entered\",self,\"twnGrow\")
+	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+	set_process(true)
+func _process(delta):
+	self.disabled=global.player.pointsLeft==0
+func upgrade():
+	if global.player.pointsLeft>0:
+		global.player.pointsLeft-=1
+		global.player.strength+=1
+		global.updatePlayerHpAndFood()
+
+func twnGrow():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+
+func twnShrink():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+"
+
+[sub_resource type="StyleBoxTexture" id=25]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 86, 35 )
+expand_margin_top = 15.0
+
+[sub_resource type="GDScript" id=26]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):
+	print(self.get_line_count())
+	if self.get_line_count()>1:
+		self.text=\"DEF: \"
+	else:
+		self.text=\"Defense: \"
+"
+
+[sub_resource type="StyleBoxEmpty" id=27]
+
+[sub_resource type="GDScript" id=28]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):
+	self.text=String(global.player.defense)
+	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
+"
+
+[sub_resource type="StyleBoxEmpty" id=29]
+
+[sub_resource type="GDScript" id=30]
+script/source = "extends TextureButton
+
+const tweenParameters={
+	\"duration\":0.3,
+	\"rect_scale_max\":1.1*Vector2(1,1),
+	\"type\":Tween.TRANS_QUINT,
+	\"easing\":Tween.EASE_OUT
+}
+
+func _ready():
+	var twn=Tween.new()
+	twn.name=\"twnScale\"
+	add_child(twn)
+	self.rect_pivot_offset=self.rect_size/2
+	self.connect(\"pressed\",self,\"upgrade\")
+	self.connect(\"mouse_entered\",self,\"twnGrow\")
+	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+	set_process(true)
+func _process(delta):
+	self.disabled=global.player.pointsLeft==0
+func upgrade():
+	if global.player.pointsLeft>0:
+		global.player.pointsLeft-=1
+		global.player.defense+=1
+		global.updatePlayerHpAndFood()
+
+func twnGrow():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+
+func twnShrink():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+"
+
+[sub_resource type="GDScript" id=31]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):
+	print(self.get_line_count())
+	if self.get_line_count()>1:
+		self.text=\"SPD: \"
+	else:
+		self.text=\"Speed: \"
+"
+
+[sub_resource type="GDScript" id=32]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):
+	self.text=String(global.player.speed)
+	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
+"
+
+[sub_resource type="GDScript" id=17]
+script/source = "extends TextureButton
+
+const tweenParameters={
+	\"duration\":0.3,
+	\"rect_scale_max\":1.1*Vector2(1,1),
+	\"type\":Tween.TRANS_QUINT,
+	\"easing\":Tween.EASE_OUT
+}
+
+func _ready():
+	var twn=Tween.new()
+	twn.name=\"twnScale\"
+	add_child(twn)
+	self.rect_pivot_offset=self.rect_size/2
+	self.connect(\"pressed\",self,\"upgrade\")
+	self.connect(\"mouse_entered\",self,\"twnGrow\")
+	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+	set_process(true)
+func _process(delta):
+	self.disabled=global.player.pointsLeft==0
+func upgrade():
+	if global.player.pointsLeft>0:
+		global.player.pointsLeft-=1
+		global.player.speed+=1
+		global.updatePlayerHpAndFood()
+
+func twnGrow():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+
+func twnShrink():
+	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
+	$twnScale.start()
+"
+
+[node name="vboxL" type="VBoxContainer"]
+margin_right = 280.0
+margin_bottom = 630.0
+size_flags_horizontal = 3
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nameStats" parent="." instance=ExtResource( 5 )]
+margin_right = 280.0
+script = SubResource( 18 )
+compact = true
+
+[node name="perks" type="PanelContainer" parent="."]
+margin_top = 171.0
+margin_right = 280.0
+margin_bottom = 630.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+custom_styles/panel = ExtResource( 3 )
+
+[node name="textureRectBG" type="TextureRect" parent="perks"]
+modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 270.0
+margin_bottom = 449.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="perks"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 270.0
+margin_bottom = 449.0
+
+[node name="marginContainer" type="MarginContainer" parent="perks/vbox"]
+margin_right = 260.0
+margin_bottom = 45.0
+custom_constants/margin_right = 0
+custom_constants/margin_top = 5
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="statPointsBox" type="HBoxContainer" parent="perks/vbox/marginContainer"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 260.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 250, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="richtextStatPoints" type="RichTextLabel" parent="perks/vbox/marginContainer/statPointsBox"]
+margin_right = 125.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 125, 30 )
+rect_clip_content = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+bbcode_enabled = true
+bbcode_text = "[center][wave amp=50 freq=5]Stat points
+left[/wave][/center]"
+text = "Stat points
+left"
+scroll_active = false
+script = SubResource( 19 )
+
+[node name="twnBB" type="Tween" parent="perks/vbox/marginContainer/statPointsBox/richtextStatPoints"]
+
+[node name="intContainer" type="PanelContainer" parent="perks/vbox/marginContainer/statPointsBox"]
+margin_left = 129.0
+margin_right = 250.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 20 )
+
+[node name="points" type="Label" parent="perks/vbox/marginContainer/statPointsBox/intContainer"]
+margin_right = 121.0
+margin_bottom = 30.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 8 )
+text = "0"
+align = 1
+valign = 1
+script = SubResource( 21 )
+
+[node name="invSep" type="HSeparator" parent="perks/vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 49.0
+margin_right = 260.0
+margin_bottom = 59.0
+custom_constants/separation = 10
+
+[node name="strPanel" type="PanelContainer" parent="perks/vbox"]
+margin_top = 63.0
+margin_right = 260.0
+margin_bottom = 185.0
+hint_tooltip = "Strength makes you deal more damage. It also increases your maximum HP and FOOD a little."
+mouse_default_cursor_shape = 16
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_styles/panel = SubResource( 22 )
+
+[node name="marginContainer" type="MarginContainer" parent="perks/vbox/strPanel"]
+margin_right = 260.0
+margin_bottom = 122.0
+custom_constants/margin_right = 40
+custom_constants/margin_top = 30
+custom_constants/margin_left = 40
+custom_constants/margin_bottom = 20
+
+[node name="strHbox" type="HBoxContainer" parent="perks/vbox/strPanel/marginContainer"]
+margin_left = 40.0
+margin_top = 30.0
+margin_right = 220.0
+margin_bottom = 102.0
+alignment = 1
+
+[node name="intContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginContainer/strHbox"]
+margin_right = 105.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_left = 0
+
+[node name="points" type="Label" parent="perks/vbox/strPanel/marginContainer/strHbox/intContainer"]
+margin_top = 15.0
+margin_right = 105.0
+margin_bottom = 57.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "00+00"
+align = 1
+valign = 1
+script = SubResource( 23 )
+
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginContainer/strHbox"]
+margin_left = 109.0
+margin_right = 180.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 0
+custom_constants/margin_top = 20
+custom_constants/margin_left = 60
+custom_constants/margin_bottom = 20
+
+[node name="btn" type="TextureButton" parent="perks/vbox/strPanel/marginContainer/strHbox/btnContainer"]
+margin_left = 60.0
+margin_top = 20.0
+margin_right = 71.0
+margin_bottom = 52.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 9 )
+texture_disabled = ExtResource( 11 )
+expand = true
+stretch_mode = 5
+script = SubResource( 24 )
+
+[node name="defPanel" type="PanelContainer" parent="perks/vbox"]
+margin_top = 189.0
+margin_right = 260.0
+margin_bottom = 311.0
+hint_tooltip = "Defense makes you take less damage. It also raises your maximum HP."
+mouse_default_cursor_shape = 16
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_styles/panel = SubResource( 25 )
+
+[node name="defHbox" type="HBoxContainer" parent="perks/vbox/defPanel"]
+margin_left = 20.0
+margin_right = 240.0
+margin_bottom = 122.0
+alignment = 1
+
+[node name="defLabel" type="Label" parent="perks/vbox/defPanel/defHbox"]
+visible = false
+margin_top = 25.0
+margin_right = 73.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "DEF: "
+align = 1
+valign = 1
+autowrap = true
+script = SubResource( 26 )
+
+[node name="intContainer" type="PanelContainer" parent="perks/vbox/defPanel/defHbox"]
+margin_left = 30.0
+margin_right = 135.0
+margin_bottom = 122.0
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 27 )
+
+[node name="points" type="Label" parent="perks/vbox/defPanel/defHbox/intContainer"]
+margin_top = 40.0
+margin_right = 105.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "00+00"
+align = 1
+valign = 1
+script = SubResource( 28 )
+
+[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/defPanel/defHbox"]
+margin_left = 139.0
+margin_right = 189.0
+margin_bottom = 122.0
+alignment = 1
+
+[node name="btnContainer" type="PanelContainer" parent="perks/vbox/defPanel/defHbox/vboxStats"]
+margin_right = 50.0
+margin_bottom = 122.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 29 )
+
+[node name="btn" type="TextureButton" parent="perks/vbox/defPanel/defHbox/vboxStats/btnContainer"]
+margin_right = 50.0
+margin_bottom = 122.0
+rect_min_size = Vector2( 50, 35 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+texture_normal = ExtResource( 10 )
+texture_disabled = ExtResource( 11 )
+expand = true
+stretch_mode = 5
+script = SubResource( 30 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="spdPanel" type="PanelContainer" parent="perks/vbox"]
+margin_top = 315.0
+margin_right = 260.0
+margin_bottom = 439.0
+hint_tooltip = "Speed makes you attack faster, and it also raises your maximum FOOD."
+mouse_default_cursor_shape = 16
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_styles/panel = ExtResource( 14 )
+
+[node name="spdHbox" type="HBoxContainer" parent="perks/vbox/spdPanel"]
+margin_left = 20.0
+margin_right = 240.0
+margin_bottom = 124.0
+alignment = 1
+
+[node name="spdLabel" type="Label" parent="perks/vbox/spdPanel/spdHbox"]
+visible = false
+margin_top = 25.0
+margin_right = 73.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "SPD: "
+align = 1
+valign = 1
+autowrap = true
+script = SubResource( 31 )
+
+[node name="intContainer" type="PanelContainer" parent="perks/vbox/spdPanel/spdHbox"]
+margin_left = 30.0
+margin_right = 135.0
+margin_bottom = 124.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 27 )
+
+[node name="points" type="Label" parent="perks/vbox/spdPanel/spdHbox/intContainer"]
+margin_top = 41.0
+margin_right = 105.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "00+00"
+align = 1
+valign = 1
+script = SubResource( 32 )
+
+[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/spdPanel/spdHbox"]
+margin_left = 139.0
+margin_right = 189.0
+margin_bottom = 124.0
+alignment = 1
+
+[node name="btnContainer" type="PanelContainer" parent="perks/vbox/spdPanel/spdHbox/vboxStats"]
+margin_right = 50.0
+margin_bottom = 124.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 29 )
+
+[node name="btn" type="TextureButton" parent="perks/vbox/spdPanel/spdHbox/vboxStats/btnContainer"]
+margin_right = 50.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 50, 35 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+texture_normal = ExtResource( 10 )
+texture_disabled = ExtResource( 11 )
+expand = true
+stretch_mode = 5
+script = SubResource( 17 )
+__meta__ = {
+"_editor_description_": ""
+}
