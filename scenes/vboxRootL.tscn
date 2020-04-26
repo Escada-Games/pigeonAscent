@@ -17,7 +17,8 @@
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends VBoxContainer
-func _ready():set_process(true)#get_tree().root.connect(\"size_changed\",global,\"shouldIBeVisible\",[self])
+var updateable=true
+func _ready():set_process(true if updateable else false)
 func _process(delta):self.visible=!global.isGameCompact()
 "
 
