@@ -14,7 +14,8 @@
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends VBoxContainer
-func _ready():get_tree().root.connect(\"size_changed\",global,\"shouldIBeVisible\",[self])
+func _ready():set_process(true)#get_tree().root.connect(\"size_changed\",global,\"shouldIBeVisible\",[self])
+func _process(delta):self.visible=!global.isGameCompact()
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -73,8 +74,9 @@ func buy():
 "
 
 [node name="vboxRootR" type="VBoxContainer"]
-margin_right = 108.0
-margin_bottom = 630.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 360, 0 )
 size_flags_horizontal = 3
 script = SubResource( 1 )
 __meta__ = {
@@ -82,15 +84,15 @@ __meta__ = {
 }
 
 [node name="panelRContainer" type="PanelContainer" parent="."]
-margin_right = 108.0
-margin_bottom = 630.0
+margin_right = 360.0
+margin_bottom = 640.0
 size_flags_vertical = 3
 
 [node name="textureRect" type="TextureRect" parent="panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 101.0
-margin_bottom = 623.0
+margin_right = 353.0
+margin_bottom = 633.0
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 2
@@ -98,30 +100,30 @@ stretch_mode = 2
 [node name="marginBox" type="MarginContainer" parent="panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 101.0
-margin_bottom = 623.0
+margin_right = 353.0
+margin_bottom = 633.0
 custom_constants/margin_top = 10
 custom_constants/margin_bottom = 10
 
 [node name="hboxChain" type="HBoxContainer" parent="panelRContainer/marginBox"]
 margin_top = 10.0
-margin_right = 94.0
-margin_bottom = 606.0
+margin_right = 346.0
+margin_bottom = 616.0
 alignment = 1
 
 [node name="1" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
-margin_left = 11.0
-margin_right = 33.0
-margin_bottom = 596.0
+margin_left = 74.0
+margin_right = 96.0
+margin_bottom = 606.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 4 )
 stretch_mode = 2
 
 [node name="2" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
-margin_left = 60.0
-margin_right = 82.0
-margin_bottom = 596.0
+margin_left = 249.0
+margin_right = 271.0
+margin_bottom = 606.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 4 )
@@ -130,23 +132,23 @@ stretch_mode = 2
 [node name="vbox" type="VBoxContainer" parent="panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 101.0
-margin_bottom = 623.0
+margin_right = 353.0
+margin_bottom = 633.0
 size_flags_vertical = 3
 
 [node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox"]
-margin_right = 94.0
-margin_bottom = 489.0
+margin_right = 346.0
+margin_bottom = 497.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
 [node name="panelContainer" type="PanelContainer" parent="panelRContainer/vbox/vboxShop"]
-margin_right = 94.0
+margin_right = 346.0
 margin_bottom = 45.0
 custom_styles/panel = SubResource( 2 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
-margin_right = 94.0
+margin_right = 346.0
 margin_bottom = 45.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -156,7 +158,7 @@ custom_constants/margin_bottom = 10
 [node name="shopLabel" type="Label" parent="panelRContainer/vbox/vboxShop/panelContainer/marginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 84.0
+margin_right = 336.0
 margin_bottom = 35.0
 custom_fonts/font = ExtResource( 2 )
 text = "Shop!"
@@ -167,13 +169,13 @@ __meta__ = {
 
 [node name="panelShop" type="ScrollContainer" parent="panelRContainer/vbox/vboxShop"]
 margin_top = 49.0
-margin_right = 94.0
-margin_bottom = 489.0
+margin_right = 346.0
+margin_bottom = 497.0
 size_flags_vertical = 3
 
 [node name="marginCtn" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelShop"]
-margin_right = 94.0
-margin_bottom = 440.0
+margin_right = 346.0
+margin_bottom = 448.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 15
@@ -184,24 +186,24 @@ custom_constants/margin_bottom = 5
 [node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox/vboxShop/panelShop/marginCtn"]
 margin_left = 15.0
 margin_top = 5.0
-margin_right = 79.0
-margin_bottom = 435.0
+margin_right = 331.0
+margin_bottom = 443.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource( 3 )
 
 [node name="descriptionContainer" type="PanelContainer" parent="panelRContainer/vbox"]
-margin_top = 493.0
-margin_right = 94.0
-margin_bottom = 616.0
+margin_top = 501.0
+margin_right = 346.0
+margin_bottom = 626.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = SubResource( 4 )
 script = SubResource( 5 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
-margin_right = 94.0
-margin_bottom = 123.0
+margin_right = 346.0
+margin_bottom = 125.0
 custom_constants/margin_right = 7
 custom_constants/margin_top = 10
 custom_constants/margin_left = 13
@@ -210,12 +212,12 @@ custom_constants/margin_bottom = 4
 [node name="vBoxContainer" type="VBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer"]
 margin_left = 13.0
 margin_top = 10.0
-margin_right = 87.0
-margin_bottom = 119.0
+margin_right = 339.0
+margin_bottom = 121.0
 
 [node name="label" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_right = 74.0
-margin_bottom = 78.0
+margin_right = 326.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
@@ -224,15 +226,15 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 autowrap = true
 
 [node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_top = 82.0
-margin_right = 74.0
-margin_bottom = 109.0
+margin_top = 84.0
+margin_right = 326.0
+margin_bottom = 111.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="price" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
 margin_top = 7.0
-margin_right = 74.0
+margin_right = 326.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0

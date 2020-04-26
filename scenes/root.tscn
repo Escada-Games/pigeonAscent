@@ -13,7 +13,7 @@
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=28]
 [ext_resource path="res://resource/tres/goldPanel.tres" type="StyleBox" id=31]
 
-[sub_resource type="GDScript" id=28]
+[sub_resource type="GDScript" id=1]
 script/source = "extends MarginContainer
 var deleteMe=Node2D.new()
 var newContainer=Node2D.new()
@@ -46,7 +46,7 @@ func checkForDeletion(h,m):
 		newContainer.queue_free()
 "
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureButton
 
 func _ready():
@@ -55,7 +55,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.152941, 0.152941, 0.211765, 1 )
 border_width_left = 10
 border_width_top = 10
@@ -67,7 +67,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=4]
 script/source = "extends TextureRect
 var textureNormal=preload(\"res://resource/Tunnel.png\")
 var textureGod=preload(\"res://resource/Boss_Board.png\")
@@ -79,14 +79,14 @@ func _process(delta):
 		self.texture=textureNormal
 "
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=5]
 script/source = "extends TextureRect
 
 func _ready():set_process(true)
 func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
 "
 
-[sub_resource type="GDScript" id=21]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -124,7 +124,7 @@ custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
-script = SubResource( 28 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -132,7 +132,7 @@ __meta__ = {
 [node name="hbox" type="HBoxContainer" parent="marginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 632.0
+margin_right = 884.0
 margin_bottom = 635.0
 alignment = 1
 __meta__ = {
@@ -141,14 +141,18 @@ __meta__ = {
 
 [node name="vboxRootL" parent="marginContainer/hbox" instance=ExtResource( 3 )]
 visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 280.0
+margin_bottom = 630.0
 
 [node name="vboxC" type="VBoxContainer" parent="marginContainer/hbox"]
-margin_right = 627.0
+margin_right = 879.0
 margin_bottom = 630.0
 size_flags_horizontal = 3
 
 [node name="fightContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
-margin_right = 627.0
+margin_right = 879.0
 margin_bottom = 74.0
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 28 )
@@ -157,7 +161,7 @@ custom_styles/panel = ExtResource( 28 )
 modulate = Color( 0.603922, 0.603922, 0.603922, 1 )
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 617.0
+margin_right = 869.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -168,13 +172,13 @@ stretch_mode = 2
 [node name="vbox" type="VBoxContainer" parent="marginContainer/hbox/vboxC/fightContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 617.0
+margin_right = 869.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="fightBtn" type="TextureButton" parent="marginContainer/hbox/vboxC/fightContainer/vbox"]
-margin_right = 607.0
+margin_right = 859.0
 margin_bottom = 54.0
 rect_min_size = Vector2( 90, 30 )
 mouse_default_cursor_shape = 2
@@ -185,7 +189,7 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 12 )
 expand = true
 stretch_mode = 5
-script = SubResource( 17 )
+script = SubResource( 2 )
 
 [node name="progressPanel" type="PanelContainer" parent="marginContainer/hbox/vboxC/fightContainer/vbox"]
 visible = false
@@ -195,16 +199,16 @@ margin_bottom = 48.0
 
 [node name="playerContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
 margin_top = 78.0
-margin_right = 627.0
+margin_right = 879.0
 margin_bottom = 375.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
-custom_styles/panel = SubResource( 18 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="textureRectBG" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 617.0
+margin_right = 869.0
 margin_bottom = 287.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -212,19 +216,19 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource( 13 )
 expand = true
 stretch_mode = 6
-script = SubResource( 19 )
+script = SubResource( 4 )
 
 [node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 617.0
+margin_right = 869.0
 margin_bottom = 287.0
 custom_constants/margin_top = 150
 custom_constants/margin_bottom = 20
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer/marginContainer"]
 margin_top = 150.0
-margin_right = 607.0
+margin_right = 859.0
 margin_bottom = 257.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -232,28 +236,28 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource( 14 )
 expand = true
 stretch_mode = 6
-script = SubResource( 20 )
+script = SubResource( 5 )
 
 [node name="playerStats" parent="marginContainer/hbox/vboxC" instance=ExtResource( 1 )]
 margin_top = 379.0
-margin_right = 627.0
+margin_right = 879.0
 margin_bottom = 546.0
 checkVisibility = true
 
 [node name="goldContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
 margin_top = 550.0
-margin_right = 627.0
+margin_right = 879.0
 margin_bottom = 629.895
 custom_styles/panel = ExtResource( 31 )
 
 [node name="hbox" type="HBoxContainer" parent="marginContainer/hbox/vboxC/goldContainer"]
 margin_left = 11.3007
 margin_top = 19.0
-margin_right = 616.989
+margin_right = 868.989
 margin_bottom = 61.0
 
 [node name="valueLabel" type="Label" parent="marginContainer/hbox/vboxC/goldContainer/hbox"]
-margin_right = 605.0
+margin_right = 857.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -265,11 +269,14 @@ custom_constants/shadow_offset_y = 3
 text = "0123456789"
 align = 1
 valign = 1
-script = SubResource( 21 )
+script = SubResource( 6 )
 
 [node name="vboxRootR" parent="marginContainer/hbox" instance=ExtResource( 4 )]
 visible = false
-margin_left = 315.0
-margin_right = 627.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 441.0
+margin_right = 879.0
+margin_bottom = 630.0
 
 [node name="twnEnter" type="Tween" parent="marginContainer"]
