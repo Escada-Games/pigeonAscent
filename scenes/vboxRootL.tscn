@@ -1,7 +1,6 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
-[ext_resource path="res://resource/fonts/m6x11-32SpacedAlt.tres" type="DynamicFont" id=2]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=3]
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=5]
@@ -100,7 +99,7 @@ func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.pointsLeft)
 "
 
-[sub_resource type="StyleBoxTexture" id=18]
+[sub_resource type="StyleBoxTexture" id=6]
 content_margin_left = 20.0
 content_margin_right = 20.0
 content_margin_top = 0.0
@@ -165,21 +164,9 @@ texture = ExtResource( 13 )
 region_rect = Rect2( 0, 0, 86, 35 )
 expand_margin_top = 15.0
 
-[sub_resource type="GDScript" id=10]
-script/source = "extends Label
+[sub_resource type="StyleBoxEmpty" id=10]
 
-func _ready():set_process(true)
-func _process(delta):
-	print(self.get_line_count())
-	if self.get_line_count()>1:
-		self.text=\"DEF: \"
-	else:
-		self.text=\"Defense: \"
-"
-
-[sub_resource type="StyleBoxEmpty" id=11]
-
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -188,9 +175,7 @@ func _process(delta):
 	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
 "
 
-[sub_resource type="StyleBoxEmpty" id=13]
-
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=12]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -228,19 +213,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=15]
-script/source = "extends Label
-
-func _ready():set_process(true)
-func _process(delta):
-	print(self.get_line_count())
-	if self.get_line_count()>1:
-		self.text=\"SPD: \"
-	else:
-		self.text=\"Speed: \"
-"
-
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -249,7 +222,7 @@ func _process(delta):
 	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
 "
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=14]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -398,7 +371,7 @@ hint_tooltip = "Defense makes you take less damage. It also raises your maximum 
 mouse_default_cursor_shape = 16
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 18 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -408,7 +381,9 @@ margin_left = 20.0
 margin_right = 984.0
 margin_bottom = 112.0
 custom_constants/margin_right = 50
+custom_constants/margin_top = 0
 custom_constants/margin_left = 50
+custom_constants/margin_bottom = 0
 __meta__ = {
 "_editor_description_": ""
 }
@@ -425,6 +400,7 @@ alignment = 1
 margin_right = 105.0
 margin_bottom = 112.0
 size_flags_horizontal = 2
+size_flags_stretch_ratio = 2.0
 custom_constants/margin_left = 0
 
 [node name="points" type="Label" parent="perks/vbox/strPanel/marginCtn/strHbox/intContainer"]
@@ -443,25 +419,22 @@ valign = 1
 script = SubResource( 7 )
 
 [node name="btnContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginCtn/strHbox"]
-margin_left = 434.0
+margin_left = 577.0
 margin_right = 864.0
 margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 0
-custom_constants/margin_top = 20
-custom_constants/margin_left = 60
-custom_constants/margin_bottom = 20
+custom_constants/margin_top = 33
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 33
 
 [node name="btn" type="TextureButton" parent="perks/vbox/strPanel/marginCtn/strHbox/btnContainer"]
-margin_left = 380.0
-margin_top = 20.0
-margin_right = 430.0
-margin_bottom = 92.0
+margin_top = 33.0
+margin_right = 287.0
+margin_bottom = 79.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
-size_flags_horizontal = 8
-size_flags_vertical = 3
 texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
 expand = true
@@ -496,28 +469,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="defLabel" type="Label" parent="perks/vbox/defPanel/marginCtn/defHbox"]
-visible = false
-margin_top = 42.0
-margin_right = 801.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 2
-custom_constants/shadow_offset_y = 2
-custom_constants/shadow_as_outline = 1
-text = "DEF: "
-align = 1
-valign = 1
-autowrap = true
-script = SubResource( 10 )
-
 [node name="intContainer" type="PanelContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
 margin_right = 105.0
 margin_bottom = 112.0
 size_flags_horizontal = 2
-custom_styles/panel = SubResource( 11 )
+size_flags_stretch_ratio = 2.0
+custom_styles/panel = SubResource( 10 )
 
 [node name="points" type="Label" parent="perks/vbox/defPanel/marginCtn/defHbox/intContainer"]
 margin_top = 35.0
@@ -533,33 +490,28 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 12 )
+script = SubResource( 11 )
 
-[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
-margin_left = 814.0
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
+margin_left = 577.0
 margin_right = 864.0
-margin_bottom = 112.0
-alignment = 1
-
-[node name="btnContainer" type="PanelContainer" parent="perks/vbox/defPanel/marginCtn/defHbox/vboxStats"]
-margin_right = 50.0
 margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 13 )
+custom_constants/margin_top = 33
+custom_constants/margin_bottom = 33
 
-[node name="btn" type="TextureButton" parent="perks/vbox/defPanel/marginCtn/defHbox/vboxStats/btnContainer"]
-margin_right = 50.0
-margin_bottom = 112.0
+[node name="btn" type="TextureButton" parent="perks/vbox/defPanel/marginCtn/defHbox/btnContainer"]
+margin_top = 33.0
+margin_right = 287.0
+margin_bottom = 79.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
-size_flags_horizontal = 8
-size_flags_vertical = 3
 texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 14 )
+script = SubResource( 12 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -587,29 +539,13 @@ margin_right = 914.0
 margin_bottom = 114.0
 alignment = 1
 
-[node name="spdLabel" type="Label" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
-visible = false
-margin_top = 25.0
-margin_right = 73.0
-margin_bottom = 53.0
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 2
-custom_constants/shadow_offset_y = 2
-custom_constants/shadow_as_outline = 1
-text = "SPD: "
-align = 1
-valign = 1
-autowrap = true
-script = SubResource( 15 )
-
 [node name="intContainer" type="PanelContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
 margin_right = 105.0
 margin_bottom = 114.0
 size_flags_horizontal = 2
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 11 )
+size_flags_stretch_ratio = 2.0
+custom_styles/panel = SubResource( 10 )
 
 [node name="points" type="Label" parent="perks/vbox/spdPanel/marginCtn/spdHbox/intContainer"]
 margin_top = 36.0
@@ -625,33 +561,28 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 16 )
+script = SubResource( 13 )
 
-[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
-margin_left = 814.0
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
+margin_left = 577.0
 margin_right = 864.0
-margin_bottom = 114.0
-alignment = 1
-
-[node name="btnContainer" type="PanelContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox/vboxStats"]
-margin_right = 50.0
 margin_bottom = 114.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 13 )
+custom_constants/margin_top = 33
+custom_constants/margin_bottom = 33
 
-[node name="btn" type="TextureButton" parent="perks/vbox/spdPanel/marginCtn/spdHbox/vboxStats/btnContainer"]
-margin_right = 50.0
-margin_bottom = 114.0
+[node name="btn" type="TextureButton" parent="perks/vbox/spdPanel/marginCtn/spdHbox/btnContainer"]
+margin_top = 33.0
+margin_right = 287.0
+margin_bottom = 81.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
-size_flags_horizontal = 8
-size_flags_vertical = 3
 texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 17 )
+script = SubResource( 14 )
 __meta__ = {
 "_editor_description_": ""
 }
