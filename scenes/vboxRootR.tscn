@@ -1,6 +1,6 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resource/fonts/m3x6-32Shadow.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=2]
 [ext_resource path="res://resource/fonts/ghouls16Shadow.tres" type="DynamicFont" id=3]
 [ext_resource path="res://resource/Shop_Chainx2.png" type="Texture" id=4]
@@ -55,6 +55,10 @@ script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 "
 
+[sub_resource type="GDScript" id=8]
+script/source = "extends Label
+func _ready():self.text=\"\""
+
 [sub_resource type="GDScript" id=6]
 script/source = "extends Label
 
@@ -85,15 +89,15 @@ __meta__ = {
 }
 
 [node name="panelRContainer" type="PanelContainer" parent="."]
-margin_right = 360.0
-margin_bottom = 640.0
+margin_right = 1024.0
+margin_bottom = 600.0
 size_flags_vertical = 3
 
 [node name="textureRect" type="TextureRect" parent="panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 353.0
-margin_bottom = 633.0
+margin_right = 1017.0
+margin_bottom = 593.0
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 2
@@ -101,30 +105,30 @@ stretch_mode = 2
 [node name="marginBox" type="MarginContainer" parent="panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 353.0
-margin_bottom = 633.0
+margin_right = 1017.0
+margin_bottom = 593.0
 custom_constants/margin_top = 10
 custom_constants/margin_bottom = 10
 
 [node name="hboxChain" type="HBoxContainer" parent="panelRContainer/marginBox"]
 margin_top = 10.0
-margin_right = 346.0
-margin_bottom = 616.0
+margin_right = 1010.0
+margin_bottom = 576.0
 alignment = 1
 
 [node name="1" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
-margin_left = 74.0
-margin_right = 96.0
-margin_bottom = 606.0
+margin_left = 240.0
+margin_right = 262.0
+margin_bottom = 566.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 4 )
 stretch_mode = 2
 
 [node name="2" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
-margin_left = 249.0
-margin_right = 271.0
-margin_bottom = 606.0
+margin_left = 747.0
+margin_right = 769.0
+margin_bottom = 566.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 4 )
@@ -133,23 +137,23 @@ stretch_mode = 2
 [node name="vbox" type="VBoxContainer" parent="panelRContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 353.0
-margin_bottom = 633.0
+margin_right = 1017.0
+margin_bottom = 593.0
 size_flags_vertical = 3
 
 [node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox"]
-margin_right = 346.0
-margin_bottom = 497.0
+margin_right = 1010.0
+margin_bottom = 465.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
 [node name="panelContainer" type="PanelContainer" parent="panelRContainer/vbox/vboxShop"]
-margin_right = 346.0
+margin_right = 1010.0
 margin_bottom = 45.0
 custom_styles/panel = SubResource( 2 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
-margin_right = 346.0
+margin_right = 1010.0
 margin_bottom = 45.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -159,7 +163,7 @@ custom_constants/margin_bottom = 10
 [node name="shopLabel" type="Label" parent="panelRContainer/vbox/vboxShop/panelContainer/marginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 336.0
+margin_right = 1000.0
 margin_bottom = 35.0
 custom_fonts/font = ExtResource( 2 )
 text = "Shop!"
@@ -170,13 +174,13 @@ __meta__ = {
 
 [node name="panelShop" type="ScrollContainer" parent="panelRContainer/vbox/vboxShop"]
 margin_top = 49.0
-margin_right = 346.0
-margin_bottom = 497.0
+margin_right = 1010.0
+margin_bottom = 465.0
 size_flags_vertical = 3
 
 [node name="marginCtn" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelShop"]
-margin_right = 346.0
-margin_bottom = 448.0
+margin_right = 1010.0
+margin_bottom = 416.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 15
@@ -187,60 +191,64 @@ custom_constants/margin_bottom = 5
 [node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox/vboxShop/panelShop/marginCtn"]
 margin_left = 15.0
 margin_top = 5.0
-margin_right = 331.0
-margin_bottom = 443.0
+margin_right = 995.0
+margin_bottom = 411.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource( 3 )
 
 [node name="descriptionContainer" type="PanelContainer" parent="panelRContainer/vbox"]
-margin_top = 501.0
-margin_right = 346.0
-margin_bottom = 626.0
+margin_top = 469.0
+margin_right = 1010.0
+margin_bottom = 586.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = SubResource( 4 )
 script = SubResource( 5 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
-margin_right = 346.0
-margin_bottom = 125.0
-custom_constants/margin_right = 7
+margin_right = 1010.0
+margin_bottom = 117.0
+custom_constants/margin_right = 25
 custom_constants/margin_top = 10
-custom_constants/margin_left = 13
+custom_constants/margin_left = 25
 custom_constants/margin_bottom = 4
 
 [node name="vBoxContainer" type="VBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer"]
-margin_left = 13.0
+margin_left = 25.0
 margin_top = 10.0
-margin_right = 339.0
-margin_bottom = 121.0
+margin_right = 985.0
+margin_bottom = 113.0
 
 [node name="label" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_right = 326.0
-margin_bottom = 80.0
+margin_right = 960.0
+margin_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "DESCRIPTION
+Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!
+"
 autowrap = true
+script = SubResource( 8 )
 
 [node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_top = 84.0
-margin_right = 326.0
-margin_bottom = 111.0
+margin_top = 74.0
+margin_right = 960.0
+margin_bottom = 103.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="price" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
-margin_top = 7.0
-margin_right = 326.0
-margin_bottom = 20.0
+margin_right = 960.0
+margin_bottom = 29.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )
-text = "-"
+text = "LOREM IPSUM - PRICE
+"
 align = 1
 script = SubResource( 6 )
 __meta__ = {

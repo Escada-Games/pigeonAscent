@@ -24,11 +24,6 @@ config/icon="res://icon.png"
 
 global="*res://scenes/global.gd"
 
-[display]
-
-window/size/width=360
-window/size/height=640
-
 [input]
 
 ui_lmb={
