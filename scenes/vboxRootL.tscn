@@ -131,7 +131,7 @@ func _ready():
 	var twn=Tween.new()
 	twn.name=\"twnScale\"
 	add_child(twn)
-	self.rect_pivot_offset=self.rect_size/2
+	#self.rect_pivot_offset=self.rect_size/2
 	self.connect(\"pressed\",self,\"upgrade\")
 	self.connect(\"mouse_entered\",self,\"twnGrow\")
 	self.connect(\"mouse_exited\",self,\"twnShrink\")
@@ -189,7 +189,7 @@ func _ready():
 	var twn=Tween.new()
 	twn.name=\"twnScale\"
 	add_child(twn)
-	self.rect_pivot_offset=self.rect_size/2
+	#self.rect_pivot_offset=self.rect_size/2
 	self.connect(\"pressed\",self,\"upgrade\")
 	self.connect(\"mouse_entered\",self,\"twnGrow\")
 	self.connect(\"mouse_exited\",self,\"twnShrink\")
@@ -236,7 +236,7 @@ func _ready():
 	var twn=Tween.new()
 	twn.name=\"twnScale\"
 	add_child(twn)
-	self.rect_pivot_offset=self.rect_size/2
+	#self.rect_pivot_offset=self.rect_size/2
 	self.connect(\"pressed\",self,\"upgrade\")
 	self.connect(\"mouse_entered\",self,\"twnGrow\")
 	self.connect(\"mouse_exited\",self,\"twnShrink\")
