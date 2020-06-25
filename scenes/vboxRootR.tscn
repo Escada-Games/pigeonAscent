@@ -1,8 +1,8 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://resource/fonts/m3x6-32Shadow.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resource/fonts/_shopDescriptionFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=2]
-[ext_resource path="res://resource/fonts/ghouls16Shadow.tres" type="DynamicFont" id=3]
+[ext_resource path="res://resource/fonts/_shopPriceFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://resource/Shop_Chainx2.png" type="Texture" id=4]
 [ext_resource path="res://resource/Shop_Buttom_Locked.png" type="Texture" id=5]
 [ext_resource path="res://resource/BG_Shop.png" type="Texture" id=6]
@@ -57,13 +57,12 @@ func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 
 [sub_resource type="GDScript" id=8]
 script/source = "extends Label
-func _ready():self.text=\"\""
+func _ready():self.text=\"\"
+"
 
 [sub_resource type="GDScript" id=6]
 script/source = "extends Label
-
-func _ready():pass#set_process(true)
-#func _process(delta):self.text=String(global.currentUpgrade.itemPrice)
+func _ready():self.text=\"\"
 "
 
 [sub_resource type="GDScript" id=7]
@@ -247,8 +246,7 @@ margin_bottom = 29.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )
-text = "LOREM IPSUM - PRICE
-"
+text = "PRICE"
 align = 1
 script = SubResource( 6 )
 __meta__ = {
