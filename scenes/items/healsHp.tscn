@@ -37,8 +37,12 @@ func _ready():
 func updateDescription():
 	global.currentUpgrade=self
 	global.shopDescription.text=self.itemDescription
-#	global.shopDescription.get_parent().get_node(\"hBoxContainer\")
 	global.shopDescription.get_parent().get_node(\"hBoxContainer/price\").text=String(self.itemPrice)
+
+func eraseDescription():
+	global.currentUpgrade=null
+	global.shopDescription.text=\"\"
+	global.shopDescription.get_parent().get_node(\"hBoxContainer/price\").text=\"\"
 
 func _input(event):
 	if event.is_action_pressed(\"ui_lmb\") and self.rect_scale>1.05*Vector2(1,1) and global.currentItem==self and self.clickable:
@@ -58,6 +62,7 @@ func twnGrow():
 	$twnScale.start()
 
 func twnShrink():
+	#eraseDescription()
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)
 	$twnScale.start()
 	

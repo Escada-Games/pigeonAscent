@@ -171,7 +171,7 @@ size_flags_horizontal = 3
 
 [node name="fightContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
 margin_right = 323.0
-margin_bottom = 66.0
+margin_bottom = 97.0
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 28 )
 
@@ -180,7 +180,7 @@ modulate = Color( 0.603922, 0.603922, 0.603922, 1 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 313.0
-margin_bottom = 56.0
+margin_bottom = 87.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 2 )
@@ -191,13 +191,13 @@ stretch_mode = 2
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 313.0
-margin_bottom = 56.0
+margin_bottom = 87.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="fightBtn" type="TextureButton" parent="marginContainer/hbox/vboxC/fightContainer/vbox"]
 margin_right = 303.0
-margin_bottom = 46.0
+margin_bottom = 77.0
 rect_min_size = Vector2( 90, 30 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
@@ -216,9 +216,9 @@ margin_right = 485.0
 margin_bottom = 48.0
 
 [node name="playerContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
-margin_top = 70.0
+margin_top = 101.0
 margin_right = 323.0
-margin_bottom = 335.0
+margin_bottom = 489.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 custom_styles/panel = SubResource( 3 )
@@ -227,7 +227,7 @@ custom_styles/panel = SubResource( 3 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 313.0
-margin_bottom = 255.0
+margin_bottom = 378.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
@@ -240,14 +240,14 @@ script = SubResource( 4 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 313.0
-margin_bottom = 255.0
+margin_bottom = 378.0
 custom_constants/margin_top = 150
 custom_constants/margin_bottom = 20
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer/marginContainer"]
 margin_top = 150.0
 margin_right = 303.0
-margin_bottom = 225.0
+margin_bottom = 348.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
@@ -257,26 +257,30 @@ stretch_mode = 6
 script = SubResource( 5 )
 
 [node name="playerStats" parent="marginContainer/hbox/vboxC" instance=ExtResource( 1 )]
-margin_top = 339.0
+visible = false
+margin_top = 350.0
 margin_right = 323.0
-margin_bottom = 506.0
+margin_bottom = 517.0
 checkVisibility = true
 
 [node name="goldContainer" type="PanelContainer" parent="marginContainer/hbox/vboxC"]
-margin_top = 510.0
+margin_top = 493.0
 margin_right = 323.0
-margin_bottom = 589.895
+margin_bottom = 590.0
+size_flags_vertical = 3
 custom_styles/panel = ExtResource( 31 )
 
 [node name="hbox" type="HBoxContainer" parent="marginContainer/hbox/vboxC/goldContainer"]
-margin_left = 11.3007
-margin_top = 19.0
-margin_right = 312.989
-margin_bottom = 61.0
+margin_top = 25.0
+margin_right = 323.0
+margin_bottom = 97.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
 
 [node name="valueLabel" type="Label" parent="marginContainer/hbox/vboxC/goldContainer/hbox"]
-margin_right = 301.0
-margin_bottom = 42.0
+margin_right = 323.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 27 )
