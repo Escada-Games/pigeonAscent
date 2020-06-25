@@ -1,14 +1,12 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
 [ext_resource path="res://resource/fonts/m6x11-32SpacedAlt.tres" type="DynamicFont" id=2]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=3]
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=5]
-[ext_resource path="res://resource/Stat_Buttom_Press.png" type="Texture" id=6]
 [ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=7]
 [ext_resource path="res://resource/fonts/ghouls32Shadow.tres" type="DynamicFont" id=8]
-[ext_resource path="res://resource/Stat_Buttom_Over.png" type="Texture" id=9]
 [ext_resource path="res://resource/Stats_Buttom_13X10_Frame1.png" type="Texture" id=10]
 [ext_resource path="res://resource/Stats_Buttom_13X10_Frame2.png" type="Texture" id=11]
 [ext_resource path="res://resource/Panel_Stat_Atk.png" type="Texture" id=12]
@@ -102,13 +100,14 @@ func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.pointsLeft)
 "
 
-[sub_resource type="StyleBoxTexture" id=6]
-content_margin_left = 0.0
-content_margin_right = 0.0
+[sub_resource type="StyleBoxTexture" id=18]
+content_margin_left = 20.0
+content_margin_right = 20.0
 content_margin_top = 0.0
 content_margin_bottom = 0.0
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 86, 35 )
+expand_margin_top = 15.0
 
 [sub_resource type="GDScript" id=7]
 script/source = "extends Label
@@ -298,14 +297,14 @@ __meta__ = {
 }
 
 [node name="nameStats" parent="." instance=ExtResource( 5 )]
-margin_right = 360.0
+margin_right = 1024.0
 script = SubResource( 2 )
 compact = true
 
 [node name="perks" type="PanelContainer" parent="."]
 margin_top = 171.0
-margin_right = 360.0
-margin_bottom = 640.0
+margin_right = 1024.0
+margin_bottom = 600.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 custom_styles/panel = ExtResource( 3 )
@@ -314,8 +313,8 @@ custom_styles/panel = ExtResource( 3 )
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 350.0
-margin_bottom = 459.0
+margin_right = 1014.0
+margin_bottom = 419.0
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 2
@@ -323,11 +322,11 @@ stretch_mode = 2
 [node name="vbox" type="VBoxContainer" parent="perks"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 350.0
-margin_bottom = 459.0
+margin_right = 1014.0
+margin_bottom = 419.0
 
 [node name="marginContainer" type="MarginContainer" parent="perks/vbox"]
-margin_right = 340.0
+margin_right = 1004.0
 margin_bottom = 45.0
 custom_constants/margin_right = 0
 custom_constants/margin_top = 5
@@ -337,7 +336,7 @@ custom_constants/margin_bottom = 10
 [node name="statPointsBox" type="HBoxContainer" parent="perks/vbox/marginContainer"]
 margin_left = 10.0
 margin_top = 5.0
-margin_right = 340.0
+margin_right = 1004.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 250, 30 )
 size_flags_horizontal = 3
@@ -345,7 +344,7 @@ size_flags_vertical = 3
 alignment = 2
 
 [node name="richtextStatPoints" type="RichTextLabel" parent="perks/vbox/marginContainer/statPointsBox"]
-margin_right = 163.0
+margin_right = 495.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 125, 30 )
 rect_clip_content = false
@@ -367,15 +366,15 @@ script = SubResource( 3 )
 [node name="twnBB" type="Tween" parent="perks/vbox/marginContainer/statPointsBox/richtextStatPoints"]
 
 [node name="intContainer" type="PanelContainer" parent="perks/vbox/marginContainer/statPointsBox"]
-margin_left = 167.0
-margin_right = 330.0
+margin_left = 499.0
+margin_right = 994.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 4 )
 
 [node name="points" type="Label" parent="perks/vbox/marginContainer/statPointsBox/intContainer"]
-margin_right = 163.0
+margin_right = 495.0
 margin_bottom = 30.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 8 )
@@ -387,46 +386,51 @@ script = SubResource( 5 )
 [node name="invSep" type="HSeparator" parent="perks/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 49.0
-margin_right = 340.0
+margin_right = 1004.0
 margin_bottom = 59.0
 custom_constants/separation = 10
 
 [node name="strPanel" type="PanelContainer" parent="perks/vbox"]
 margin_top = 63.0
-margin_right = 340.0
-margin_bottom = 189.0
-hint_tooltip = "Strength makes you deal more damage. It also increases your maximum HP and FOOD a little."
+margin_right = 1004.0
+margin_bottom = 175.0
+hint_tooltip = "Defense makes you take less damage. It also raises your maximum HP."
 mouse_default_cursor_shape = 16
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 18 )
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="marginContainer" type="MarginContainer" parent="perks/vbox/strPanel"]
-margin_right = 340.0
-margin_bottom = 126.0
-custom_constants/margin_right = 40
-custom_constants/margin_top = 30
-custom_constants/margin_left = 40
-custom_constants/margin_bottom = 20
+[node name="marginCtn" type="MarginContainer" parent="perks/vbox/strPanel"]
+margin_left = 20.0
+margin_right = 984.0
+margin_bottom = 112.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="strHbox" type="HBoxContainer" parent="perks/vbox/strPanel/marginContainer"]
-margin_left = 40.0
-margin_top = 30.0
-margin_right = 300.0
-margin_bottom = 106.0
-alignment = 1
-
-[node name="intContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginContainer/strHbox"]
-margin_right = 128.0
-margin_bottom = 76.0
+[node name="strHbox" type="HBoxContainer" parent="perks/vbox/strPanel/marginCtn"]
+margin_left = 50.0
+margin_right = 914.0
+margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
+
+[node name="intContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginCtn/strHbox"]
+margin_right = 105.0
+margin_bottom = 112.0
+size_flags_horizontal = 2
 custom_constants/margin_left = 0
 
-[node name="points" type="Label" parent="perks/vbox/strPanel/marginContainer/strHbox/intContainer"]
-margin_top = 17.0
-margin_right = 128.0
-margin_bottom = 59.0
+[node name="points" type="Label" parent="perks/vbox/strPanel/marginCtn/strHbox/intContainer"]
+margin_top = 35.0
+margin_right = 105.0
+margin_bottom = 77.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -438,10 +442,10 @@ align = 1
 valign = 1
 script = SubResource( 7 )
 
-[node name="btnContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginContainer/strHbox"]
-margin_left = 132.0
-margin_right = 260.0
-margin_bottom = 76.0
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginCtn/strHbox"]
+margin_left = 434.0
+margin_right = 864.0
+margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 0
@@ -449,41 +453,54 @@ custom_constants/margin_top = 20
 custom_constants/margin_left = 60
 custom_constants/margin_bottom = 20
 
-[node name="btn" type="TextureButton" parent="perks/vbox/strPanel/marginContainer/strHbox/btnContainer"]
-margin_left = 60.0
+[node name="btn" type="TextureButton" parent="perks/vbox/strPanel/marginCtn/strHbox/btnContainer"]
+margin_left = 380.0
 margin_top = 20.0
-margin_right = 128.0
-margin_bottom = 56.0
+margin_right = 430.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
 texture_normal = ExtResource( 10 )
-texture_pressed = ExtResource( 6 )
-texture_hover = ExtResource( 9 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
 script = SubResource( 8 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="defPanel" type="PanelContainer" parent="perks/vbox"]
-margin_top = 193.0
-margin_right = 340.0
-margin_bottom = 319.0
+margin_top = 179.0
+margin_right = 1004.0
+margin_bottom = 291.0
 hint_tooltip = "Defense makes you take less damage. It also raises your maximum HP."
 mouse_default_cursor_shape = 16
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = SubResource( 9 )
 
-[node name="defHbox" type="HBoxContainer" parent="perks/vbox/defPanel"]
+[node name="marginCtn" type="MarginContainer" parent="perks/vbox/defPanel"]
 margin_left = 20.0
-margin_right = 320.0
-margin_bottom = 126.0
+margin_right = 984.0
+margin_bottom = 112.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="defHbox" type="HBoxContainer" parent="perks/vbox/defPanel/marginCtn"]
+margin_left = 50.0
+margin_right = 914.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 alignment = 1
 
-[node name="defLabel" type="Label" parent="perks/vbox/defPanel/defHbox"]
+[node name="defLabel" type="Label" parent="perks/vbox/defPanel/marginCtn/defHbox"]
 visible = false
-margin_top = 25.0
-margin_right = 73.0
-margin_bottom = 53.0
+margin_top = 42.0
+margin_right = 801.0
+margin_bottom = 70.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -496,18 +513,16 @@ valign = 1
 autowrap = true
 script = SubResource( 10 )
 
-[node name="intContainer" type="PanelContainer" parent="perks/vbox/defPanel/defHbox"]
-margin_left = 70.0
-margin_right = 175.0
-margin_bottom = 126.0
-size_flags_horizontal = 0
-size_flags_vertical = 3
+[node name="intContainer" type="PanelContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
+margin_right = 105.0
+margin_bottom = 112.0
+size_flags_horizontal = 2
 custom_styles/panel = SubResource( 11 )
 
-[node name="points" type="Label" parent="perks/vbox/defPanel/defHbox/intContainer"]
-margin_top = 42.0
+[node name="points" type="Label" parent="perks/vbox/defPanel/marginCtn/defHbox/intContainer"]
+margin_top = 35.0
 margin_right = 105.0
-margin_bottom = 84.0
+margin_bottom = 77.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
@@ -520,25 +535,25 @@ align = 1
 valign = 1
 script = SubResource( 12 )
 
-[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/defPanel/defHbox"]
-margin_left = 179.0
-margin_right = 229.0
-margin_bottom = 126.0
+[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
+margin_left = 814.0
+margin_right = 864.0
+margin_bottom = 112.0
 alignment = 1
 
-[node name="btnContainer" type="PanelContainer" parent="perks/vbox/defPanel/defHbox/vboxStats"]
+[node name="btnContainer" type="PanelContainer" parent="perks/vbox/defPanel/marginCtn/defHbox/vboxStats"]
 margin_right = 50.0
-margin_bottom = 126.0
+margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 13 )
 
-[node name="btn" type="TextureButton" parent="perks/vbox/defPanel/defHbox/vboxStats/btnContainer"]
+[node name="btn" type="TextureButton" parent="perks/vbox/defPanel/marginCtn/defHbox/vboxStats/btnContainer"]
 margin_right = 50.0
-margin_bottom = 126.0
+margin_bottom = 112.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 size_flags_vertical = 3
 texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
@@ -550,22 +565,29 @@ __meta__ = {
 }
 
 [node name="spdPanel" type="PanelContainer" parent="perks/vbox"]
-margin_top = 323.0
-margin_right = 340.0
-margin_bottom = 449.0
+margin_top = 295.0
+margin_right = 1004.0
+margin_bottom = 409.0
 hint_tooltip = "Speed makes you attack faster, and it also raises your maximum FOOD."
 mouse_default_cursor_shape = 16
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = ExtResource( 14 )
 
-[node name="spdHbox" type="HBoxContainer" parent="perks/vbox/spdPanel"]
+[node name="marginCtn" type="MarginContainer" parent="perks/vbox/spdPanel"]
 margin_left = 20.0
-margin_right = 320.0
-margin_bottom = 126.0
+margin_right = 984.0
+margin_bottom = 114.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="spdHbox" type="HBoxContainer" parent="perks/vbox/spdPanel/marginCtn"]
+margin_left = 50.0
+margin_right = 914.0
+margin_bottom = 114.0
 alignment = 1
 
-[node name="spdLabel" type="Label" parent="perks/vbox/spdPanel/spdHbox"]
+[node name="spdLabel" type="Label" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
 visible = false
 margin_top = 25.0
 margin_right = 73.0
@@ -582,17 +604,17 @@ valign = 1
 autowrap = true
 script = SubResource( 15 )
 
-[node name="intContainer" type="PanelContainer" parent="perks/vbox/spdPanel/spdHbox"]
-margin_left = 70.0
-margin_right = 175.0
-margin_bottom = 126.0
+[node name="intContainer" type="PanelContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
+margin_right = 105.0
+margin_bottom = 114.0
+size_flags_horizontal = 2
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 11 )
 
-[node name="points" type="Label" parent="perks/vbox/spdPanel/spdHbox/intContainer"]
-margin_top = 42.0
+[node name="points" type="Label" parent="perks/vbox/spdPanel/marginCtn/spdHbox/intContainer"]
+margin_top = 36.0
 margin_right = 105.0
-margin_bottom = 84.0
+margin_bottom = 78.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
@@ -605,25 +627,25 @@ align = 1
 valign = 1
 script = SubResource( 16 )
 
-[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/spdPanel/spdHbox"]
-margin_left = 179.0
-margin_right = 229.0
-margin_bottom = 126.0
+[node name="vboxStats" type="VBoxContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
+margin_left = 814.0
+margin_right = 864.0
+margin_bottom = 114.0
 alignment = 1
 
-[node name="btnContainer" type="PanelContainer" parent="perks/vbox/spdPanel/spdHbox/vboxStats"]
+[node name="btnContainer" type="PanelContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox/vboxStats"]
 margin_right = 50.0
-margin_bottom = 126.0
+margin_bottom = 114.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 13 )
 
-[node name="btn" type="TextureButton" parent="perks/vbox/spdPanel/spdHbox/vboxStats/btnContainer"]
+[node name="btn" type="TextureButton" parent="perks/vbox/spdPanel/marginCtn/spdHbox/vboxStats/btnContainer"]
 margin_right = 50.0
-margin_bottom = 126.0
+margin_bottom = 114.0
 rect_min_size = Vector2( 50, 35 )
 mouse_default_cursor_shape = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 size_flags_vertical = 3
 texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
