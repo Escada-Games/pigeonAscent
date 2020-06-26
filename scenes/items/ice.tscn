@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://resource/Shop_Panel.png" type="Texture" id=2]
 [ext_resource path="res://resource/itens/Ice.png" type="Texture" id=3]
+[ext_resource path="res://scenes/polish/panelGambiarraShadow.tscn" type="PackedScene" id=4]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -73,7 +74,7 @@ outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
 
-[node name="sword" type="PanelContainer"]
+[node name="ice" type="PanelContainer"]
 margin_right = 310.0
 margin_bottom = 99.0
 rect_min_size = Vector2( 0, 100 )
@@ -86,9 +87,11 @@ __meta__ = {
 
 [node name="twnScale" type="Tween" parent="."]
 
+[node name="panelGambiarraShadow" parent="." instance=ExtResource( 4 )]
+
 [node name="marginContainer" type="MarginContainer" parent="."]
 margin_right = 310.0
-margin_bottom = 100.0
+margin_bottom = 114.0
 mouse_filter = 2
 custom_constants/margin_right = 10
 custom_constants/margin_left = 3
@@ -96,18 +99,18 @@ custom_constants/margin_left = 3
 [node name="hboxItem" type="HBoxContainer" parent="marginContainer"]
 margin_left = 3.0
 margin_right = 300.0
-margin_bottom = 100.0
+margin_bottom = 114.0
 
 [node name="vSeparator" type="VSeparator" parent="marginContainer/hboxItem"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 15.0
-margin_bottom = 100.0
+margin_bottom = 114.0
 custom_constants/separation = 15
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/hboxItem"]
 margin_left = 19.0
 margin_right = 110.0
-margin_bottom = 100.0
+margin_bottom = 114.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 3 )
@@ -116,9 +119,9 @@ stretch_mode = 6
 
 [node name="label" type="Label" parent="marginContainer/hboxItem"]
 margin_left = 114.0
-margin_top = 37.0
+margin_top = 44.0
 margin_right = 297.0
-margin_bottom = 63.0
+margin_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = SubResource( 3 )

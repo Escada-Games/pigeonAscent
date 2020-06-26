@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://resource/Shop_Panel.png" type="Texture" id=2]
 [ext_resource path="res://resource/itens/Orange.png" type="Texture" id=3]
+[ext_resource path="res://scenes/polish/panelGambiarraShadow.tscn" type="PackedScene" id=4]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -86,6 +87,9 @@ __meta__ = {
 }
 
 [node name="twnScale" type="Tween" parent="."]
+
+[node name="panelGambiarraShadow" parent="." instance=ExtResource( 4 )]
+margin_bottom = 100.0
 
 [node name="marginContainer" type="MarginContainer" parent="."]
 margin_right = 310.0
