@@ -55,17 +55,17 @@ script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 "
 
-[sub_resource type="GDScript" id=8]
-script/source = "extends Label
-func _ready():self.text=\"\"
-"
-
 [sub_resource type="GDScript" id=6]
 script/source = "extends Label
 func _ready():self.text=\"\"
 "
 
 [sub_resource type="GDScript" id=7]
+script/source = "extends Label
+func _ready():self.text=\"\"
+"
+
+[sub_resource type="GDScript" id=8]
 script/source = "extends TextureButton
 
 func _ready():
@@ -116,22 +116,70 @@ margin_bottom = 576.0
 alignment = 1
 
 [node name="1" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
-margin_left = 240.0
-margin_right = 262.0
+margin_left = 251.0
+margin_right = 251.0
 margin_bottom = 566.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
-texture = ExtResource( 4 )
 stretch_mode = 2
 
-[node name="2" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
-margin_left = 747.0
-margin_right = 769.0
-margin_bottom = 566.0
+[node name="shadow" type="TextureRect" parent="panelRContainer/marginBox/hboxChain/1"]
+modulate = Color( 0, 0, 0, 0.5 )
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 27.0
+margin_bottom = 571.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 texture = ExtResource( 4 )
 stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chain" type="TextureRect" parent="panelRContainer/marginBox/hboxChain/1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="TextureRect" parent="panelRContainer/marginBox/hboxChain"]
+margin_left = 758.0
+margin_right = 758.0
+margin_bottom = 566.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+stretch_mode = 2
+
+[node name="shadow" type="TextureRect" parent="panelRContainer/marginBox/hboxChain/3"]
+modulate = Color( 0, 0, 0, 0.5 )
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 27.0
+margin_bottom = 571.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chain" type="TextureRect" parent="panelRContainer/marginBox/hboxChain/3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="vbox" type="VBoxContainer" parent="panelRContainer"]
 margin_left = 7.0
@@ -231,7 +279,7 @@ text = "DESCRIPTION
 Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!
 "
 autowrap = true
-script = SubResource( 8 )
+script = SubResource( 6 )
 
 [node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
 margin_top = 74.0
@@ -248,7 +296,7 @@ size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )
 text = "PRICE"
 align = 1
-script = SubResource( 6 )
+script = SubResource( 7 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -266,4 +314,4 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 8 )
 texture_disabled = ExtResource( 5 )
 expand = true
-script = SubResource( 7 )
+script = SubResource( 8 )
