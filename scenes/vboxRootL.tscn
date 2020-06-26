@@ -113,6 +113,7 @@ script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):
+	self.rect_scale=Vector2(2,2) if OS.window_size.x>1024*1.5 else Vector2(1,1)
 	self.text=String(global.player.strength)
 	if global.player.extraStrength!=0: self.text+= \" + \" + String(global.player.extraStrength)
 "
@@ -171,6 +172,7 @@ script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):
+	self.rect_scale=Vector2(2,2) if OS.window_size.x>1024*1.5 else Vector2(1,1)
 	self.text=String(global.player.defense)
 	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
 "
@@ -218,6 +220,7 @@ script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):
+	self.rect_scale=Vector2(2,2) if OS.window_size.x>1024*1.5 else Vector2(1,1)
 	self.text=String(global.player.speed)
 	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
 "
