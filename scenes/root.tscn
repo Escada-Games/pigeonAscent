@@ -105,11 +105,16 @@ func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.pla
 
 [sub_resource type="GDScript" id=6]
 script/source = "extends Label
-
-func _ready():set_process(true)
+var displayGold=0
+const lerpConstant=0.1
+func _ready():
+	displayGold=global.player.gold
+	set_process(true)
 func _process(delta):
 #	self.text=\"Gold: \"+String(global.player.gold)
-	self.text=String(global.player.gold)
+	#self.text=String(global.player.gold)
+	displayGold=lerp(displayGold,global.player.gold,lerpConstant)
+	self.text=str(int(displayGold))
 "
 
 [node name="root" type="Control"]
