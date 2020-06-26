@@ -53,8 +53,7 @@ func buy():
 		global.createSelectSfx()
 		if self.unique:self.queue_free()
 	else:
-		pass
-		#PLAY OTHER SFX
+		global.createClickUnableSfx()
 	
 func twnGrow():
 	global.currentItem=self
@@ -88,10 +87,11 @@ __meta__ = {
 [node name="twnScale" type="Tween" parent="."]
 
 [node name="panelGambiarraShadow" parent="." instance=ExtResource( 4 )]
+margin_bottom = 100.0
 
 [node name="marginContainer" type="MarginContainer" parent="."]
 margin_right = 310.0
-margin_bottom = 114.0
+margin_bottom = 100.0
 mouse_filter = 2
 custom_constants/margin_right = 10
 custom_constants/margin_left = 3
@@ -99,18 +99,18 @@ custom_constants/margin_left = 3
 [node name="hboxItem" type="HBoxContainer" parent="marginContainer"]
 margin_left = 3.0
 margin_right = 300.0
-margin_bottom = 114.0
+margin_bottom = 100.0
 
 [node name="vSeparator" type="VSeparator" parent="marginContainer/hboxItem"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 15.0
-margin_bottom = 114.0
+margin_bottom = 100.0
 custom_constants/separation = 15
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/hboxItem"]
 margin_left = 19.0
 margin_right = 110.0
-margin_bottom = 114.0
+margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 3 )
@@ -119,9 +119,9 @@ stretch_mode = 6
 
 [node name="label" type="Label" parent="marginContainer/hboxItem"]
 margin_left = 114.0
-margin_top = 44.0
+margin_top = 37.0
 margin_right = 297.0
-margin_bottom = 70.0
+margin_bottom = 63.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = SubResource( 3 )

@@ -56,6 +56,8 @@ func buy():
 		global.player.hp=clamp(global.player.hp+20,0,global.player.maxHp)
 		global.createSelectSfx()
 		if self.unique:self.queue_free()
+	else:
+		global.createClickUnableSfx()
 	
 func twnGrow():
 	global.currentItem=self

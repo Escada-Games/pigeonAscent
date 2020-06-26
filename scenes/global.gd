@@ -215,6 +215,9 @@ func secondEvolution():
 		self.player["class"]=self.c_hatoshi if self.hasSword else self.c_winged2
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
 var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
+var clickUnableSfx=preload("res://scenes/polish/clickUnableSfx.tscn")
+func createClickUnableSfx():
+	add_child(clickUnableSfx.instance())
 func createHoverSfx():
 	add_child(hoverSfx.instance())
 func createSelectSfx():
