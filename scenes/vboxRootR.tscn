@@ -26,8 +26,8 @@ region_rect = Rect2( 0, 0, 83, 20 )
 [sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 83, 20 )
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends VBoxContainer
