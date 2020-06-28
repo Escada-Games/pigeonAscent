@@ -72,22 +72,20 @@ const maxWaveAmp=50
 var stringNormal=\"[center]Stat points \\nleft[/center]\"
 var stringWavy=\"[center][wave amp=50 freq=5]Stat points \\nleft[/wave][/center]\"
 var stringWavySlowed
-var slowing
-func _ready():set_process(true)
+var slowing=false
+func _ready():
+	self.bbcode_text=stringWavy
+	set_process(true)
 func _process(delta):
-	if global.player.pointsLeft>0 and self.bbcode_text==stringWavy:
+	stringWavy=\"[center][wave amp=\"+str(waveAmp)+\"freq=5]Stat points \\nleft[/wave][/center]\"
+	waveAmp=lerp(waveAmp,0 if slowing else maxWaveAmp,0.1 if slowing else 1)
+	if global.player.pointsLeft==0:
 		slowing=true
-	
-	if slowing:
-		pass
-		
-	
-	if global.player.pointsLeft>0:
-		if self.bbcode_text!=stringWavy:
-			self.bbcode_text=stringWavy
 	else:
-		if self.bbcode_text!=stringNormal:
-			self.bbcode_text=stringNormal
+		slowing=false
+	#I don't know, but the following works
+	if self.bbcode_text!=stringWavy:
+		self.bbcode_text=stringWavy
 "
 
 [sub_resource type="StyleBoxEmpty" id=4]

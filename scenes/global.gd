@@ -257,6 +257,8 @@ func _ready():
 	set_process(true)
 var muted=false
 func _process(delta):
+	if Input.is_action_just_pressed("ui_debug"):
+		debugInput()
 	if Input.is_action_just_pressed("ui_mute"):
 		muted=!muted
 		AudioServer.set_bus_mute(0,muted)
@@ -269,7 +271,9 @@ func battle(nextEnemyDict):
 	self.enemy=nextEnemyDict
 	var i=battleScene.instance()
 	get_tree().root.add_child(i)
-
+func debugInput():
+	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
+		global.player.pointsLeft+=1
 var listOfNames=[
 	"Rick Jim",
 	"Sucraiso",
