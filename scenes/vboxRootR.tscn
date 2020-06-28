@@ -23,13 +23,13 @@ func _process(delta):self.visible=!global.isGameCompact()
 texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 83, 20 )
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 83, 20 )
 expand_margin_right = 5.0
 expand_margin_bottom = 5.0
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends VBoxContainer
 
 var items=[
@@ -52,18 +52,13 @@ func _ready():
 	global.currentItem=get_children()[0]
 "
 
-[sub_resource type="StyleBoxTexture" id=4]
+[sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 107, 49 )
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=6]
 script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
-"
-
-[sub_resource type="GDScript" id=6]
-script/source = "extends Label
-func _ready():self.text=\"\"
 "
 
 [sub_resource type="GDScript" id=7]
@@ -72,6 +67,11 @@ func _ready():self.text=\"\"
 "
 
 [sub_resource type="GDScript" id=8]
+script/source = "extends Label
+func _ready():self.text=\"\"
+"
+
+[sub_resource type="GDScript" id=9]
 script/source = "extends TextureButton
 
 func _ready():
@@ -209,7 +209,7 @@ custom_styles/panel = SubResource( 2 )
 modulate = Color( 0, 0, 0, 0.5 )
 margin_right = 1010.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="panel" type="PanelContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 1010.0
@@ -259,7 +259,7 @@ margin_right = 990.0
 margin_bottom = 411.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="descriptionContainer" type="PanelContainer" parent="panelRContainer/vbox"]
 margin_top = 469.0
@@ -267,8 +267,8 @@ margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 4 )
-script = SubResource( 5 )
+custom_styles/panel = SubResource( 5 )
+script = SubResource( 6 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
 margin_right = 1010.0
@@ -296,7 +296,7 @@ text = "DESCRIPTION
 Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!
 "
 autowrap = true
-script = SubResource( 6 )
+script = SubResource( 7 )
 
 [node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
 margin_top = 74.0
@@ -313,7 +313,7 @@ size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )
 text = "PRICE"
 align = 1
-script = SubResource( 7 )
+script = SubResource( 8 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -331,4 +331,4 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 8 )
 texture_disabled = ExtResource( 5 )
 expand = true
-script = SubResource( 8 )
+script = SubResource( 9 )

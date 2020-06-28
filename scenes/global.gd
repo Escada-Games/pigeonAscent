@@ -1,4 +1,5 @@
 extends Node
+const rerollPrice=100
 
 var pigeonClassesAndSprites={
 	"baker":
