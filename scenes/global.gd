@@ -260,8 +260,10 @@ func _process(delta):
 		muted=!muted
 		AudioServer.set_bus_mute(0,muted)
 #	OS.set_window_title("Pigeon Ascent -- " + String(Engine.get_frames_per_second()) + "FPS")
-func fight():
-	get_tree().root.add_child(opponents.instance())
+func fight(doTween=true):
+	var i=opponents.instance()
+	i.get_node("marginContainer/opponentPanel").doTween=doTween
+	get_tree().root.add_child(i)
 func battle(nextEnemyDict):
 	self.enemy=nextEnemyDict
 	var i=battleScene.instance()

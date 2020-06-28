@@ -20,13 +20,17 @@ extends PanelContainer
 
 var enemyPanel=preload(\"res://scenes/opponentModel.tscn\")
 var targetPos=0
+var doTween=true
 const duration=0.4
 func _ready():
 	randomize()
-	targetPos=self.rect_position.y
-	self.rect_position.y=-1.2*self.rect_size.y
-	$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,self.duration,Tween.TRANS_BACK,Tween.EASE_OUT)
-	$twnPosition.start()
+	if doTween:
+		targetPos=self.rect_position.y
+		self.rect_position.y=-1.2*self.rect_size.y
+		$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,self.duration,Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnPosition.start()
+	else:
+		pass
 	var level=global.level
 	if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
 	elif level in [2]:addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
@@ -117,6 +121,9 @@ func createEnemy(level,handicap=0,boss=false):
 func addEnemies(enemyArray=[]):
 	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
 
+func reroll():
+	global.fight(false)
+	self.queue_free()
 
 var thoughts=\"\"\"
 	Ok, let's think about enemy generation...
@@ -199,7 +206,7 @@ var thoughts=\"\"\"
 [sub_resource type="GDScript" id=2]
 script/source = "extends Button
 func _ready():connect(\"pressed\",self,\"reroll\")
-func reroll():get_parent().get_parent().get_parent()._ready()
+func reroll():get_parent().get_parent().get_parent().reroll()
 "
 
 [sub_resource type="GDScript" id=3]
@@ -212,7 +219,8 @@ func exit():
 	$twnPosition.interpolate_property(get_parent(),\"rect_position:y\",get_parent().rect_position.y,-1.2*get_parent().rect_size.y,self.duration,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnPosition.start()
 func delete(h,m):
-	get_parent().get_parent().get_parent().queue_free()"
+	get_parent().get_parent().get_parent().queue_free()
+"
 
 [node name="opponentControl" type="Control"]
 anchor_right = 1.0
