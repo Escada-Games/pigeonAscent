@@ -1,6 +1,6 @@
 extends Node
 const rerollPrice=100
-
+const defaultResolution=Vector2(1024,600)
 var pigeonClassesAndSprites={
 	"baker":
 		{"sprite":"res://resource/sprites/Baker_Pigeon.png",

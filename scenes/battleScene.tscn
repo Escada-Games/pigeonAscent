@@ -12,6 +12,7 @@
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=10]
 [ext_resource path="res://resource/Arena_Sand.png" type="Texture" id=11]
 [ext_resource path="res://resource/sprites/God_Pigeon.png" type="Texture" id=12]
+[ext_resource path="res://resource/fonts/battleLog16.tres" type="DynamicFont" id=13]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends NinePatchRect
@@ -36,22 +37,25 @@ font_data = ExtResource( 2 )
 size = 32
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=4]
-outline_color = Color( 0.0862745, 0.0313726, 0.0313726, 1 )
-font_data = ExtResource( 2 )
-
 [sub_resource type="GDScript" id=5]
 script/source = "extends RichTextLabel
 
 var bufferedMessage=\"\"
 
 func _ready():
+	get_tree().get_root().connect(\"size_changed\", self, \"updateSize\")
 	self.bbcode_text=\"\"
 	set_process(true)
 func _process(delta):
 	if bufferedMessage!=\"\":
 		self.bbcode_text+=bufferedMessage[0]
 		bufferedMessage.erase(0,1)
+func updateSize():
+#	self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog32.tres\") if OS.window_size.x>global.resolution.x*1.5 else load(\"res://resource/fonts/battleLog16.tres\"))
+	if OS.window_size.x>1024*1.5:
+		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog32.tres\"))
+	else:
+		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog16.tres\"))
 "
 
 [sub_resource type="GDScript" id=6]
@@ -246,16 +250,16 @@ __meta__ = {
 [node name="battlePanel" type="PanelContainer" parent="marginCtn"]
 margin_left = 25.0
 margin_top = 25.0
-margin_right = 871.0
-margin_bottom = 479.0
+margin_right = 999.0
+margin_bottom = 575.0
 rect_clip_content = true
 custom_styles/panel = ExtResource( 10 )
 
 [node name="BG" type="TextureRect" parent="marginCtn/battlePanel"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 836.0
-margin_bottom = 444.0
+margin_right = 964.0
+margin_bottom = 540.0
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 1
@@ -263,32 +267,30 @@ stretch_mode = 1
 [node name="vboxCtn" type="VBoxContainer" parent="marginCtn/battlePanel"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 836.0
-margin_bottom = 444.0
+margin_right = 964.0
+margin_bottom = 540.0
 alignment = 1
 
 [node name="hboxCtnTop" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
-margin_right = 826.0
-margin_bottom = 181.0
+margin_right = 954.0
+margin_bottom = 167.0
 alignment = 1
 
 [node name="playerStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 1 )]
-margin_right = 250.0
-margin_bottom = 181.0
 entering = true
 compact = true
 
 [node name="vsepL" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 254.0
-margin_right = 279.0
-margin_bottom = 181.0
+margin_left = 179.0
+margin_right = 221.0
+margin_bottom = 167.0
 size_flags_horizontal = 3
 
 [node name="panelContainer" type="NinePatchRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
-margin_left = 283.0
-margin_right = 541.0
-margin_bottom = 181.0
+margin_left = 225.0
+margin_right = 652.0
+margin_bottom = 167.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 10.0
 texture = ExtResource( 4 )
@@ -313,12 +315,15 @@ __meta__ = {
 [node name="richTextLabel" type="RichTextLabel" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer"]
 margin_left = 15.0
 margin_top = 10.0
-margin_right = 248.0
-margin_bottom = 171.0
+margin_right = 417.0
+margin_bottom = 157.0
 size_flags_horizontal = 3
 custom_fonts/italics_font = SubResource( 2 )
 custom_fonts/bold_font = SubResource( 3 )
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = ExtResource( 13 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
 bbcode_enabled = true
 bbcode_text = "#123> TESTE
 #123> TESTE
@@ -347,22 +352,22 @@ script = SubResource( 5 )
 
 [node name="vsepR" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 545.0
-margin_right = 570.0
-margin_bottom = 181.0
+margin_left = 656.0
+margin_right = 698.0
+margin_bottom = 167.0
 size_flags_horizontal = 3
 
 [node name="enemyStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 5 )]
-margin_left = 574.0
-margin_right = 824.0
-margin_bottom = 181.0
+margin_left = 702.0
+margin_right = 952.0
+margin_bottom = 167.0
 entering = true
 compact = true
 
 [node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
-margin_top = 185.0
-margin_right = 826.0
-margin_bottom = 410.0
+margin_top = 171.0
+margin_right = 954.0
+margin_bottom = 506.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
@@ -370,18 +375,18 @@ alignment = 1
 
 [node name="playerCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
 margin_right = 250.0
-margin_bottom = 225.0
+margin_bottom = 335.0
 
 [node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn"]
 margin_right = 250.0
-margin_bottom = 225.0
+margin_bottom = 335.0
 rect_min_size = Vector2( 250, 0 )
 alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-margin_top = 43.0
+margin_top = 98.0
 margin_right = 250.0
-margin_bottom = 68.0
+margin_bottom = 123.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
@@ -397,15 +402,15 @@ script = SubResource( 6 )
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 72.0
+margin_top = 127.0
 margin_right = 250.0
-margin_bottom = 77.0
+margin_bottom = 132.0
 custom_constants/separation = 5
 
 [node name="playerSpr" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-margin_top = 81.0
+margin_top = 136.0
 margin_right = 250.0
-margin_bottom = 181.0
+margin_bottom = 236.0
 rect_min_size = Vector2( 100, 100 )
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
@@ -420,18 +425,18 @@ shape = SubResource( 8 )
 [node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 254.0
-margin_right = 572.0
-margin_bottom = 225.0
+margin_right = 700.0
+margin_bottom = 335.0
 size_flags_horizontal = 3
 
 [node name="enemyCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
-margin_left = 576.0
-margin_right = 826.0
-margin_bottom = 225.0
+margin_left = 704.0
+margin_right = 954.0
+margin_bottom = 335.0
 
 [node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn"]
 margin_right = 250.0
-margin_bottom = 225.0
+margin_bottom = 335.0
 rect_min_size = Vector2( 250, 0 )
 size_flags_vertical = 3
 alignment = 1
@@ -465,7 +470,7 @@ custom_constants/separation = 5
 [node name="textureRect" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
 margin_top = 38.0
 margin_right = 250.0
-margin_bottom = 225.0
+margin_bottom = 335.0
 rect_min_size = Vector2( 100, 100 )
 rect_pivot_offset = Vector2( 125, 82 )
 size_flags_vertical = 3
@@ -488,15 +493,15 @@ texture = ExtResource( 12 )
 script = SubResource( 11 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
-margin_top = 414.0
-margin_right = 826.0
-margin_bottom = 434.0
+margin_top = 510.0
+margin_right = 954.0
+margin_bottom = 530.0
 size_flags_vertical = 5
 alignment = 1
 
 [node name="vBoxContainer" type="CenterContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot"]
-margin_left = 386.0
-margin_right = 440.0
+margin_left = 450.0
+margin_right = 504.0
 margin_bottom = 20.0
 
 [node name="btnGoBack" type="Button" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot/vBoxContainer"]
