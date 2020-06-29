@@ -125,7 +125,7 @@ func playerAttack():
 		enemySpr.hit()
 #	playerAttackAnim()
 	global.enemy.hp-=damage
-	createDamageNumbers(enemySpr.rect_global_position+enemySpr.rect_size/2,1,damage,isCritical)
+	createDamageNumbers(enemySpr.rect_global_position+enemySpr.rect_size/2,1,damage,isCritical,"Player")
 	if global.enemy.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
@@ -147,7 +147,7 @@ func enemyAttack():
 		playerSpr.hit()
 #	enemyAttackAnim()
 	global.player.hp-=damage
-	createDamageNumbers(playerSpr.rect_global_position+playerSpr.rect_size/2,-1,damage,isCritical)
+	createDamageNumbers(playerSpr.rect_global_position+playerSpr.rect_size/2,-1,damage,isCritical,"Enemy")
 	if global.player.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
@@ -233,12 +233,13 @@ func effects(area):
 	particlesAndWindowshake(area)
 	knockback()
 #	createDamageNumbers()
-func createDamageNumbers(position,direction,damage,critical=false):
+func createDamageNumbers(position,direction,damage,critical=false,origin=""):
 	var i=damageNumbers.instance()
 	i.global_position=position
 	i.direction=direction
 	i.damage=damage
 	i.critical=critical
+	i.origin=origin
 	add_child(i)
 func knockback():
 	if playerAttacked:
