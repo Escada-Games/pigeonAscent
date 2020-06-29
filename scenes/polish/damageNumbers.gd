@@ -1,5 +1,5 @@
 extends RigidBody2D
-var duration=0.2
+var duration=0.8
 var direction=1
 var damage=1
 var origin=""
@@ -14,8 +14,7 @@ func _ready():
 		self.scale*=2
 	if origin=="Enemy":
 		$label.modulate=Color("#FFAAAA")
-	$label.rect_scale=Vector2(2,0)
-	$twnScale.interpolate_property($label,"rect_scale",$label.rect_scale,Vector2(1,1),duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
-	$twnScale.start()
+#	$twnScale.interpolate_property($label,"rect_scale",Vector2(3,0),Vector2(1,1),duration,Tween.TRANS_ELASTIC,Tween.EASE_OUT)
+#	$twnScale.start()
 func _process(delta):
 	if self.global_position.y>OS.window_size.y:self.queue_free()
