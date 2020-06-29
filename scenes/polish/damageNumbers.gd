@@ -8,6 +8,7 @@ func _ready():
 	self.linear_velocity.y=-rand_range(200,500)
 	$label.text=String(damage)
 	if critical:
+		$label.text=$label.text+"!"
 		self.scale*=2
 func _process(delta):
 	if self.global_position.y>OS.window_size.y:self.queue_free()
