@@ -54,8 +54,14 @@ func _ready():
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
 	goldToWin=global.enemy.gold
+	get_tree().get_root().connect("size_changed", self, "updateDefaultPositions")
 	set_process(true)
-	
+
+func updateDefaultPositions():
+	playerDefaultPos=playerSpr.rect_global_position
+	enemyDefaultPos=enemySpr.rect_global_position
+	pass
+
 func _process(delta):
 	update()
 	if self.offset!=0:
@@ -177,7 +183,6 @@ func attackFinished(h,m):
 		enemyAttacked=false
 func playerAttackAnim():
 	$twnRecoil.stop(playerSpr)
-#	$twnAttack.stop_all()
 	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnAttack.start()
 func enemyAttackAnim():
