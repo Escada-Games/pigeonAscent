@@ -4,7 +4,7 @@
 [ext_resource path="res://resource/fonts/monogram.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://resource/Panel_Battle_Log.png" type="Texture" id=4]
-[ext_resource path="res://scenes/enemyStats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/enemyStatsV2.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resource/Pigeon_Basic.png" type="Texture" id=6]
 [ext_resource path="res://scenes/battleScene/battleScene.gd" type="Script" id=7]
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=8]
@@ -37,7 +37,7 @@ font_data = ExtResource( 2 )
 size = 32
 font_data = ExtResource( 3 )
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 script/source = "extends RichTextLabel
 
 var bufferedMessage=\"\"
@@ -58,7 +58,7 @@ func updateSize():
 		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog16.tres\"))
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends TextureProgress
 
 var targetPos=Vector2()
@@ -80,7 +80,7 @@ func _process(delta):
 
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
@@ -93,7 +93,6 @@ func _ready():
 	randomize()
 	duration*=rand_range(0.5,1.5)
 	targetPos=self.rect_global_position
-#	self.rect_global_position.y=OS.window_size.y*2
 	var twnEnter=Tween.new()
 	add_child(twnEnter)
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
@@ -109,10 +108,10 @@ func _ready():
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 "
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=7]
 radius = 44.3355
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=8]
 script/source = "extends TextureProgress
 
 var targetPos=Vector2()
@@ -134,7 +133,7 @@ func _process(delta):
 
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=9]
 script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
@@ -167,7 +166,7 @@ func _ready():
 
 "
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Sprite
 var defaultY=0
 var t=0
@@ -180,7 +179,7 @@ func _process(delta):
 	self.position.y=defaultY+20*sin(t*omega)
 "
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -191,7 +190,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -283,13 +282,13 @@ compact = true
 [node name="vsepL" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 179.0
-margin_right = 221.0
+margin_right = 228.0
 margin_bottom = 167.0
 size_flags_horizontal = 3
 
 [node name="panelContainer" type="NinePatchRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
-margin_left = 225.0
-margin_right = 652.0
+margin_left = 232.0
+margin_right = 722.0
 margin_bottom = 167.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 10.0
@@ -315,7 +314,7 @@ __meta__ = {
 [node name="richTextLabel" type="RichTextLabel" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer"]
 margin_left = 15.0
 margin_top = 10.0
-margin_right = 417.0
+margin_right = 480.0
 margin_bottom = 157.0
 size_flags_horizontal = 3
 custom_fonts/italics_font = SubResource( 2 )
@@ -348,19 +347,18 @@ text = "#123> TESTE
 #123> TESTE
 "
 scroll_following = true
-script = SubResource( 5 )
+script = SubResource( 4 )
 
 [node name="vsepR" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 656.0
-margin_right = 698.0
+margin_left = 726.0
+margin_right = 775.0
 margin_bottom = 167.0
 size_flags_horizontal = 3
 
 [node name="enemyStats" parent="marginCtn/battlePanel/vboxCtn/hboxCtnTop" instance=ExtResource( 5 )]
-margin_left = 702.0
-margin_right = 952.0
-margin_bottom = 167.0
+margin_left = 779.0
+margin_right = 954.0
 entering = true
 compact = true
 
@@ -398,7 +396,7 @@ rect_min_size = Vector2( 0, 25 )
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
-script = SubResource( 6 )
+script = SubResource( 5 )
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
@@ -415,12 +413,12 @@ rect_min_size = Vector2( 100, 100 )
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
-script = SubResource( 7 )
+script = SubResource( 6 )
 
 [node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr"]
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D"]
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
 [node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
 modulate = Color( 1, 1, 1, 0 )
@@ -442,8 +440,9 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
+margin_top = 98.0
 margin_right = 250.0
-margin_bottom = 25.0
+margin_bottom = 123.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
@@ -455,42 +454,41 @@ rect_min_size = Vector2( 0, 25 )
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
-script = SubResource( 9 )
+script = SubResource( 8 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 29.0
+margin_top = 127.0
 margin_right = 250.0
-margin_bottom = 34.0
+margin_bottom = 132.0
 custom_constants/separation = 5
 
 [node name="textureRect" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
-margin_top = 38.0
+margin_top = 136.0
 margin_right = 250.0
-margin_bottom = 335.0
+margin_bottom = 236.0
 rect_min_size = Vector2( 100, 100 )
 rect_pivot_offset = Vector2( 125, 82 )
-size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
 flip_h = true
-script = SubResource( 10 )
+script = SubResource( 9 )
 
 [node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect"]
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect/area2D"]
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
 [node name="sprite" type="Sprite" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect"]
 visible = false
 position = Vector2( 159.79, 1.16635 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 12 )
-script = SubResource( 11 )
+script = SubResource( 10 )
 
 [node name="hboxCtnBot" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 510.0
@@ -509,7 +507,7 @@ margin_right = 54.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "Return"
-script = SubResource( 12 )
+script = SubResource( 11 )
 
 [node name="btnReset" type="Button" parent="marginCtn/battlePanel/vboxCtn/hboxCtnBot/vBoxContainer"]
 margin_left = 2.0
@@ -517,4 +515,4 @@ margin_right = 51.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
 text = "Retry!"
-script = SubResource( 13 )
+script = SubResource( 12 )

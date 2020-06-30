@@ -1,0 +1,338 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://resource/Bar_Food.png" type="Texture" id=1]
+[ext_resource path="res://resource/Bar_BG.png" type="Texture" id=2]
+[ext_resource path="res://resource/Bar_Life.png" type="Texture" id=3]
+[ext_resource path="res://resource/Barra_Base.png" type="Texture" id=4]
+[ext_resource path="res://resource/Stats_Panel_Battle.png" type="Texture" id=5]
+[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=6]
+[ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=7]
+[ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=8]
+[ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=9]
+[ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=10]
+[ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=11]
+[ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=12]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PanelContainer
+var offset=0
+var duration=0.75
+var defaultPos=Vector2()
+export(bool) var entering=false
+export(bool) var showStats=false
+export(bool) var compact=false
+export(bool) var checkVisibility=false
+var targetPos=Vector2()
+var durationEnter=2
+func _ready():
+	if checkVisibility:
+		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
+	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
+	defaultPos=$marginContainer/vbox/hpBox.rect_position
+	set_process(false)
+	if compact:
+		$marginContainer/vbox/invSep2.visible=false
+		$marginContainer/vbox/abilities.visible=false
+		$marginContainer/vbox/abilitiesText.visible=false
+	else:
+		$marginContainer/vbox/invSep2.visible=true
+		$marginContainer/vbox/abilities.visible=true
+		$marginContainer/vbox/abilitiesText.visible=true
+	if entering:
+		randomize()
+		duration*=rand_range(0.5,1.5)
+		targetPos=self.rect_global_position
+		self.rect_global_position.y=-1.5*self.rect_size.y
+		var twnEnter=Tween.new()
+		add_child(twnEnter)
+		twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,durationEnter,Tween.TRANS_QUART,Tween.EASE_OUT)
+		twnEnter.start()
+
+func _process(delta):
+	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+func shakeHp(newOffset=5):
+	offset=newOffset
+	$twnOffset.interpolate_property(self,\"offset\",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
+	$twnOffset.start()
+	set_process(true)
+func resetProcess():
+	set_process(false)
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+func _ready():self.text=global.player.name
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends TextureProgress
+
+func _ready():set_process(true)
+func _process(delta):
+	self.max_value=global.player.maxHp
+	self.value=lerp(self.value,global.player.hp,0.1)
+#	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
+#	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends TextureProgress
+
+func _ready():set_process(true)
+func _process(delta):
+	self.max_value=global.player.maxEnergy
+	self.value=lerp(self.value,global.player.energy,0.1)
+#	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Label
+
+func _ready():set_process(true)
+func _process(delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
+"
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[node name="playerStats" type="PanelContainer"]
+margin_right = 175.0
+margin_bottom = 167.0
+rect_min_size = Vector2( 175, 0 )
+size_flags_stretch_ratio = 4.0
+custom_styles/panel = ExtResource( 7 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="twnOffset" type="Tween" parent="."]
+
+[node name="textureRect" type="TextureRect" parent="."]
+modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 165.0
+margin_bottom = 157.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 2
+
+[node name="marginContainer" type="MarginContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 165.0
+margin_bottom = 157.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="vbox" type="VBoxContainer" parent="marginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 142.0
+alignment = 1
+
+[node name="name" type="Label" parent="marginContainer/vbox"]
+margin_right = 145.0
+margin_bottom = 28.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 2
+text = "NOME"
+align = 1
+valign = 1
+clip_text = true
+script = SubResource( 2 )
+
+[node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 32.0
+margin_right = 145.0
+margin_bottom = 37.0
+custom_constants/separation = 5
+
+[node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox"]
+margin_top = 41.0
+margin_right = 145.0
+margin_bottom = 87.0
+hint_tooltip = "Every attack you take lowers your HP. At zero, you lose your pigeon!"
+mouse_default_cursor_shape = 16
+alignment = 1
+
+[node name="hp" type="Label" parent="marginContainer/vbox/hpBox"]
+margin_right = 61.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 61, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.3
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "HP"
+align = 1
+valign = 1
+
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/hpBox"]
+margin_left = 65.0
+margin_right = 145.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/hpBox/vBoxContainer"]
+margin_right = 80.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+step = 0.1
+value = 50.0
+texture_under = ExtResource( 2 )
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 1
+stretch_margin_right = 5
+stretch_margin_bottom = 1
+script = SubResource( 3 )
+
+[node name="label" type="Label" parent="marginContainer/vbox/hpBox/vBoxContainer"]
+margin_top = 29.0
+margin_right = 80.0
+margin_bottom = 46.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+text = "10/10"
+align = 1
+valign = 1
+script = SubResource( 4 )
+
+[node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox"]
+margin_top = 91.0
+margin_right = 145.0
+margin_bottom = 137.0
+hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, all attacks you take are critical hits (deal double damage)."
+mouse_default_cursor_shape = 16
+alignment = 1
+
+[node name="food" type="Label" parent="marginContainer/vbox/foodBox"]
+margin_right = 61.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 61, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.3
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "FOOD"
+align = 1
+valign = 1
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/foodBox"]
+margin_left = 65.0
+margin_right = 145.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/foodBox/vBoxContainer"]
+margin_right = 80.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+size_flags_horizontal = 3
+step = 0.1
+value = 25.0
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 1 )
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 1
+stretch_margin_right = 5
+stretch_margin_bottom = 1
+script = SubResource( 5 )
+
+[node name="label" type="Label" parent="marginContainer/vbox/foodBox/vBoxContainer"]
+margin_top = 29.0
+margin_right = 80.0
+margin_bottom = 46.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+text = "10/10"
+align = 1
+valign = 1
+script = SubResource( 6 )
+
+[node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 143.0
+margin_right = 145.0
+margin_bottom = 153.0
+custom_constants/separation = 10
+
+[node name="centerContainer" type="PanelContainer" parent="marginContainer/vbox"]
+visible = false
+margin_top = 155.0
+margin_right = 145.0
+margin_bottom = 155.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 50.0
+custom_styles/panel = SubResource( 7 )
+
+[node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
+margin_right = 145.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="abilities" type="Label" parent="marginContainer/vbox"]
+visible = false
+margin_top = 175.0
+margin_right = 230.0
+margin_bottom = 200.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 8 )
+text = "ABILITIES"
+align = 1
+
+[node name="abilitiesText" type="Label" parent="marginContainer/vbox"]
+visible = false
+margin_top = 175.0
+margin_right = 230.0
+margin_bottom = 217.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 11 )
+text = "LOREM IPSUM"
+align = 1
+valign = 1
