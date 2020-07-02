@@ -45,8 +45,9 @@ func _ready():
 	$twnColorRectTransparency.start()
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
-	$twnBack
-	playerDefaultPos=playerSpr.rect_global_position
+	#$twnBack
+	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/barCtn.rect_global_position+Vector2(0,38)
+#	playerDefaultPos=playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
 	var pos=$marginCtn.rect_global_position
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
@@ -58,6 +59,8 @@ func _ready():
 
 func updateDefaultPositions():
 	var aa=get_node("marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer")
+	playerDefaultPos=OS.window_size/2#$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/barCtn/actionBar.rect_global_position+Vector2(0,38)
+#	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer.rect_global_position+Vector2(0,38)
 #	playerDefaultPos=aa.rect_global_position#+aa.rect_size*Vector2(0.5,0.5)#$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn.rect_global_position*Vector2(1,1)#$playerSpr.rect_global_position
 	print_debug("A")
 #	self.rect_global_position=Vector2()
