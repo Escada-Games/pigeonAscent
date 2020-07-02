@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/fonts/monogram.ttf" type="DynamicFontData" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://resource/Arena_Sand.png" type="Texture" id=11]
 [ext_resource path="res://resource/sprites/God_Pigeon.png" type="Texture" id=12]
 [ext_resource path="res://resource/fonts/battleLog16.tres" type="DynamicFont" id=13]
+[ext_resource path="res://resource/Bar_BG.png" type="Texture" id=14]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends NinePatchRect
@@ -407,6 +408,7 @@ margin_left = 10.0
 margin_right = 240.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
+texture_under = ExtResource( 14 )
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
@@ -468,6 +470,7 @@ margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+texture_under = ExtResource( 14 )
 texture_over = ExtResource( 8 )
 texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
