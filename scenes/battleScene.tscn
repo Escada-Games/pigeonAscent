@@ -104,8 +104,11 @@ func _ready():
 	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
-	$area2D.position=self.rect_size/2
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	set_process(true)
+func _process(delta):$area2D.position=self.rect_size/2
+	
+#	self.size_flags_vertical=SIZE_EXPAND
 "
 
 [sub_resource type="CircleShape2D" id=7]
@@ -146,7 +149,6 @@ func _ready():
 	randomize()
 	duration*=rand_range(0.5,1.5)
 	targetPos=self.rect_global_position
-#	self.rect_global_position.y=OS.window_size.y*2
 	var twnEnter=Tween.new()
 	add_child(twnEnter)
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
@@ -158,11 +160,12 @@ func _ready():
 	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
-	self.rect_pivot_offset=self.rect_size/2
+#	self.rect_pivot_offset=self.rect_size/2
 	$area2D.position=self.rect_size/2
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
-	
-	self.size_flags_vertical=SIZE_EXPAND
+	set_process(true)
+func _process(delta):$area2D.position=self.rect_size/2
+#	self.size_flags_vertical=SIZE_EXPAND
 
 "
 
@@ -362,33 +365,41 @@ margin_right = 954.0
 entering = true
 compact = true
 
-[node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn"]
+[node name="hboxCtnMid" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn"]
 margin_top = 171.0
 margin_right = 954.0
 margin_bottom = 506.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/margin_top = 50
+custom_constants/margin_bottom = 50
+
+[node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
+margin_top = 50.0
+margin_right = 954.0
+margin_bottom = 285.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 alignment = 1
 
-[node name="playerCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
+[node name="playerCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
 margin_right = 250.0
-margin_bottom = 335.0
+margin_bottom = 235.0
 
-[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn"]
+[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn"]
 margin_right = 250.0
-margin_bottom = 335.0
+margin_bottom = 235.0
 rect_min_size = Vector2( 250, 0 )
 alignment = 1
 
-[node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-margin_top = 98.0
+[node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer"]
 margin_right = 250.0
-margin_bottom = 123.0
+margin_bottom = 25.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
-[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/barCtn"]
+[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
 margin_bottom = 25.0
@@ -398,55 +409,55 @@ texture_progress = ExtResource( 9 )
 nine_patch_stretch = true
 script = SubResource( 5 )
 
-[node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
+[node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 127.0
+margin_top = 29.0
 margin_right = 250.0
-margin_bottom = 132.0
+margin_bottom = 34.0
 custom_constants/separation = 5
 
-[node name="playerSpr" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer"]
-margin_top = 136.0
+[node name="playerSpr" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer"]
+margin_top = 38.0
 margin_right = 250.0
-margin_bottom = 236.0
+margin_bottom = 235.0
 rect_min_size = Vector2( 100, 100 )
+size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
 script = SubResource( 6 )
 
-[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr"]
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr"]
 
-[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D"]
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D"]
 shape = SubResource( 7 )
 
-[node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
+[node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 254.0
 margin_right = 700.0
-margin_bottom = 335.0
+margin_bottom = 235.0
 size_flags_horizontal = 3
 
-[node name="enemyCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
+[node name="enemyCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
 margin_left = 704.0
 margin_right = 954.0
-margin_bottom = 335.0
+margin_bottom = 235.0
 
-[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn"]
+[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn"]
 margin_right = 250.0
-margin_bottom = 335.0
+margin_bottom = 235.0
 rect_min_size = Vector2( 250, 0 )
 size_flags_vertical = 3
 alignment = 1
 
-[node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
-margin_top = 98.0
+[node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer"]
 margin_right = 250.0
-margin_bottom = 123.0
+margin_bottom = 25.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
-[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/barCtn"]
+[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
 margin_bottom = 25.0
@@ -459,31 +470,32 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
+[node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 127.0
+margin_top = 29.0
 margin_right = 250.0
-margin_bottom = 132.0
+margin_bottom = 34.0
 custom_constants/separation = 5
 
-[node name="textureRect" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer"]
-margin_top = 136.0
+[node name="enemySpr" type="TextureRect" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer"]
+margin_top = 38.0
 margin_right = 250.0
-margin_bottom = 236.0
+margin_bottom = 235.0
 rect_min_size = Vector2( 100, 100 )
 rect_pivot_offset = Vector2( 125, 82 )
+size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 texture = ExtResource( 6 )
 stretch_mode = 6
 flip_h = true
 script = SubResource( 9 )
 
-[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect"]
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr"]
 
-[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect/area2D"]
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr/area2D"]
 shape = SubResource( 7 )
 
-[node name="sprite" type="Sprite" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect"]
+[node name="sprite" type="Sprite" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr"]
 visible = false
 position = Vector2( 159.79, 1.16635 )
 scale = Vector2( 4, 4 )

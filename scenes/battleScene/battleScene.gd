@@ -37,7 +37,7 @@ func _ready():
 		$marginCtn/battlePanel/BG.texture=load(arenaFiles[2])
 		enemySpr.self_modulate.a=0
 		enemySpr.get_node("sprite").visible=true
-#		$marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer.alignment=BoxContainer.ALIGN_END
+#		$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer.alignment=BoxContainer.ALIGN_END
 #		playerSpr.rect_min_size=Vector2(20,20)
 #		enemySpr.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		
@@ -58,8 +58,11 @@ func _ready():
 	set_process(true)
 
 func updateDefaultPositions():
-	playerDefaultPos=playerSpr.rect_global_position
-	enemyDefaultPos=enemySpr.rect_global_position
+	print_debug("A")
+	self.rect_global_position=Vector2()
+	$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr.rect_scale=Vector2(2,2)
+#	playerDefaultPos=playerSpr.rect_global_position
+#	enemyDefaultPos=enemySpr.rect_global_position
 	pass
 
 func _process(delta):
@@ -268,7 +271,7 @@ func particles(area):
 	var i=particlesImpact.instance()
 #	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
 #	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
-	i.global_position=0.5*($marginCtn/battlePanel/vboxCtn/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D.global_position+$marginCtn/battlePanel/vboxCtn/hboxCtnMid/enemyCtn/vboxPlayer/textureRect/area2D.global_position)
+	i.global_position=0.5*($marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D.global_position+$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr/area2D.global_position)
 	i.emitting=true
 	add_child(i)
 func windowShake(newOffset=10):
