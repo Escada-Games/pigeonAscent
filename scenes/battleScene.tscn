@@ -106,7 +106,9 @@ func _ready():
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	set_process(true)
-func _process(delta):$area2D.position=self.rect_size/2
+func _process(delta):
+#	self.rect_global_position=get_parent().rect_global_position
+	$area2D.position=self.rect_size/2
 	
 #	self.size_flags_vertical=SIZE_EXPAND
 "

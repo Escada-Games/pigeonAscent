@@ -40,7 +40,6 @@ func _ready():
 #		$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer.alignment=BoxContainer.ALIGN_END
 #		playerSpr.rect_min_size=Vector2(20,20)
 #		enemySpr.size_flags_vertical=Control.SIZE_EXPAND_FILL
-		
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
@@ -58,8 +57,9 @@ func _ready():
 	set_process(true)
 
 func updateDefaultPositions():
-	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn.rect_global_position*Vector2(1,1)#$playerSpr.rect_global_position
-#	print_debug("A")
+	var aa=get_node("marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer")
+	playerDefaultPos=aa.rect_global_position+aa.rect_size/2#$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn.rect_global_position*Vector2(1,1)#$playerSpr.rect_global_position
+	print_debug("A")
 #	self.rect_global_position=Vector2()
 #	$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr.rect_scale=Vector2(2,2)
 #	playerDefaultPos=playerSpr.rect_global_position
@@ -173,7 +173,10 @@ func attackFinished(h,m):
 		playerAttack()
 		playerAttacked=false
 		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
+#		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
+#		var returnPos=playerSpr.get_parent().rect_global_position
 		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+		#$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnRecoil.start()
 		effects('a')
 	if enemyAttacked:
