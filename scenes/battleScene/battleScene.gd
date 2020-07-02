@@ -47,7 +47,7 @@ func _ready():
 	randomize()
 	$twnAttack.connect("tween_completed",self,"attackFinished")
 	$twnBack
-	playerDefaultPos=playerSpr.rect_global_position
+	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn.rect_global_position*Vector2(1,1)#$playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
 	var pos=$marginCtn.rect_global_position
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
@@ -58,9 +58,10 @@ func _ready():
 	set_process(true)
 
 func updateDefaultPositions():
-	print_debug("A")
-	self.rect_global_position=Vector2()
-	$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr.rect_scale=Vector2(2,2)
+	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn.rect_global_position*Vector2(1,1)#$playerSpr.rect_global_position
+#	print_debug("A")
+#	self.rect_global_position=Vector2()
+#	$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr.rect_scale=Vector2(2,2)
 #	playerDefaultPos=playerSpr.rect_global_position
 #	enemyDefaultPos=enemySpr.rect_global_position
 	pass
