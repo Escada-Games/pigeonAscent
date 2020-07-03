@@ -24,24 +24,25 @@ var arenaFiles=[
 	"res://resource/Arena_Grass.png",
 	"res://resource/Arena_Godfight.png"
 ]
-onready var richtextLabel=$marginCtn/battlePanel/vboxCtn/hboxCtnTop/panelContainer/marginContainer/richTextLabel
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
 var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
+
+onready var battleLogText=get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog/marginContainer/richTextLabel")
+onready var bgNode=get_node("marginCtn/battlePanel/battlePanelMargin/BG")
 func calculateStaminaIncrement(x):
 	return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
 func _ready():
 	randomize()
-	if global.level in [1,2,3,4]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[0])
-	elif global.level in [5,6,7,8,9]:$marginCtn/battlePanel/BG.texture=load(arenaFiles[1])
+	if global.level in [1,2,3,4]:bgNode.texture=load(arenaFiles[0])
+	elif global.level in [5,6,7,8,9]:bgNode.texture=load(arenaFiles[1])
 	elif global.level in [10]:
-		$marginCtn/battlePanel/BG.texture=load(arenaFiles[2])
+		bgNode.texture=load(arenaFiles[2])
 		enemySpr.self_modulate.a=0;enemySpr.get_node("sprite").visible=true
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
-#	playerDefaultPos=playerSpr.rect_global_position
-	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/barCtn.rect_global_position+Vector2(0,38)
+	playerDefaultPos=playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
 	var pos=$marginCtn.rect_global_position
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
@@ -164,8 +165,8 @@ func attackFinished(h,m):
 		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
 #		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
 #		var returnPos=playerSpr.get_parent().rect_global_position
-		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-		#$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+#		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnRecoil.start()
 		effects('a')
 	if enemyAttacked:
@@ -185,22 +186,22 @@ func enemyAttackAnim():
 	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerSpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnAttack.start()
 func shakePlayerHpBar(intensity=5):
-	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/playerStats.shakeHp(intensity)
+	$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerStats".shakeHp(intensity)
 func shakeEnemyHpBar(intensity=5):
-	$marginCtn/battlePanel/vboxCtn/hboxCtnTop/enemyStats.shakeHp(intensity)
+	$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyStats".shakeHp(intensity)
 func register(string):
 	var message="#"+String(turn)+"> "+string+"\n"#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
-	richtextLabel.bbcode_text+=message
+	battleLogText.bbcode_text+=message
 	turn+=1
 
 func registerSameTurn(string):
 	var message= " "+string+"\n"
-	richtextLabel.bbcode_text+=message
+	battleLogText.bbcode_text+=message
 	turn+=1
 
 func registerFast(string):
 	var message="#"+String(turn)+"> "+string
-	richtextLabel.bbcode_text+=message
+	battleLogText.bbcode_text+=message
 
 func exitBattle():
 	self.set_process(false)
@@ -262,7 +263,8 @@ func particles(area):
 	var i=particlesImpact.instance()
 #	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
 #	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
-	i.global_position=0.5*($marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D.global_position+$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr/area2D.global_position)
+	i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
+#	i.global_position=0.5*($marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D.global_position+$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr/area2D.global_position)
 	i.emitting=true
 	add_child(i)
 func windowShake(newOffset=10):

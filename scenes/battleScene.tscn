@@ -374,21 +374,24 @@ margin_right = 954.0
 margin_bottom = 506.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/margin_right = 25
 custom_constants/margin_top = 50
+custom_constants/margin_left = 25
 custom_constants/margin_bottom = 50
 
 [node name="hboxCtnMid" type="HBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid"]
+margin_left = 25.0
 margin_top = 50.0
-margin_right = 954.0
+margin_right = 929.0
 margin_bottom = 285.0
-size_flags_horizontal = 3
+size_flags_horizontal = 7
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 alignment = 1
 
 [node name="playerCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
-margin_left = 73.0
-margin_right = 323.0
+margin_left = 48.0
+margin_right = 298.0
 margin_bottom = 235.0
 
 [node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn"]
@@ -443,15 +446,14 @@ __meta__ = {
 }
 
 [node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 327.0
-margin_right = 627.0
+margin_left = 302.0
+margin_right = 602.0
 margin_bottom = 235.0
 custom_constants/separation = 300
 
 [node name="enemyCtn" type="MarginContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
-margin_left = 631.0
-margin_right = 881.0
+margin_left = 606.0
+margin_right = 856.0
 margin_bottom = 235.0
 
 [node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn"]
