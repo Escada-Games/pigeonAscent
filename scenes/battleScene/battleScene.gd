@@ -47,6 +47,7 @@ func _ready():
 	$twnAttack.connect("tween_completed",self,"attackFinished")
 	#$twnBack
 	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/barCtn.rect_global_position+Vector2(0,38)
+	$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position=playerDefaultPos
 #	playerDefaultPos=playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
 	var pos=$marginCtn.rect_global_position
@@ -58,19 +59,9 @@ func _ready():
 	set_process(true)
 
 func updateDefaultPositions():
-	var aa=get_node("marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer")
-	playerDefaultPos=OS.window_size/2#$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/barCtn/actionBar.rect_global_position+Vector2(0,38)
-#	playerDefaultPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer.rect_global_position+Vector2(0,38)
-#	playerDefaultPos=aa.rect_global_position#+aa.rect_size*Vector2(0.5,0.5)#$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn.rect_global_position*Vector2(1,1)#$playerSpr.rect_global_position
-	print_debug("A")
-#	self.rect_global_position=Vector2()
-#	$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr.rect_scale=Vector2(2,2)
-#	playerDefaultPos=playerSpr.rect_global_position
-#	enemyDefaultPos=enemySpr.rect_global_position
-	pass
+	print_debug("Update default positions")
 
 func _process(delta):
-	update()
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
@@ -171,6 +162,7 @@ func calculateDamage(strength,defense,minDamage=1):
 
 func attackFinished(h,m):
 	if playerAttacked:
+#		updateDefaultPositions()
 #		$twnAttack.interpolate_property(playerSpr,"rect_global_position",Vector2(-1.33,1)*playerSpr.rect_size,playerDefaultPos,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
 #		$twnAttack.start()
 		playerAttack()
@@ -178,7 +170,7 @@ func attackFinished(h,m):
 		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
 #		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
 #		var returnPos=playerSpr.get_parent().rect_global_position
-		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 		#$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnRecoil.start()
 		effects('a')

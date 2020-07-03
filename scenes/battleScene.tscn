@@ -437,6 +437,11 @@ script = SubResource( 6 )
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D"]
 shape = SubResource( 7 )
 
+[node name="playerSprRef" type="Position2D" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer"]
+__meta__ = {
+"_gizmo_extents_": 100.0
+}
+
 [node name="vsep" type="VSeparator" parent="marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 327.0
