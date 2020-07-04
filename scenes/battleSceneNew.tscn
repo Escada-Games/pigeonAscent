@@ -15,28 +15,6 @@
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/enemyStatsV2.tscn" type="PackedScene" id=14]
 
-[sub_resource type="GDScript" id=1]
-script/source = "extends Button
-func _ready():
-	self.visible=false
-	self.rect_global_position.y=2*OS.window_size.y
-	get_tree().root.get_node(\"/root/battleScene\").exitButton=self
-	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\")
-"
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends Button
-func _ready():
-	self.visible=false
-	self.rect_global_position.y=2*OS.window_size.y
-	get_tree().root.get_node(\"/root/battleScene\").resetButton=self
-	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"gameOver\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\")
-"
-
 [sub_resource type="GDScript" id=3]
 script/source = "extends TextureProgress
 
@@ -227,6 +205,28 @@ func updateSize():
 		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog16.tres\"))
 "
 
+[sub_resource type="GDScript" id=1]
+script/source = "extends Button
+func _ready():
+	self.visible=false
+	self.rect_global_position.y=2*OS.window_size.y
+	get_tree().root.get_node(\"/root/battleScene\").exitButton=self
+	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+func _ready():
+	self.visible=false
+	self.rect_global_position.y=2*OS.window_size.y
+	get_tree().root.get_node(\"/root/battleScene\").resetButton=self
+	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"gameOver\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+"
+
 [node name="battleScene" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -255,28 +255,6 @@ color = Color( 0.128906, 0.128906, 0.128906, 0.75 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="vBoxContainer" type="CenterContainer" parent="."]
-visible = false
-margin_left = 501.948
-margin_top = 400.464
-margin_right = 555.948
-margin_bottom = 420.464
-
-[node name="btnGoBack" type="Button" parent="vBoxContainer"]
-margin_right = 54.0
-margin_bottom = 20.0
-mouse_default_cursor_shape = 2
-text = "Return"
-script = SubResource( 1 )
-
-[node name="btnReset" type="Button" parent="vBoxContainer"]
-margin_left = 2.0
-margin_right = 51.0
-margin_bottom = 20.0
-mouse_default_cursor_shape = 2
-text = "Retry!"
-script = SubResource( 2 )
 
 [node name="marginCtn" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -330,7 +308,7 @@ alignment = 1
 [node name="battleArea" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn"]
 margin_right = 668.0
 margin_bottom = 516.0
-size_flags_horizontal = 3
+rect_min_size = Vector2( 668, 516 )
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -341,7 +319,6 @@ margin_left = 20.0
 margin_top = 20.0
 margin_right = 648.0
 margin_bottom = 496.0
-size_flags_horizontal = 3
 alignment = 1
 
 [node name="topPadding" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
@@ -516,7 +493,7 @@ __meta__ = {
 }
 
 [node name="vSep" type="VSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
-modulate = Color( 1, 1, 1, 0 )
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 254.0
 margin_right = 449.0
 margin_bottom = 167.0
@@ -525,6 +502,7 @@ size_flags_horizontal = 3
 [node name="playerStats" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn" instance=ExtResource( 13 )]
 margin_left = 453.0
 margin_right = 628.0
+size_flags_stretch_ratio = 1.0
 entering = true
 compact = true
 
@@ -533,7 +511,6 @@ margin_left = 672.0
 margin_right = 940.0
 margin_bottom = 516.0
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.4
 
 [node name="battleLog" type="NinePatchRect" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog"]
 margin_right = 268.0
@@ -596,3 +573,30 @@ text = "#123> TESTE
 "
 scroll_following = true
 script = SubResource( 12 )
+
+[node name="vBoxContainer" type="CenterContainer" parent="marginCtn/battlePanel/battlePanelMargin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 950.0
+margin_bottom = 526.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btnGoBack" type="Button" parent="marginCtn/battlePanel/battlePanelMargin/vBoxContainer"]
+margin_left = 443.0
+margin_top = 248.0
+margin_right = 497.0
+margin_bottom = 268.0
+mouse_default_cursor_shape = 2
+text = "Return"
+script = SubResource( 1 )
+
+[node name="btnReset" type="Button" parent="marginCtn/battlePanel/battlePanelMargin/vBoxContainer"]
+margin_left = 445.0
+margin_top = 248.0
+margin_right = 494.0
+margin_bottom = 268.0
+mouse_default_cursor_shape = 2
+text = "Retry!"
+script = SubResource( 2 )

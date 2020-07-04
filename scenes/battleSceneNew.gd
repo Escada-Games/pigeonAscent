@@ -27,7 +27,7 @@ var arenaFiles=[
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
 var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
-
+const pigeonRectOffset=Vector2(0,30)
 onready var battleLogText=get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog/marginContainer/richTextLabel")
 onready var bgNode=get_node("marginCtn/battlePanel/battlePanelMargin/BG")
 func calculateStaminaIncrement(x):
@@ -55,6 +55,14 @@ func _ready():
 
 func updateDefaultPositions():
 	print_debug("Window size changed")
+	var change=max((OS.window_size/global.defaultResolution).length(),1)
+#	playerSpr.rect_scale=Vector2(change,change)
+#	enemySpr.rect_scale=Vector2(change,change)
+	get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/topPadding").set("custom_constants/separation",change*66)
+#	if OS.window_size.length()>global.defaultResolution.length()*1.2:
+#		get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/topPadding").set("custom_constants/separation",66*2)
+#		playerSpr.rect_scale=Vector2(2,2)
+#		enemySpr.rect_scale=Vector2(2,2)
 
 func _process(delta):
 	if self.offset!=0:
@@ -155,31 +163,6 @@ func enemyAttack():
 func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 
-#func attackFinished(h,m):
-#	if playerAttacked:
-##		updateDefaultPositions()
-##		$twnAttack.interpolate_property(playerSpr,"rect_global_position",Vector2(-1.33,1)*playerSpr.rect_size,playerDefaultPos,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
-##		$twnAttack.start()
-#		playerAttack()
-#		playerAttacked=false
-#		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
-##		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
-##		var returnPos=playerSpr.get_parent().rect_global_position
-##		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#		print_debug("Hm?")
-#		playerSpr.rect_position=Vector2()
-##		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-##		$twnRecoil.start()
-##		
-#		effects('a')
-#	if enemyAttacked:
-#		enemyAttack()
-#		enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
-#		$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-##		$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#		$twnRecoil.start()
-#		effects('a')
-#		enemyAttacked=false
 func playerAttackAnim():
 	$twnRecoil.stop(playerSpr)
 	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
@@ -255,8 +238,8 @@ func knockback():
 	randomize()
 	playerSpr.rect_global_position.y*=rand_range(0.9,1.1)
 	enemySpr.rect_global_position.y*=rand_range(0.9,1.1)
-	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(0,38),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(0,38),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnRecoil.start()
 func particlesAndWindowshake(area):
 	createHitSfx()
