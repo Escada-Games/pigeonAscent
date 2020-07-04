@@ -250,6 +250,7 @@ var currentUpgrade
 var shopDescription
 var opponents=preload("res://scenes/opponentPanel.tscn")
 var battleScene=preload("res://scenes/battleScene.tscn")
+var battleSceneNew=preload("res://scenes/battleSceneNew.tscn")
 var music=preload("res://scenes/music.tscn")
 func _ready():
 	OS.min_window_size=Vector2(360,640)
@@ -269,7 +270,7 @@ func fight(doTween=true):
 	get_tree().root.add_child(i)
 func battle(nextEnemyDict):
 	self.enemy=nextEnemyDict
-	var i=battleScene.instance()
+	var i=battleSceneNew.instance()
 	get_tree().root.add_child(i)
 func debugInput():
 	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
