@@ -254,11 +254,9 @@ func knockback():
 	$twnAttack.stop_all()
 	randomize()
 	playerSpr.rect_global_position.y*=rand_range(0.9,1.1)
-	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	enemySpr.rect_global_position.y*=rand_range(0.9,1.1)
-	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-	#$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-	#$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(0,38),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(0,38),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnRecoil.start()
 func particlesAndWindowshake(area):
 	createHitSfx()
@@ -266,10 +264,7 @@ func particlesAndWindowshake(area):
 	windowShake()
 func particles(area):
 	var i=particlesImpact.instance()
-#	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
-#	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2
 	i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
-#	i.global_position=0.5*($marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSpr/area2D.global_position+$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/enemyCtn/vboxPlayer/enemySpr/area2D.global_position)
 	i.emitting=true
 	add_child(i)
 func windowShake(newOffset=10):
