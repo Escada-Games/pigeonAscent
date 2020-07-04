@@ -25,6 +25,7 @@ extends PanelContainer
 var enemyPanel=preload(\"res://scenes/opponentModel.tscn\")
 var targetPos=0
 var doTween=true
+var loadEnemies=false
 const duration=0.4
 func _ready():
 	randomize()
@@ -36,18 +37,22 @@ func _ready():
 	else:
 		pass
 	var level=global.level
-	if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
-	elif level in [2]:addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
-	elif level in [3,4,5]:
-		addEnemies([createEnemy(level-1,2),createEnemy(level,2),createEnemy(level)])
-	elif level in [6,7]:
-		addEnemies([createEnemy(level,2),createEnemy(level,2),createEnemy(level+1,2)])
-	elif level in [8]:
-		addEnemies([createEnemy(level,3),createEnemy(level+1,2),createEnemy(level+1,1)])
-	elif level in [9]:
-		addEnemies([createEnemy(level+1,2),createEnemy(level+1,2),createEnemy(level+1,1)])
-	elif level in [10]:
-		addEnemies([createEnemy(level,0,true)])
+	if global.enemiesForBattle!=[]:
+		print_debug(\"A\")
+		addSameEnemies()
+	else:
+		if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
+		elif level in [2]:addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
+		elif level in [3,4,5]:
+			addEnemies([createEnemy(level-1,2),createEnemy(level,2),createEnemy(level)])
+		elif level in [6,7]:
+			addEnemies([createEnemy(level,2),createEnemy(level,2),createEnemy(level+1,2)])
+		elif level in [8]:
+			addEnemies([createEnemy(level,3),createEnemy(level+1,2),createEnemy(level+1,1)])
+		elif level in [9]:
+			addEnemies([createEnemy(level+1,2),createEnemy(level+1,2),createEnemy(level+1,1)])
+		elif level in [10]:
+			addEnemies([createEnemy(level,0,true)])
 
 func selectName():
 	var name=global.listOfNames[randi()%global.listOfNames.size()]
@@ -123,8 +128,21 @@ func createEnemy(level,handicap=0,boss=false):
 	return i
 
 func addEnemies(enemyArray=[]):
+	if enemyArray!=[]:
+		for enemy in enemyArray:
+			global.enemiesForBattle.append(enemy.generateEnemyDict())
 	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
 
+func addSameEnemies():
+	for e in global.enemiesForBattle:
+		var i=enemyPanel.instance()
+		i.enemyName=e.name
+		i.enemyLevel=e.level
+		i.enemyGold=e.gold
+		i.enemyClass=e[\"class\"]
+		distributePoints(i,0,[e.strength,e.defense,e.speed])
+		$marginContainer/vbox/vboxOpponents.add_child(i)
+		
 func reroll():
 	global.fight(false)
 	self.queue_free()

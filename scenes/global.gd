@@ -252,12 +252,14 @@ var opponents=preload("res://scenes/opponentPanel.tscn")
 var battleScene=preload("res://scenes/battleScene.tscn")
 var battleSceneNew=preload("res://scenes/battleSceneNew.tscn")
 var music=preload("res://scenes/music.tscn")
+var enemiesForBattle=[]
 func _ready():
 	OS.min_window_size=Vector2(360,640)
 	if not OS.is_debug_build():add_child(music.instance())
 	set_process(true)
 var muted=false
 func _process(delta):
+	print_debug(global.enemiesForBattle.size())
 	if Input.is_action_just_pressed("ui_debug"):
 		debugInput()
 	if Input.is_action_just_pressed("ui_mute"):
@@ -269,6 +271,7 @@ func fight(doTween=true):
 	i.get_node("marginContainer/opponentPanel").doTween=doTween
 	get_tree().root.add_child(i)
 func battle(nextEnemyDict):
+	enemiesForBattle=[]
 	self.enemy=nextEnemyDict
 	var i=battleSceneNew.instance()
 	get_tree().root.add_child(i)
