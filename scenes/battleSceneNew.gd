@@ -166,8 +166,11 @@ func attackFinished(h,m):
 #		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
 #		var returnPos=playerSpr.get_parent().rect_global_position
 #		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-		$twnRecoil.start()
+		print_debug("Hm?")
+		playerSpr.rect_position=Vector2()
+#		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+#		$twnRecoil.start()
+#		
 		effects('a')
 	if enemyAttacked:
 		enemyAttack()
@@ -250,10 +253,12 @@ func knockback():
 		enemyAttacked=false
 	$twnAttack.stop_all()
 	randomize()
-	playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
-	$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-	enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
-	$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	playerSpr.rect_global_position.y*=rand_range(0.9,1.1)
+	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	enemySpr.rect_global_position.y*=rand_range(0.9,1.1)
+	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	#$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	#$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnRecoil.start()
 func particlesAndWindowshake(area):
 	createHitSfx()
