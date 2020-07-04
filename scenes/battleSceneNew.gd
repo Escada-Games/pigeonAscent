@@ -155,31 +155,31 @@ func enemyAttack():
 func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 
-func attackFinished(h,m):
-	if playerAttacked:
-#		updateDefaultPositions()
-#		$twnAttack.interpolate_property(playerSpr,"rect_global_position",Vector2(-1.33,1)*playerSpr.rect_size,playerDefaultPos,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
-#		$twnAttack.start()
-		playerAttack()
-		playerAttacked=false
-		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
-#		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
-#		var returnPos=playerSpr.get_parent().rect_global_position
-#		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-		print_debug("Hm?")
-		playerSpr.rect_position=Vector2()
-#		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+#func attackFinished(h,m):
+#	if playerAttacked:
+##		updateDefaultPositions()
+##		$twnAttack.interpolate_property(playerSpr,"rect_global_position",Vector2(-1.33,1)*playerSpr.rect_size,playerDefaultPos,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
+##		$twnAttack.start()
+#		playerAttack()
+#		playerAttacked=false
+#		playerSpr.rect_global_position.y*=rand_range(0.7,1.1)
+##		var returnPos=$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/hSeparator.rect_global_position*1.5
+##		var returnPos=playerSpr.get_parent().rect_global_position
+##		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,$marginCtn/battlePanel/vboxCtn/hboxCtnMid/hboxCtnMid/playerCtn/vboxPlayer/playerSprRef.global_position,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+#		print_debug("Hm?")
+#		playerSpr.rect_position=Vector2()
+##		$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+##		$twnRecoil.start()
+##		
+#		effects('a')
+#	if enemyAttacked:
+#		enemyAttack()
+#		enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
+#		$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+##		$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 #		$twnRecoil.start()
-#		
-		effects('a')
-	if enemyAttacked:
-		enemyAttack()
-		enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
-		$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#		$twnRecoil.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-		$twnRecoil.start()
-		effects('a')
-		enemyAttacked=false
+#		effects('a')
+#		enemyAttacked=false
 func playerAttackAnim():
 	$twnRecoil.stop(playerSpr)
 	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
