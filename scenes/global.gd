@@ -157,8 +157,6 @@ var uncommonEvoPigeons=[
 	self.c_batPigeon
 ]
 
-
-
 var player={
 	"name":"Pombo",
 	"gold":100,
@@ -188,9 +186,9 @@ var enemy={
 var level=1
 
 var scaling={
-	"strength":1.2,
+	"strength":1.15,
 	"defense":1,
-	"speed":60,#30,#33
+	"speed":60,#60,#30,#33
 	"hp":1,
 	"food":2
 }
@@ -224,8 +222,7 @@ func createHoverSfx():
 func createSelectSfx():
 	add_child(selectSfx.instance())
 func calculateHp(strength,defense):
-	strength-=1
-	defense-=1
+	strength-=1;defense-=1
 	return 10+self.scaling.hp*(strength+2*defense)
 func calculateFood(strength,speed):
 	strength-=1
@@ -259,7 +256,7 @@ func _ready():
 	set_process(true)
 var muted=false
 func _process(delta):
-	print_debug(global.enemiesForBattle.size())
+#	print_debug(global.enemiesForBattle.size())
 	if Input.is_action_just_pressed("ui_debug"):
 		debugInput()
 	if Input.is_action_just_pressed("ui_mute"):
