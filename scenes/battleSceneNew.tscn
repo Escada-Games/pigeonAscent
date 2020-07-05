@@ -16,7 +16,7 @@
 [ext_resource path="res://scenes/enemyStatsV2.tscn" type="PackedScene" id=14]
 [ext_resource path="res://resource/fonts/battleLog32Shadow.tres" type="DynamicFont" id=15]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=1]
 script/source = "extends TextureProgress
 
 var targetPos=Vector2()
@@ -38,7 +38,7 @@ func _process(delta):
 
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=2]
 script/source = "extends Sprite
 func _ready():
 	self.position=get_parent().rect_size*Vector2(0.5,1)
@@ -48,7 +48,7 @@ func _process(delta):
 	self.global_position=p.rect_size*Vector2(0.5,0.75)+p.get_node(\"enemySpr\").rect_global_position
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=3]
 script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
@@ -81,10 +81,10 @@ func _process(delta):$area2D.position=self.rect_size/2
 
 "
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=4]
 radius = 44.3355
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Sprite
 var defaultY=0
 var t=0
@@ -97,7 +97,7 @@ func _process(delta):
 	self.position.y=defaultY+20*sin(t*omega)
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureProgress
 
 var targetPos=Vector2()
@@ -119,7 +119,7 @@ func _process(delta):
 
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Sprite
 func _ready():
 	self.position=get_parent().rect_size*Vector2(0.5,1)
@@ -177,7 +177,7 @@ func _ready():
 	twnEnter.start()
 "
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -188,7 +188,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -199,15 +199,15 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=12]
 size = 32
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=13]
 size = 32
 font_data = ExtResource( 8 )
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=14]
 script/source = "extends RichTextLabel
 
 var bufferedMessage=\"\"
@@ -375,7 +375,7 @@ texture_under = ExtResource( 6 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 10 )
 nine_patch_stretch = true
-script = SubResource( 3 )
+script = SubResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -391,7 +391,7 @@ custom_constants/separation = 5
 modulate = Color( 0.231373, 0.231373, 0.231373, 1 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
-script = SubResource( 14 )
+script = SubResource( 2 )
 
 [node name="enemySpr" type="TextureRect" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer"]
 margin_top = 38.0
@@ -404,19 +404,19 @@ size_flags_stretch_ratio = 8.0
 texture = ExtResource( 5 )
 stretch_mode = 6
 flip_h = true
-script = SubResource( 4 )
+script = SubResource( 3 )
 
 [node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr"]
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr/area2D"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="sprite" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr"]
 visible = false
 position = Vector2( 159.79, 1.16635 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 9 )
-script = SubResource( 6 )
+script = SubResource( 5 )
 
 [node name="midPadding" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
 modulate = Color( 1, 1, 1, 0 )
@@ -457,7 +457,7 @@ texture_under = ExtResource( 6 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 10 )
 nine_patch_stretch = true
-script = SubResource( 7 )
+script = SubResource( 6 )
 
 [node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
 modulate = Color( 1, 1, 1, 0 )
@@ -470,7 +470,7 @@ custom_constants/separation = 5
 modulate = Color( 0.231373, 0.231373, 0.231373, 1 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
-script = SubResource( 13 )
+script = SubResource( 7 )
 
 [node name="playerSpr" type="TextureRect" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
 margin_top = 38.0
@@ -486,7 +486,7 @@ script = SubResource( 8 )
 [node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr"]
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr/area2D"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="playerSprRef" type="Position2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
 __meta__ = {
@@ -557,7 +557,7 @@ margin_bottom = 49.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 15 )
 text = "Return"
-script = SubResource( 1 )
+script = SubResource( 10 )
 
 [node name="btnReset" type="Button" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog/ctnButtons/vBoxContainer"]
 margin_left = 82.0
@@ -567,7 +567,7 @@ margin_bottom = 49.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 15 )
 text = "Retry!"
-script = SubResource( 2 )
+script = SubResource( 11 )
 
 [node name="marginContainer" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog"]
 anchor_right = 1.0
@@ -588,8 +588,8 @@ margin_right = 258.0
 margin_bottom = 506.0
 mouse_filter = 2
 size_flags_horizontal = 3
-custom_fonts/italics_font = SubResource( 10 )
-custom_fonts/bold_font = SubResource( 11 )
+custom_fonts/italics_font = SubResource( 12 )
+custom_fonts/bold_font = SubResource( 13 )
 custom_fonts/normal_font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
@@ -618,4 +618,4 @@ text = "#123> TESTE
 #123> TESTE
 "
 scroll_following = true
-script = SubResource( 12 )
+script = SubResource( 14 )

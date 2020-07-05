@@ -188,9 +188,14 @@ var level=1
 var scaling={
 	"strength":1.15,
 	"defense":1,
-	"speed":60,#60,#30,#33
+	"speed":60,#30,#33
 	"hp":1,
-	"food":2
+	"food":2,
+	"foodDamage":0.5,
+	"defenseBlock":0.5
+}
+var limits={
+	"defense":30
 }
 var currentItem
 var evolvePanel=preload("res://scenes/evolvePannel.tscn")
