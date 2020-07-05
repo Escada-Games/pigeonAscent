@@ -12,56 +12,11 @@
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=10]
 [ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=11]
 [ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=12]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends PanelContainer
-var offset=0
-var duration=0.75
-var defaultPos=Vector2()
-export(bool) var entering=false
-export(bool) var showStats=false
-export(bool) var compact=false
-export(bool) var checkVisibility=false
-var targetPos=Vector2()
-var durationEnter=2
-func _ready():
-	if checkVisibility:
-		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
-	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
-	defaultPos=$marginContainer/vbox/hpBox.rect_position
-	set_process(false)
-	if compact:
-		$marginContainer/vbox/invSep2.visible=false
-		$marginContainer/vbox/abilities.visible=false
-		$marginContainer/vbox/abilitiesText.visible=false
-	else:
-		$marginContainer/vbox/invSep2.visible=true
-		$marginContainer/vbox/abilities.visible=true
-		$marginContainer/vbox/abilitiesText.visible=true
-	if entering:
-		randomize()
-		duration*=rand_range(0.5,1.5)
-		targetPos=self.rect_global_position
-		self.rect_global_position.y=-1.5*self.rect_size.y
-		var twnEnter=Tween.new()
-		add_child(twnEnter)
-		twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,durationEnter,Tween.TRANS_QUART,Tween.EASE_OUT)
-		twnEnter.start()
-
-func _process(delta):
-	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
-func shakeHp(newOffset=5):
-	offset=newOffset
-	$twnOffset.interpolate_property(self,\"offset\",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
-	$twnOffset.start()
-	set_process(true)
-func resetProcess():
-	set_process(false)
-"
+[ext_resource path="res://scenes/enemyStatsV2.gd" type="Script" id=13]
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends Label
-func _ready():self.text=global.player.name
+func _ready():self.text=global.enemy.name
 "
 
 [sub_resource type="GDScript" id=3]
@@ -69,8 +24,8 @@ script/source = "extends TextureProgress
 
 func _ready():set_process(true)
 func _process(delta):
-	self.max_value=global.player.maxHp
-	self.value=lerp(self.value,global.player.hp,0.1)
+	self.max_value=global.enemy.maxHp
+	self.value=lerp(self.value,global.enemy.hp,0.1)
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 #	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 "
@@ -79,7 +34,7 @@ func _process(delta):
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
+func _process(delta):self.text=String(global.enemy.hp)+\"/\"+String(global.enemy.maxHp)
 "
 
 [sub_resource type="GDScript" id=5]
@@ -87,8 +42,8 @@ script/source = "extends TextureProgress
 
 func _ready():set_process(true)
 func _process(delta):
-	self.max_value=global.player.maxEnergy
-	self.value=lerp(self.value,global.player.energy,0.1)
+	self.max_value=global.enemy.maxEnergy
+	self.value=lerp(self.value,global.enemy.energy,0.1)
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
@@ -96,18 +51,18 @@ func _process(delta):
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
+func _process(delta):self.text=String(global.enemy.energy)+\"/\"+String(global.enemy.maxEnergy)
 "
 
 [sub_resource type="StyleBoxEmpty" id=7]
 
-[node name="playerStats" type="PanelContainer"]
+[node name="enemyStats" type="PanelContainer"]
 margin_right = 175.0
 margin_bottom = 167.0
 rect_min_size = Vector2( 175, 0 )
 size_flags_stretch_ratio = 4.0
 custom_styles/panel = ExtResource( 7 )
-script = SubResource( 1 )
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
