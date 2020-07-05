@@ -125,12 +125,12 @@ func playerAttack():
 		damage*=2
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
-		registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar(15)
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar()
 		enemySpr.hit()
+	if foodDamage>0:register(bbName + " attacks for " +String(foodDamage)+ " food damage")
 #	playerAttackAnim()
 	global.enemy.hp-=damage
 	global.enemy.energy-=foodDamage
@@ -155,6 +155,7 @@ func enemyAttack():
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar()
 		playerSpr.hit()
+	if foodDamage>0:register(bbName + " attacks for " +String(foodDamage)+ " food damage")
 #	enemyAttackAnim()
 	global.player.hp-=damage
 	global.player.energy-=foodDamage
