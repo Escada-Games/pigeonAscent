@@ -28,6 +28,7 @@ var doTween=true
 var loadEnemies=false
 const duration=0.4
 func _ready():
+	print_debug(global.level)
 	randomize()
 	if doTween:
 		targetPos=self.rect_position.y
@@ -78,7 +79,8 @@ func createEnemy(level,handicap=0,boss=false):
 	var addedPoints=[0,0,0]
 	if level in [1,2]:
 		i.enemyClass=global.commonEnemyPigeons[randi()%global.commonEnemyPigeons.size()]
-	elif level in [3,4,5]:
+	elif level in [3,4,5,6]:
+#		print_debug([3,4,5,6])
 		if((level-randi()%6)>0):
 			var focus=randi()%3
 			var usedPoints=ceil(points/2.0)
@@ -92,7 +94,9 @@ func createEnemy(level,handicap=0,boss=false):
 				i.enemyClass=global.c_winged
 		else:
 			i.enemyClass=global.commonEnemyPigeons[randi()%global.commonEnemyPigeons.size()]
-	elif level in [7,8,9]:
+	elif level in [7,8,9,10,11,12] and not boss:
+#	elif [7,8,9].has(level):
+#		print_debug([7,8,9])
 		if((level-randi()%7)>0):
 			var focus=randi()%3
 			var usedPoints=ceil(points/2.0)
