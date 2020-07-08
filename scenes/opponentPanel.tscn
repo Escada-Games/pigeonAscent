@@ -29,16 +29,13 @@ var loadEnemies=false
 const duration=0.4
 func _ready():
 	randomize()
-	if true:#doTween:
+	if doTween:
 		targetPos=self.rect_position.y
 		self.rect_position.y=-1.2*self.rect_size.y
 		$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,self.duration,Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnPosition.start()
 	else:
-		targetPos=self.rect_position.y
-		self.rect_position.y=-1.2*self.rect_size.y
-		$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,0,Tween.TRANS_BACK,Tween.EASE_OUT)
-		$twnPosition.start()
+		pass
 	var level=global.level
 	if global.enemiesForBattle!=[]:
 #		print_debug(\"A\")
@@ -147,7 +144,7 @@ func addSameEnemies():
 		$marginContainer/vbox/vboxOpponents.add_child(i)
 		
 func reroll():
-	print_debug(\"asdasd\")
+#	print_debug(\"asdasd\")
 	global.fight(false)
 	global.enemiesForBattle=[]
 	get_parent().get_parent().queue_free()
