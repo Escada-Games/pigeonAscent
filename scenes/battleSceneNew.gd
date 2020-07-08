@@ -117,7 +117,8 @@ func _process(delta):
 #				resetButton.modulate.a+=0.1
 
 func playerAttack():
-	var damage=max(floor(calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)*(1-global.enemy.defense*global.scaling.defenseBlock/global.limits.defense)),1)
+	var block=(1-global.enemy.defense*global.scaling.defenseBlock/global.limits.defense)
+	var damage=max(floor(calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)*block),1)
 	var foodDamage=floor(max(0,global.player.speed-global.enemy.speed)*global.scaling.foodDamage)
 	var bbName=global.player.name
 	var isCritical=false
@@ -127,10 +128,10 @@ func playerAttack():
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		shakeEnemyHpBar(15)
 	else:
-		register(bbName + " attacks for " +String(damage)+ " damage")
+		registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar()
 		enemySpr.hit()
-	if foodDamage>0:register(bbName + " attacks for " +String(foodDamage)+ " food damage")
+	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
 #	playerAttackAnim()
 	global.enemy.hp-=damage
 	global.enemy.energy-=foodDamage
@@ -155,7 +156,7 @@ func enemyAttack():
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar()
 		playerSpr.hit()
-	if foodDamage>0:register(bbName + " attacks for " +String(foodDamage)+ " food damage")
+	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
 #	enemyAttackAnim()
 	global.player.hp-=damage
 	global.player.energy-=foodDamage

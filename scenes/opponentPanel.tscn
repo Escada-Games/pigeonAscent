@@ -29,16 +29,19 @@ var loadEnemies=false
 const duration=0.4
 func _ready():
 	randomize()
-	if doTween:
+	if true:#doTween:
 		targetPos=self.rect_position.y
 		self.rect_position.y=-1.2*self.rect_size.y
 		$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,self.duration,Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnPosition.start()
 	else:
-		pass
+		targetPos=self.rect_position.y
+		self.rect_position.y=-1.2*self.rect_size.y
+		$twnPosition.interpolate_property(self,\"rect_position:y\",self.rect_position.y,targetPos,0,Tween.TRANS_BACK,Tween.EASE_OUT)
+		$twnPosition.start()
 	var level=global.level
 	if global.enemiesForBattle!=[]:
-		print_debug(\"A\")
+#		print_debug(\"A\")
 		addSameEnemies()
 	else:
 		if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
@@ -144,8 +147,10 @@ func addSameEnemies():
 		$marginContainer/vbox/vboxOpponents.add_child(i)
 		
 func reroll():
+	print_debug(\"asdasd\")
 	global.fight(false)
-	self.queue_free()
+	global.enemiesForBattle=[]
+	get_parent().get_parent().queue_free()
 
 var thoughts=\"\"\"
 	Ok, let's think about enemy generation...
@@ -255,6 +260,7 @@ func delete(h,m):
 [node name="opponentControl" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -264,6 +270,7 @@ __meta__ = {
 [node name="marginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 custom_constants/margin_right = 100
 custom_constants/margin_top = 25
 custom_constants/margin_left = 100

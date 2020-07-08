@@ -279,7 +279,9 @@ func battle(nextEnemyDict):
 	get_tree().root.add_child(i)
 func debugInput():
 	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
-		global.player.pointsLeft+=1
+		global.player.pointsLeft+=10
+		global.level+=1
+		global.player.gold+=1000
 var listOfNames=[
 	"Rick Jim",
 	"Sucraiso",
