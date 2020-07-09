@@ -10,7 +10,7 @@ var targetPos=Vector2()
 var durationEnter=2
 func _ready():
 	$twnOffset.connect("tween_completed",self,"resetProcess")
-	defaultPos=$marginContainer/vbox/hpBox.rect_position
+	defaultPos=$marginContainer/vbox/vboxBars/hpBox.rect_position
 	set_process(false)
 	if compact:
 		$marginContainer/vbox/invSep2.visible=false
@@ -31,11 +31,12 @@ func _ready():
 		twnEnter.start()
 
 func _process(delta):
-	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+	$marginContainer/vbox/vboxBars/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
 func shakeHp(newOffset=5):
 	offset=newOffset
 	$twnOffset.interpolate_property(self,"offset",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
 	$twnOffset.start()
 	set_process(true)
 func resetProcess():
+	return
 	set_process(false)

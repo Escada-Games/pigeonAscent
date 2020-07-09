@@ -189,7 +189,7 @@ func register(string):
 func registerSameTurn(string):
 	var message= " "+string+"\n"
 	battleLogText.bbcode_text+=message
-	turn+=1
+#	turn+=1
 
 func registerFast(string):
 	var message="#"+String(turn)+"> "+string
