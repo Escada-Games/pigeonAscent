@@ -126,12 +126,18 @@ func playerAttack():
 		damage*=2
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
-		shakeEnemyHpBar(15)
+		if foodDamage>0:
+			registerSameTurnNoLineBreak(bbName + " attacks for " +String(damage)+ " damage")
+			registerSameTurn("and " +String(foodDamage)+ " food damage")
+		else:
+			registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
+		shakeEnemyHpBar(25)
 	else:
-		registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
+		register(bbName + " attacks for " +String(damage)+ " damage")
+		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakeEnemyHpBar()
 		enemySpr.hit()
-	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
+	
 #	playerAttackAnim()
 	global.enemy.hp-=damage
 	global.enemy.energy-=foodDamage
@@ -150,13 +156,19 @@ func enemyAttack():
 		damage*=2
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
-		registerSameTurn( bbName + " attacks for " +String(damage)+ " damage")
-		shakePlayerHpBar(15)
+		
+		if foodDamage>0:
+			registerSameTurnNoLineBreak(bbName + " attacks for " +String(damage)+ " damage")
+			registerSameTurn(" and " +String(foodDamage)+ " food damage")
+		else:
+			registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
+		shakePlayerHpBar(25)
 	else:
 		register(bbName + " attacks for " +String(damage)+ " damage")
+		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakePlayerHpBar()
 		playerSpr.hit()
-	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
+#	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
 #	enemyAttackAnim()
 	global.player.hp-=damage
 	global.player.energy-=foodDamage
@@ -188,6 +200,11 @@ func register(string):
 
 func registerSameTurn(string):
 	var message= " "+string+"\n"
+	battleLogText.bbcode_text+=message
+#	turn+=1
+
+func registerSameTurnNoLineBreak(string):
+	var message= " "+string
 	battleLogText.bbcode_text+=message
 #	turn+=1
 

@@ -70,7 +70,7 @@ script/source = "extends TextureProgress
 func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.player.maxHp
-	self.value=lerp(self.value,global.player.hp,0.1)
+	self.value=lerp(self.value,global.player.hp,0.2)
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 #	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 "
@@ -153,7 +153,7 @@ custom_constants/shadow_as_outline = 2
 text = "NOME"
 align = 1
 valign = 1
-autowrap = true
+clip_text = true
 script = SubResource( 2 )
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]

@@ -25,7 +25,7 @@ script/source = "extends TextureProgress
 func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.enemy.maxHp
-	self.value=lerp(self.value,global.enemy.hp,0.1)
+	self.value=lerp(self.value,global.enemy.hp,0.2)
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 #	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 "
@@ -161,7 +161,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 step = 0.1
 value = 50.0
-rounded = true
 texture_under = ExtResource( 2 )
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 3 )
