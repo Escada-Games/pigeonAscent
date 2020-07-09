@@ -28,7 +28,7 @@ var doTween=true
 var loadEnemies=false
 const duration=0.4
 func _ready():
-	print_debug(global.level)
+#	print_debug(global.level)
 	randomize()
 	if doTween:
 		targetPos=self.rect_position.y

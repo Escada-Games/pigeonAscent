@@ -31,7 +31,9 @@ const pigeonRectOffset=Vector2(0,30)
 onready var battleLogText=get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog/marginContainer/richTextLabel")
 onready var bgNode=get_node("marginCtn/battlePanel/battlePanelMargin/BG")
 func calculateStaminaIncrement(x):
-	return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
+	return 3.79643 + (0.9834812 - 3.79643)/(1 + pow((x/22.7243),1.642935))
+	#Original:
+	#return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
 func _ready():
 	randomize()
 	if global.level in [1,2,3,4]:bgNode.texture=load(arenaFiles[0])
@@ -99,7 +101,7 @@ func _process(delta):
 				exitButton.visible=true
 				resetButton.visible=false
 			else:
-				registerSameTurn("[center][shake rate=5 level=10]"+global.enemy.name + " won... [/shake][/center]\n")
+				registerSameTurn("[center][shake rate=15 level=10]"+global.enemy.name + " won... [/shake][/center]\n")
 				registerSameTurn("[center][color=#b0305c]" + "Game Over." + "[/color][/center]\n\n")
 				registerSameTurn("[center] Retry? [/center]")
 				ended=true
@@ -117,9 +119,9 @@ func _process(delta):
 #				resetButton.modulate.a+=0.1
 
 func playerAttack():
-	var block=(1-global.enemy.defense*global.scaling.defenseBlock/global.limits.defense)
+	var block=(1-(global.enemy.defense)*global.scaling.defenseBlock/global.limits.defense)
 	var damage=max(floor(calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)*block),1)
-	var foodDamage=floor(max(0,global.player.speed-global.enemy.speed)*global.scaling.foodDamage)
+	var foodDamage=floor(max(0,global.player.speed+global.player.extraSpeed-global.enemy.speed)*global.scaling.foodDamage)
 	var bbName=global.player.name
 	var isCritical=false
 	if randf()>0.9 or global.enemy.energy<=0:
@@ -148,8 +150,8 @@ func playerAttack():
 #	playerAttacked=true
 	
 func enemyAttack():
-	var damage=max(ceil(calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)*(1-global.player.defense*global.scaling.defenseBlock/global.limits.defense)),1)
-	var foodDamage=ceil(max(0,global.enemy.speed-global.player.speed)*global.scaling.foodDamage)
+	var damage=max(ceil(calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)*(1-(global.player.defense+global.player.extraDefense)*global.scaling.defenseBlock/global.limits.defense)),1)
+	var foodDamage=ceil(max(0,global.enemy.speed-global.player.speed-global.player.extraSpeed)*global.scaling.foodDamage)
 	var bbName=colorizeString(global.enemy.name,"#eb564b")#"[color=#eb564b]"+global.enemy.name+"[/color]"
 	var isCritical=false
 	if randf()>0.9 or global.player.energy<=0:

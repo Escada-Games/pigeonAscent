@@ -280,7 +280,7 @@ func battle(nextEnemyDict):
 func debugInput():
 	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
 		global.player.pointsLeft+=10
-		global.level=int(clamp(global.level,0,10))
+		global.level=int(clamp(global.level+1,0,10))
 		global.player.gold+=1000
 var listOfNames=[
 	"Rick Jim",
