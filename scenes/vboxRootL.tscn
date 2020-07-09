@@ -34,7 +34,7 @@ func _ready():
 	if checkVisibility:
 		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
 	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
-	defaultPos=$marginContainer/vbox/hpBox.rect_position
+#	defaultPos=$marginContainer/vbox/hpBox.rect_position
 	set_process(false)
 	if compact:
 		$marginContainer/vbox/invSep2.visible=false
@@ -55,7 +55,8 @@ func _ready():
 		twnEnter.start()
 
 func _process(delta):
-	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+	pass
+#	$marginContainer/vbox/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
 func shakeHp(newOffset=5):
 	offset=newOffset
 	$twnOffset.interpolate_property(self,\"offset\",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
@@ -180,7 +181,7 @@ texture = ExtResource( 13 )
 region_rect = Rect2( 0, 0, 86, 35 )
 expand_margin_top = 15.0
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=11]
 script/source = "extends PanelContainer
 const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
@@ -197,9 +198,9 @@ func twnShrink():
 func _process(delta):self.rect_pivot_offset=self.rect_size/2
 "
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxEmpty" id=12]
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -209,7 +210,7 @@ func _process(delta):
 	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=14]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -247,7 +248,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=15]
 script/source = "extends PanelContainer
 const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
@@ -264,7 +265,7 @@ func twnShrink():
 func _process(delta):self.rect_pivot_offset=self.rect_size/2
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=16]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -274,7 +275,7 @@ func _process(delta):
 	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
 "
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=17]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -321,8 +322,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="nameStats" parent="." instance=ExtResource( 5 )]
+[node name="playerStats" parent="." instance=ExtResource( 5 )]
 margin_right = 1024.0
+compact = true
+
+[node name="nameStats" parent="." instance=ExtResource( 5 )]
+visible = false
+margin_top = 171.0
+margin_right = 1024.0
+margin_bottom = 338.0
 script = SubResource( 2 )
 compact = true
 
@@ -511,7 +519,7 @@ mouse_default_cursor_shape = 16
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = SubResource( 10 )
-script = SubResource( 16 )
+script = SubResource( 11 )
 
 [node name="twnScale" type="Tween" parent="perks/vbox/defPanel"]
 
@@ -537,7 +545,7 @@ margin_bottom = 112.0
 mouse_filter = 1
 size_flags_horizontal = 2
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 12 )
 
 [node name="points" type="Label" parent="perks/vbox/defPanel/marginCtn/defHbox/intContainer"]
 margin_top = 35.0
@@ -554,7 +562,7 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 12 )
+script = SubResource( 13 )
 
 [node name="btnContainer" type="MarginContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
 margin_left = 577.0
@@ -577,7 +585,7 @@ texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 13 )
+script = SubResource( 14 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -591,7 +599,7 @@ mouse_default_cursor_shape = 16
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = ExtResource( 14 )
-script = SubResource( 17 )
+script = SubResource( 15 )
 
 [node name="twnScale" type="Tween" parent="perks/vbox/spdPanel"]
 
@@ -616,7 +624,7 @@ mouse_filter = 1
 size_flags_horizontal = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 12 )
 
 [node name="points" type="Label" parent="perks/vbox/spdPanel/marginCtn/spdHbox/intContainer"]
 margin_top = 36.0
@@ -633,7 +641,7 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 14 )
+script = SubResource( 16 )
 
 [node name="btnContainer" type="MarginContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
 margin_left = 577.0
@@ -656,7 +664,7 @@ texture_normal = ExtResource( 10 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 15 )
+script = SubResource( 17 )
 __meta__ = {
 "_editor_description_": ""
 }
