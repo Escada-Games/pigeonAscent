@@ -149,8 +149,8 @@ func addSameEnemies():
 		
 func reroll():
 #	print_debug(\"asdasd\")
-	global.fight(false)
 	global.enemiesForBattle=[]
+	global.fight(false)
 	get_parent().get_parent().queue_free()
 
 var thoughts=\"\"\"
