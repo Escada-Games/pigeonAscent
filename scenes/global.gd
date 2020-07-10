@@ -262,6 +262,7 @@ func _ready():
 var muted=false
 func _process(delta):
 #	print_debug(global.enemiesForBattle.size())
+	player.energy=max(player.energy,0)
 	if Input.is_action_just_pressed("ui_debug"):
 		debugInput()
 	if Input.is_action_just_pressed("ui_mute"):
