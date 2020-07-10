@@ -185,11 +185,13 @@ func calculateDamage(strength,defense,minDamage=1):
 
 func playerAttackAnim():
 	$twnRecoil.stop(playerSpr)
-	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+#	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemyDefaultPos,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnAttack.start()
 func enemyAttackAnim():
 	$twnRecoil.stop(enemySpr)
-	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerSpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+#	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerSpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerDefaultPos,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnAttack.start()
 func shakePlayerHpBar(intensity=5):
 	$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerStats".shakeHp(intensity)

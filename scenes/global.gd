@@ -186,7 +186,7 @@ var enemy={
 var level=1
 
 var scaling={
-	"strength":1.15,
+	"strength":1.12,
 	"defense":1,
 	"speed":60,#30,#33
 	"hp":1,
