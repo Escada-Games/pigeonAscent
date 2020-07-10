@@ -71,7 +71,8 @@ func battle():
 	}
 	global.listOfNames.erase(enemyDict.name)
 	global.battle(enemyDict)
-	get_tree().root.get_node(\"/root/opponentControl/marginContainer/opponentPanel/btnExit\").exit()
+#	get_tree().root.get_node(\"/root/opponentControl/marginContainer/opponentPanel/btnExit\").exit()
+	get_parent().get_parent().get_parent().get_parent().get_node(\"btnExit\").exit()
 
 func generateEnemyDict():
 	var maxHp=global.calculateHp(self.enemyStr,self.enemyDef)
