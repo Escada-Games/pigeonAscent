@@ -237,7 +237,7 @@ margin_bottom = 96.0
 hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, the pigeon:
 -Take only critical hits (deal double damage);
 -Their damage is halved;
--They attack slightly slower."
+-They attack speed slightly slower."
 mouse_default_cursor_shape = 16
 alignment = 1
 

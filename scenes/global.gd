@@ -162,7 +162,7 @@ var player={
 	"gold":100,
 	"hp":5,"maxHp":5,
 	"energy":10,"maxEnergy":10,
-	"pointsLeft":3,
+	"pointsLeft":5,#3,
 	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
 	"speed":1,"extraSpeed":0,
