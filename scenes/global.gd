@@ -1,6 +1,11 @@
 extends Node
 const rerollPrice=100
 const defaultResolution=Vector2(1024,600)
+
+const phrases=[
+	"Yo mamma so fat she's a duck"
+]
+
 var pigeonClassesAndSprites={
 	"baker":
 		{"sprite":"res://resource/sprites/Baker_Pigeon.png",

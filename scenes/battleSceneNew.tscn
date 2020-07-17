@@ -517,6 +517,7 @@ script = SubResource( 8 )
 shape = SubResource( 4 )
 
 [node name="phraseCtn" type="PanelContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr"]
+visible = false
 margin_left = 197.0
 margin_top = -32.0
 margin_right = 346.0
