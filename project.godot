@@ -19,6 +19,8 @@ config/name="Pigeon Ascent"
 run/main_scene="res://scenes/intro.tscn"
 boot_splash/image="res://resource/EscadaSplash.png"
 config/icon="res://icon.png"
+config/macos_native_icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
