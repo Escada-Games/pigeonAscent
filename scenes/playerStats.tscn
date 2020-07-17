@@ -234,7 +234,10 @@ script = SubResource( 4 )
 margin_top = 50.0
 margin_right = 145.0
 margin_bottom = 96.0
-hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, all attacks you take are critical hits (deal double damage)."
+hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, the pigeon:
+-Take only critical hits (deal double damage);
+-Their damage is halved;
+-They attack slightly slower."
 mouse_default_cursor_shape = 16
 alignment = 1
 

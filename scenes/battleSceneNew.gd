@@ -30,8 +30,10 @@ var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
 const pigeonRectOffset=Vector2(0,30)
 onready var battleLogText=get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog/marginContainer/richTextLabel")
 onready var bgNode=get_node("marginCtn/battlePanel/battlePanelMargin/BG")
-func calculateStaminaIncrement(x):
-	return 3.79643 + (0.9834812 - 3.79643)/(1 + pow((x/22.7243),1.642935))
+const hungryStaminaScaling:=0.75
+func calculateStaminaIncrement(x,isHungry=false):
+	var staminaScaling=hungryStaminaScaling if isHungry else 1
+	return 3.79643 + (0.9834812 - 3.79643)/(1 + pow((x/22.7243),1.642935))*staminaScaling
 	#Original:
 	#return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
 func _ready():
@@ -70,14 +72,14 @@ func _process(delta):
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
-		playerStamina+=calculateStaminaIncrement(global.player.speed+global.player.extraSpeed)*delta*global.scaling.speed
+		playerStamina+=calculateStaminaIncrement(global.player.speed+global.player.extraSpeed,global.player.energy<=0)*delta*global.scaling.speed
 		if playerStamina>100:
 			playerStamina=0
 			global.player.energy-=global.level
 			global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
 			playerAttacked=true
 			playerAttackAnim()
-		enemyStamina+=calculateStaminaIncrement(global.enemy.speed)*delta*global.scaling.speed
+		enemyStamina+=calculateStaminaIncrement(global.enemy.speed,global.enemy.energy<=0)*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=global.level
@@ -126,6 +128,7 @@ func playerAttack():
 	var isCritical=false
 	if randf()>0.9 or global.enemy.energy<=0:
 		damage*=2
+		damage*=1 if global.player.energy>0 else 0.5
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		if foodDamage>0:
@@ -135,6 +138,7 @@ func playerAttack():
 			registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar(25)
 	else:
+		damage*=1 if global.player.energy>0 else 0.5
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakeEnemyHpBar()
@@ -156,6 +160,7 @@ func enemyAttack():
 	var isCritical=false
 	if randf()>0.9 or global.player.energy<=0:
 		damage*=2
+		damage*=1 if global.enemy.energy>0 else 0.5
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		
@@ -166,6 +171,7 @@ func enemyAttack():
 			registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar(25)
 	else:
+		damage*=1 if global.enemy.energy>0 else 0.5
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakePlayerHpBar()

@@ -177,15 +177,15 @@ func _ready():
 	twnEnter.start()
 "
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=10]
 size = 32
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=11]
 size = 32
 font_data = ExtResource( 8 )
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=12]
 script/source = "extends RichTextLabel
 
 var bufferedMessage=\"\"
@@ -206,7 +206,7 @@ func updateSize():
 		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog16.tres\"))
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -217,7 +217,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=14]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -546,8 +546,8 @@ margin_right = 258.0
 margin_bottom = 506.0
 mouse_filter = 2
 size_flags_horizontal = 3
-custom_fonts/italics_font = SubResource( 12 )
-custom_fonts/bold_font = SubResource( 13 )
+custom_fonts/italics_font = SubResource( 10 )
+custom_fonts/bold_font = SubResource( 11 )
 custom_fonts/normal_font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
@@ -576,7 +576,7 @@ text = "#123> TESTE
 #123> TESTE
 "
 scroll_following = true
-script = SubResource( 14 )
+script = SubResource( 12 )
 
 [node name="ctnButtons" type="MarginContainer" parent="marginCtn/battlePanel"]
 margin_left = 7.0
@@ -610,7 +610,7 @@ margin_bottom = 59.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 15 )
 text = "Return"
-script = SubResource( 10 )
+script = SubResource( 13 )
 
 [node name="btnReset" type="Button" parent="marginCtn/battlePanel/ctnButtons/vBoxContainer"]
 margin_left = 308.0
@@ -620,4 +620,4 @@ margin_bottom = 59.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 15 )
 text = "Retry!"
-script = SubResource( 11 )
+script = SubResource( 14 )
