@@ -136,7 +136,8 @@ func addEnemies(enemyArray=[]):
 	if enemyArray!=[]:
 		for enemy in enemyArray:
 			global.enemiesForBattle.append(enemy.generateEnemyDict())
-	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
+		addSameEnemies()
+#	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
 
 func addSameEnemies():
 	for e in global.enemiesForBattle:
