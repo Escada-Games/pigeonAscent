@@ -47,11 +47,11 @@ func _ready():
 		elif level in [3,4,5]:
 			addEnemies([createEnemy(level-1,2),createEnemy(level,2),createEnemy(level)])
 		elif level in [6,7]:
-			addEnemies([createEnemy(level,2),createEnemy(level,2),createEnemy(level+1,2)])
+			addEnemies([createEnemy(level-1,2),createEnemy(level,2),createEnemy(level+1,2)])
 		elif level in [8]:
-			addEnemies([createEnemy(level,3),createEnemy(level+1,2),createEnemy(level+1,1)])
+			addEnemies([createEnemy(level,3),createEnemy(level,2),createEnemy(level+1,1)])
 		elif level in [9]:
-			addEnemies([createEnemy(level+1,2),createEnemy(level+1,2),createEnemy(level+1,1)])
+			addEnemies([createEnemy(level,2),createEnemy(level+1,2),createEnemy(level+2,1)])
 		elif level in [10]:
 			addEnemies([createEnemy(level,0,true)])
 			$marginContainer/vbox/btnReroll.disabled=true
