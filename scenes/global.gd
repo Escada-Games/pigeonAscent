@@ -7,7 +7,8 @@ const phrases=[
 	"I've seem squirrels fly better than you",
 	"I bet you're bad even at delivering letters",
 	"How do you even managed to get in the game?",
-	"I think you have two left wings mate"
+	"I think you have two left wings mate",
+	"...have I seen you before?"
 ]
 
 var pigeonClassesAndSprites={
