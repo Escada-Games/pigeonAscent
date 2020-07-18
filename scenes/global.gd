@@ -10,7 +10,8 @@ const phrases=[
 	"I think you have two left wings mate",
 	"...have I seen you before?",
 	"You were expecting Dio, but it's me!",
-	"FYI, my grandgrandfather was a dragon."
+	"FYI, my grandgrandfather was a dragon.",
+	"You reek of birdseed, eugh"
 ]
 
 var pigeonClassesAndSprites={
