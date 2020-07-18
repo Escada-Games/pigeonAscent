@@ -17,7 +17,7 @@ func _ready():
 		\"gold\":100,
 		\"hp\":5,\"maxHp\":5,
 		\"energy\":10,\"maxEnergy\":10,
-		\"pointsLeft\":3,
+		\"pointsLeft\":5,
 		\"strength\":1,\"extraStrength\":0,
 		\"defense\":1,\"extraDefense\":0,
 		\"speed\":1,\"extraSpeed\":0,
@@ -26,7 +26,7 @@ func _ready():
 	global.level=1
 	connect(\"pressed\",self,\"startGame\")
 func startGame():
-	global.player.name=get_parent().get_node(\"textEdit\").text
+	global.player.name=get_parent().get_node(\"lineEdit\").text
 	get_tree().change_scene(\"res://scenes/root.tscn\")
 "
 
@@ -101,7 +101,7 @@ margin_top = 273.0
 margin_right = 1024.0
 margin_bottom = 277.0
 
-[node name="textEdit" type="LineEdit" parent="marginContainer/vBoxContainer"]
+[node name="lineEdit" type="LineEdit" parent="marginContainer/vBoxContainer"]
 margin_left = 412.0
 margin_top = 281.0
 margin_right = 612.0
