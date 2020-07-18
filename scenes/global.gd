@@ -4,7 +4,8 @@ const defaultResolution=Vector2(1024,600)
 
 const phrases=[
 	"Yo mamma so fat she's a duck",
-	"I've seem squirrels fly better than you"
+	"I've seem squirrels fly better than you",
+	"I bet you're bad even at delivering letters"
 ]
 
 var pigeonClassesAndSprites={
