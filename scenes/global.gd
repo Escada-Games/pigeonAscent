@@ -189,11 +189,11 @@ var enemy={
 }
 
 var level=1
-
+var rerolls=1
 var scaling={
 	"strength":1.12,
 	"defense":1,
-	"speed":60,#30,#33
+	"speed":64,#30,#33
 	"hp":1,
 	"food":2,
 	"foodDamage":0.5,

@@ -235,9 +235,10 @@ var thoughts=\"\"\"
 script/source = "extends Button
 func _ready():
 	connect(\"pressed\",self,\"reroll\")
-	self.text=\"REROLL: $\" + str(global.rerollPrice)
+	self.text=\"REROLL: $\" + str(global.rerollPrice*global.rerolls)
 func reroll():
 	if global.player.gold>=global.rerollPrice:
+		global.rerolls+=1
 		global.player.gold-=global.rerollPrice
 		global.createSelectSfx()
 		get_parent().get_parent().get_parent().reroll()

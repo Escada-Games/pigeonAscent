@@ -151,6 +151,13 @@ func playerAttack():
 	if global.enemy.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
+#		$twnAttack.stop(enemySpr)
+#		$twnRecoil.stop(enemySpr)
+#		enemySpr.dead=true
+#		$twn.interpolate_property(enemySpr,"rect_global_position:x",enemySpr.rect_global_position.x,enemySpr.rect_global_position.x+333,1,Tween.TRANS_QUINT,Tween.EASE_OUT)
+#		$twn.interpolate_property(enemySpr,"rect_global_position:y",enemySpr.rect_global_position.y,enemySpr.rect_global_position.y+OS.window_size.y,1,Tween.TRANS_BACK,Tween.EASE_IN)
+#		$twn.interpolate_property(enemySpr,"rect_rotation",enemySpr.rect_rotation,100*PI,10,Tween.TRANS_QUINT,Tween.EASE_OUT)
+#		$twn.start()
 #	playerAttacked=true
 	
 func enemyAttack():
