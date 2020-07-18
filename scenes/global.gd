@@ -13,7 +13,9 @@ const phrases=[
 	"FYI, my grandgrandfather was a dragon.",
 	"You reek of birdseed, eugh",
 	"Just give up, I'm four parallel universes ahead of you right now.",
-	"You don't want to see me use my Ultra Instinct."
+	"You don't want to see me use my Ultra Instinct.",
+	"Get ready for my Gear Second!",
+	
 ]
 
 var pigeonClassesAndSprites={
