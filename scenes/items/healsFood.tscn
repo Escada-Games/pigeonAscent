@@ -14,7 +14,7 @@ script/source = "extends PanelContainer
 
 export(String) var itemName=\"Popcorn\"
 export(int) var itemPrice=50
-export(String) var itemDescription=\"Heals 10 hunger.\"
+export(String) var itemDescription=\"Heals 15 hunger.\"
 export(bool) var unique=false
 export(bool) var clickable=false
 
@@ -49,7 +49,7 @@ func buy():
 	if global.player.gold>=self.itemPrice and global.player.energy!=global.player.maxEnergy:
 		global.player.gold-=self.itemPrice
 		#Effect here
-		global.player.energy=clamp(global.player.energy+10,0,global.player.maxEnergy)
+		global.player.energy=clamp(global.player.energy+15,0,global.player.maxEnergy)
 		global.createSelectSfx()
 		if self.unique:self.queue_free()
 	else:
