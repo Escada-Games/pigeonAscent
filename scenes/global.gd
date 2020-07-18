@@ -246,7 +246,7 @@ func createSelectSfx():
 	add_child(selectSfx.instance())
 func calculateHp(strength,defense):
 	strength-=1;defense-=1
-	return 10+self.scaling.hp*(strength+2*defense)
+	return 5+self.scaling.hp*(strength+2*defense)
 func calculateFood(strength,speed):
 	strength-=1
 	speed-=1
