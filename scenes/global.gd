@@ -11,7 +11,9 @@ const phrases=[
 	"...have I seen you before?",
 	"You were expecting Dio, but it's me!",
 	"FYI, my grandgrandfather was a dragon.",
-	"You reek of birdseed, eugh"
+	"You reek of birdseed, eugh",
+	"Just give up, I'm four parallel universes ahead of you right now.",
+	
 ]
 
 var pigeonClassesAndSprites={
