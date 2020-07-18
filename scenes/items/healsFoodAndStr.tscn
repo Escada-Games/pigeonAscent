@@ -50,7 +50,7 @@ func buy():
 		global.player.gold-=self.itemPrice
 		#Effect here
 		global.player.energy=clamp(global.player.energy+5,0,global.player.maxEnergy)
-		global.player.extraStrength+=2
+		global.player.extraStrength+=1
 		global.createSelectSfx()
 		if self.unique:self.queue_free()
 	else:
