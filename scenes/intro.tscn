@@ -101,7 +101,7 @@ margin_top = 273.0
 margin_right = 1024.0
 margin_bottom = 277.0
 
-[node name="textEdit" type="TextEdit" parent="marginContainer/vBoxContainer"]
+[node name="textEdit" type="LineEdit" parent="marginContainer/vBoxContainer"]
 margin_left = 412.0
 margin_top = 281.0
 margin_right = 612.0
@@ -110,9 +110,8 @@ rect_min_size = Vector2( 200, 30 )
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
 text = "Pombo"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+align = 1
+max_length = 15
 
 [node name="hSeparator2" type="HSeparator" parent="marginContainer/vBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
