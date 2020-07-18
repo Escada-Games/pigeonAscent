@@ -1,6 +1,7 @@
 [gd_scene format=2]
 
 [node name="particlesImpact" type="CPUParticles2D"]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
 emitting = false
 amount = 50
 lifetime = 120.0
@@ -15,4 +16,4 @@ angular_velocity = 50.0
 linear_accel = 10.0
 scale_amount = 10.0
 scale_amount_random = 1.0
-color = Color( 0.905882, 0.905882, 0.905882, 1 )
+color = Color( 1.91, 1.91, 1.91, 1 )

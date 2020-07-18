@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="particlesImpact" type="Particles2D"]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
+amount = 50
+lifetime = 120.0
+one_shot = true
+explosiveness = 1.0
