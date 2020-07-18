@@ -24,6 +24,7 @@ var arenaFiles=[
 	"res://resource/Arena_Grass.png",
 	"res://resource/Arena_Godfight.png"
 ]
+var particlesImpactGPU=preload("res://scenes/polish/particlesImpactGPU.tscn")
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
 var damageNumbers=preload("res://scenes/polish/damageNumbers.tscn")
