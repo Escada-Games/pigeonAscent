@@ -54,7 +54,7 @@ func _ready():
 
 [sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 10 )
-region_rect = Rect2( 0, 0, 107, 49 )
+region_rect = Rect2( 0, 0, 118, 49 )
 
 [sub_resource type="GDScript" id=6]
 script/source = "extends PanelContainer
@@ -196,7 +196,7 @@ size_flags_vertical = 3
 
 [node name="vboxShop" type="VBoxContainer" parent="panelRContainer/vbox"]
 margin_right = 1010.0
-margin_bottom = 465.0
+margin_bottom = 423.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
@@ -239,12 +239,12 @@ __meta__ = {
 [node name="panelShop" type="ScrollContainer" parent="panelRContainer/vbox/vboxShop"]
 margin_top = 49.0
 margin_right = 1010.0
-margin_bottom = 465.0
+margin_bottom = 423.0
 size_flags_vertical = 3
 
 [node name="marginCtn" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelShop"]
 margin_right = 1010.0
-margin_bottom = 416.0
+margin_bottom = 374.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 20
@@ -256,23 +256,23 @@ custom_constants/margin_bottom = 5
 margin_left = 20.0
 margin_top = 5.0
 margin_right = 990.0
-margin_bottom = 411.0
+margin_bottom = 369.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource( 4 )
 
 [node name="descriptionContainer" type="PanelContainer" parent="panelRContainer/vbox"]
-margin_top = 469.0
+margin_top = 427.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 3.0
 custom_styles/panel = SubResource( 5 )
 script = SubResource( 6 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
 margin_right = 1010.0
-margin_bottom = 117.0
+margin_bottom = 159.0
 custom_constants/margin_right = 25
 custom_constants/margin_top = 10
 custom_constants/margin_left = 25
@@ -282,11 +282,11 @@ custom_constants/margin_bottom = 4
 margin_left = 25.0
 margin_top = 10.0
 margin_right = 985.0
-margin_bottom = 113.0
+margin_bottom = 155.0
 
 [node name="label" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
 margin_right = 960.0
-margin_bottom = 70.0
+margin_bottom = 105.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
@@ -299,15 +299,16 @@ autowrap = true
 script = SubResource( 7 )
 
 [node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
-margin_top = 74.0
+margin_top = 109.0
 margin_right = 960.0
-margin_bottom = 103.0
+margin_bottom = 145.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="price" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
+margin_top = 3.0
 margin_right = 960.0
-margin_bottom = 29.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )

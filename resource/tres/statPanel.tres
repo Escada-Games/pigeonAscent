@@ -1,0 +1,16 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=2]
+
+[ext_resource path="res://resource/Panel_Stat_Atk.png" type="Texture" id=1]
+
+[resource]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 88, 35 )
+margin_left = 1.15661
+margin_right = 4.81642
+margin_top = 1.0281
+margin_bottom = 4.75495
+expand_margin_top = 15.0
