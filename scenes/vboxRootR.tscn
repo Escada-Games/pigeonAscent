@@ -63,7 +63,8 @@ func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 
 [sub_resource type="GDScript" id=7]
 script/source = "extends Label
-func _ready():self.text=\"\"
+func _ready():
+	self.text=\"Hover your mouse over an item to see its info, and click it to buy!\"
 "
 
 [sub_resource type="GDScript" id=8]
