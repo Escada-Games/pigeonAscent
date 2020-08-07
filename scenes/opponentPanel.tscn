@@ -42,8 +42,10 @@ func _ready():
 #		print_debug(\"A\")
 		addSameEnemies()
 	else:
-		if level in [1]:addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
-		elif level in [2]:addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
+		if level in [1]:
+			addEnemies([createEnemy(1,1),createEnemy(1,1),createEnemy(1,0)])
+		elif level in [2]:
+			addEnemies([createEnemy(level-1),createEnemy(level,1),createEnemy(level)])
 		elif level in [3,4,5]:
 			addEnemies([createEnemy(level-1,2),createEnemy(level,2),createEnemy(level)])
 		elif level in [6,7]:
@@ -77,6 +79,7 @@ func createEnemy(level,handicap=0,boss=false):
 	i.enemyName=selectName()
 	i.enemyLevel=level
 	var points=(level*3)-handicap
+#	print_debug(points)
 	var addedPoints=[0,0,0]
 	if level in [1,2]:
 		i.enemyClass=global.commonEnemyPigeons[randi()%global.commonEnemyPigeons.size()]
@@ -133,6 +136,7 @@ func createEnemy(level,handicap=0,boss=false):
 	return i
 
 func addEnemies(enemyArray=[]):
+	print_debug(enemyArray)
 	if enemyArray!=[]:
 		for enemy in enemyArray:
 			global.enemiesForBattle.append(enemy.generateEnemyDict())
@@ -140,6 +144,7 @@ func addEnemies(enemyArray=[]):
 #	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
 
 func addSameEnemies():
+	print_debug(\"ASDASD\")
 	for e in global.enemiesForBattle:
 		var i=enemyPanel.instance()
 		i.enemyName=e.name

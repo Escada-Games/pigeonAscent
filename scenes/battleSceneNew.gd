@@ -123,8 +123,8 @@ func _process(delta):
 
 func playerAttack():
 	var block=(1-(global.enemy.defense)*global.scaling.defenseBlock/global.limits.defense)
-	var damage=max(floor(calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)*block),1)
-	var foodDamage=floor(max(0,global.player.speed+global.player.extraSpeed-global.enemy.speed)*global.scaling.foodDamage)
+	var damage=max(ceil(calculateDamage(global.player.strength+global.player.extraStrength,global.enemy.defense)*block),1)
+	var foodDamage=ceil(max(0,global.player.speed+global.player.extraSpeed-global.enemy.speed)*global.scaling.foodDamage)
 	var bbName=global.player.name
 	var isCritical=false
 	if randf()>0.9 or global.enemy.energy<=0:
@@ -162,8 +162,8 @@ func playerAttack():
 #	playerAttacked=true
 	
 func enemyAttack():
-	var damage=max(ceil(calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)*(1-(global.player.defense+global.player.extraDefense)*global.scaling.defenseBlock/global.limits.defense)),1)
-	var foodDamage=ceil(max(0,global.enemy.speed-global.player.speed-global.player.extraSpeed)*global.scaling.foodDamage)
+	var damage=max(floor(calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)*(1-(global.player.defense+global.player.extraDefense)*global.scaling.defenseBlock/global.limits.defense)),1)
+	var foodDamage=floor(max(0,global.enemy.speed-global.player.speed-global.player.extraSpeed)*global.scaling.foodDamage)
 	var bbName=colorizeString(global.enemy.name,"#eb564b")#"[color=#eb564b]"+global.enemy.name+"[/color]"
 	var isCritical=false
 	if randf()>0.9 or global.player.energy<=0:

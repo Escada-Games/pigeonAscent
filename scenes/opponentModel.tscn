@@ -84,9 +84,9 @@ func generateEnemyDict():
 		\"hp\":maxHp,\"maxHp\":maxHp,
 		\"energy\":maxEnergy,\"maxEnergy\":maxEnergy,
 		\"pointsLeft\":0,
-		\"strength\":self.enemyStr,
-		\"defense\":self.enemyDef,
-		\"speed\":self.enemySpd,
+		\"strength\":self.enemyStr-1,
+		\"defense\":self.enemyDef-1,
+		\"speed\":self.enemySpd-1,
 		\"class\":self.enemyClass
 	}
 "
