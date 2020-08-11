@@ -58,6 +58,9 @@ func _ready():
 	get_tree().get_root().connect("size_changed", self, "updateDefaultPositions")
 	set_process(true)
 
+func attackFinished(a,b):
+	print_debug("ASDASDASD")
+
 func updateDefaultPositions():
 	print_debug("Window size changed")
 	var change=max((OS.window_size/global.defaultResolution).length(),1)

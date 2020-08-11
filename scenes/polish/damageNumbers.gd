@@ -8,7 +8,7 @@ func _ready():
 	set_process(true)
 	self.linear_velocity.x=direction*rand_range(200,400)
 	self.linear_velocity.y=-rand_range(200,500)
-	$label.text=String(damage)
+	$label.text=String(int(damage))
 	if critical:
 		$label.text=$label.text+"!"
 		self.scale*=2

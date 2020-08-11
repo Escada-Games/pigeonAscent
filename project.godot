@@ -26,6 +26,10 @@ config/windows_native_icon="res://icon.ico"
 
 global="*res://scenes/global.gd"
 
+[display]
+
+window/size/resizable=false
+
 [input]
 
 ui_lmb={
