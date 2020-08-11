@@ -59,7 +59,12 @@ func _ready():
 	set_process(true)
 
 func attackFinished(a,b):
-	print_debug("ASDASDASD")
+	if a==playerSpr:
+		$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnRecoil.start()
+	else:
+		$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnRecoil.start()
 
 func updateDefaultPositions():
 	print_debug("Window size changed")
@@ -149,7 +154,7 @@ func playerAttack():
 		enemySpr.hit()
 	
 #	playerAttackAnim()
-	global.enemy.hp-=damage
+	global.enemy.hp-=int(damage)
 	global.enemy.energy-=foodDamage
 	createDamageNumbers(enemySpr.rect_global_position+enemySpr.rect_size/2,1,damage,isCritical,"Player")
 	if global.enemy.hp<=0:
@@ -189,7 +194,7 @@ func enemyAttack():
 		playerSpr.hit()
 #	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
 #	enemyAttackAnim()
-	global.player.hp-=damage
+	global.player.hp-=int(damage)
 	global.player.energy-=foodDamage
 	createDamageNumbers(playerSpr.rect_global_position+playerSpr.rect_size/2,-1,damage,isCritical,"Enemy")
 	if global.player.hp<=0:
