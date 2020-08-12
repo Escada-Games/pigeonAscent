@@ -206,7 +206,7 @@ var rerolls=1
 var scaling={
 	"strength":1.12,
 	"defense":1,
-	"speed":64,#30,#33
+	"speed":40,#64,#30,#33
 	"hp":1,
 	"food":2,
 	"foodDamage":0.5,

@@ -34,7 +34,9 @@ onready var bgNode=get_node("marginCtn/battlePanel/battlePanelMargin/BG")
 const hungryStaminaScaling:=0.75
 func calculateStaminaIncrement(x,isHungry=false):
 	var staminaScaling=hungryStaminaScaling if isHungry else 1
-	return 3.79643 + (0.9834812 - 3.79643)/(1 + pow((x/22.7243),1.642935))*staminaScaling
+	var externalScaling=1
+#	staminaScaling*=2.0
+	return externalScaling*(3.79643 + (0.9834812 - 3.79643)/(1 + pow((x/22.7243),1.642935))*staminaScaling)
 	#Original:
 	#return 0.9420715 + 0.1041146*x - 0.00172845*pow(x,2)
 func _ready():
@@ -60,11 +62,11 @@ func _ready():
 
 func attackFinished(a,b):
 	if a==playerSpr:
-		$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnRecoil.start()
+		$twnAttack.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnAttack.start()
 	else:
-		$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnRecoil.start()
+		$twnAttack.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnAttack.start()
 
 func updateDefaultPositions():
 	print_debug("Window size changed")
