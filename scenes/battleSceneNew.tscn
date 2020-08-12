@@ -79,8 +79,9 @@ func _ready():
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	set_process(true)
 func _process(delta):
+	if dead:self.modulate=Color(\"#aaaaaa\")
 	$area2D.position=self.rect_size/2
-	if dead:self.rect_rotation+=10*delta
+#	if dead:self.rect_rotation+=10*delta
 #	self.size_flags_vertical=SIZE_EXPAND
 
 "
@@ -138,6 +139,7 @@ script/source = "extends TextureRect
 var targetPos=Vector2()
 var duration=1.0
 var twnHit=Tween.new()
+var dead=false
 func hit():
 	twnHit.interpolate_property(self,\"rect_scale\",Vector2(0.8,1.2)*self.rect_scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	twnHit.start()
@@ -160,6 +162,7 @@ func _ready():
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	set_process(true)
 func _process(delta):
+	if dead:self.modulate=Color(\"#aaaaaa\")
 #	self.rect_global_position=get_parent().rect_global_position
 	$area2D.position=self.rect_size/2
 	
