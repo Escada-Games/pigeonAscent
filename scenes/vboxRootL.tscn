@@ -109,6 +109,7 @@ func _ready():
 	set_process(true)
 	self.connect(\"mouse_entered\",self,\"twnGrow\")
 	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,maximumScale,duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()
@@ -187,6 +188,7 @@ func _ready():
 	set_process(true)
 	self.connect(\"mouse_entered\",self,\"twnGrow\")
 	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,maximumScale,duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()
@@ -267,6 +269,7 @@ func _ready():
 	set_process(true)
 	self.connect(\"mouse_entered\",self,\"twnGrow\")
 	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,maximumScale,duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()

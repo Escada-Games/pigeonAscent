@@ -12,6 +12,7 @@ func _ready():
 	if critical:
 		$label.text=$label.text+"!"
 		self.scale*=2
+		$label.rect_scale*=2
 	if origin=="Enemy":
 		$label.modulate=Color("#FFAAAA")
 #	$twnScale.interpolate_property($label,"rect_scale",Vector2(3,0),Vector2(1,1),duration,Tween.TRANS_ELASTIC,Tween.EASE_OUT)

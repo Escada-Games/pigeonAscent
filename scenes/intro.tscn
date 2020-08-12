@@ -37,6 +37,7 @@ func _ready():
 	}
 	global.level=1
 	connect(\"pressed\",self,\"startGame\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func startGame():
 	global.player.name=get_parent().get_node(\"lineEdit\").text
 	get_tree().change_scene(\"res://scenes/root.tscn\")

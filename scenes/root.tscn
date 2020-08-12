@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=2]
@@ -14,6 +14,18 @@
 [ext_resource path="res://resource/tres/goldPanel.tres" type="StyleBox" id=31]
 
 [sub_resource type="GDScript" id=1]
+script/source = "extends TextureRect
+var defaultRectPosition:=Vector2()
+const speed:=0.5
+func _ready():
+	defaultRectPosition=self.rect_position
+	set_process(true)
+func _process(delta):
+	self.rect_position+=Vector2(speed,speed)
+	if is_equal_approx(self.rect_position.x,0):self.rect_position=defaultRectPosition
+"
+
+[sub_resource type="GDScript" id=2]
 script/source = "extends MarginContainer
 var deleteMe=Node2D.new()
 var newContainer=Node2D.new()
@@ -64,7 +76,7 @@ func checkForDeletion(h,m):
 		newContainer.queue_free()
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends TextureButton
 
 func _ready():
@@ -73,7 +85,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.152941, 0.152941, 0.211765, 1 )
 border_width_left = 10
 border_width_top = 10
@@ -85,7 +97,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=5]
 script/source = "extends TextureRect
 var textureNormal=preload(\"res://resource/Tunnel.png\")
 var textureGod=preload(\"res://resource/Boss_Board.png\")
@@ -97,13 +109,13 @@ func _process(delta):
 		self.texture=textureNormal
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureRect
 func _ready():set_process(true)
 func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 var displayGold=0
 const lerpConstant=0.1
@@ -133,11 +145,17 @@ __meta__ = {
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -96.0
+margin_top = -96.0
+margin_right = 96.0
+margin_bottom = 96.0001
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
+script = SubResource( 1 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": ""
 }
 
 [node name="marginContainer" type="MarginContainer" parent="."]
@@ -147,7 +165,7 @@ custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
-script = SubResource( 1 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -212,7 +230,7 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 12 )
 expand = true
 stretch_mode = 5
-script = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="progressPanel" type="PanelContainer" parent="marginContainer/hbox/vboxC/fightContainer/vbox"]
 visible = false
@@ -226,7 +244,7 @@ margin_right = 335.0
 margin_bottom = 491.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 4 )
 
 [node name="textureRectBG" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
@@ -238,7 +256,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = ExtResource( 13 )
 expand = true
-script = SubResource( 4 )
+script = SubResource( 5 )
 
 [node name="marginContainer" type="MarginContainer" parent="marginContainer/hbox/vboxC/playerContainer"]
 margin_left = 10.0
@@ -256,7 +274,7 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource( 14 )
 expand = true
 stretch_mode = 6
-script = SubResource( 5 )
+script = SubResource( 6 )
 
 [node name="playerStats" parent="marginContainer/hbox/vboxC" instance=ExtResource( 1 )]
 visible = false
@@ -293,7 +311,7 @@ custom_constants/shadow_offset_y = 3
 text = "0123456789"
 align = 1
 valign = 1
-script = SubResource( 6 )
+script = SubResource( 7 )
 
 [node name="vboxRootR" parent="marginContainer/hbox" instance=ExtResource( 4 )]
 anchor_right = 0.0

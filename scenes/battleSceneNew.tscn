@@ -244,7 +244,7 @@ func updateSize():
 script/source = "extends Button
 func _ready():
 	self.visible=false
-	self.rect_global_position.y=2*OS.window_size.y
+#	self.rect_global_position.y=2*OS.window_size.y
 	get_tree().root.get_node(\"/root/battleScene\").exitButton=self
 	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
 	self.connect(\"mouse_entered\",global,\"createHoverSfx\")

@@ -155,7 +155,8 @@ func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 
 func attackFinished(h,m):
-	if playerAttacked:
+#	if playerAttacked:
+	if h==playerSpr:
 #		updateDefaultPositions()
 #		$twnAttack.interpolate_property(playerSpr,"rect_global_position",Vector2(-1.33,1)*playerSpr.rect_size,playerDefaultPos,durationReturn,Tween.TRANS_BACK,Tween.EASE_OUT)
 #		$twnAttack.start()
@@ -168,7 +169,8 @@ func attackFinished(h,m):
 		#$twnRecoil.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 		$twnRecoil.start()
 		effects('a')
-	if enemyAttacked:
+	if h==enemySpr:
+#	if enemyAttacked:
 		enemyAttack()
 		enemySpr.rect_global_position.y*=rand_range(0.7,1.1)
 		$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
