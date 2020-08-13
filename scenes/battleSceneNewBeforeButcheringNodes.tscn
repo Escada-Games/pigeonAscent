@@ -1,0 +1,839 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://resource/fonts/battlePhrase32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resource/fonts/battleLog16.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resource/fonts/battleLog32Shadow.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/playerStats.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/enemyStatsV2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://resource/Arena_Sand.png" type="Texture" id=6]
+[ext_resource path="res://resource/sprites/God_Pigeon.png" type="Texture" id=7]
+[ext_resource path="res://resource/Bar_Attack.png" type="Texture" id=8]
+[ext_resource path="res://resource/Shadow.png" type="Texture" id=9]
+[ext_resource path="res://resource/fonts/mago3.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://resource/Panel_Battle_Log.png" type="Texture" id=11]
+[ext_resource path="res://resource/fonts/monogram.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://resource/Pigeon_Basic.png" type="Texture" id=13]
+[ext_resource path="res://resource/Bar_BG.png" type="Texture" id=14]
+[ext_resource path="res://resource/Barra_Base.png" type="Texture" id=15]
+[ext_resource path="res://scenes/battleSceneNew.gd" type="Script" id=16]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureProgress
+
+var targetPos=Vector2()
+var duration=1.0
+
+func _ready():
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.rect_global_position
+	self.rect_global_position.y=-1.5*self.rect_size.y
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+	set_process(true)
+func _process(delta):
+	self.value=get_tree().root.get_node(\"/root/battleScene\").enemyStamina
+
+
+"
+
+[sub_resource type="GDScript" id=17]
+script/source = "extends Sprite
+var targetPos=Vector2()
+var duration=1.0
+var twnHit=Tween.new()
+var dead=false
+func hit():
+	twnHit.interpolate_property(self,\"scale\",Vector2(0.8,1.2)*self.scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	twnHit.start()
+func _ready():
+	self.position=get_parent().rect_size*Vector2(0.5,1)
+	self.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.global_position
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+	
+	twnHit=Tween.new()
+	add_child(twnHit)
+	twnHit.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnHit.start()
+	
+	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
+#	self.rect_pivot_offset=self.rect_size/2
+	$area2D.position=self.texture.get_size()*self.scale/2
+	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	set_process(true)
+func _process(delta):
+	if dead:self.modulate=Color(\"#aaaaaa\")
+"
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 44.3355
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Sprite
+var defaultY=0
+var t=0
+var omega=PI
+func _ready():
+	var defaultY=self.position.y
+	set_process(true)
+func _process(delta):
+	t+=delta
+	self.position.y=defaultY+20*sin(t*omega)
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends TextureRect
+var targetPos=Vector2()
+var duration=1.0
+var twnHit=Tween.new()
+var dead=false
+func hit():
+	twnHit.interpolate_property(self,\"rect_scale\",Vector2(0.8,1.2)*self.rect_scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	twnHit.start()
+func _ready():
+	return
+	self.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.rect_global_position
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+	
+	twnHit=Tween.new()
+	add_child(twnHit)
+	twnHit.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnHit.start()
+	
+	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
+#	self.rect_pivot_offset=self.rect_size/2
+	$area2D.position=self.rect_size/2
+	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	set_process(true)
+func _process(delta):
+	if dead:self.modulate=Color(\"#aaaaaa\")
+	$area2D.position=self.rect_size/2
+#	if dead:self.rect_rotation+=10*delta
+#	self.size_flags_vertical=SIZE_EXPAND
+
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends TextureProgress
+
+var targetPos=Vector2()
+var duration=1.0
+
+func _ready():
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.rect_global_position
+	self.rect_global_position.y=-1.5*self.rect_size.y
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+	set_process(true)
+func _process(delta):
+	self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
+
+
+"
+
+[sub_resource type="GDScript" id=18]
+script/source = "extends Sprite
+var targetPos=Vector2()
+var duration=1.0
+var twnHit=Tween.new()
+var dead=false
+func hit():
+	twnHit.interpolate_property(self,\"scale\",Vector2(0.8,1.2)*self.scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	twnHit.start()
+func _ready():
+#	return
+	self.texture=load(global.pigeonClassesAndSprites[global.player.class].sprite)
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.global_position
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+	
+	twnHit=Tween.new()
+	add_child(twnHit)
+	twnHit.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnHit.start()
+	
+	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
+	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	set_process(true)
+func _process(delta):
+	if dead:self.modulate=Color(\"#aaaaaa\")
+#	self.rect_global_position=get_parent().rect_global_position
+#	$area2D.position=self.rect_size/2
+	
+#	self.size_flags_vertical=SIZE_EXPAND
+"
+
+[sub_resource type="StyleBoxFlat" id=9]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.156863, 0.156863, 0.184314, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Label
+const duration=1.0
+const delay=0.4
+var phrase=\"Eat my shorts! Oh wait\"
+func _ready():
+	self.percent_visible=0
+	$twn.interpolate_property(self,\"percent_visible\",0,1,duration,Tween.TRANS_LINEAR,Tween.EASE_OUT,delay)
+	$twn.start()
+	$twn.connect(\"tween_all_completed\",self,\"delete\")
+func delete():
+	yield(get_tree().create_timer(2),\"timeout\")
+	get_parent().get_parent().queue_free()
+"
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends TextureRect
+var targetPos=Vector2()
+var duration=1.0
+var twnHit=Tween.new()
+var dead=false
+func hit():
+	twnHit.interpolate_property(self,\"rect_scale\",Vector2(0.8,1.2)*self.rect_scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	twnHit.start()
+func _ready():
+	return
+	self.texture=load(global.pigeonClassesAndSprites[global.player.class].sprite)
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.rect_global_position
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+	
+	twnHit=Tween.new()
+	add_child(twnHit)
+	twnHit.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnHit.start()
+	
+	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
+	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	set_process(true)
+func _process(delta):
+	if dead:self.modulate=Color(\"#aaaaaa\")
+#	self.rect_global_position=get_parent().rect_global_position
+	$area2D.position=self.rect_size/2
+	
+#	self.size_flags_vertical=SIZE_EXPAND
+"
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends NinePatchRect
+var targetPos=Vector2()
+var duration=1.5
+func _ready():
+	randomize()
+	duration*=rand_range(0.5,1.5)
+	targetPos=self.rect_global_position
+	self.rect_global_position.y=-1.5*self.rect_size.y
+	var twnEnter=Tween.new()
+	add_child(twnEnter)
+	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
+	twnEnter.start()
+"
+
+[sub_resource type="DynamicFont" id=12]
+size = 32
+font_data = ExtResource( 12 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 32
+font_data = ExtResource( 10 )
+
+[sub_resource type="GDScript" id=14]
+script/source = "extends RichTextLabel
+
+var bufferedMessage=\"\"
+
+func _ready():
+	get_tree().get_root().connect(\"size_changed\", self, \"updateSize\")
+	self.bbcode_text=\"\"
+	set_process(true)
+func _process(delta):
+	if bufferedMessage!=\"\":
+		self.bbcode_text+=bufferedMessage[0]
+		bufferedMessage.erase(0,1)
+func updateSize():
+#	self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog32.tres\") if OS.window_size.x>global.resolution.x*1.5 else load(\"res://resource/fonts/battleLog16.tres\"))
+	if OS.window_size.x>1024*1.5:
+		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog32.tres\"))
+	else:
+		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog16.tres\"))
+"
+
+[sub_resource type="GDScript" id=15]
+script/source = "extends Button
+func _ready():
+	self.visible=false
+#	self.rect_global_position.y=2*OS.window_size.y
+	get_tree().root.get_node(\"/root/battleScene\").exitButton=self
+	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+"
+
+[sub_resource type="GDScript" id=16]
+script/source = "extends Button
+func _ready():
+	self.visible=false
+	self.rect_global_position.y=2*OS.window_size.y
+	get_tree().root.get_node(\"/root/battleScene\").resetButton=self
+	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"gameOver\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
+"
+
+[node name="battleScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 250.909 ]
+}
+
+[node name="twn" type="Tween" parent="."]
+
+[node name="twnPlayer" type="Tween" parent="."]
+
+[node name="twnEnemy" type="Tween" parent="."]
+
+[node name="twnAttack" type="Tween" parent="."]
+
+[node name="twnColorRectTransparency" type="Tween" parent="."]
+
+[node name="twnRecoil" type="Tween" parent="."]
+
+[node name="twnShake" type="Tween" parent="."]
+
+[node name="twnSelfPos" type="Tween" parent="."]
+
+[node name="twnBackButton" type="Tween" parent="."]
+
+[node name="colorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.128906, 0.128906, 0.128906, 0.75 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="marginCtn" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.94812
+margin_top = -3.53566
+margin_right = 1.94812
+margin_bottom = -3.53564
+rect_clip_content = true
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="battlePanel" type="PanelContainer" parent="marginCtn"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 999.0
+margin_bottom = 590.0
+rect_clip_content = true
+
+[node name="battlePanelMargin" type="MarginContainer" parent="marginCtn/battlePanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 967.0
+margin_bottom = 558.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="BG" type="TextureRect" parent="marginCtn/battlePanel/battlePanelMargin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 950.0
+margin_bottom = 541.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="hboxCtn" type="HBoxContainer" parent="marginCtn/battlePanel/battlePanelMargin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 950.0
+margin_bottom = 541.0
+alignment = 1
+
+[node name="battleArea" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn"]
+margin_right = 668.0
+margin_bottom = 531.0
+rect_min_size = Vector2( 668, 516 )
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="battleArea" type="VBoxContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 648.0
+margin_bottom = 511.0
+alignment = 1
+
+[node name="topPadding" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 628.0
+margin_bottom = 33.0
+custom_constants/separation = 33
+
+[node name="enemyCtn" type="HBoxContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
+margin_top = 37.0
+margin_right = 628.0
+margin_bottom = 204.0
+alignment = 1
+
+[node name="enemyStats" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn" instance=ExtResource( 5 )]
+margin_right = 296.0
+size_flags_horizontal = 3
+entering = true
+compact = true
+
+[node name="vSep" type="VSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 300.0
+margin_right = 374.0
+margin_bottom = 167.0
+size_flags_horizontal = 3
+
+[node name="enemyCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn"]
+margin_left = 378.0
+margin_right = 628.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+
+[node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn"]
+margin_right = 250.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/barCtn"]
+margin_left = 10.0
+margin_right = 240.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_under = ExtResource( 14 )
+texture_over = ExtResource( 15 )
+texture_progress = ExtResource( 8 )
+nine_patch_stretch = true
+script = SubResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn"]
+margin_right = 250.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 250, 0 )
+size_flags_vertical = 3
+alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 95.0
+margin_right = 250.0
+margin_bottom = 4096.0
+custom_constants/separation = 5
+
+[node name="enemySpr" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer"]
+position = Vector2( 133.95, 109.25 )
+flip_h = true
+script = SubResource( 17 )
+
+[node name="pigeonShadow" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr"]
+modulate = Color( 0.231373, 0.231373, 0.231373, 1 )
+position = Vector2( 0, 64.8001 )
+scale = Vector2( 4, 4 )
+z_as_relative = false
+texture = ExtResource( 9 )
+
+[node name="pigeon" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 13 )
+flip_h = true
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr"]
+position = Vector2( -10.45, 9.50002 )
+
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr/area2D"]
+shape = SubResource( 4 )
+
+[node name="sprite" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySpr"]
+visible = false
+position = Vector2( 159.79, 1.16635 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+
+[node name="enemySprOld" type="TextureRect" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer"]
+visible = false
+margin_top = 38.0
+margin_right = 250.0
+margin_bottom = 138.0
+rect_min_size = Vector2( 100, 100 )
+rect_pivot_offset = Vector2( 125, 82 )
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+texture = ExtResource( 13 )
+stretch_mode = 6
+flip_h = true
+script = SubResource( 3 )
+
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySprOld"]
+
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySprOld/area2D"]
+shape = SubResource( 4 )
+disabled = true
+
+[node name="sprite" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyCtn/vboxPlayer/enemySprOld"]
+visible = false
+position = Vector2( 159.79, 1.16635 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+
+[node name="midPadding" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 208.0
+margin_right = 628.0
+margin_bottom = 320.0
+size_flags_vertical = 3
+
+[node name="playerCtn" type="HBoxContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
+margin_top = 324.0
+margin_right = 628.0
+margin_bottom = 491.0
+size_flags_vertical = 5
+alignment = 1
+
+[node name="playerCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
+margin_right = 250.0
+margin_bottom = 167.0
+
+[node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn"]
+margin_top = 142.0
+margin_right = 250.0
+margin_bottom = 167.0
+size_flags_vertical = 8
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/barCtn"]
+margin_left = 10.0
+margin_right = 240.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+texture_under = ExtResource( 14 )
+texture_over = ExtResource( 15 )
+texture_progress = ExtResource( 8 )
+nine_patch_stretch = true
+script = SubResource( 6 )
+
+[node name="vboxPlayer" type="VBoxContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn"]
+margin_right = 250.0
+margin_bottom = 167.0
+rect_min_size = Vector2( 250, 0 )
+alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 81.0
+margin_right = 250.0
+margin_bottom = 86.0
+custom_constants/separation = 5
+
+[node name="playerSpr" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
+position = Vector2( 123.463, 50.8576 )
+texture = ExtResource( 13 )
+script = SubResource( 18 )
+
+[node name="pigeonShadow" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr"]
+modulate = Color( 0.231373, 0.231373, 0.231373, 1 )
+position = Vector2( 0, 60.8001 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 9 )
+
+[node name="pigeon" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 13 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr"]
+
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr/area2D"]
+shape = SubResource( 4 )
+
+[node name="phraseCtn" type="PanelContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr"]
+visible = false
+margin_left = 197.0
+margin_top = -32.0
+margin_right = 346.0
+margin_bottom = 25.0
+custom_styles/panel = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="marginCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr/phraseCtn"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 144.0
+margin_bottom = 52.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 2
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 2
+
+[node name="phrase" type="Label" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr/phraseCtn/marginCtn"]
+margin_left = 10.0
+margin_top = 2.0
+margin_right = 129.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Eat my shorts! Oh wait"
+align = 1
+valign = 1
+autowrap = true
+script = SubResource( 10 )
+
+[node name="twn" type="Tween" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSpr/phraseCtn/marginCtn/phrase"]
+
+[node name="playerSprOld" type="TextureRect" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
+visible = false
+margin_top = 38.0
+margin_right = 250.0
+margin_bottom = 138.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+texture = ExtResource( 13 )
+stretch_mode = 6
+script = SubResource( 8 )
+
+[node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSprOld"]
+
+[node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSprOld/area2D"]
+shape = SubResource( 4 )
+disabled = true
+
+[node name="phraseCtn" type="PanelContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSprOld"]
+visible = false
+margin_left = 197.0
+margin_top = -32.0
+margin_right = 346.0
+margin_bottom = 25.0
+custom_styles/panel = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="marginCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSprOld/phraseCtn"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 144.0
+margin_bottom = 52.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 2
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 2
+
+[node name="phrase" type="Label" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSprOld/phraseCtn/marginCtn"]
+margin_left = 10.0
+margin_top = 2.0
+margin_right = 129.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Eat my shorts! Oh wait"
+align = 1
+valign = 1
+autowrap = true
+script = SubResource( 10 )
+
+[node name="twn" type="Tween" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer/playerSprOld/phraseCtn/marginCtn/phrase"]
+
+[node name="playerSprRef" type="Position2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerCtn/vboxPlayer"]
+__meta__ = {
+"_gizmo_extents_": 100.0
+}
+
+[node name="vSep" type="VSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 254.0
+margin_right = 449.0
+margin_bottom = 167.0
+size_flags_horizontal = 3
+
+[node name="playerStats" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn" instance=ExtResource( 4 )]
+margin_left = 453.0
+margin_right = 628.0
+size_flags_stretch_ratio = 1.0
+entering = true
+compact = true
+
+[node name="battleLog" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn"]
+margin_left = 672.0
+margin_right = 940.0
+margin_bottom = 531.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="battleLog" type="NinePatchRect" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog"]
+margin_right = 268.0
+margin_bottom = 531.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 98, 176 )
+patch_margin_left = 11
+patch_margin_top = 15
+patch_margin_right = 11
+patch_margin_bottom = 11
+script = SubResource( 11 )
+
+[node name="marginContainer" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="richTextLabel" type="RichTextLabel" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog/marginContainer"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 258.0
+margin_bottom = 521.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_fonts/italics_font = SubResource( 12 )
+custom_fonts/bold_font = SubResource( 13 )
+custom_fonts/normal_font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+bbcode_enabled = true
+bbcode_text = "#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+"
+text = "#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+#123> TESTE
+"
+scroll_following = true
+script = SubResource( 14 )
+
+[node name="ctnButtons" type="MarginContainer" parent="marginCtn/battlePanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 967.0
+margin_bottom = 558.0
+mouse_filter = 2
+custom_constants/margin_right = 250
+custom_constants/margin_top = 400
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vBoxContainer" type="CenterContainer" parent="marginCtn/battlePanel/ctnButtons"]
+margin_left = 10.0
+margin_top = 400.0
+margin_right = 710.0
+margin_bottom = 501.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btnGoBack" type="Button" parent="marginCtn/battlePanel/ctnButtons/vBoxContainer"]
+margin_left = 308.0
+margin_top = 34.0
+margin_right = 392.0
+margin_bottom = 66.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Return"
+script = SubResource( 15 )
+
+[node name="btnReset" type="Button" parent="marginCtn/battlePanel/ctnButtons/vBoxContainer"]
+margin_left = 308.0
+margin_top = 34.0
+margin_right = 392.0
+margin_bottom = 66.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Retry!"
+script = SubResource( 16 )
