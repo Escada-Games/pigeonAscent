@@ -273,6 +273,10 @@ __meta__ = {
 
 [node name="twn" type="Tween" parent="."]
 
+[node name="twnPlayer" type="Tween" parent="."]
+
+[node name="twnEnemy" type="Tween" parent="."]
+
 [node name="twnAttack" type="Tween" parent="."]
 
 [node name="twnColorRectTransparency" type="Tween" parent="."]

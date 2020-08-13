@@ -178,12 +178,12 @@ var uncommonEvoPigeons=[
 var player={
 	"name":"Pombo",
 	"gold":100,
-	"hp":5,"maxHp":5,
+	"hp":100 if OS.is_debug_build() else 5,"maxHp":100 if OS.is_debug_build() else 5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":5,#3,
 	"strength":1,"extraStrength":0,
-	"defense":1,"extraDefense":0,
-	"speed":1,"extraSpeed":0,
+	"defense":1,"extraDefense":30 if OS.is_debug_build() else 0,
+	"speed":1,"extraSpeed":30 if OS.is_debug_build() else 0,
 	"class":self.c_normal
 }
 var hasWings=false
@@ -192,12 +192,12 @@ var hasSword=false
 var enemy={
 	"name":"PomboEnemy",
 	"gold":100,
-	"hp":5,"maxHp":5,
+	"hp":100 if OS.is_debug_build() else 5,"maxHp":100 if OS.is_debug_build() else 5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
 	"strength":1,
-	"defense":1,
-	"speed":1.0,
+	"defense":20 if OS.is_debug_build() else 0,
+	"speed":20 if OS.is_debug_build() else 1.0,
 	"class":"normal"
 }
 
@@ -206,7 +206,7 @@ var rerolls=1
 var scaling={
 	"strength":1.12,
 	"defense":1,
-	"speed":40,#64,#30,#33
+	"speed":64,#64,#30,#33
 	"hp":1,
 	"food":2,
 	"foodDamage":0.5,

@@ -26,9 +26,6 @@ var arenaFiles=[
 	"res://resource/Arena_Godfight.png"
 ]
 
-var playerAttacking=false
-var enemyAttacking=false
-
 var particlesImpactGPU=preload("res://scenes/polish/particlesImpactGPU.tscn")
 var particlesImpact=preload("res://scenes/polish/particlesImpact.tscn")
 var hitSfx=preload("res://scenes/polish/hitSfx.tscn")
@@ -48,51 +45,45 @@ func calculateStaminaIncrement(x,isHungry=false):
 
 func _ready():
 	randomize()
-	# Set battle arena texture
 	if global.level in [1,2,3,4]:bgNode.texture=load(arenaFiles[0])
 	elif global.level in [5,6,7,8,9]:bgNode.texture=load(arenaFiles[1])
 	elif global.level in [10]:
 		bgNode.texture=load(arenaFiles[2])
 		enemySpr.self_modulate.a=0;enemySpr.get_node("sprite").visible=true
-	# Dunno
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
-	# Holding default positions for playerSpr and enemySpr
 	playerDefaultPos=playerSpr.rect_global_position
 	enemyDefaultPos=enemySpr.rect_global_position
-	# Tween to inside the game's viewport
 	var pos=$marginCtn.rect_global_position
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
-	# Gold to be added at the end of the fight
 	goldToWin=global.enemy.gold
-	# Detection for when an attack finished
 	$twnAttack.connect("tween_completed",self,"attackFinished")
-	$twnPlayer.connect("tween_completed",self,"attackFinished")
-	$twnEnemy.connect("tween_completed",self,"attackFinished")
-#	get_tree().get_root().connect("size_changed", self, "updateDefaultPositions")
+	get_tree().get_root().connect("size_changed", self, "updateDefaultPositions")
 	set_process(true)
 
 func attackFinished(a,b):
-	return
 	if a==playerSpr:
-		print_debug("Player finished attacking.")
-		playerAttacking=false
-		$twnPlayer.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnPlayer.start()
-#		$twnAttack.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-#		$twnAttack.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-#		$twnAttack.start()
+		$twnAttack.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnAttack.start()
 	else:
-		print_debug("Enemy finished attacking.")
 		$twnAttack.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnAttack.start()
 
+func updateDefaultPositions():
+	print_debug("Window size changed")
+	var change=max((OS.window_size/global.defaultResolution).length(),1)
+#	playerSpr.rect_scale=Vector2(change,change)
+#	enemySpr.rect_scale=Vector2(change,change)
+	get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/topPadding").set("custom_constants/separation",change*66)
+#	if OS.window_size.length()>global.defaultResolution.length()*1.2:
+#		get_node("marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/topPadding").set("custom_constants/separation",66*2)
+#		playerSpr.rect_scale=Vector2(2,2)
+#		enemySpr.rect_scale=Vector2(2,2)
+
 func _process(delta):
-	global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
-	global.enemy.energy=clamp(global.enemy.energy,0,global.enemy.maxEnergy)
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
@@ -110,6 +101,8 @@ func _process(delta):
 			global.enemy.energy=clamp(global.enemy.energy,0,global.enemy.maxEnergy)
 			enemyAttacked=true
 			enemyAttackAnim()
+#		if abs(playerSpr.rect_global_position.x-enemySpr.rect_global_position.x)<50:
+#			print("?")
 	else:
 		if not ended:
 			if global.player.hp>0:
@@ -137,6 +130,10 @@ func _process(delta):
 		else:
 			exitButton.modulate.a+=0.1
 			resetButton.modulate.a+=0.1
+#			if global.player.hp>0:
+#				exitButton.modulate.a+=0.1
+#			elif global.enemy.hp>0:
+#				resetButton.modulate.a+=0.1
 
 func playerAttack():
 	var block=(1-(global.enemy.defense)*global.scaling.defenseBlock/global.limits.defense)
@@ -162,13 +159,21 @@ func playerAttack():
 		shakeEnemyHpBar()
 		enemySpr.hit()
 	
+#	playerAttackAnim()
 	global.enemy.hp-=int(damage)
 	global.enemy.energy-=foodDamage
 	createDamageNumbers(enemySpr.rect_global_position+enemySpr.rect_size/2,1,damage,isCritical,"Player")
 	if global.enemy.hp<=0:
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
+#		$twnAttack.stop(enemySpr)
+#		$twnRecoil.stop(enemySpr)
 		enemySpr.dead=true
+#		$twn.interpolate_property(enemySpr,"rect_global_position:x",enemySpr.rect_global_position.x,enemySpr.rect_global_position.x+333,1,Tween.TRANS_QUINT,Tween.EASE_OUT)
+#		$twn.interpolate_property(enemySpr,"rect_global_position:y",enemySpr.rect_global_position.y,enemySpr.rect_global_position.y+OS.window_size.y,1,Tween.TRANS_BACK,Tween.EASE_IN)
+#		$twn.interpolate_property(enemySpr,"rect_rotation",enemySpr.rect_rotation,100*PI,10,Tween.TRANS_QUINT,Tween.EASE_OUT)
+#		$twn.start()
+#	playerAttacked=true
 	
 func enemyAttack():
 	var damage=max(floor(calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)*(1-(global.player.defense+global.player.extraDefense)*global.scaling.defenseBlock/global.limits.defense)),1)
@@ -193,6 +198,8 @@ func enemyAttack():
 		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakePlayerHpBar()
 		playerSpr.hit()
+#	if foodDamage>0:registerSameTurn(bbName + " attacks for " +String(foodDamage)+ " food damage")
+#	enemyAttackAnim()
 	global.player.hp-=int(damage)
 	global.player.energy-=foodDamage
 	createDamageNumbers(playerSpr.rect_global_position+playerSpr.rect_size/2,-1,damage,isCritical,"Enemy")
@@ -200,39 +207,25 @@ func enemyAttack():
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
 		playerSpr.dead=true
+#	enemyAttacked=true
 
 func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 
 func playerAttackAnim():
-	if not playerAttacking:
-		playerAttacking=true
-		var localDurationAttack=durationAttack*(1+global.player.speed/30)
-		var isAtEnemy=is_equal_approx(playerSpr.rect_global_position.x,enemyDefaultPos.x)
-		var targetPosition=enemyDefaultPos if not isAtEnemy else playerDefaultPos
-		$twnPlayer.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnPlayer.start()
-#	$twnRecoil.stop(playerSpr)
-#	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#	$twnRecoil.start()
-#	var localDurationAttack=durationAttack*(1+global.player.speed/30)
-#	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemyDefaultPos,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-#	$twnAttack.start()
+	$twnRecoil.stop(playerSpr)
+	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemySpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+#	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemyDefaultPos,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnAttack.start()
 func enemyAttackAnim():
-	if not enemyAttacking:
-		enemyAttacking=true
-		var localDurationAttack=durationAttack*(1+global.enemy.speed/30)
-		var isAtPlayer=is_equal_approx(playerSpr.rect_global_position.x,enemyDefaultPos.x)
-		var targetPosition=playerDefaultPos if not isAtPlayer else enemyDefaultPos
-		$twnEnemy.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnEnemy.start()
-#	$twnRecoil.stop(enemySpr)
-##	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-##	$twnRecoil.start()
-#	var localDurationAttack=durationAttack*(1+global.enemy.speed/30)
-#	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerDefaultPos,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-#	$twnAttack.start()
-
+	$twnRecoil.stop(enemySpr)
+	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerSpr.rect_global_position,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+#	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerDefaultPos,durationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+	$twnAttack.start()
+func shakePlayerHpBar(intensity=5):
+	$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerStats".shakeHp(intensity)
+func shakeEnemyHpBar(intensity=5):
+	$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyStats".shakeHp(intensity)
 func register(string):
 	var message="#"+String(turn)+"> "+string+"\n"#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
 	battleLogText.bbcode_text+=message
@@ -241,10 +234,12 @@ func register(string):
 func registerSameTurn(string):
 	var message= " "+string+"\n"
 	battleLogText.bbcode_text+=message
+#	turn+=1
 
 func registerSameTurnNoLineBreak(string):
 	var message= " "+string
 	battleLogText.bbcode_text+=message
+#	turn+=1
 
 func registerFast(string):
 	var message="#"+String(turn)+"> "+string
@@ -267,16 +262,21 @@ func exitBattle():
 	$twnSelfPos.start()
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0.85,0,0.3,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
-	
-func applyDamage(target,damage):target.hp-=damage
-	
-func killMe(h,m):self.queue_free()
-	
+func applyDamage(target,damage):
+	target.hp-=damage
+func killMe(h,m):
+	self.queue_free()
 func gameOver():
+	#TODO:CHANGE TO GOING BACK TO THE TITLE SCREEN
+#	get_tree().quit()
+#	get_tree().change_scene("res://scenes/intro.tscn")
 	global.level=1
 	get_tree().change_scene("res://scenes/intro.tscn")
 	self.queue_free()
-
+func effects(area):
+	particlesAndWindowshake(area)
+	knockback()
+#	createDamageNumbers()
 func createDamageNumbers(position,direction,damage,critical=false,origin=""):
 	var i=damageNumbers.instance()
 	i.global_position=position
@@ -285,53 +285,35 @@ func createDamageNumbers(position,direction,damage,critical=false,origin=""):
 	i.critical=critical
 	i.origin=origin
 	add_child(i)
-
-func effects(area):
-	particlesAndWindowshake(area)
-	knockback()
-
 func knockback():
 	if playerAttacked:
 		playerAttack()
 		playerAttacked=false
-		playerAttacking=false
 	elif enemyAttacked:
 		enemyAttack()
 		enemyAttacked=false
-		enemyAttacking=false
 	$twnAttack.stop_all()
 	randomize()
 	playerSpr.rect_global_position.y*=rand_range(0.9,1.1)
 	enemySpr.rect_global_position.y*=rand_range(0.9,1.1)
-	playerAttacking=false
-	$twnPlayer.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-	$twnPlayer.start()
-	$twnEnemy.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-	$twnEnemy.start()
-	
-	
-#	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#	$twnRecoil.start()
-
+	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
+	$twnRecoil.start()
 func particlesAndWindowshake(area):
 	createHitSfx()
 	particles(area)
 	windowShake()
-
 func particles(area):
 	var i=particlesImpact.instance()
 	i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
 	i.emitting=true
 	add_child(i)
-
 func windowShake(newOffset=10):
 	self.offset=newOffset
 	$twnShake.interpolate_property(self,"offset",self.offset,0,self.durationShake,Tween.TRANS_QUAD,Tween.EASE_OUT)
 	$twnShake.start()
 	durationShake=defaultDurationShake*rand_range(0.7,1.0)
-	
-func createHitSfx():self.add_child(hitSfx.instance())
-func colorizeString(string,color="#ffffff"):return "[color="+color+"]"+String(string)+"[/color]"
-func shakePlayerHpBar(intensity=5):$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerStats".shakeHp(intensity)
-func shakeEnemyHpBar(intensity=5):$"marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemyStats".shakeHp(intensity)
+func createHitSfx():
+	self.add_child(hitSfx.instance())
+func colorizeString(string,color="#ffffff"):
+	return "[color="+color+"]"+String(string)+"[/color]"
