@@ -103,7 +103,7 @@ func _process(delta):
 			global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
 			playerAttacked=true
 			playerAttackAnim()
-		enemyStamina+=calculateStaminaIncrement(global.enemy.speed,global.enemy.energy<=0)*delta*global.scaling.speed
+#		enemyStamina+=calculateStaminaIncrement(global.enemy.speed,global.enemy.energy<=0)*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=global.level

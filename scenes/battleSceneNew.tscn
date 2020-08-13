@@ -449,7 +449,6 @@ __meta__ = {
 
 [node name="playerSpr" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
 position = Vector2( 125, 50 )
-texture = ExtResource( 5 )
 script = SubResource( 5 )
 
 [node name="pigeonShadow" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerSpr"]
