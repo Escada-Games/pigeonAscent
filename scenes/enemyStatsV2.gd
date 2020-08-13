@@ -31,9 +31,9 @@ func _ready():
 		twnEnter.start()
 
 func _process(delta):
-	$marginContainer/vbox/vboxBars/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+	$marginContainer/vbox/vboxBars/hpBox.rect_position=defaultPos+offset*Vector2(randf()-0.5,randf()-0.5)
 func shakeHp(newOffset=5):
-	offset=newOffset*sign(randf()-0.5)
+	offset=newOffset#*sign(randf()-0.5)
 	$twnOffset.interpolate_property(self,"offset",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
 	$twnOffset.start()
 	set_process(true)

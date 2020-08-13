@@ -25,6 +25,9 @@ export(bool) var checkVisibility=false
 var targetPos=Vector2()
 var durationEnter=2
 func _ready():
+#	if global.player.attack>global.player.defense and global.player.attack>global.player.speed:
+#		$tex
+#		pass
 	if checkVisibility:
 		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
 	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
@@ -49,9 +52,9 @@ func _ready():
 		twnEnter.start()
 
 func _process(delta):
-	$marginContainer/vbox/vboxBars/hpBox.rect_position=defaultPos+offset*Vector2(randf(),randf())
+	$marginContainer/vbox/vboxBars/hpBox.rect_position=defaultPos+offset*Vector2(randf()-0.5,randf()-0.5)
 func shakeHp(newOffset=5):
-	offset=newOffset*sign(randf()-0.5)
+	offset=newOffset#*sign(randf()-0.5)
 	$twnOffset.interpolate_property(self,\"offset\",self.offset,0,self.duration,Tween.TRANS_QUAD,Tween.EASE_OUT)
 	$twnOffset.start()
 	set_process(true)

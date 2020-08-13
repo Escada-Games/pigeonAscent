@@ -49,8 +49,6 @@ func _ready():
 	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
-#	self.rect_pivot_offset=self.rect_size/2
-#	$area2D.position=self.texture.get_size()*self.scale/2
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	$area2D.connect(\"area_entered\",self,\"hit\")
 	set_process(true)
@@ -58,7 +56,7 @@ func _process(delta):if dead:self.modulate=Color(\"#aaaaaa\")
 "
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 44.3355
+radius = 55.0
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Sprite
@@ -392,7 +390,6 @@ position = Vector2( -10.45, 9.50002 )
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr/area2D"]
 shape = SubResource( 2 )
-disabled = true
 
 [node name="sprite" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr"]
 visible = false
@@ -531,6 +528,7 @@ margin_left = 10.0
 margin_right = 240.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
+value = 50.0
 texture_under = ExtResource( 6 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 10 )

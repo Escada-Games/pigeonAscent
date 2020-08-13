@@ -55,9 +55,6 @@ func _ready():
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
-	# Holding default positions for playerSpr and enemySpr
-#	playerDefaultPos=playerSpr.global_position
-#	enemyDefaultPos=enemySpr.global_position
 	# Tween to inside the game's viewport
 	var pos=$marginCtn.rect_global_position
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
@@ -65,32 +62,11 @@ func _ready():
 	$twnSelfPos.start()
 	# Gold to be added at the end of the fight
 	goldToWin=global.enemy.gold
-	# Detection for when an attack finished
-#	$twnAttack.connect("tween_completed",self,"attackFinished")
-#	$twnPlayer.connect("tween_completed",self,"attackFinished")
-#	$twnEnemy.connect("tween_completed",self,"attackFinished")
 	# Set process true
 	set_process(true)
 
-func attackFinished(a,b):
-	return
-	if a==playerSpr:
-		print_debug("Player finished attacking.")
-		playerAttacking=false
-		$twnPlayer.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnPlayer.start()
-#		$twnAttack.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-#		$twnAttack.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-#		$twnAttack.start()
-	else:
-		print_debug("Enemy finished attacking.")
-		$twnAttack.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,pigeonRectOffset,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_IN)
-		$twnAttack.start()
 
 func _process(delta):
-#	playerSpr.global_position=playerDefaultPos
-#	enemySpr.global_position=enemyDefaultPos
-#	return
 	global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
 	global.enemy.energy=clamp(global.enemy.energy,0,global.enemy.maxEnergy)
 	if self.offset!=0:
@@ -104,7 +80,7 @@ func _process(delta):
 			global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
 			playerAttacked=true
 			playerAttackAnim()
-#		enemyStamina+=calculateStaminaIncrement(global.enemy.speed,global.enemy.energy<=0)*delta*global.scaling.speed
+		enemyStamina+=calculateStaminaIncrement(global.enemy.speed,global.enemy.energy<=0)*delta*global.scaling.speed
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=global.level
@@ -213,13 +189,7 @@ func playerAttackAnim():
 		var targetPosition=enemyDefaultPos if not isAtEnemy else playerDefaultPos#enemyDefaultPos if not isAtEnemy else playerDefaultPos
 		$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnPlayer.start()
-#		print_debug(isAtEnemy)
-#	$twnRecoil.stop(playerSpr)
-#	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-#	$twnRecoil.start()
-#	var localDurationAttack=durationAttack*(1+global.player.speed/30)
-#	$twnAttack.interpolate_property(playerSpr,"rect_global_position",playerSpr.rect_global_position,enemyDefaultPos,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-#	$twnAttack.start()
+
 func enemyAttackAnim():
 	if not enemyAttacking:
 		enemyAttacking=true
@@ -228,12 +198,6 @@ func enemyAttackAnim():
 		var targetPosition=playerDefaultPos if not isAtPlayer else enemyDefaultPos
 		$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnEnemy.start()
-#	$twnRecoil.stop(enemySpr)
-##	$twnRecoil.interpolate_property(enemySpr,"rect_position",enemySpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
-##	$twnRecoil.start()
-#	var localDurationAttack=durationAttack*(1+global.enemy.speed/30)
-#	$twnAttack.interpolate_property(enemySpr,"rect_global_position",enemySpr.rect_global_position,playerDefaultPos,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
-#	$twnAttack.start()
 
 func register(string):
 	var message="#"+String(turn)+"> "+string+"\n"#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
