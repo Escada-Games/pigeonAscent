@@ -98,6 +98,7 @@ func _process(delta):
 	if fighting:
 		playerStamina+=calculateStaminaIncrement(global.player.speed+global.player.extraSpeed,global.player.energy<=0)*delta*global.scaling.speed
 		if playerStamina>100:
+#			if playerAttacking: playerAttacking=false
 			playerStamina=0
 			global.player.energy-=global.level
 			global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
@@ -208,11 +209,11 @@ func playerAttackAnim():
 	if not playerAttacking:
 		playerAttacking=true
 		var localDurationAttack=durationAttack*(1+global.player.speed/30)
-		var isAtEnemy=false#is_equal_approx(playerSpr.global_position.x,enemyDefaultPos.x)
+		var isAtEnemy=is_equal_approx(playerSpr.global_position.x,enemyDefaultPos.x)
 		var targetPosition=enemyDefaultPos if not isAtEnemy else playerDefaultPos#enemyDefaultPos if not isAtEnemy else playerDefaultPos
 		$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnPlayer.start()
-		print_debug(isAtEnemy)
+#		print_debug(isAtEnemy)
 #	$twnRecoil.stop(playerSpr)
 #	$twnRecoil.interpolate_property(playerSpr,"rect_position",playerSpr.rect_position,Vector2(),durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 #	$twnRecoil.start()
