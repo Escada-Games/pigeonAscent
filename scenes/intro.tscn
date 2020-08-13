@@ -8,7 +8,7 @@
 [ext_resource path="res://resource/Fight_Buttom_Over.png" type="Texture" id=6]
 [ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=7]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends TextureRect
 var defaultRectPosition:=Vector2()
 const speed:=0.5
@@ -20,7 +20,7 @@ func _process(delta):
 	if is_equal_approx(self.rect_position.x,0):self.rect_position=defaultRectPosition
 "
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureButton
 
 func _ready():
@@ -61,7 +61,7 @@ margin_bottom = 96.0001
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 2
-script = SubResource( 2 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
@@ -110,7 +110,7 @@ margin_top = 227.0
 margin_right = 1024.0
 margin_bottom = 269.0
 custom_fonts/font = ExtResource( 3 )
-text = "Chose your pigeon name."
+text = "Choose your pigeon name."
 align = 1
 autowrap = true
 
@@ -149,7 +149,7 @@ texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 6 )
 expand = true
 stretch_mode = 5
-script = SubResource( 1 )
+script = SubResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
