@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://resource/Bar_Food.png" type="Texture" id=1]
 [ext_resource path="res://resource/Bar_BG.png" type="Texture" id=2]
@@ -14,30 +14,44 @@
 [ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=12]
 [ext_resource path="res://scenes/enemyStatsV2.gd" type="Script" id=13]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Label
 func _ready():self.text=global.enemy.name#.substr(0,20)
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=7]
 script/source = "extends TextureProgress
 
-func _ready():set_process(true)
+func _ready():
+	$cPUParticles2D.emitting=false
+	set_process(true)
 func _process(delta):
 	self.max_value=global.enemy.maxHp
 	self.value=lerp(self.value,global.enemy.hp,0.2)
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 #	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
+	$cPUParticles2D.position.x=self.value*self.rect_size.x/self.max_value
+	if abs(self.value-global.enemy.hp)>0.5:
+		$cPUParticles2D.emitting=true
+	else:
+		$cPUParticles2D.emitting=false
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
+colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.364706, 1, 0.811765, 1, 0.439216, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GDScript" id=8]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.enemy.hp)+\"/\"+String(global.enemy.maxHp)
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=9]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -47,14 +61,14 @@ func _process(delta):
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.enemy.energy)+\"/\"+String(global.enemy.maxEnergy)
 "
 
-[sub_resource type="StyleBoxEmpty" id=6]
+[sub_resource type="StyleBoxEmpty" id=11]
 
 [node name="enemyStats" type="PanelContainer"]
 margin_right = 175.0
@@ -109,7 +123,7 @@ text = "NOME"
 align = 1
 valign = 1
 autowrap = true
-script = SubResource( 1 )
+script = SubResource( 6 )
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -169,7 +183,30 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 2 )
+script = SubResource( 7 )
+
+[node name="cPUParticles2D" type="CPUParticles2D" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
+position = Vector2( 80, 14 )
+amount = 50
+lifetime = 5.0
+speed_scale = 1.2
+randomness = 0.3
+lifetime_randomness = 1.0
+local_coords = false
+draw_order = 1
+emission_shape = 2
+emission_rect_extents = Vector2( 6, 4 )
+direction = Vector2( 0, -1 )
+spread = 90.0
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+scale_amount = 8.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer"]
 margin_top = 29.0
@@ -183,7 +220,7 @@ custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 3 )
+script = SubResource( 8 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
 margin_top = 50.0
@@ -233,7 +270,7 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 4 )
+script = SubResource( 9 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
 margin_top = 29.0
@@ -247,7 +284,7 @@ custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 5 )
+script = SubResource( 10 )
 
 [node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
 visible = false
@@ -265,7 +302,7 @@ margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 50.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 11 )
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
 margin_right = 145.0
