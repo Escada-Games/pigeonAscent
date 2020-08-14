@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://resource/Shadow.png" type="Texture" id=1]
 [ext_resource path="res://resource/fonts/battleLog16.tres" type="DynamicFont" id=2]
@@ -17,13 +17,13 @@
 [ext_resource path="res://resource/fonts/battleLog32Shadow.tres" type="DynamicFont" id=15]
 [ext_resource path="res://resource/fonts/battlePhrase32.tres" type="DynamicFont" id=16]
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Position2D
 func _ready():set_process(true)
 func _process(delta):get_tree().root.get_node(\"/root/battleScene\").enemyDefaultPos=self.global_position
 "
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 script/source = "extends Sprite
 var targetPos=Vector2()
 var duration=1.0
@@ -64,10 +64,10 @@ func _process(delta):
 		$twnDead.start()
 "
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 radius = 55.0
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Sprite
 var defaultY=0
 var t=0
@@ -80,7 +80,18 @@ func _process(delta):
 	self.position.y=defaultY+20*sin(t*omega)
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=20]
+script/source = "extends MarginContainer
+func _ready():set_process(true)
+func _process(delta):self.rect_global_position=get_parent().get_node(\"actionBar\").rect_global_position
+"
+
+[sub_resource type="StyleBoxTexture" id=19]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 96, 12 )
+modulate_color = Color( 0, 0, 0, 0.6 )
+
+[sub_resource type="GDScript" id=5]
 script/source = "extends TextureProgress
 
 var targetPos=Vector2()
@@ -97,18 +108,28 @@ func _ready():
 	twnEnter.start()
 	set_process(true)
 func _process(delta):
-	self.value=get_tree().root.get_node(\"/root/battleScene\").enemyStamina
-
-
+	$cPUParticles2D.position.x=self.value*115/50
+	if global.enemy.hp<=0 or global.player.hp<=0:
+		$cPUParticles2D.one_shot=true
+		self.value=lerp(self.value,0,0.2)
+	else:
+		self.value=get_tree().root.get_node(\"/root/battleScene\").enemyStamina
 "
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="Curve" id=17]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=18]
+offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
+colors = PoolColorArray( 0.305882, 0.0666667, 0.14902, 1, 0.690196, 0.188235, 0.360784, 1, 1, 0.419608, 0.592157, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GDScript" id=6]
 script/source = "extends Position2D
 func _ready():set_process(true)
 func _process(delta):get_tree().root.get_node(\"/root/battleScene\").playerDefaultPos=self.global_position
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Sprite
 var targetPos=Vector2()
 var duration=1.0
@@ -140,7 +161,7 @@ func hit():
 	twnHit.start()
 "
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=8]
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -152,7 +173,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 corner_detail = 1
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 const duration=1.0
 const delay=0.4
@@ -167,7 +188,7 @@ func delete():
 	get_parent().get_parent().queue_free()
 "
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=10]
 script/source = "extends TextureProgress
 
 var targetPos=Vector2()
@@ -184,12 +205,15 @@ func _ready():
 	twnEnter.start()
 	set_process(true)
 func _process(delta):
-	self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
-
-
+	$cPUParticles2D.position.x=self.value*115/50
+	if global.enemy.hp<=0 or global.player.hp<=0:
+		$cPUParticles2D.one_shot=true
+		self.value=lerp(self.value,0,0.2)
+	else:
+		self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=11]
 script/source = "extends NinePatchRect
 var targetPos=Vector2()
 var duration=1.5
@@ -204,15 +228,15 @@ func _ready():
 	twnEnter.start()
 "
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=12]
 size = 32
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=13]
 size = 32
 font_data = ExtResource( 8 )
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=14]
 script/source = "extends RichTextLabel
 
 var bufferedMessage=\"\"
@@ -233,7 +257,7 @@ func updateSize():
 		self.set(\"custom_fonts/normal_font\",load(\"res://resource/fonts/battleLog16.tres\"))
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=15]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -244,7 +268,7 @@ func _ready():
 	self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=16]
 script/source = "extends Button
 func _ready():
 	self.visible=false
@@ -365,7 +389,7 @@ alignment = 1
 
 [node name="enemyDefaultPosition" type="Position2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn"]
 position = Vector2( 510, 110 )
-script = SubResource( 15 )
+script = SubResource( 1 )
 __meta__ = {
 "_gizmo_extents_": 50.0
 }
@@ -373,7 +397,7 @@ __meta__ = {
 [node name="enemySpr" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn"]
 position = Vector2( 510, 110 )
 flip_h = true
-script = SubResource( 1 )
+script = SubResource( 2 )
 
 [node name="twnDead" type="Tween" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr"]
 
@@ -396,7 +420,7 @@ __meta__ = {
 position = Vector2( -10.45, 9.50002 )
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr/area2D"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="sprite" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr"]
 visible = false
@@ -404,7 +428,7 @@ position = Vector2( 0, -64 )
 scale = Vector2( 4, 4 )
 z_index = 5
 texture = ExtResource( 9 )
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="enemyStats" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn" instance=ExtResource( 14 )]
 entering = true
@@ -427,6 +451,26 @@ size_flags_vertical = 0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
+[node name="marginCtnShadow" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/barCtn"]
+margin_left = 10.0
+margin_right = 240.0
+margin_bottom = 25.0
+custom_constants/margin_right = -3
+custom_constants/margin_top = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = -3
+script = SubResource( 20 )
+
+[node name="panelContainer" type="PanelContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/barCtn/marginCtnShadow"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 233.0
+margin_bottom = 28.0
+custom_styles/panel = SubResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
@@ -434,14 +478,34 @@ margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+value = 50.0
 texture_under = ExtResource( 6 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 10 )
 nine_patch_stretch = true
-script = SubResource( 4 )
+script = SubResource( 5 )
 __meta__ = {
 "_editor_description_": ""
 }
+
+[node name="cPUParticles2D" type="CPUParticles2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/barCtn/actionBar"]
+position = Vector2( 115, 12 )
+amount = 20
+speed_scale = 1.2
+randomness = 0.3
+lifetime_randomness = 1.0
+local_coords = false
+draw_order = 1
+emission_shape = 2
+emission_rect_extents = Vector2( 6, 4 )
+direction = Vector2( 0, -1 )
+spread = 90.0
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+scale_amount = 8.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 17 )
+color_ramp = SubResource( 18 )
 
 [node name="midPadding" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
 modulate = Color( 1, 1, 1, 0 )
@@ -459,14 +523,14 @@ alignment = 1
 
 [node name="playerDefaultPosition" type="Position2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
 position = Vector2( 125, 50 )
-script = SubResource( 16 )
+script = SubResource( 6 )
 __meta__ = {
 "_gizmo_extents_": 50.0
 }
 
 [node name="playerSpr" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
 position = Vector2( 125, 50 )
-script = SubResource( 5 )
+script = SubResource( 7 )
 
 [node name="pigeonShadow" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerSpr"]
 modulate = Color( 0.231373, 0.231373, 0.231373, 1 )
@@ -484,7 +548,7 @@ __meta__ = {
 [node name="area2D" type="Area2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerSpr"]
 
 [node name="collisionShape2D" type="CollisionShape2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerSpr/area2D"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="phraseCtn" type="PanelContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerSpr"]
 visible = false
@@ -492,7 +556,7 @@ margin_left = 197.0
 margin_top = -32.0
 margin_right = 346.0
 margin_bottom = 25.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -517,7 +581,7 @@ text = "Eat my shorts! Oh wait"
 align = 1
 valign = 1
 autowrap = true
-script = SubResource( 7 )
+script = SubResource( 9 )
 
 [node name="twn" type="Tween" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/playerSpr/phraseCtn/marginCtn/phrase"]
 
@@ -530,6 +594,26 @@ size_flags_vertical = 8
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
+[node name="marginCtnShadow" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/barCtn"]
+margin_left = 10.0
+margin_right = 240.0
+margin_bottom = 25.0
+custom_constants/margin_right = -3
+custom_constants/margin_top = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = -3
+script = SubResource( 20 )
+
+[node name="panelContainer" type="PanelContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/barCtn/marginCtnShadow"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 233.0
+margin_bottom = 28.0
+custom_styles/panel = SubResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="actionBar" type="TextureProgress" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/barCtn"]
 margin_left = 10.0
 margin_right = 240.0
@@ -540,7 +624,29 @@ texture_under = ExtResource( 6 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 10 )
 nine_patch_stretch = true
-script = SubResource( 8 )
+script = SubResource( 10 )
+
+[node name="cPUParticles2D" type="CPUParticles2D" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn/barCtn/actionBar"]
+position = Vector2( 115, 12 )
+amount = 20
+speed_scale = 1.2
+randomness = 0.3
+lifetime_randomness = 1.0
+local_coords = false
+draw_order = 1
+emission_shape = 2
+emission_rect_extents = Vector2( 6, 4 )
+direction = Vector2( 0, -1 )
+spread = 90.0
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+scale_amount = 12.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 17 )
+color_ramp = SubResource( 18 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="vSep" type="VSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -574,7 +680,7 @@ patch_margin_left = 11
 patch_margin_top = 15
 patch_margin_right = 11
 patch_margin_bottom = 11
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="marginContainer" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleLog/battleLog"]
 anchor_right = 1.0
@@ -595,8 +701,8 @@ margin_right = 258.0
 margin_bottom = 506.0
 mouse_filter = 2
 size_flags_horizontal = 3
-custom_fonts/italics_font = SubResource( 10 )
-custom_fonts/bold_font = SubResource( 11 )
+custom_fonts/italics_font = SubResource( 12 )
+custom_fonts/bold_font = SubResource( 13 )
 custom_fonts/normal_font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
@@ -625,7 +731,7 @@ text = "#123> TESTE
 #123> TESTE
 "
 scroll_following = true
-script = SubResource( 12 )
+script = SubResource( 14 )
 
 [node name="ctnButtons" type="MarginContainer" parent="marginCtn/battlePanel"]
 margin_left = 7.0
@@ -659,7 +765,7 @@ margin_bottom = 59.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 15 )
 text = "Return"
-script = SubResource( 13 )
+script = SubResource( 15 )
 
 [node name="btnReset" type="Button" parent="marginCtn/battlePanel/ctnButtons/vBoxContainer"]
 margin_left = 308.0
@@ -669,4 +775,4 @@ margin_bottom = 59.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 15 )
 text = "Retry!"
-script = SubResource( 14 )
+script = SubResource( 16 )
