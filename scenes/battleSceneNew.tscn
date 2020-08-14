@@ -19,7 +19,8 @@
 
 [sub_resource type="GDScript" id=15]
 script/source = "extends Position2D
-func _ready():get_tree().root.get_node(\"/root/battleScene\").enemyDefaultPos=self.global_position
+func _ready():set_process(true)
+func _process(delta):get_tree().root.get_node(\"/root/battleScene\").enemyDefaultPos=self.global_position
 "
 
 [sub_resource type="GDScript" id=1]
@@ -32,8 +33,6 @@ func hit():
 	twnHit.interpolate_property(self,\"scale\",Vector2(0.8,1.2)*self.scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	twnHit.start()
 func _ready():
-#	self.position=get_parent().rect_size*Vector2(0.5,1)
-#	get_tree().root.get_node(\"/root/battleScene\").enemyDefaultPos=self.global_position
 	self.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
 	randomize()
 	duration*=rand_range(0.5,1.5)
@@ -52,7 +51,18 @@ func _ready():
 	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	$area2D.connect(\"area_entered\",self,\"hit\")
 	set_process(true)
-func _process(delta):if dead:self.modulate=Color(\"#aaaaaa\")
+	
+func _process(delta):
+	print_debug(self.global_position.y)
+	if dead:
+		dead=false
+#		set_process(false)
+		self.z_index=10
+		$twnDead.interpolate_property(self,\"modulate\",self.modulate,Color(\"#888888\"),0.8,Tween.TRANS_QUINT,Tween.EASE_OUT)
+		$twnDead.interpolate_property(self,\"global_position:x\",self.global_position.x,self.global_position.x+rand_range(200,300),3,Tween.TRANS_SINE,Tween.EASE_IN_OUT)
+		$twnDead.interpolate_property(self,\"global_position:y\",self.global_position.y,self.global_position.y+rand_range(300,400),1,Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnDead.interpolate_property(self,\"rotation\",self.rotation,12*PI,6,Tween.TRANS_QUINT,Tween.EASE_OUT)
+		$twnDead.start()
 "
 
 [sub_resource type="CircleShape2D" id=2]
@@ -95,7 +105,8 @@ func _process(delta):
 
 [sub_resource type="GDScript" id=16]
 script/source = "extends Position2D
-func _ready():get_tree().root.get_node(\"/root/battleScene\").playerDefaultPos=self.global_position
+func _ready():set_process(true)
+func _process(delta):get_tree().root.get_node(\"/root/battleScene\").playerDefaultPos=self.global_position
 "
 
 [sub_resource type="GDScript" id=5]
@@ -108,9 +119,8 @@ var dead=false
 func _ready():
 	randomize()
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
-#	get_tree().root.get_node(\"/root/battleScene\").playerDefaultPos=self.global_position
 	self.texture=load(global.pigeonClassesAndSprites[global.player.class].sprite)
-	duration*=rand_range(0.5,1.5)
+	duration*=rand_range(0.8,1.2)
 	targetPos=self.global_position
 	var twnEnter=Tween.new();add_child(twnEnter)
 	twnEnter.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
@@ -261,11 +271,7 @@ __meta__ = {
 
 [node name="twnEnemy" type="Tween" parent="."]
 
-[node name="twnAttack" type="Tween" parent="."]
-
 [node name="twnColorRectTransparency" type="Tween" parent="."]
-
-[node name="twnRecoil" type="Tween" parent="."]
 
 [node name="twnShake" type="Tween" parent="."]
 
@@ -369,6 +375,8 @@ __meta__ = {
 position = Vector2( 510, 110 )
 flip_h = true
 script = SubResource( 1 )
+
+[node name="twnDead" type="Tween" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr"]
 
 [node name="pigeonShadow" type="Sprite" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn/enemySpr"]
 modulate = Color( 0.231373, 0.231373, 0.231373, 1 )

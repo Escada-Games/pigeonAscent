@@ -178,7 +178,7 @@ var uncommonEvoPigeons=[
 var player={
 	"name":"Pombo",
 	"gold":100,
-	"hp":100 if OS.is_debug_build() else 5,"maxHp":100 if OS.is_debug_build() else 5,
+	"hp":5,"maxHp":5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":5,#3,
 	"strength":1,"extraStrength":0,
@@ -192,12 +192,12 @@ var hasSword=false
 var enemy={
 	"name":"PomboEnemy",
 	"gold":100,
-	"hp":100 if OS.is_debug_build() else 5,"maxHp":100 if OS.is_debug_build() else 5,
+	"hp":5,"maxHp":5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
 	"strength":1,
-	"defense":20 if OS.is_debug_build() else 0,
-	"speed":20 if OS.is_debug_build() else 1.0,
+	"defense":0,
+	"speed":1.0,
 	"class":"normal"
 }
 

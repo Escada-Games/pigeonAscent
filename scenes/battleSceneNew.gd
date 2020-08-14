@@ -74,7 +74,6 @@ func _process(delta):
 	if fighting:
 		playerStamina+=calculateStaminaIncrement(global.player.speed+global.player.extraSpeed,global.player.energy<=0)*delta*global.scaling.speed
 		if playerStamina>100:
-#			if playerAttacking: playerAttacking=false
 			playerStamina=0
 			global.player.energy-=global.level
 			global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
@@ -146,6 +145,9 @@ func playerAttack():
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
 		enemySpr.dead=true
+		$twnEnemy.stop_all()
+		$twnEnemy.stop_all()
+		return
 	
 func enemyAttack():
 	var damage=max(floor(calculateDamage(global.enemy.strength,global.player.defense+global.player.extraDefense)*(1-(global.player.defense+global.player.extraDefense)*global.scaling.defenseBlock/global.limits.defense)),1)
@@ -177,6 +179,7 @@ func enemyAttack():
 		exitButton.rect_global_position.y=OS.window_size.y*1.2
 		fighting=false
 		playerSpr.dead=true
+		$twnPlayer.stop_all()
 
 func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
