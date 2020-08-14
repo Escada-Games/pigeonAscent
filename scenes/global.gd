@@ -182,8 +182,8 @@ var player={
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":5,#3,
 	"strength":1,"extraStrength":0,
-	"defense":1,"extraDefense":30 if OS.is_debug_build() else 0,
-	"speed":1,"extraSpeed":30 if OS.is_debug_build() else 0,
+	"defense":1,"extraDefense":0,
+	"speed":1,"extraSpeed":0,
 	"class":self.c_normal
 }
 var hasWings=false
@@ -301,6 +301,23 @@ func debugInput():
 		global.player.pointsLeft+=10
 		global.level=int(clamp(global.level+1,0,10))
 		global.player.gold+=1000
+
+func getBgTexture():
+	var playerClass=global.player["class"]
+	var newTexture
+	if playerClass==global.c_normal:newTexture=load("res://resource/BG_Stats_N1.png")
+	elif playerClass==global.c_platy:newTexture=load("res://resource/BG_Stats_N2.png")
+	elif playerClass==global.c_stronga:newTexture=load("res://resource/BG_Stats_R1.png")
+	elif playerClass==global.c_whey:newTexture=load("res://resource/BG_Stats_R2.png")
+	elif playerClass==global.c_wyrm:newTexture=load("res://resource/BG_Stats_R3.png")
+	elif playerClass==global.c_knight:newTexture=load("res://resource/BG_Stats_B1.png")
+	elif playerClass==global.c_crusader:newTexture=load("res://resource/BG_Stats_B2.png")
+	elif playerClass==global.c_fridgeon:newTexture=load("res://resource/BG_Stats_B3.png")
+	elif playerClass==global.c_winged:newTexture=load("res://resource/BG_Stats_G1.png")
+	elif playerClass==global.c_winged2:newTexture=load("res://resource/BG_Stats_G2.png")
+	elif playerClass==global.c_hatoshi:newTexture=load("res://resource/BG_Stats_G3.png")
+	return newTexture
+	
 var listOfNames=[
 	"Rick Jim",
 	"Sucraiso",

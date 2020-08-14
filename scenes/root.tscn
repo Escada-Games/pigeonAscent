@@ -24,21 +24,7 @@ func _ready():
 func _process(delta):
 	self.rect_position+=Vector2(speed,speed)
 	if is_equal_approx(self.rect_position.x,0):self.rect_position=defaultRectPosition
-	
-	var playerClass=global.player[\"class\"]
-	var newTexture
-	if playerClass==global.c_normal:newTexture=load(\"res://resource/BG_Stats_N1.png\")
-	elif playerClass==global.c_platy:newTexture=load(\"res://resource/BG_Stats_N2.png\")
-	elif playerClass==global.c_stronga:newTexture=load(\"res://resource/BG_Stats_R1.png\")
-	elif playerClass==global.c_whey:newTexture=load(\"res://resource/BG_Stats_R2.png\")
-	elif playerClass==global.c_wyrm:newTexture=load(\"res://resource/BG_Stats_R3.png\")
-	elif playerClass==global.c_knight:newTexture=load(\"res://resource/BG_Stats_B1.png\")
-	elif playerClass==global.c_crusader:newTexture=load(\"res://resource/BG_Stats_B2.png\")
-	elif playerClass==global.c_fridgeon:newTexture=load(\"res://resource/BG_Stats_B3.png\")
-	elif playerClass==global.c_winged:newTexture=load(\"res://resource/BG_Stats_G1.png\")
-	elif playerClass==global.c_winged2:newTexture=load(\"res://resource/BG_Stats_G2.png\")
-	elif playerClass==global.c_hatoshi:newTexture=load(\"res://resource/BG_Stats_G3.png\")
-	self.texture=newTexture
+	self.texture=global.getBgTexture()
 "
 
 [sub_resource type="GDScript" id=2]

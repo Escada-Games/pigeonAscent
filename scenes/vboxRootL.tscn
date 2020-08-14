@@ -1,6 +1,6 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
-[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
+[ext_resource path="res://resource/BG_Stats_N1.png" type="Texture" id=1]
 [ext_resource path="res://resource/tres/statPanel.tres" type="StyleBox" id=2]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=3]
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=4]
@@ -70,6 +70,13 @@ func resetProcess():
 "
 
 [sub_resource type="GDScript" id=3]
+script/source = "extends TextureRect
+
+func _ready():set_process(true)
+func _process(delta):self.texture=global.getBgTexture()
+"
+
+[sub_resource type="GDScript" id=4]
 script/source = "extends RichTextLabel
 var waveAmp=50
 const maxWaveAmp=50
@@ -92,16 +99,16 @@ func _process(delta):
 		self.bbcode_text=stringWavy
 "
 
-[sub_resource type="StyleBoxEmpty" id=4]
+[sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.pointsLeft)
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=7]
 script/source = "extends PanelContainer
 const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
@@ -119,7 +126,7 @@ func twnShrink():
 func _process(delta):self.rect_pivot_offset=self.rect_size/2
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=8]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -129,7 +136,7 @@ func _process(delta):
 	if global.player.extraStrength!=0: self.text+= \" + \" + String(global.player.extraStrength)
 "
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -167,7 +174,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=10]
 content_margin_left = 20.0
 content_margin_right = 20.0
 content_margin_top = 0.0
@@ -180,7 +187,7 @@ margin_top = 1.0281
 margin_bottom = 4.75495
 expand_margin_top = 15.0
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=11]
 script/source = "extends PanelContainer
 const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
@@ -198,9 +205,9 @@ func twnShrink():
 func _process(delta):self.rect_pivot_offset=self.rect_size/2
 "
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxEmpty" id=12]
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -210,7 +217,7 @@ func _process(delta):
 	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=14]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -248,7 +255,7 @@ func twnShrink():
 	$twnScale.start()
 "
 
-[sub_resource type="StyleBoxTexture" id=14]
+[sub_resource type="StyleBoxTexture" id=15]
 content_margin_left = 20.0
 content_margin_right = 20.0
 content_margin_top = 0.0
@@ -261,7 +268,7 @@ margin_top = 1.0281
 margin_bottom = 4.75495
 expand_margin_top = 15.0
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=16]
 script/source = "extends PanelContainer
 const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
@@ -279,7 +286,7 @@ func twnShrink():
 func _process(delta):self.rect_pivot_offset=self.rect_size/2
 "
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=17]
 script/source = "extends Label
 
 func _ready():set_process(true)
@@ -289,7 +296,7 @@ func _process(delta):
 	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
 "
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=18]
 script/source = "extends TextureButton
 
 const tweenParameters={
@@ -357,7 +364,7 @@ size_flags_stretch_ratio = 6.0
 custom_styles/panel = ExtResource( 3 )
 
 [node name="textureRectBG" type="TextureRect" parent="perks"]
-modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+modulate = Color( 0.4, 0.4, 0.4, 1 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0
@@ -365,6 +372,7 @@ margin_bottom = 419.0
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 2
+script = SubResource( 3 )
 
 [node name="vbox" type="VBoxContainer" parent="perks"]
 margin_left = 10.0
@@ -408,7 +416,7 @@ left[/wave][/center]"
 text = "Stat points
 left"
 scroll_active = false
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="twnBB" type="Tween" parent="perks/vbox/marginContainer/statPointsBox/richtextStatPoints"]
 
@@ -418,7 +426,7 @@ margin_right = 994.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 5 )
 
 [node name="points" type="Label" parent="perks/vbox/marginContainer/statPointsBox/intContainer"]
 margin_right = 495.0
@@ -428,7 +436,7 @@ custom_fonts/font = ExtResource( 8 )
 text = "0"
 align = 1
 valign = 1
-script = SubResource( 5 )
+script = SubResource( 6 )
 
 [node name="invSep" type="HSeparator" parent="perks/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -446,7 +454,7 @@ mouse_filter = 1
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = ExtResource( 2 )
-script = SubResource( 6 )
+script = SubResource( 7 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -494,7 +502,7 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 7 )
+script = SubResource( 8 )
 
 [node name="btnContainer" type="MarginContainer" parent="perks/vbox/strPanel/marginCtn/strHbox"]
 margin_left = 577.0
@@ -521,7 +529,7 @@ texture_hover = ExtResource( 12 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 8 )
+script = SubResource( 9 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -562,8 +570,8 @@ margin_bottom = 287.0
 mouse_filter = 1
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 9 )
-script = SubResource( 10 )
+custom_styles/panel = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="twnScale" type="Tween" parent="perks/vbox/defPanel"]
 
@@ -589,7 +597,7 @@ margin_bottom = 103.0
 mouse_filter = 1
 size_flags_horizontal = 2
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 12 )
 
 [node name="points" type="Label" parent="perks/vbox/defPanel/marginCtn/defHbox/intContainer"]
 margin_top = 30.0
@@ -606,7 +614,7 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 12 )
+script = SubResource( 13 )
 
 [node name="btnContainer" type="MarginContainer" parent="perks/vbox/defPanel/marginCtn/defHbox"]
 margin_left = 577.0
@@ -631,7 +639,7 @@ texture_hover = ExtResource( 12 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 13 )
+script = SubResource( 14 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -672,8 +680,8 @@ margin_bottom = 409.0
 mouse_filter = 1
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 14 )
-script = SubResource( 15 )
+custom_styles/panel = SubResource( 15 )
+script = SubResource( 16 )
 
 [node name="twnScale" type="Tween" parent="perks/vbox/spdPanel"]
 
@@ -698,7 +706,7 @@ mouse_filter = 1
 size_flags_horizontal = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 12 )
 
 [node name="points" type="Label" parent="perks/vbox/spdPanel/marginCtn/spdHbox/intContainer"]
 margin_top = 31.0
@@ -715,7 +723,7 @@ custom_constants/shadow_as_outline = 1
 text = "00+00"
 align = 1
 valign = 1
-script = SubResource( 16 )
+script = SubResource( 17 )
 
 [node name="btnContainer" type="MarginContainer" parent="perks/vbox/spdPanel/marginCtn/spdHbox"]
 margin_left = 577.0
@@ -740,7 +748,7 @@ texture_hover = ExtResource( 12 )
 texture_disabled = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-script = SubResource( 17 )
+script = SubResource( 18 )
 __meta__ = {
 "_editor_description_": ""
 }
