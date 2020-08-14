@@ -33,7 +33,7 @@ func hit():
 	twnHit.interpolate_property(self,\"scale\",Vector2(0.8,1.2)*self.scale,Vector2(1,1),0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	twnHit.start()
 func _ready():
-	self.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
+	$pigeon.texture=load(global.pigeonClassesAndSprites[global.enemy.class].sprite)
 	randomize()
 	duration*=rand_range(0.5,1.5)
 	targetPos=self.global_position
@@ -53,14 +53,14 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
-	print_debug(self.global_position.y)
+	if self.global_position.y>OS.window_size.y+64:self.visible=false
 	if dead:
 		dead=false
 #		set_process(false)
 		self.z_index=10
 		$twnDead.interpolate_property(self,\"modulate\",self.modulate,Color(\"#888888\"),0.8,Tween.TRANS_QUINT,Tween.EASE_OUT)
 		$twnDead.interpolate_property(self,\"global_position:x\",self.global_position.x,self.global_position.x+rand_range(200,300),3,Tween.TRANS_SINE,Tween.EASE_IN_OUT)
-		$twnDead.interpolate_property(self,\"global_position:y\",self.global_position.y,self.global_position.y+rand_range(300,400),1,Tween.TRANS_BACK,Tween.EASE_IN)
+		$twnDead.interpolate_property(self,\"global_position:y\",self.global_position.y,self.global_position.y+rand_range(400,500),1,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnDead.interpolate_property(self,\"rotation\",self.rotation,12*PI,6,Tween.TRANS_QUINT,Tween.EASE_OUT)
 		$twnDead.start()
 "
@@ -119,7 +119,7 @@ var dead=false
 func _ready():
 	randomize()
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
-	self.texture=load(global.pigeonClassesAndSprites[global.player.class].sprite)
+	$pigeon.texture=load(global.pigeonClassesAndSprites[global.player.class].sprite)
 	duration*=rand_range(0.8,1.2)
 	targetPos=self.global_position
 	var twnEnter=Tween.new();add_child(twnEnter)
