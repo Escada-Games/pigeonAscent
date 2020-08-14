@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://resource/Shadow.png" type="Texture" id=1]
 [ext_resource path="res://resource/fonts/battleLog16.tres" type="DynamicFont" id=2]
@@ -119,9 +119,9 @@ func _process(delta):
 [sub_resource type="Curve" id=17]
 _data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=18]
+[sub_resource type="Gradient" id=21]
 offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
-colors = PoolColorArray( 0.305882, 0.0666667, 0.14902, 1, 0.690196, 0.188235, 0.360784, 1, 1, 0.419608, 0.592157, 1, 1, 1, 1, 1 )
+colors = PoolColorArray( 0.45098, 0.152941, 0.360784, 1, 0.690196, 0.188235, 0.360784, 1, 1, 0.419608, 0.592157, 1, 1, 1, 1, 1 )
 
 [sub_resource type="GDScript" id=6]
 script/source = "extends Position2D
@@ -212,6 +212,10 @@ func _process(delta):
 	else:
 		self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
 "
+
+[sub_resource type="Gradient" id=18]
+offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
+colors = PoolColorArray( 0.45098, 0.152941, 0.360784, 1, 0.690196, 0.188235, 0.360784, 1, 1, 0.419608, 0.592157, 1, 1, 1, 1, 1 )
 
 [sub_resource type="GDScript" id=11]
 script/source = "extends NinePatchRect
@@ -431,19 +435,22 @@ texture = ExtResource( 9 )
 script = SubResource( 4 )
 
 [node name="enemyStats" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn" instance=ExtResource( 14 )]
+margin_right = 246.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 entering = true
 compact = true
 
 [node name="vSep" type="VSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 179.0
-margin_right = 374.0
+margin_left = 250.0
+margin_right = 373.0
 margin_bottom = 167.0
 size_flags_horizontal = 3
 
 [node name="barCtn" type="MarginContainer" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/enemyCtn"]
-margin_left = 378.0
-margin_right = 628.0
+margin_left = 377.0
+margin_right = 627.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 250, 0 )
 size_flags_horizontal = 3
@@ -505,7 +512,7 @@ initial_velocity_random = 1.0
 scale_amount = 8.0
 scale_amount_random = 1.0
 scale_amount_curve = SubResource( 17 )
-color_ramp = SubResource( 18 )
+color_ramp = SubResource( 21 )
 
 [node name="midPadding" type="HSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea"]
 modulate = Color( 1, 1, 1, 0 )
@@ -651,14 +658,15 @@ __meta__ = {
 [node name="vSep" type="VSeparator" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 254.0
-margin_right = 449.0
+margin_right = 377.0
 margin_bottom = 167.0
 size_flags_horizontal = 3
 
 [node name="playerStats" parent="marginCtn/battlePanel/battlePanelMargin/hboxCtn/battleArea/battleArea/playerCtn" instance=ExtResource( 13 )]
-margin_left = 453.0
+margin_left = 381.0
 margin_right = 628.0
-size_flags_stretch_ratio = 1.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 entering = true
 compact = true
 
@@ -734,6 +742,7 @@ scroll_following = true
 script = SubResource( 14 )
 
 [node name="ctnButtons" type="MarginContainer" parent="marginCtn/battlePanel"]
+visible = false
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 967.0

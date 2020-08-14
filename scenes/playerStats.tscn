@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=10]
 [ext_resource path="res://resource/tres/panelAtts.tres" type="StyleBox" id=11]
 [ext_resource path="res://resource/Bar_BG.png" type="Texture" id=12]
+[ext_resource path="res://icon.png" type="Texture" id=13]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends PanelContainer
@@ -70,13 +71,24 @@ func _ready():self.text=global.player.name
 [sub_resource type="GDScript" id=3]
 script/source = "extends TextureProgress
 
-func _ready():set_process(true)
+func _ready():
+	$cPUParticles2D.emitting=false
+	set_process(true)
 func _process(delta):
 	self.max_value=global.player.maxHp
 	self.value=lerp(self.value,global.player.hp,0.2)
+	$cPUParticles2D.position.x=self.value*self.rect_size.x/100
+	$cPUParticles2D.emitting=(not is_equal_approx(self.value,global.player.hp))
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
 #	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 "
+
+[sub_resource type="Curve" id=17]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=18]
+offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
+colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.364706, 1, 0.811765, 1, 0.439216, 1, 1, 1, 1, 1 )
 
 [sub_resource type="GDScript" id=4]
 script/source = "extends Label
@@ -218,6 +230,31 @@ stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
 script = SubResource( 3 )
+
+[node name="cPUParticles2D" type="CPUParticles2D" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
+position = Vector2( 80.5243, 12 )
+amount = 20
+speed_scale = 1.2
+randomness = 0.3
+lifetime_randomness = 1.0
+local_coords = false
+draw_order = 1
+emission_shape = 2
+emission_rect_extents = Vector2( 6, 4 )
+direction = Vector2( 0, -1 )
+spread = 90.0
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+scale_amount = 8.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 17 )
+color_ramp = SubResource( 18 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="sprite" type="Sprite" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar/cPUParticles2D"]
+texture = ExtResource( 13 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer"]
 margin_top = 29.0
