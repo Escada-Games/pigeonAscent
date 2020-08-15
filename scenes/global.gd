@@ -280,12 +280,37 @@ var battleScene=preload("res://scenes/battleScene.tscn")
 var battleSceneNew=preload("res://scenes/battleSceneNew.tscn")
 var music=preload("res://scenes/music.tscn")
 var enemiesForBattle=[]
+
+var GAs=load("res://GameAnalytics.gd")
+var GA = GAs.new()
+
 func _ready():
-	OS.min_window_size=Vector2(360,640)
+	GA.game_key="d3b54946a2375107f995a646cb21bcf0"
+	GA.secret_key="6eb93d985446293c6af4642926bb8c87bbc22875"
+	GA.base_url = "http://api.gameanalytics.com"
+	var init_response = GA.request_init()
+  # Add events to queue
+#	GA.add_to_event_queue(GA.get_test_design_event("TEST_TAG", 1233123123))
+#	GA.add_to_event_queue(GA.get_test_design_event("player:new_level", 2))
+#	var returned = GA.submit_events()
+#	print_debug(returned)
+#	OS.min_window_size=Vector2(360,640)
 	if not OS.is_debug_build():add_child(music.instance())
 	set_process(true)
 var muted=false
+var t=Thread.new()
+func sendData(eventId="",value=0):
+	t.start(self,"_sendData",[eventId,value])
+func _sendData(array=["",0]):
+	print_debug("Global thread: Sending data")
+	GA.add_to_event_queue(GA.get_test_design_event(array[0],array[1]))
+	var returned = GA.submit_events()
+func _exit_tree():
+	t.wait_to_finish()
+	
 func _process(_delta):
+#	GA.add_to_event_queue(GA.get_test_design_event("TEST_TAG", 1233123123))
+#	var returned = GA.submit_events()
 #	print_debug(global.enemiesForBattle.size())
 	player.energy=max(player.energy,0)
 	if Input.is_action_just_pressed("ui_debug"):

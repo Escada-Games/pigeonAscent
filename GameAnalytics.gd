@@ -530,42 +530,42 @@ func get_test_design_event(event_id, value):
 	return event_dict
 	
 static func merge_dir(target, patch):
-    for key in patch:
-        target[key] = patch[key]
+	for key in patch:
+		target[key] = patch[key]
 
 static func merge_dir2(target, patch):
-    for key in patch:
-        if target.has(key):
-            var tv = target[key]
-            if typeof(tv) == TYPE_DICTIONARY:
-                merge_dir(tv, patch[key])
-            else:
-                target[key] = patch[key]
-        else:
-            target[key] = patch[key]
+	for key in patch:
+		if target.has(key):
+			var tv = target[key]
+			if typeof(tv) == TYPE_DICTIONARY:
+				merge_dir(tv, patch[key])
+			else:
+				target[key] = patch[key]
+		else:
+			target[key] = patch[key]
 			
 func get_gzip_string(string_for_gzip):
-    var f = File.new()
+	var f = File.new()
 
-    f.open_compressed("user://gzip", File.WRITE, File.COMPRESSION_GZIP)
-    #f.store_buffer(string_for_gzip.to_utf8())
-    f.store_string(string_for_gzip)
-    f.close()
+	f.open_compressed("user://gzip", File.WRITE, File.COMPRESSION_GZIP)
+	#f.store_buffer(string_for_gzip.to_utf8())
+	f.store_string(string_for_gzip)
+	f.close()
 
-    f.open("user://gzip", File.READ)
-    #var enc_text = f.get_buffer(f.get_len())
-    #get_string_from_utf8()
-    var enc_text = f.get_as_text()
-    #var enc_text = f.get_buffer(f.get_len()).get_string_from_utf8()
-    f.close()
+	f.open("user://gzip", File.READ)
+	#var enc_text = f.get_buffer(f.get_len())
+	#get_string_from_utf8()
+	var enc_text = f.get_as_text()
+	#var enc_text = f.get_buffer(f.get_len()).get_string_from_utf8()
+	f.close()
 #    var zip_text_file = StringIO()
 #    var zipper = gzip.GzipFile('wb', zip_text_file)
 #    zipper.write(string_for_gzip)
 #    zipper.close()
 #
 #    enc_text = zip_text_file.getvalue()
-    return enc_text
-    pass
+	return enc_text
+	pass
 
 
 # add default annotations (will alter the dict by reference)
