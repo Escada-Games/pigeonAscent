@@ -289,12 +289,6 @@ func _ready():
 	GA.secret_key="6eb93d985446293c6af4642926bb8c87bbc22875"
 	GA.base_url = "http://api.gameanalytics.com"
 	var init_response = GA.request_init()
-  # Add events to queue
-#	GA.add_to_event_queue(GA.get_test_design_event("TEST_TAG", 1233123123))
-#	GA.add_to_event_queue(GA.get_test_design_event("player:new_level", 2))
-#	var returned = GA.submit_events()
-#	print_debug(returned)
-#	OS.min_window_size=Vector2(360,640)
 	if not OS.is_debug_build():add_child(music.instance())
 	set_process(true)
 var muted=false
