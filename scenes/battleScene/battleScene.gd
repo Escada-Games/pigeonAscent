@@ -48,8 +48,8 @@ func _ready():
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
 	goldToWin=global.enemy.gold
-	$twnAttack.connect("tween_completed",self,"attackFinished")
-	get_tree().get_root().connect("size_changed", self, "updateDefaultPositions")
+	var _s1=$twnAttack.connect("tween_completed",self,"attackFinished")
+	var _s2=get_tree().get_root().connect("size_changed", self, "updateDefaultPositions")
 	set_process(true)
 
 func updateDefaultPositions():
@@ -154,7 +154,7 @@ func enemyAttack():
 func calculateDamage(strength,defense,minDamage=1):
 	return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 
-func attackFinished(h,m):
+func attackFinished(h,_m):
 #	if playerAttacked:
 	if h==playerSpr:
 #		updateDefaultPositions()
@@ -207,7 +207,7 @@ func registerFast(string):
 func exitBattle():
 	self.set_process(false)
 	if global.level==11:
-		get_tree().change_scene("res://scenes/end.tscn")
+		var _sc1=get_tree().change_scene("res://scenes/end.tscn")
 	global.player.extraStrength=0
 	global.player.extraDefense=0
 	global.player.extraSpeed=0
@@ -216,19 +216,19 @@ func exitBattle():
 		global.createEvolvePanel()
 	elif(global.level==7):
 		global.createEvolvePanel()
-	$twnSelfPos.connect("tween_completed",self,"killMe")
+	var _s1=$twnSelfPos.connect("tween_completed",self,"killMe")
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0.85,0,0.3,Tween.TRANS_CUBIC,Tween.EASE_OUT)
 	$twnColorRectTransparency.start()
 func applyDamage(target,damage):
 	target.hp-=damage
-func killMe(h,m):
+func killMe(_h,_m):
 	self.queue_free()
 func gameOver():
 	#TODO:CHANGE TO GOING BACK TO THE TITLE SCREEN
 #	get_tree().quit()
-	get_tree().change_scene("res://scenes/intro.tscn")
+	var _sc1=get_tree().change_scene("res://scenes/intro.tscn")
 	self.queue_free()
 func effects(area):
 	particlesAndWindowshake(area)
@@ -260,7 +260,7 @@ func particlesAndWindowshake(area):
 	createHitSfx()
 	particles(area)
 	windowShake()
-func particles(area):
+func particles(_area):
 	var i=particlesImpact.instance()
 #	i.global_position.x=(playerSpr.rect_size.x/2)+(playerSpr.rect_global_position.x+enemySpr.rect_global_position.x)/2.0
 #	i.global_position.y=playerSpr.rect_global_position.y+playerSpr.rect_size.y/2

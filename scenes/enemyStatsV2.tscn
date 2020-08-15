@@ -25,7 +25,7 @@ script/source = "extends TextureProgress
 func _ready():
 	$cPUParticles2D.emitting=false
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.max_value=global.enemy.maxHp
 	self.value=lerp(self.value,global.enemy.hp,0.2)
 #	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
@@ -48,14 +48,14 @@ colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.enemy.hp)+\"/\"+String(global.enemy.maxHp)
+func _process(_delta):self.text=String(global.enemy.hp)+\"/\"+String(global.enemy.maxHp)
 "
 
 [sub_resource type="GDScript" id=9]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.max_value=global.enemy.maxEnergy
 	self.value=lerp(self.value,global.enemy.energy,0.1)
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
@@ -65,7 +65,7 @@ func _process(delta):
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.enemy.energy)+\"/\"+String(global.enemy.maxEnergy)
+func _process(_delta):self.text=String(global.enemy.energy)+\"/\"+String(global.enemy.maxEnergy)
 "
 
 [sub_resource type="StyleBoxEmpty" id=11]

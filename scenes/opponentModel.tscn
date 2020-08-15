@@ -41,11 +41,11 @@ func _ready():
 	$marginContainer/hboxEnemy/icon.texture=load(global.pigeonClassesAndSprites[self.enemyClass].portrait)
 #	$hboxEnemy/vboxDescription/name.name=self.enemyName
 	self.rect_pivot_offset=self.rect_size/2
-	connect(\"mouse_entered\",self,\"twnGrow\")
-	connect(\"mouse_exited\",self,\"twnShrink\")
-	$marginContainer/hboxEnemy/btn.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	$marginContainer/hboxEnemy/btn.connect(\"button_down\",global,\"createSelectSfx\")
-	$marginContainer/hboxEnemy/btn.connect(\"pressed\",self,\"battle\")
+	var _s1=connect(\"mouse_entered\",self,\"twnGrow\")
+	var _s2=connect(\"mouse_exited\",self,\"twnShrink\")
+	var _s3=$marginContainer/hboxEnemy/btn.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _s4=$marginContainer/hboxEnemy/btn.connect(\"button_down\",global,\"createSelectSfx\")
+	var _s5=$marginContainer/hboxEnemy/btn.connect(\"pressed\",self,\"battle\")
 
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,self.tweenParameters.rect_scale_max,self.tweenParameters.duration,self.tweenParameters.type,self.tweenParameters.easing)

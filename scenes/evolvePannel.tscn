@@ -5,7 +5,7 @@
 [ext_resource path="res://resource/fonts/m6x11-32SpacedAlt.tres" type="DynamicFont" id=3]
 [ext_resource path="res://resource/sprites/Normal_Pigeon.png" type="Texture" id=4]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Control
 var counter=1
 var otherCounter=25
@@ -19,13 +19,13 @@ func _ready():
 	$twnBlack.start()
 	$twnMov.interpolate_property(target,\"rect_global_position:x\",target.rect_global_position.x,1.0*OS.window_size.x,1.0,Tween.TRANS_BACK,Tween.EASE_IN,2.0)
 	$twnMov.start()
-	$twnMov.connect(\"tween_completed\",self,\"loopEvo\")
+	var _s1=$twnMov.connect(\"tween_completed\",self,\"loopEvo\")
 	if global.level<6:
 		global.firstEvolution()
 	else:
 		global.secondEvolution()
 
-func loopEvo(h,m):
+func loopEvo(_h,_m):
 	if counter<=25:
 		$twnMov.interpolate_property(target,\"rect_global_position:x\",-self.rect_size.x,OS.window_size.x,1.0/min(counter,10),Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnMov.start()
@@ -49,20 +49,21 @@ func loopEvo(h,m):
 script/source = "extends Button
 const duration=0.3
 func _ready():
-	self.connect(\"pressed\",self,\"exit\")
-	$twnPosition.connect(\"tween_completed\",self,\"delete\")
+	var _s1=self.connect(\"pressed\",self,\"exit\")
+	var _s2=$twnPosition.connect(\"tween_completed\",self,\"delete\")
 func exit():
 	$twnPosition.interpolate_property(get_parent(),\"rect_position:y\",get_parent().rect_position.y,-1.2*get_parent().rect_size.y,self.duration,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnPosition.start()
-func delete(h,m):
-	get_parent().get_parent().get_parent().queue_free()"
+func delete(_h,_m):
+	get_parent().get_parent().get_parent().queue_free()
+"
 
 [node name="evolveControl" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 3 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -85,8 +86,8 @@ __meta__ = {
 [node name="opponentPanel" type="PanelContainer" parent="marginContainer"]
 margin_left = 100.0
 margin_top = 25.0
-margin_right = 796.0
-margin_bottom = 429.0
+margin_right = 924.0
+margin_bottom = 525.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 2 )
@@ -95,8 +96,8 @@ custom_styles/panel = ExtResource( 2 )
 modulate = Color( 0.756863, 0.756863, 0.756863, 1 )
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 686.0
-margin_bottom = 394.0
+margin_right = 814.0
+margin_bottom = 490.0
 mouse_filter = 2
 texture = ExtResource( 1 )
 expand = true
@@ -105,8 +106,8 @@ stretch_mode = 2
 [node name="marginContainer" type="MarginContainer" parent="marginContainer/opponentPanel"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 686.0
-margin_bottom = 394.0
+margin_right = 814.0
+margin_bottom = 490.0
 rect_clip_content = true
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -116,12 +117,12 @@ custom_constants/margin_bottom = 10
 [node name="vbox" type="VBoxContainer" parent="marginContainer/opponentPanel/marginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 666.0
-margin_bottom = 374.0
+margin_right = 794.0
+margin_bottom = 470.0
 alignment = 1
 
 [node name="title" type="Label" parent="marginContainer/opponentPanel/marginContainer/vbox"]
-margin_right = 656.0
+margin_right = 784.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -131,7 +132,7 @@ align = 1
 
 [node name="hSeparator" type="HSeparator" parent="marginContainer/opponentPanel/marginContainer/vbox"]
 margin_top = 32.0
-margin_right = 656.0
+margin_right = 784.0
 margin_bottom = 36.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -139,8 +140,8 @@ __meta__ = {
 
 [node name="marginContainer" type="MarginContainer" parent="marginContainer/opponentPanel/marginContainer/vbox"]
 margin_top = 40.0
-margin_right = 656.0
-margin_bottom = 364.0
+margin_right = 784.0
+margin_bottom = 460.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 20
@@ -151,8 +152,8 @@ custom_constants/margin_bottom = 20
 [node name="pigeon" type="TextureRect" parent="marginContainer/opponentPanel/marginContainer/vbox/marginContainer"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 636.0
-margin_bottom = 304.0
+margin_right = 764.0
+margin_bottom = 400.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 4 )
@@ -160,9 +161,9 @@ expand = true
 stretch_mode = 6
 
 [node name="btnExit" type="Button" parent="marginContainer/opponentPanel"]
-margin_left = 666.0
+margin_left = 794.0
 margin_top = 10.0
-margin_right = 686.0
+margin_right = 814.0
 margin_bottom = 30.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 8

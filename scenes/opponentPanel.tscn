@@ -241,7 +241,7 @@ var thoughts=\"\"\"
 [sub_resource type="GDScript" id=2]
 script/source = "extends Button
 func _ready():
-	connect(\"pressed\",self,\"reroll\")
+	var _s1=connect(\"pressed\",self,\"reroll\")
 	self.text=\"REROLL: $\" + str(global.rerollPrice*global.rerolls)
 func reroll():
 	if global.player.gold>=global.rerollPrice:
@@ -257,12 +257,12 @@ func reroll():
 script/source = "extends Button
 const duration=0.3
 func _ready():
-	self.connect(\"pressed\",self,\"exit\")
-	$twnPosition.connect(\"tween_completed\",self,\"delete\")
+	var _s1=self.connect(\"pressed\",self,\"exit\")
+	var _s2=$twnPosition.connect(\"tween_completed\",self,\"delete\")
 func exit():
 	$twnPosition.interpolate_property(get_parent(),\"rect_position:y\",get_parent().rect_position.y,-1.2*get_parent().rect_size.y,self.duration,Tween.TRANS_BACK,Tween.EASE_IN)
 	$twnPosition.start()
-func delete(h,m):
+func delete(_h,_m):
 	get_parent().get_parent().get_parent().queue_free()
 "
 

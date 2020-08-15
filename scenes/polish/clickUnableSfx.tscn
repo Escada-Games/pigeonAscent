@@ -2,12 +2,11 @@
 
 [ext_resource path="res://resource/sfx/clickUnable.wav" type="AudioStream" id=1]
 
-
 [sub_resource type="GDScript" id=1]
 script/source = "extends AudioStreamPlayer
 
 func _ready():
-	self.connect(\"finished\",self,\"killMe\")
+	var _s1=self.connect(\"finished\",self,\"killMe\")
 	self.playing=true
 func killMe():
 	yield(get_tree().create_timer(2.0),\"timeout\")

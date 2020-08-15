@@ -20,7 +20,7 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Position2D
 func _ready():set_process(true)
-func _process(delta):get_tree().root.get_node(\"/root/battleScene\").enemyDefaultPos=self.global_position
+func _process(_delta):get_tree().root.get_node(\"/root/battleScene\").enemyDefaultPos=self.global_position
 "
 
 [sub_resource type="GDScript" id=2]
@@ -48,11 +48,11 @@ func _ready():
 	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
-	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
-	$area2D.connect(\"area_entered\",self,\"hit\")
+	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	var _s2=$area2D.connect(\"area_entered\",self,\"hit\")
 	set_process(true)
 	
-func _process(delta):
+func _process(_delta):
 	if self.global_position.y>OS.window_size.y:self.visible=false
 	if dead:
 		dead=false
@@ -73,7 +73,7 @@ var defaultY=0
 var t=0
 var omega=PI
 func _ready():
-	var defaultY=self.position.y
+	defaultY=self.position.y
 	set_process(true)
 func _process(delta):
 	t+=delta

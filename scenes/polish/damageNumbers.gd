@@ -21,5 +21,5 @@ func _ready():
 	$twnScale.interpolate_property(self,"scale.y",0,self.scale.y,duration,Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnScale.interpolate_property(self,"modulate:a",0,1,duration/4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()
-func _process(delta):
+func _process(_delta):
 	if self.global_position.y>OS.window_size.y:self.queue_free()

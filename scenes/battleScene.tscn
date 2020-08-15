@@ -44,10 +44,10 @@ script/source = "extends RichTextLabel
 var bufferedMessage=\"\"
 
 func _ready():
-	get_tree().get_root().connect(\"size_changed\", self, \"updateSize\")
+	var _s1=get_tree().get_root().connect(\"size_changed\", self, \"updateSize\")
 	self.bbcode_text=\"\"
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	if bufferedMessage!=\"\":
 		self.bbcode_text+=bufferedMessage[0]
 		bufferedMessage.erase(0,1)
@@ -75,7 +75,7 @@ func _ready():
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	twnEnter.start()
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.value=get_tree().root.get_node(\"/root/battleScene\").playerStamina
 
 
@@ -105,9 +105,9 @@ func _ready():
 	twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").playerSpr=self
-	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 #	self.rect_global_position=get_parent().rect_global_position
 	$area2D.position=self.rect_size/2
 	
@@ -133,7 +133,7 @@ func _ready():
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	twnEnter.start()
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.value=get_tree().root.get_node(\"/root/battleScene\").enemyStamina
 
 
@@ -165,9 +165,9 @@ func _ready():
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
 #	self.rect_pivot_offset=self.rect_size/2
 	$area2D.position=self.rect_size/2
-	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
 	set_process(true)
-func _process(delta):$area2D.position=self.rect_size/2
+func _process(_delta):$area2D.position=self.rect_size/2
 #	self.size_flags_vertical=SIZE_EXPAND
 
 "
@@ -178,7 +178,7 @@ var defaultY=0
 var t=0
 var omega=PI
 func _ready():
-	var defaultY=self.position.y
+	defaultY=self.position.y
 	set_process(true)
 func _process(delta):
 	t+=delta
@@ -191,9 +191,9 @@ func _ready():
 	self.visible=false
 	self.rect_global_position.y=2*OS.window_size.y
 	get_tree().root.get_node(\"/root/battleScene\").exitButton=self
-	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\")
+	var _s1=self.connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"exitBattle\")
+	var _s2=self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _s3=self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
 [sub_resource type="GDScript" id=12]
@@ -202,9 +202,9 @@ func _ready():
 	self.visible=false
 	self.rect_global_position.y=2*OS.window_size.y
 	get_tree().root.get_node(\"/root/battleScene\").resetButton=self
-	connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"gameOver\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\")
+	var _s1=self.connect(\"pressed\",get_tree().root.get_node(\"/root/battleScene\"),\"gameOver\")
+	var _s2=self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _s3=self.connect(\"button_down\",global,\"createSelectSfx\")
 "
 
 [node name="battleScene" type="Control"]

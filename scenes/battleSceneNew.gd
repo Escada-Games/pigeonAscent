@@ -39,7 +39,7 @@ onready var bgNode=get_node("marginCtn/battlePanel/battlePanelMargin/BG")
 
 
 func calculateStaminaIncrement(x,isHungry=false):
-	var staminaScaling=hungryStaminaScaling if isHungry else 1
+	var staminaScaling=hungryStaminaScaling if isHungry else 1.0
 	var externalScaling=1
 	return externalScaling*(3.79643 + (0.9834812 - 3.79643)/(1 + pow((x/22.7243),1.642935))*staminaScaling)
 
@@ -122,7 +122,7 @@ func playerAttack():
 	var isCritical=false
 	if randf()>0.9 or global.enemy.energy<=0:
 		damage*=2
-		damage*=1 if global.player.energy>0 else 0.5
+		damage*=1.0 if global.player.energy>0 else 0.5
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		if foodDamage>0:
@@ -132,7 +132,7 @@ func playerAttack():
 			registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakeEnemyHpBar(25)
 	else:
-		damage*=1 if global.player.energy>0 else 0.5
+		damage*=1.0 if global.player.energy>0 else 0.5
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakeEnemyHpBar()
@@ -156,7 +156,7 @@ func enemyAttack():
 	var isCritical=false
 	if randf()>0.9 or global.player.energy<=0:
 		damage*=2
-		damage*=1 if global.enemy.energy>0 else 0.5
+		damage*=1.0 if global.enemy.energy>0 else 0.5
 		isCritical=true
 		registerFast("[shake rate=20 level=10]CRITICAL HIT![/shake]")
 		
@@ -167,7 +167,7 @@ func enemyAttack():
 			registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 		shakePlayerHpBar(25)
 	else:
-		damage*=1 if global.enemy.energy>0 else 0.5
+		damage*=1.0 if global.enemy.energy>0 else 0.5
 		register(bbName + " attacks for " +String(damage)+ " damage")
 		if foodDamage>0:registerSameTurn(" and " +String(foodDamage)+ " food damage")
 		shakePlayerHpBar()
@@ -222,7 +222,7 @@ func registerFast(string):
 func exitBattle():
 	self.set_process(false)
 	if global.level==11:
-		get_tree().change_scene("res://scenes/end.tscn")
+		var _sc1=get_tree().change_scene("res://scenes/end.tscn")
 	global.player.extraStrength=0
 	global.player.extraDefense=0
 	global.player.extraSpeed=0
@@ -231,7 +231,7 @@ func exitBattle():
 		global.createEvolvePanel()
 	elif(global.level==7):
 		global.createEvolvePanel()
-	$twnSelfPos.connect("tween_completed",self,"killMe")
+	var _s1=$twnSelfPos.connect("tween_completed",self,"killMe")
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0.85,0,0.3,Tween.TRANS_CUBIC,Tween.EASE_OUT)
@@ -239,7 +239,7 @@ func exitBattle():
 	
 func applyDamage(target,damage):target.hp-=damage
 	
-func killMe(h,m):self.queue_free()
+func killMe(_h,_m):self.queue_free()
 
 func createDamageNumbers(position,direction,damage,critical=false,origin=""):
 	var i=damageNumbers.instance()
@@ -283,7 +283,7 @@ func particlesAndWindowshake(area):
 	particles(area)
 	windowShake()
 
-func particles(area):
+func particles(_area):
 	var i=particlesImpact.instance()
 	i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
 	i.emitting=true
@@ -302,5 +302,5 @@ func shakeEnemyHpBar(intensity=5):$"marginCtn/battlePanel/battlePanelMargin/hbox
 
 func gameOver():
 	global.level=1
-	get_tree().change_scene("res://scenes/intro.tscn")
+	var _sc1=get_tree().change_scene("res://scenes/intro.tscn")
 	self.queue_free()

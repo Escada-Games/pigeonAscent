@@ -278,7 +278,7 @@ func _ready():
 	if not OS.is_debug_build():add_child(music.instance())
 	set_process(true)
 var muted=false
-func _process(delta):
+func _process(_delta):
 #	print_debug(global.enemiesForBattle.size())
 	player.energy=max(player.energy,0)
 	if Input.is_action_just_pressed("ui_debug"):

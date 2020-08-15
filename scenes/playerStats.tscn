@@ -29,8 +29,8 @@ func _ready():
 #		$tex
 #		pass
 	if checkVisibility:
-		get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
-	$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
+		var _s1=get_tree().root.connect(\"size_changed\",global,\"shouldIBeInvisible\",[self])
+	var _s2=$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
 	defaultPos=$marginContainer/vbox/vboxBars/hpBox.rect_position
 	set_process(false)
 	if compact:
@@ -51,7 +51,7 @@ func _ready():
 		twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,durationEnter,Tween.TRANS_QUART,Tween.EASE_OUT)
 		twnEnter.start()
 
-func _process(delta):
+func _process(_delta):
 	$marginContainer/vbox/vboxBars/hpBox.rect_position=defaultPos+offset*Vector2(randf()-0.5,randf()-0.5)
 func shakeHp(newOffset=5):
 	offset=newOffset#*sign(randf()-0.5)
@@ -74,7 +74,7 @@ func _ready():
 	$cPUParticles2D.emitting=false
 #	$cPUParticles2D.one_shot=true
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.max_value=global.player.maxHp
 	self.value=lerp(self.value,global.player.hp,0.25)
 	$cPUParticles2D.position.x=self.value*self.rect_size.x/self.max_value
@@ -112,7 +112,7 @@ func _process(delta):
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
+func _process(_delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
 "
 
 [sub_resource type="StyleBoxEmpty" id=9]
