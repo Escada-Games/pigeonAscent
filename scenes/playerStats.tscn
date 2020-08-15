@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=4]
 [ext_resource path="res://resource/Bar_Food.png" type="Texture" id=5]
 [ext_resource path="res://resource/Stats_Panel_Battle.png" type="Texture" id=6]
-[ext_resource path="res://resource/BG_Stats.png" type="Texture" id=7]
+[ext_resource path="res://resource/BG_Stats_N1.png" type="Texture" id=7]
 [ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=8]
 [ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=9]
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=10]
@@ -62,6 +62,12 @@ func resetProcess():
 	set_process(false)
 "
 
+[sub_resource type="GDScript" id=14]
+script/source = "extends TextureRect
+func _ready():set_process(true)
+func _process(delta):self.texture=global.getBgTexture()
+"
+
 [sub_resource type="GDScript" id=2]
 script/source = "extends Label
 func _ready():self.text=global.player.name
@@ -78,33 +84,33 @@ func _process(_delta):
 	self.max_value=global.player.maxHp
 	self.value=lerp(self.value,global.player.hp,0.25)
 	$cPUParticles2D.position.x=self.value*self.rect_size.x/self.max_value
-	if abs(self.value-global.player.hp)>0.5:
+	if abs(self.value-global.player.hp)>0.5 and self.value>0:
 		$cPUParticles2D.emitting=true
 	else:
 		$cPUParticles2D.emitting=false
 "
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=11]
 offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
 colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.364706, 1, 0.811765, 1, 0.439216, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=13]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
 func _process(delta):
 	self.max_value=global.player.maxEnergy
-	self.value=lerp(self.value,global.player.energy,0.1)
+	self.value=lerp(self.value,global.player.energy,0.25)
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
@@ -131,7 +137,7 @@ __meta__ = {
 [node name="twnOffset" type="Tween" parent="."]
 
 [node name="textureRect" type="TextureRect" parent="."]
-modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
+modulate = Color( 0.4, 0.4, 0.4, 1 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 165.0
@@ -139,6 +145,7 @@ margin_bottom = 157.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 2
+script = SubResource( 14 )
 
 [node name="marginContainer" type="MarginContainer" parent="."]
 margin_left = 10.0
@@ -232,6 +239,8 @@ stretch_margin_right = 5
 stretch_margin_bottom = 1
 script = SubResource( 3 )
 
+[node name="twn" type="Tween" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
+
 [node name="cPUParticles2D" type="CPUParticles2D" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
 position = Vector2( 80.5243, 12 )
 amount = 50
@@ -249,8 +258,8 @@ initial_velocity = 10.0
 initial_velocity_random = 1.0
 scale_amount = 8.0
 scale_amount_random = 1.0
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 10 )
+color_ramp = SubResource( 11 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -267,7 +276,7 @@ custom_constants/shadow_as_outline = 1
 text = "5/5"
 align = 1
 valign = 1
-script = SubResource( 6 )
+script = SubResource( 12 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
 margin_top = 50.0
@@ -321,7 +330,7 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 7 )
+script = SubResource( 13 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
 margin_top = 29.0

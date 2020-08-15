@@ -93,7 +93,7 @@ size_flags_vertical = 3
 custom_styles/panel = ExtResource( 2 )
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/opponentPanel"]
-modulate = Color( 0.756863, 0.756863, 0.756863, 1 )
+modulate = Color( 0.398438, 0.398438, 0.398438, 1 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 814.0

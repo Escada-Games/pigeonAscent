@@ -242,8 +242,15 @@ func createClickUnableSfx():
 	add_child(clickUnableSfx.instance())
 func createHoverSfx():
 	add_child(hoverSfx.instance())
-func createSelectSfx():
-	add_child(selectSfx.instance())
+func createSelectSfx(type=""):
+	var i=selectSfx.instance()
+	var pitchIncrement=0.0
+	if type=="":pass
+	elif type=="attack":pitchIncrement=self.player.strength/75.0
+	elif type=="defense":pitchIncrement=self.player.defense/75.0
+	elif type=="speed":pitchIncrement=self.player.speed/75.0
+	i.pitch_scale+=pitchIncrement
+	add_child(i)
 func calculateHp(strength,defense):
 	strength-=1;defense-=1
 	return 5+self.scaling.hp*(strength+2*defense)
