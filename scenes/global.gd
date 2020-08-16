@@ -285,16 +285,18 @@ var GAs=load("res://GameAnalytics.gd")
 var GA = GAs.new()
 
 func _ready():
-	GA.game_key="d3b54946a2375107f995a646cb21bcf0"
-	GA.secret_key="6eb93d985446293c6af4642926bb8c87bbc22875"
-	GA.base_url = "http://api.gameanalytics.com"
-	var init_response = GA.request_init()
+	if OS.get_name()!="HTML5":
+		GA.game_key="d3b54946a2375107f995a646cb21bcf0"
+		GA.secret_key="6eb93d985446293c6af4642926bb8c87bbc22875"
+		GA.base_url = "http://api.gameanalytics.com"
+		var init_response = GA.request_init()
 	if not OS.is_debug_build():add_child(music.instance())
 	set_process(true)
 var muted=false
 var t=Thread.new()
 func sendData(eventId="",value=0):
-	t.start(self,"_sendData",[eventId,value])
+	if OS.get_name()!="HTML5":
+		t.start(self,"_sendData",[eventId,value])
 func _sendData(array=["",0]):
 	print_debug("Global thread: Sending data")
 	GA.add_to_event_queue(GA.get_test_design_event(array[0],array[1]))

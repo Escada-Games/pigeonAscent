@@ -62,18 +62,18 @@ func resetProcess():
 	set_process(false)
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureRect
 func _ready():set_process(true)
 func _process(delta):self.texture=global.getBgTexture()
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Label
 func _ready():self.text=global.player.name
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends TextureProgress
 
 func _ready():
@@ -90,21 +90,21 @@ func _process(_delta):
 		$cPUParticles2D.emitting=false
 "
 
-[sub_resource type="Curve" id=10]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=6]
 offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
 colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.364706, 1, 0.811765, 1, 0.439216, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=8]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -114,14 +114,14 @@ func _process(delta):
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(_delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
 "
 
-[sub_resource type="StyleBoxEmpty" id=9]
+[sub_resource type="StyleBoxEmpty" id=10]
 
 [node name="playerStats" type="PanelContainer"]
 margin_right = 175.0
@@ -145,7 +145,7 @@ margin_bottom = 157.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 2
-script = SubResource( 14 )
+script = SubResource( 2 )
 
 [node name="marginContainer" type="MarginContainer" parent="."]
 margin_left = 10.0
@@ -177,7 +177,7 @@ text = "NOME"
 align = 1
 valign = 1
 clip_text = true
-script = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -194,7 +194,7 @@ margin_bottom = 137.0
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
 margin_right = 145.0
 margin_bottom = 46.0
-hint_tooltip = "Every attack you take lowers your HP. At zero, you lose your pigeon!"
+hint_tooltip = "Every attack your pigeon takes lowers their HP. At zero, you lose your pigeon!"
 mouse_default_cursor_shape = 16
 alignment = 1
 
@@ -237,7 +237,7 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="twn" type="Tween" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
 
@@ -258,8 +258,8 @@ initial_velocity = 10.0
 initial_velocity_random = 1.0
 scale_amount = 8.0
 scale_amount_random = 1.0
-scale_amount_curve = SubResource( 10 )
-color_ramp = SubResource( 11 )
+scale_amount_curve = SubResource( 5 )
+color_ramp = SubResource( 6 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -276,14 +276,14 @@ custom_constants/shadow_as_outline = 1
 text = "5/5"
 align = 1
 valign = 1
-script = SubResource( 12 )
+script = SubResource( 7 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
 margin_top = 50.0
 margin_right = 145.0
 margin_bottom = 96.0
 hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, the pigeon:
--Take only critical hits (deal double damage);
+-Takes only critical hits (deal double damage);
 -Their damage is halved;
 -They attack speed slightly slower."
 mouse_default_cursor_shape = 16
@@ -330,7 +330,7 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 13 )
+script = SubResource( 8 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
 margin_top = 29.0
@@ -344,7 +344,7 @@ custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 9 )
 
 [node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
 visible = false
@@ -362,7 +362,7 @@ margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 50.0
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 10 )
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
 margin_right = 145.0
