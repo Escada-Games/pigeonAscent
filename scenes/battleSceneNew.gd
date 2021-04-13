@@ -95,8 +95,8 @@ func _process(delta):
 				registerSameTurn("[center][wave amp=100 freq=5]"+global.player.name + " won! [/wave][/center]\n")
 				registerSameTurn("[center]You got [color=#ffe478]" + String(goldToWin) + "[/color] gold.[/center]")#
 				ended=true
-				$twnBackButton.interpolate_property(exitButton,"rect_global_position:y",OS.window_size.y*1.2,OS.window_size.y*0.66,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
-				$twnBackButton.start()
+#				$twnBackButton.interpolate_property(exitButton,"rect_global_position:y",OS.window_size.y*1.2,exitButton.rect_global_position.y,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
+#				$twnBackButton.start()
 				exitButton.modulate.a=0
 				exitButton.visible=true
 				resetButton.visible=false
@@ -105,8 +105,8 @@ func _process(delta):
 				registerSameTurn("[center][color=#b0305c]" + "Game Over." + "[/color][/center]\n\n")
 				registerSameTurn("[center] Retry? [/center]")
 				ended=true
-				$twnBackButton.interpolate_property(resetButton,"rect_global_position:y",OS.window_size.y*1.2,OS.window_size.y*0.66,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
-				$twnBackButton.start()
+#				$twnBackButton.interpolate_property(resetButton,"rect_global_position:y",OS.window_size.y*1.2,resetButton.rect_global_position.y,0.5,Tween.TRANS_BACK,Tween.EASE_OUT)
+#				$twnBackButton.start()
 				resetButton.modulate.a=0
 				resetButton.visible=true
 				exitButton.visible=false

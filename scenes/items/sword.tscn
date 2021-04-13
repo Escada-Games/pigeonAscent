@@ -14,7 +14,7 @@ script/source = "extends PanelContainer
 
 export(String) var itemName=\"Sword\"
 export(int) var itemPrice=1000
-export(String) var itemDescription=\"A mysterious sword... you might be able to use it with enough speed.\"
+export(String) var itemDescription=\"A mysterious sword... you might be able to use it with enough SPEED.\"
 export(bool) var unique=true
 export(bool) var clickable=false
 

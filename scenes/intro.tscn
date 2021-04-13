@@ -41,7 +41,7 @@ func _ready():
 func startGame():
 	global.player.name=get_parent().get_node(\"lineEdit\").text
 	var _sc1=get_tree().change_scene(\"res://scenes/root.tscn\")
-	global.sendData(\"player:startedGame\",0)
+#	global.sendData(\"player:startedGame\",0)
 "
 
 [node name="intro" type="Control"]
@@ -101,7 +101,7 @@ margin_right = 1004.0
 margin_bottom = 580.0
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 7 )
-text = "V1.2"
+text = "V1.3"
 align = 2
 valign = 2
 autowrap = true
