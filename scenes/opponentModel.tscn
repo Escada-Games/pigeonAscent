@@ -34,9 +34,10 @@ const tweenParameters={
 }
 
 func _ready():
+	
 	enemyDescription=\"Strength: \"+String(self.enemyStr)+\", Defense: \"+String(self.enemyDef)+\", Speed: \"+String(self.enemySpd)+\"\\n Gold: \"+String(self.enemyGold)
 	$marginContainer/hboxEnemy/vboxDescription/name.text=self.enemyName
-	$marginContainer/hboxEnemy/vboxDescription/title.text=self.enemyClass+\", Lv.\"+String(self.enemyLevel)
+	$marginContainer/hboxEnemy/vboxDescription/title.text=global.Classes.keys()[self.enemyClass]+\", Lv.\"+String(self.enemyLevel)
 	$marginContainer/hboxEnemy/vboxDescription/description.text=self.enemyDescription
 	$marginContainer/hboxEnemy/icon.texture=load(global.pigeonClassesAndSprites[self.enemyClass].portrait)
 #	$hboxEnemy/vboxDescription/name.name=self.enemyName
@@ -107,31 +108,31 @@ __meta__ = {
 
 [node name="textureRect" type="TextureRect" parent="."]
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 580.0
-margin_bottom = 95.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 586.0
+margin_bottom = 89.0
 mouse_filter = 2
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 2
 
 [node name="marginContainer" type="MarginContainer" parent="."]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 580.0
-margin_bottom = 95.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 586.0
+margin_bottom = 89.0
 mouse_filter = 1
 custom_constants/margin_top = 5
 custom_constants/margin_bottom = 5
 
 [node name="hboxEnemy" type="HBoxContainer" parent="marginContainer"]
 margin_top = 5.0
-margin_right = 570.0
+margin_right = 582.0
 margin_bottom = 80.0
 
 [node name="icon" type="TextureRect" parent="marginContainer/hboxEnemy"]
-margin_right = 93.0
+margin_right = 95.0
 margin_bottom = 75.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -142,8 +143,8 @@ expand = true
 stretch_mode = 6
 
 [node name="vboxDescription" type="VBoxContainer" parent="marginContainer/hboxEnemy"]
-margin_left = 97.0
-margin_right = 471.0
+margin_left = 99.0
+margin_right = 481.0
 margin_bottom = 75.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -151,7 +152,7 @@ size_flags_stretch_ratio = 8.0
 alignment = 1
 
 [node name="name" type="Label" parent="marginContainer/hboxEnemy/vboxDescription"]
-margin_right = 374.0
+margin_right = 382.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
@@ -162,7 +163,7 @@ valign = 1
 
 [node name="title" type="Label" parent="marginContainer/hboxEnemy/vboxDescription"]
 margin_top = 32.0
-margin_right = 374.0
+margin_right = 382.0
 margin_bottom = 49.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
@@ -174,13 +175,13 @@ valign = 1
 [node name="hSeparator" type="HSeparator" parent="marginContainer/hboxEnemy/vboxDescription"]
 modulate = Color( 1, 1, 1, 0 )
 margin_top = 53.0
-margin_right = 374.0
+margin_right = 382.0
 margin_bottom = 57.0
 mouse_filter = 2
 
 [node name="description" type="Label" parent="marginContainer/hboxEnemy/vboxDescription"]
 margin_top = 61.0
-margin_right = 374.0
+margin_right = 382.0
 margin_bottom = 75.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
@@ -191,8 +192,8 @@ valign = 1
 autowrap = true
 
 [node name="btn" type="TextureButton" parent="marginContainer/hboxEnemy"]
-margin_left = 475.0
-margin_right = 570.0
+margin_left = 485.0
+margin_right = 582.0
 margin_bottom = 75.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2

@@ -118,8 +118,13 @@ func _process(delta):
 
 [sub_resource type="GDScript" id=7]
 script/source = "extends TextureRect
-func _ready():set_process(true)
-func _process(delta):self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
+func _ready():
+	global.connect(\"PlayerEvolved\",self,'ChangeTexture')
+	set_process(false)
+func changeTexture():
+	self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
+func _process(delta):
+	self.texture=load(global.pigeonClassesAndSprites[global.player[\"class\"]].sprite)
 "
 
 [sub_resource type="GDScript" id=8]
@@ -292,7 +297,7 @@ margin_bottom = 364.0
 custom_constants/margin_top = 150
 custom_constants/margin_bottom = 20
 
-[node name="textureRect" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer/marginContainer"]
+[node name="texPlayerPigeon" type="TextureRect" parent="marginContainer/hbox/vboxC/playerContainer/marginContainer"]
 margin_top = 150.0
 margin_right = 296.0
 margin_bottom = 334.0

@@ -20,7 +20,7 @@ func _ready():set_process(true if updateable else false)
 func _process(delta):self.visible=!global.isGameCompact()
 "
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxFlat" id=2]
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -33,17 +33,17 @@ corner_radius_bottom_left = 2
 corner_detail = 1
 anti_aliasing = false
 
-[sub_resource type="StyleBoxTexture" id=2]
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 83, 20 )
 
-[sub_resource type="StyleBoxTexture" id=3]
+[sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 83, 20 )
 expand_margin_right = 5.0
 expand_margin_bottom = 5.0
 
-[sub_resource type="StyleBoxFlat" id=15]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.729412, 0.380392, 0.337255, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -57,7 +57,7 @@ corner_radius_bottom_left = 1
 corner_detail = 4
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=17]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.8, 0.419608, 0.372549, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -71,7 +71,7 @@ corner_radius_bottom_left = 1
 corner_detail = 4
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.466667, 0.247059, 0.219608, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -85,7 +85,7 @@ corner_radius_bottom_left = 1
 corner_detail = 4
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=8]
 content_margin_left = 4.0
 content_margin_right = 4.0
 content_margin_top = 0.0
@@ -107,18 +107,18 @@ expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 anti_aliasing = false
 
-[sub_resource type="Theme" id=13]
+[sub_resource type="Theme" id=9]
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 15 )
-VScrollBar/styles/grabber_highlight = SubResource( 17 )
-VScrollBar/styles/grabber_pressed = SubResource( 18 )
-VScrollBar/styles/scroll = SubResource( 14 )
+VScrollBar/styles/grabber = SubResource( 5 )
+VScrollBar/styles/grabber_highlight = SubResource( 6 )
+VScrollBar/styles/grabber_pressed = SubResource( 7 )
+VScrollBar/styles/scroll = SubResource( 8 )
 VScrollBar/styles/scroll_focus = null
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=10]
 script/source = "extends VBoxContainer
 
 var items=[
@@ -143,27 +143,27 @@ func _ready():
 	global.currentItem=get_children()[0]
 "
 
-[sub_resource type="StyleBoxTexture" id=5]
+[sub_resource type="StyleBoxTexture" id=11]
 texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 118, 49 )
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=12]
 script/source = "extends PanelContainer
 func _ready():global.shopDescription=$marginContainer/vBoxContainer/label
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Label
 func _ready():
 	self.text=\"Hover your mouse over an item to see its info, and click it to buy!\"
 "
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=14]
 script/source = "extends Label
 func _ready():self.text=\"\"
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=15]
 script/source = "extends TextureButton
 
 func _ready():
@@ -189,7 +189,7 @@ __meta__ = {
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 19 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="textureRect" type="TextureRect" parent="panelRContainer"]
 margin_left = 4.0
@@ -296,18 +296,18 @@ size_flags_stretch_ratio = 8.0
 [node name="panelContainer" type="PanelContainer" parent="panelRContainer/vbox/vboxShop"]
 margin_right = 1016.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="panelShadow" type="PanelContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 modulate = Color( 0, 0, 0, 0.5 )
 margin_right = 1016.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 4 )
 
 [node name="panel" type="PanelContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 1016.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 1016.0
@@ -348,7 +348,7 @@ margin_right = 1012.0
 margin_bottom = 374.0
 rect_clip_content = false
 size_flags_vertical = 3
-theme = SubResource( 13 )
+theme = SubResource( 9 )
 
 [node name="marginCtn" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop"]
 margin_right = 1000.0
@@ -368,7 +368,7 @@ margin_right = 980.0
 margin_bottom = 701.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 4 )
+script = SubResource( 10 )
 
 [node name="itemModel" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
 margin_right = 960.0
@@ -475,8 +475,8 @@ margin_right = 1016.0
 margin_bottom = 592.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
-custom_styles/panel = SubResource( 5 )
-script = SubResource( 6 )
+custom_styles/panel = SubResource( 11 )
+script = SubResource( 12 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
 margin_right = 1016.0
@@ -504,7 +504,7 @@ text = "DESCRIPTION
 Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!
 "
 autowrap = true
-script = SubResource( 7 )
+script = SubResource( 13 )
 
 [node name="hBoxContainer" type="HBoxContainer" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
 margin_top = 111.0
@@ -522,7 +522,7 @@ size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )
 text = "PRICE"
 align = 1
-script = SubResource( 8 )
+script = SubResource( 14 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -540,4 +540,4 @@ texture_pressed = ExtResource( 11 )
 texture_hover = ExtResource( 8 )
 texture_disabled = ExtResource( 5 )
 expand = true
-script = SubResource( 9 )
+script = SubResource( 15 )

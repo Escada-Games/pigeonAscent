@@ -1,7 +1,7 @@
 extends Node
+
 const rerollPrice=100
 const defaultResolution=Vector2(1024,600)
-
 const phrases=[
 	"Yo mamma so fat she's a duck",
 	"I've seem squirrels fly better than you",
@@ -16,127 +16,280 @@ const phrases=[
 	"You don't want to see me use my Ultra Instinct.",
 	"Get ready for my Gear Second!",
 	"Beware: I learned to fight by watching anime.",
-	""
+	"I wonder if you can carry a coconut till you reach England!",
+	"Even a turtle would beat you up"
 ]
 
-var pigeonClassesAndSprites={
-	"baker":
+# Player items
+var hasWings=false
+var hasIce=false
+var hasSword=false
+# Classes enum
+enum Classes{
+	Baker,
+	Bat,
+	Charlie,
+	Crusader,
+	Egirl,
+	Fridgeon,
+	GodPigeon,
+	Hatoshi,
+	Infiltrator,
+	Kawaii,
+	Knight,
+	Mimic,
+	Normal,
+	PIgeon,
+	Selfie,
+	Sink,
+	Stronga,
+	Whey,
+	Winged,
+	Winged2,
+	Wizard,
+	Wyrm,
+	Platy,
+}
+
+const pigeonClassesAndSprites={
+	Classes.Baker:
 		{"sprite":"res://resource/sprites/Baker_Pigeon.png",
 		"portrait":"res://resource/portraits/Baker_Pigeon_Port.png"
 	},
-	"batPigeon":
+	Classes.Bat:
 		{"sprite":"res://resource/sprites/BatPigeon.png",
 		"portrait":"res://resource/portraits/BatPigeon_Port.png"
 	},
-	"charlie":
+	Classes.Charlie:
 		{"sprite":"res://resource/sprites/Charlie_Pigeon.png",
 		"portrait":"res://resource/portraits/Charlie_Pigeon_Port.png"
 	},
-	"crusader":
+	Classes.Crusader:
 		{"sprite":"res://resource/sprites/Crusader_Pigeon.png",
 		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png"
 	},
-	"e-girl":
+	Classes.Egirl:
 		{"sprite":"res://resource/sprites/E-girl_Pigeon.png",
 		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png"
 	},
-	"fridgeon":
+	Classes.Fridgeon:
 		{"sprite":"res://resource/sprites/Fridgeon.png",
 		"portrait":"res://resource/portraits/Fridgeon_Port.png"
 	},
-	"godPigeon":
+	Classes.Mimic:
 		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
 		"portrait":"res://resource/portraits/God_Pigeon_Port.png"
 	},
-	"hatoshi":
+	Classes.Hatoshi:
 		{"sprite":"res://resource/sprites/Hatoshi.png",
 		"portrait":"res://resource/portraits/Hatoshi_Port.png"
 	},
-	"infiltrator":
+	Classes.Infiltrator:
 		{"sprite":"res://resource/sprites/Infiltrator.png",
 		"portrait":"res://resource/portraits/Infiltrator_Port.png"
 	},
-	"kawaii":
+	Classes.Kawaii:
 		{"sprite":"res://resource/sprites/Kawaii_Pigeon.png",
 		"portrait":"res://resource/portraits/Kawaii_Pigeon_Port.png"
 	},
-	"knight":
+	Classes.Knight:
 		{"sprite":"res://resource/sprites/Knight_Pigeon.png",
 		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png"
 	},
-	"mimic":
+	Classes.Mimic:
 		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
 		"portrait":"res://resource/portraits/Mimic_Pigeon_Port.png"
 	},
-	"normal":
+	Classes.Normal:
 		{"sprite":"res://resource/sprites/Normal_Pigeon.png",
 		"portrait":"res://resource/portraits/Normal_Pigeon_Port.png"
 	},
-	"PIgeon":
+	Classes.PIgeon:
 		{"sprite":"res://resource/sprites/PIgeon.png",
 		"portrait":"res://resource/portraits/PIgeon_Port.png"
 	},
-	"selfie":
+	Classes.Selfie:
 		{"sprite":"res://resource/sprites/Selfie_Pigeon.png",
 		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
 	},
-	"sink":
+	Classes.Sink:
 		{"sprite":"res://resource/sprites/Sink_Pigeon.png",
 		"portrait":"res://resource/portraits/Sink_Pigeon_Port.png"
 	},
-	"stronga":
+	Classes.Stronga:
 		{"sprite":"res://resource/sprites/Stronga_Pigeon.png",
 		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png"
 	},
-	"whey":
+	Classes.Whey:
 		{"sprite":"res://resource/sprites/Whey_Pigeon.png",
 		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png"
 	},
-	"winged":
+	Classes.Winged:
 		{"sprite":"res://resource/sprites/Winged_Pigeon.png",
 		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png"
 	},
-	"winged2":
+	Classes.Winged2:
 		{"sprite":"res://resource/sprites/Winged_Pigeon_With_Wings.png",
 		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png"
 	},
-	"wizard":
+	Classes.Wizard:
 		{"sprite":"res://resource/sprites/Wizard_Pigeon.png",
 		"portrait":"res://resource/portraits/Wizard_Pigeon_Port.png"
 	},
-	"wyrm":
+	Classes.Wyrm:
 		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
 		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
 	},
-	"platy":
+	Classes.Platy:
 		{"sprite":"res://resource/sprites/Platypigeon.png",
 		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
-	}
+	},
 }
 
-var c_baker="baker"
-var c_batPigeon="batPigeon"
-var c_charlie="charlie"
-var c_crusader="crusader"
-var c_egirl="e-girl"
-var c_fridgeon="fridgeon"
-var c_godPigeon="godPigeon"
-var c_hatoshi="hatoshi"
-var c_infiltrator="infiltrator"
-var c_kawaii="kawaii"
-var c_knight="knight"
-var c_mimic="mimic"
-var c_normal="normal"
-var c_PIgeon="PIgeon"
-var c_selfie="selfie"
-var c_sink="sink"
-var c_stronga="stronga"
-var c_whey="whey"
-var c_winged="winged"
-var c_winged2="winged2"
-var c_wizard="wizard"
-var c_wyrm="wyrm"
-var c_platy="platy"
+#const pigeonClassesAndSprites={
+#	"baker":
+#		{"sprite":"res://resource/sprites/Baker_Pigeon.png",
+#		"portrait":"res://resource/portraits/Baker_Pigeon_Port.png"
+#	},
+#	"batPigeon":
+#		{"sprite":"res://resource/sprites/BatPigeon.png",
+#		"portrait":"res://resource/portraits/BatPigeon_Port.png"
+#	},
+#	"charlie":
+#		{"sprite":"res://resource/sprites/Charlie_Pigeon.png",
+#		"portrait":"res://resource/portraits/Charlie_Pigeon_Port.png"
+#	},
+#	"crusader":
+#		{"sprite":"res://resource/sprites/Crusader_Pigeon.png",
+#		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png"
+#	},
+#	"e-girl":
+#		{"sprite":"res://resource/sprites/E-girl_Pigeon.png",
+#		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png"
+#	},
+#	"fridgeon":
+#		{"sprite":"res://resource/sprites/Fridgeon.png",
+#		"portrait":"res://resource/portraits/Fridgeon_Port.png"
+#	},
+#	"godPigeon":
+#		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
+#		"portrait":"res://resource/portraits/God_Pigeon_Port.png"
+#	},
+#	"hatoshi":
+#		{"sprite":"res://resource/sprites/Hatoshi.png",
+#		"portrait":"res://resource/portraits/Hatoshi_Port.png"
+#	},
+#	"infiltrator":
+#		{"sprite":"res://resource/sprites/Infiltrator.png",
+#		"portrait":"res://resource/portraits/Infiltrator_Port.png"
+#	},
+#	"kawaii":
+#		{"sprite":"res://resource/sprites/Kawaii_Pigeon.png",
+#		"portrait":"res://resource/portraits/Kawaii_Pigeon_Port.png"
+#	},
+#	"knight":
+#		{"sprite":"res://resource/sprites/Knight_Pigeon.png",
+#		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png"
+#	},
+#	"mimic":
+#		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
+#		"portrait":"res://resource/portraits/Mimic_Pigeon_Port.png"
+#	},
+#	"normal":
+#		{"sprite":"res://resource/sprites/Normal_Pigeon.png",
+#		"portrait":"res://resource/portraits/Normal_Pigeon_Port.png"
+#	},
+#	"PIgeon":
+#		{"sprite":"res://resource/sprites/PIgeon.png",
+#		"portrait":"res://resource/portraits/PIgeon_Port.png"
+#	},
+#	"selfie":
+#		{"sprite":"res://resource/sprites/Selfie_Pigeon.png",
+#		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
+#	},
+#	"sink":
+#		{"sprite":"res://resource/sprites/Sink_Pigeon.png",
+#		"portrait":"res://resource/portraits/Sink_Pigeon_Port.png"
+#	},
+#	"stronga":
+#		{"sprite":"res://resource/sprites/Stronga_Pigeon.png",
+#		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png"
+#	},
+#	"whey":
+#		{"sprite":"res://resource/sprites/Whey_Pigeon.png",
+#		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png"
+#	},
+#	"winged":
+#		{"sprite":"res://resource/sprites/Winged_Pigeon.png",
+#		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png"
+#	},
+#	"winged2":
+#		{"sprite":"res://resource/sprites/Winged_Pigeon_With_Wings.png",
+#		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png"
+#	},
+#	"wizard":
+#		{"sprite":"res://resource/sprites/Wizard_Pigeon.png",
+#		"portrait":"res://resource/portraits/Wizard_Pigeon_Port.png"
+#	},
+#	"wyrm":
+#		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
+#		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
+#	},
+#	"platy":
+#		{"sprite":"res://resource/sprites/Platypigeon.png",
+#		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
+#	},
+#}
+# Classes
+var c_baker=Classes.Baker
+var c_batPigeon=Classes.Bat
+var c_charlie=Classes.Charlie
+var c_crusader=Classes.Crusader
+var c_egirl=Classes.Egirl
+var c_fridgeon=Classes.Fridgeon
+var c_godPigeon=Classes.GodPigeon
+var c_hatoshi=Classes.Hatoshi
+var c_infiltrator=Classes.Infiltrator
+var c_kawaii=Classes.Kawaii
+var c_knight=Classes.Knight
+var c_mimic=Classes.Mimic
+var c_normal=Classes.Normal
+var c_PIgeon=Classes.PIgeon
+var c_selfie=Classes.Selfie
+var c_sink=Classes.Sink
+var c_stronga=Classes.Stronga
+var c_whey=Classes.Whey
+var c_winged=Classes.Winged
+var c_winged2=Classes.Winged2
+var c_wizard=Classes.Wizard
+var c_wyrm=Classes.Wyrm
+var c_platy=Classes.Platy
+
+# Classes
+#var c_baker="baker"
+#var c_batPigeon="batPigeon"
+#var c_charlie="charlie"
+#var c_crusader="crusader"
+#var c_egirl="e-girl"
+#var c_fridgeon="fridgeon"
+#var c_godPigeon="godPigeon"
+#var c_hatoshi="hatoshi"
+#var c_infiltrator="infiltrator"
+#var c_kawaii="kawaii"
+#var c_knight="knight"
+#var c_mimic="mimic"
+#var c_normal="normal"
+#var c_PIgeon="PIgeon"
+#var c_selfie="selfie"
+#var c_sink="sink"
+#var c_stronga="stronga"
+#var c_whey="whey"
+#var c_winged="winged"
+#var c_winged2="winged2"
+#var c_wizard="wizard"
+#var c_wyrm="wyrm"
+#var c_platy="platy"
+#var c_bat="bat"
 
 var commonEnemyPigeons=[
 	self.c_baker,
@@ -175,6 +328,7 @@ var uncommonEvoPigeons=[
 	self.c_batPigeon
 ]
 
+# Player pigeon object
 var player={
 	"name":"Pombo",
 	"gold":100,
@@ -186,9 +340,7 @@ var player={
 	"speed":1,"extraSpeed":0,
 	"class":self.c_normal
 }
-var hasWings=false
-var hasIce=false
-var hasSword=false
+# Current enemy object
 var enemy={
 	"name":"PomboEnemy",
 	"gold":100,
@@ -217,6 +369,7 @@ var limits={
 }
 var currentItem
 var evolvePanel=preload("res://scenes/evolvePannel.tscn")
+signal PlayerEvolved
 func createEvolvePanel():
 	get_tree().root.get_node("/root/root").add_child(evolvePanel.instance())
 func firstEvolution():
@@ -228,6 +381,7 @@ func firstEvolution():
 		self.player["class"]=self.c_winged
 	else:
 		self.player["class"]=self.c_platy
+	emit_signal("PlayerEvolved")
 func secondEvolution():
 	if self.player["class"]==self.c_stronga:
 		self.player["class"]=self.c_wyrm if self.hasWings else self.c_whey
@@ -235,6 +389,7 @@ func secondEvolution():
 		self.player["class"]=self.c_fridgeon if self.hasIce else self.c_crusader
 	elif self.player["class"]==self.c_winged:
 		self.player["class"]=self.c_hatoshi if self.hasSword else self.c_winged2
+	emit_signal("PlayerEvolved")
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
 var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
 var clickUnableSfx=preload("res://scenes/polish/clickUnableSfx.tscn")
@@ -285,6 +440,7 @@ var GAs=load("res://GameAnalytics.gd")
 var GA = GAs.new()
 
 func _ready():
+	print_debug(Classes.keys()[0])
 #	if OS.get_name()!="HTML5":
 #		GA.game_key="d3b54946a2375107f995a646cb21bcf0"
 #		GA.secret_key="6eb93d985446293c6af4642926bb8c87bbc22875"
