@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://resource/music/partyCrasher.ogg" type="AudioStream" id=1]
+
+[node name="music" type="AudioStreamPlayer"]
+stream = ExtResource( 1 )
+autoplay = true
+bus = "Music"
+__meta__ = {
+"_editor_description_": ""
+}

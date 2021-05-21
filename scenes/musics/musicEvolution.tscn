@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resource/music/mashPotatoes.ogg" type="AudioStream" id=1]
+[ext_resource path="res://scenes/musics/musicEvolution.gd" type="Script" id=2]
+
+[node name="music" type="AudioStreamPlayer"]
+stream = ExtResource( 1 )
+bus = "Jingle"
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="tween" type="Tween" parent="."]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/vboxC/panelCtnPlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/vboxC/ctnFight.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/vboxC/ctnGold.tscn" type="PackedScene" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.152941, 0.152941, 0.211765, 1 )
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color( 0.156863, 0.156863, 0.184314, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="vboxC" type="VBoxContainer"]
+margin_left = 332.0
+margin_right = 648.0
+margin_bottom = 569.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ctnFight" parent="." instance=ExtResource( 4 )]
+
+[node name="ctnPlayer" parent="." instance=ExtResource( 3 )]
+custom_styles/panel = SubResource( 1 )
+
+[node name="ctnGold" parent="." instance=ExtResource( 5 )]

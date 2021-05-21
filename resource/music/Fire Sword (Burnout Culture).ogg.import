@@ -12,4 +12,4 @@ dest_files=[ "res://.import/Fire Sword (Burnout Culture).ogg-0d2724cfdf7340d4974
 [params]
 
 loop=true
-loop_offset=0
+loop_offset=24.048

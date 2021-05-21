@@ -14,12 +14,12 @@
 [ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=12]
 [ext_resource path="res://scenes/enemyStatsV2.gd" type="Script" id=13]
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Label
 func _ready():self.text=global.enemy.name#.substr(0,20)
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureProgress
 
 func _ready():
@@ -28,8 +28,6 @@ func _ready():
 func _process(_delta):
 	self.max_value=global.enemy.maxHp
 	self.value=lerp(self.value,global.enemy.hp,0.25)
-#	self.hint_tooltip=String(self.value)+\"/\"+String(self.max_value)
-#	self.hint_tooltip=String(ceil(self.value))+\"/\"+String(ceil(self.max_value))
 	$cPUParticles2D.position.x=self.value*self.rect_size.x/self.max_value
 	if abs(self.value-global.enemy.hp)>0.5 and self.value>0:
 		$cPUParticles2D.emitting=true
@@ -37,21 +35,21 @@ func _process(_delta):
 		$cPUParticles2D.emitting=false
 "
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.227451, 0.772549, 1 )
 colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.364706, 1, 0.811765, 1, 0.439216, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(_delta):self.text=String(global.enemy.hp)+\"/\"+String(global.enemy.maxHp)
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=6]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
@@ -61,14 +59,14 @@ func _process(_delta):
 #	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 
 func _ready():set_process(true)
 func _process(_delta):self.text=String(global.enemy.energy)+\"/\"+String(global.enemy.maxEnergy)
 "
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxEmpty" id=8]
 
 [node name="enemyStats" type="PanelContainer"]
 margin_right = 175.0
@@ -85,19 +83,19 @@ __meta__ = {
 
 [node name="textureRect" type="TextureRect" parent="."]
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 165.0
-margin_bottom = 157.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 171.0
+margin_bottom = 163.0
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 2
 
 [node name="marginContainer" type="MarginContainer" parent="."]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 165.0
-margin_bottom = 157.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 171.0
+margin_bottom = 163.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -106,13 +104,14 @@ custom_constants/margin_bottom = 5
 [node name="vbox" type="VBoxContainer" parent="marginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 150.0
-margin_bottom = 142.0
+margin_right = 162.0
+margin_bottom = 154.0
 alignment = 1
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
-margin_right = 145.0
-margin_bottom = 28.0
+margin_top = 6.0
+margin_right = 157.0
+margin_bottom = 34.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -123,22 +122,22 @@ text = "NOME"
 align = 1
 valign = 1
 autowrap = true
-script = SubResource( 12 )
+script = SubResource( 1 )
 
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 32.0
-margin_right = 145.0
-margin_bottom = 37.0
+margin_top = 38.0
+margin_right = 157.0
+margin_bottom = 43.0
 custom_constants/separation = 5
 
 [node name="vboxBars" type="VBoxContainer" parent="marginContainer/vbox"]
-margin_top = 41.0
-margin_right = 145.0
-margin_bottom = 137.0
+margin_top = 47.0
+margin_right = 157.0
+margin_bottom = 143.0
 
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 46.0
 hint_tooltip = "Every attack you take lowers your HP. At zero, you lose your pigeon!"
 mouse_default_cursor_shape = 16
@@ -162,13 +161,13 @@ valign = 1
 
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/vboxBars/hpBox"]
 margin_left = 65.0
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer"]
-margin_right = 80.0
+margin_right = 92.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -183,7 +182,7 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 7 )
+script = SubResource( 2 )
 
 [node name="cPUParticles2D" type="CPUParticles2D" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
 position = Vector2( 80, 14 )
@@ -202,15 +201,15 @@ initial_velocity = 10.0
 initial_velocity_random = 1.0
 scale_amount = 8.0
 scale_amount_random = 1.0
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer"]
 margin_top = 29.0
-margin_right = 80.0
+margin_right = 92.0
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -220,11 +219,11 @@ custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 5 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
 margin_top = 50.0
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 96.0
 hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, all attacks you take are critical hits (deal double damage)."
 mouse_default_cursor_shape = 16
@@ -251,13 +250,13 @@ __meta__ = {
 
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/vboxBars/foodBox"]
 margin_left = 65.0
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
-margin_right = 80.0
+margin_right = 92.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -270,11 +269,11 @@ stretch_margin_left = 5
 stretch_margin_top = 1
 stretch_margin_right = 5
 stretch_margin_bottom = 1
-script = SubResource( 9 )
+script = SubResource( 6 )
 
 [node name="label" type="Label" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
 margin_top = 29.0
-margin_right = 80.0
+margin_right = 92.0
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -284,7 +283,7 @@ custom_constants/shadow_as_outline = 1
 text = "10/10"
 align = 1
 valign = 1
-script = SubResource( 10 )
+script = SubResource( 7 )
 
 [node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
 visible = false
@@ -302,7 +301,7 @@ margin_bottom = 155.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 50.0
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
 margin_right = 145.0

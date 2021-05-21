@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/fireSwordBurnoutCulture.ogg-587ecefaf5f664b81c53ba392120f9a6.oggstr"
+
+[deps]
+
+source_file="res://resource/music/fireSwordBurnoutCulture.ogg"
+dest_files=[ "res://.import/fireSwordBurnoutCulture.ogg-587ecefaf5f664b81c53ba392120f9a6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=24.048

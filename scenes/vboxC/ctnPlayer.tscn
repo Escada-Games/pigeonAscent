@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://resource/Tunnel.png" type="Texture" id=1]
+[ext_resource path="res://scenes/vboxC/texPlayerPigeon.gd" type="Script" id=2]
+[ext_resource path="res://scenes/vboxC/texLevelBg.gd" type="Script" id=3]
+[ext_resource path="res://resource/Pigeon_Basic.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.152941, 0.152941, 0.211765, 1 )
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color( 0.156863, 0.156863, 0.184314, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="ctnPlayer" type="PanelContainer"]
+margin_right = 316.0
+margin_bottom = 374.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ctnLevelBg" type="MarginContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 306.0
+margin_bottom = 364.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="texLevelBg" type="TextureRect" parent="ctnLevelBg"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 288.0
+margin_bottom = 346.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 3 )
+
+[node name="ctnTexPlayerPigeon" type="MarginContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 306.0
+margin_bottom = 364.0
+custom_constants/margin_top = 150
+custom_constants/margin_bottom = 20
+
+[node name="texPlayerPigeon" type="TextureRect" parent="ctnTexPlayerPigeon"]
+margin_top = 150.0
+margin_right = 296.0
+margin_bottom = 334.0
+size_flags_stretch_ratio = 2.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 2 )

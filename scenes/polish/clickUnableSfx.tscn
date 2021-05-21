@@ -15,5 +15,6 @@ func killMe():
 
 [node name="clickUnableSfx" type="AudioStreamPlayer"]
 stream = ExtResource( 1 )
+volume_db = -5.0
 bus = "SFX"
 script = SubResource( 1 )

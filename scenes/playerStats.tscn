@@ -1,11 +1,10 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://resource/fonts/look32Shadow.tres" type="DynamicFont" id=1]
-[ext_resource path="res://resource/fonts/look16Shadow.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resource/fonts/fntSkill.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/stats/strSkill.gd" type="Script" id=2]
 [ext_resource path="res://resource/Bar_Life.png" type="Texture" id=3]
 [ext_resource path="res://resource/Barra_Base.png" type="Texture" id=4]
 [ext_resource path="res://resource/Bar_Food.png" type="Texture" id=5]
-[ext_resource path="res://resource/Stats_Panel_Battle.png" type="Texture" id=6]
 [ext_resource path="res://resource/BG_Stats_N1.png" type="Texture" id=7]
 [ext_resource path="res://resource/fonts/m6x11-32.tres" type="DynamicFont" id=8]
 [ext_resource path="res://resource/fonts/m6x11-32Spaced.tres" type="DynamicFont" id=9]
@@ -33,14 +32,14 @@ func _ready():
 	var _s2=$twnOffset.connect(\"tween_completed\",self,\"resetProcess\")
 	defaultPos=$marginContainer/vbox/vboxBars/hpBox.rect_position
 	set_process(false)
-	if compact:
-		$marginContainer/vbox/invSep2.visible=false
-		$marginContainer/vbox/abilities.visible=false
-		$marginContainer/vbox/abilitiesText.visible=false
-	else:
-		$marginContainer/vbox/invSep2.visible=true
-		$marginContainer/vbox/abilities.visible=true
-		$marginContainer/vbox/abilitiesText.visible=true
+#	if compact:
+#		$marginContainer/vbox/invSep2.visible=false
+#		$marginContainer/vbox/abilities.visible=false
+#		$marginContainer/vbox/abilitiesText.visible=false
+#	else:
+#		$marginContainer/vbox/invSep2.visible=true
+#		$marginContainer/vbox/abilities.visible=true
+#		$marginContainer/vbox/abilitiesText.visible=true
 	if entering:
 		randomize()
 		duration*=rand_range(0.5,1.5)
@@ -121,37 +120,36 @@ func _ready():set_process(true)
 func _process(_delta):self.text=String(global.player.energy)+\"/\"+String(global.player.maxEnergy)
 "
 
-[sub_resource type="StyleBoxEmpty" id=10]
-
 [node name="playerStats" type="PanelContainer"]
 margin_right = 175.0
-margin_bottom = 167.0
+margin_bottom = 155.0
 rect_min_size = Vector2( 175, 0 )
 size_flags_stretch_ratio = 4.0
 custom_styles/panel = ExtResource( 11 )
 script = SubResource( 1 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 73.0 ]
 }
 
 [node name="twnOffset" type="Tween" parent="."]
 
 [node name="textureRect" type="TextureRect" parent="."]
 modulate = Color( 0.4, 0.4, 0.4, 1 )
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 165.0
-margin_bottom = 157.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 171.0
+margin_bottom = 168.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 2
 script = SubResource( 2 )
 
 [node name="marginContainer" type="MarginContainer" parent="."]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 165.0
-margin_bottom = 157.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 171.0
+margin_bottom = 168.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -160,12 +158,12 @@ custom_constants/margin_bottom = 5
 [node name="vbox" type="VBoxContainer" parent="marginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 150.0
-margin_bottom = 142.0
+margin_right = 162.0
+margin_bottom = 159.0
 alignment = 1
 
 [node name="name" type="Label" parent="marginContainer/vbox"]
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 28.0
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 9 )
@@ -182,28 +180,28 @@ script = SubResource( 3 )
 [node name="invSep" type="HSeparator" parent="marginContainer/vbox"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 32.0
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 37.0
 custom_constants/separation = 5
 
 [node name="vboxBars" type="VBoxContainer" parent="marginContainer/vbox"]
 margin_top = 41.0
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 137.0
 
 [node name="hpBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 46.0
 hint_tooltip = "Every attack your pigeon takes lowers their HP. At zero, you lose your pigeon!"
 mouse_default_cursor_shape = 16
 alignment = 1
 
-[node name="hp" type="Label" parent="marginContainer/vbox/vboxBars/hpBox"]
-margin_right = 61.0
-margin_bottom = 46.0
-rect_min_size = Vector2( 61, 0 )
+[node name="strHp" type="Label" parent="marginContainer/vbox/vboxBars/hpBox"]
+margin_right = 60.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 60, 0 )
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 0
 size_flags_stretch_ratio = 0.3
 custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -214,15 +212,15 @@ text = "HP"
 align = 1
 valign = 1
 
-[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/vboxBars/hpBox"]
-margin_left = 65.0
-margin_right = 145.0
+[node name="vbox" type="VBoxContainer" parent="marginContainer/vbox/vboxBars/hpBox"]
+margin_left = 64.0
+margin_right = 157.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer"]
-margin_right = 80.0
+[node name="lifebar" type="TextureProgress" parent="marginContainer/vbox/vboxBars/hpBox/vbox"]
+margin_right = 93.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -233,15 +231,15 @@ texture_under = ExtResource( 12 )
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 3 )
 nine_patch_stretch = true
-stretch_margin_left = 5
-stretch_margin_top = 1
-stretch_margin_right = 5
-stretch_margin_bottom = 1
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
 script = SubResource( 4 )
 
-[node name="twn" type="Tween" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
+[node name="twn" type="Tween" parent="marginContainer/vbox/vboxBars/hpBox/vbox/lifebar"]
 
-[node name="cPUParticles2D" type="CPUParticles2D" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer/progressBar"]
+[node name="cPUParticles2D" type="CPUParticles2D" parent="marginContainer/vbox/vboxBars/hpBox/vbox/lifebar"]
 position = Vector2( 80.5243, 12 )
 amount = 50
 lifetime = 5.0
@@ -264,9 +262,9 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="label" type="Label" parent="marginContainer/vbox/vboxBars/hpBox/vBoxContainer"]
+[node name="strLife" type="Label" parent="marginContainer/vbox/vboxBars/hpBox/vbox"]
 margin_top = 29.0
-margin_right = 80.0
+margin_right = 93.0
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -280,7 +278,7 @@ script = SubResource( 7 )
 
 [node name="foodBox" type="HBoxContainer" parent="marginContainer/vbox/vboxBars"]
 margin_top = 50.0
-margin_right = 145.0
+margin_right = 157.0
 margin_bottom = 96.0
 hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, the pigeon:
 -Takes only critical hits (deal double damage);
@@ -289,12 +287,12 @@ hint_tooltip = "Each attack your pigeon makes uses a bit of food. At zero food, 
 mouse_default_cursor_shape = 16
 alignment = 1
 
-[node name="food" type="Label" parent="marginContainer/vbox/vboxBars/foodBox"]
-margin_right = 61.0
-margin_bottom = 46.0
-rect_min_size = Vector2( 61, 0 )
+[node name="strFood" type="Label" parent="marginContainer/vbox/vboxBars/foodBox"]
+margin_right = 60.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 60, 0 )
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 0
 size_flags_stretch_ratio = 0.3
 custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -308,15 +306,15 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="vBoxContainer" type="VBoxContainer" parent="marginContainer/vbox/vboxBars/foodBox"]
-margin_left = 65.0
-margin_right = 145.0
+[node name="vbox" type="VBoxContainer" parent="marginContainer/vbox/vboxBars/foodBox"]
+margin_left = 64.0
+margin_right = 157.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="progressBar" type="TextureProgress" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
-margin_right = 80.0
+[node name="foodBar" type="TextureProgress" parent="marginContainer/vbox/vboxBars/foodBox/vbox"]
+margin_right = 93.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
@@ -326,15 +324,15 @@ texture_under = ExtResource( 12 )
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 nine_patch_stretch = true
-stretch_margin_left = 5
-stretch_margin_top = 1
-stretch_margin_right = 5
-stretch_margin_bottom = 1
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
 script = SubResource( 8 )
 
-[node name="label" type="Label" parent="marginContainer/vbox/vboxBars/foodBox/vBoxContainer"]
+[node name="strFood" type="Label" parent="marginContainer/vbox/vboxBars/foodBox/vbox"]
 margin_top = 29.0
-margin_right = 80.0
+margin_right = 93.0
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -346,49 +344,18 @@ align = 1
 valign = 1
 script = SubResource( 9 )
 
-[node name="invSep2" type="HSeparator" parent="marginContainer/vbox"]
-visible = false
-self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 143.0
-margin_right = 145.0
-margin_bottom = 153.0
-custom_constants/separation = 10
-
-[node name="centerContainer" type="PanelContainer" parent="marginContainer/vbox"]
-visible = false
-margin_top = 155.0
-margin_right = 145.0
-margin_bottom = 155.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 50.0
-custom_styles/panel = SubResource( 10 )
-
-[node name="textureRect" type="TextureRect" parent="marginContainer/vbox/centerContainer"]
-margin_right = 145.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 6 )
-expand = true
-stretch_mode = 6
-
-[node name="abilities" type="Label" parent="marginContainer/vbox"]
-visible = false
-margin_top = 175.0
-margin_right = 230.0
-margin_bottom = 200.0
+[node name="strSkill" type="Label" parent="marginContainer/vbox"]
+margin_top = 141.0
+margin_right = 157.0
+margin_bottom = 154.0
+mouse_filter = 1
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 1 )
-text = "ABILITIES"
-align = 1
-
-[node name="abilitiesText" type="Label" parent="marginContainer/vbox"]
-visible = false
-margin_top = 175.0
-margin_right = 230.0
-margin_bottom = 217.0
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "LOREM IPSUM"
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 2
+text = "Skill name"
 align = 1
 valign = 1
+clip_text = true
+script = ExtResource( 2 )

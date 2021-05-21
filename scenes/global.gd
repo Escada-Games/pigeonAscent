@@ -50,282 +50,191 @@ enum Classes{
 	Wyrm,
 	Platy,
 }
-
-const pigeonClassesAndSprites={
+var nCurrentMusic:AudioStreamPlayer
+#const pigeonClassesAndSprites={
+const pigeonDict={
 	Classes.Baker:
 		{"sprite":"res://resource/sprites/Baker_Pigeon.png",
-		"portrait":"res://resource/portraits/Baker_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Baker_Pigeon_Port.png",
+		'skill':'Bread baking',
+		'skillDescription':'Loved both by pigeons and ducks'
 	},
 	Classes.Bat:
 		{"sprite":"res://resource/sprites/BatPigeon.png",
-		"portrait":"res://resource/portraits/BatPigeon_Port.png"
+		"portrait":"res://resource/portraits/BatPigeon_Port.png",
+		'skill':'Blood sucker',
+		'skillDescription':'Not a sucker, but sucks blood'
 	},
 	Classes.Charlie:
 		{"sprite":"res://resource/sprites/Charlie_Pigeon.png",
-		"portrait":"res://resource/portraits/Charlie_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Charlie_Pigeon_Port.png",
+		'skill':'Sk8 4 l1fe',
+		'skillDescription':'High speed rolling'
 	},
 	Classes.Crusader:
 		{"sprite":"res://resource/sprites/Crusader_Pigeon.png",
-		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png",
+		'skill':'Pigod VULT',
+		'skillDescription':'Nothing can stop it\'s quest for Pigeoralem'
 	},
 	Classes.Egirl:
 		{"sprite":"res://resource/sprites/E-girl_Pigeon.png",
-		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png",
+		'skill':'Support from the fans',
+		'skillDescription':'"Hey, thanks for the superchat, anonymous!"'
 	},
 	Classes.Fridgeon:
 		{"sprite":"res://resource/sprites/Fridgeon.png",
-		"portrait":"res://resource/portraits/Fridgeon_Port.png"
+		"portrait":"res://resource/portraits/Fridgeon_Port.png",
+		'skill':'The cold shoulder',
+		'skillDescription':'Its insides are also cold as ice'
+	},
+	Classes.GodPigeon:
+		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
+		"portrait":"res://resource/portraits/God_Pigeon_Port.png",
+		'skill':'Ascended',
+		'skillDescription':'Can you reject another pigeon?'
 	},
 	Classes.Mimic:
 		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
-		"portrait":"res://resource/portraits/God_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/God_Pigeon_Port.png",
+		'skill':'Ditto you',
+		'skillDescription':'Could it be you were the reflection all along?'
 	},
 	Classes.Hatoshi:
 		{"sprite":"res://resource/sprites/Hatoshi.png",
-		"portrait":"res://resource/portraits/Hatoshi_Port.png"
+		"portrait":"res://resource/portraits/Hatoshi_Port.png",
+		'skill':'Ancient arts',
+		'skillDescription':'Better not be in the path of its blade'
 	},
 	Classes.Infiltrator:
 		{"sprite":"res://resource/sprites/Infiltrator.png",
-		"portrait":"res://resource/portraits/Infiltrator_Port.png"
+		"portrait":"res://resource/portraits/Infiltrator_Port.png",
+		'skill':'Honk for Chen',
+		'skillDescription':'Go for the rake in the lake'
 	},
 	Classes.Kawaii:
 		{"sprite":"res://resource/sprites/Kawaii_Pigeon.png",
-		"portrait":"res://resource/portraits/Kawaii_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Kawaii_Pigeon_Port.png",
+		'skill':'Anime eyes',
+		'skillDescription':'With those big eyes, seeing attacks is easier'
 	},
 	Classes.Knight:
 		{"sprite":"res://resource/sprites/Knight_Pigeon.png",
-		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png",
+		'skill':'Magic wall',
+		'skillDescription':'Adevo grav tera'
 	},
-	Classes.Mimic:
-		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
-		"portrait":"res://resource/portraits/Mimic_Pigeon_Port.png"
-	},
+#	Classes.Mimic:
+#		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
+#		"portrait":"res://resource/portraits/Mimic_Pigeon_Port.png",
+#
+#	},
 	Classes.Normal:
 		{"sprite":"res://resource/sprites/Normal_Pigeon.png",
-		"portrait":"res://resource/portraits/Normal_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Normal_Pigeon_Port.png",
+		'skill':'City survivor',
+		'skillDescription':'This skill protects the pigeon from critical hits.'
 	},
 	Classes.PIgeon:
 		{"sprite":"res://resource/sprites/PIgeon.png",
-		"portrait":"res://resource/portraits/PIgeon_Port.png"
+		"portrait":"res://resource/portraits/PIgeon_Port.png",
+		'skill':'Irrational till the end',
+		'skillDescription':'About 22/7 with great precision'
 	},
 	Classes.Selfie:
 		{"sprite":"res://resource/sprites/Selfie_Pigeon.png",
-		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png",
+		'skill':'Memory creator',
+		'skillDescription':'Be sure to not run out on space on your device'
 	},
 	Classes.Sink:
 		{"sprite":"res://resource/sprites/Sink_Pigeon.png",
-		"portrait":"res://resource/portraits/Sink_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Sink_Pigeon_Port.png",
+		'skill':'This is draining me',
+		'skillDescription':'Some losses are inevitable'
 	},
 	Classes.Stronga:
 		{"sprite":"res://resource/sprites/Stronga_Pigeon.png",
-		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png",
+		'skill':'The strongest survives',
+		'skillDescription':'Well, actually the most adaptable survives...'
 	},
 	Classes.Whey:
 		{"sprite":"res://resource/sprites/Whey_Pigeon.png",
-		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png",
+		'skill':'BIRL',
+		'skillDescription':'Be strong IRL too'
 	},
 	Classes.Winged:
 		{"sprite":"res://resource/sprites/Winged_Pigeon.png",
-		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png",
+		'skill':'Winged creature',
+		'skillDescription':'More wings = better flight'
 	},
 	Classes.Winged2:
 		{"sprite":"res://resource/sprites/Winged_Pigeon_With_Wings.png",
-		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png"
+		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png",
+		'skill':'Winged wings',
+		'skillDescription':'Wings with wings = even better flight somehow'
 	},
 	Classes.Wizard:
 		{"sprite":"res://resource/sprites/Wizard_Pigeon.png",
-		"portrait":"res://resource/portraits/Wizard_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Wizard_Pigeon_Port.png",
+		'skill':'"You are a wizard"',
+		'skillDescription':'This pigeon\'s dream was to be named Tim'
 	},
 	Classes.Wyrm:
 		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
-		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png",
+		'skill':'Mythical dragon creature',
+		'skillDescription':'Dragons are actually quite small'
 	},
 	Classes.Platy:
 		{"sprite":"res://resource/sprites/Platypigeon.png",
-		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
+		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png",
+		'skill':'Trade of all jacks',
+		'skillDescription':'Master of all jacks too, idk'
 	},
 }
 
-#const pigeonClassesAndSprites={
-#	"baker":
-#		{"sprite":"res://resource/sprites/Baker_Pigeon.png",
-#		"portrait":"res://resource/portraits/Baker_Pigeon_Port.png"
-#	},
-#	"batPigeon":
-#		{"sprite":"res://resource/sprites/BatPigeon.png",
-#		"portrait":"res://resource/portraits/BatPigeon_Port.png"
-#	},
-#	"charlie":
-#		{"sprite":"res://resource/sprites/Charlie_Pigeon.png",
-#		"portrait":"res://resource/portraits/Charlie_Pigeon_Port.png"
-#	},
-#	"crusader":
-#		{"sprite":"res://resource/sprites/Crusader_Pigeon.png",
-#		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png"
-#	},
-#	"e-girl":
-#		{"sprite":"res://resource/sprites/E-girl_Pigeon.png",
-#		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png"
-#	},
-#	"fridgeon":
-#		{"sprite":"res://resource/sprites/Fridgeon.png",
-#		"portrait":"res://resource/portraits/Fridgeon_Port.png"
-#	},
-#	"godPigeon":
-#		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
-#		"portrait":"res://resource/portraits/God_Pigeon_Port.png"
-#	},
-#	"hatoshi":
-#		{"sprite":"res://resource/sprites/Hatoshi.png",
-#		"portrait":"res://resource/portraits/Hatoshi_Port.png"
-#	},
-#	"infiltrator":
-#		{"sprite":"res://resource/sprites/Infiltrator.png",
-#		"portrait":"res://resource/portraits/Infiltrator_Port.png"
-#	},
-#	"kawaii":
-#		{"sprite":"res://resource/sprites/Kawaii_Pigeon.png",
-#		"portrait":"res://resource/portraits/Kawaii_Pigeon_Port.png"
-#	},
-#	"knight":
-#		{"sprite":"res://resource/sprites/Knight_Pigeon.png",
-#		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png"
-#	},
-#	"mimic":
-#		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
-#		"portrait":"res://resource/portraits/Mimic_Pigeon_Port.png"
-#	},
-#	"normal":
-#		{"sprite":"res://resource/sprites/Normal_Pigeon.png",
-#		"portrait":"res://resource/portraits/Normal_Pigeon_Port.png"
-#	},
-#	"PIgeon":
-#		{"sprite":"res://resource/sprites/PIgeon.png",
-#		"portrait":"res://resource/portraits/PIgeon_Port.png"
-#	},
-#	"selfie":
-#		{"sprite":"res://resource/sprites/Selfie_Pigeon.png",
-#		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
-#	},
-#	"sink":
-#		{"sprite":"res://resource/sprites/Sink_Pigeon.png",
-#		"portrait":"res://resource/portraits/Sink_Pigeon_Port.png"
-#	},
-#	"stronga":
-#		{"sprite":"res://resource/sprites/Stronga_Pigeon.png",
-#		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png"
-#	},
-#	"whey":
-#		{"sprite":"res://resource/sprites/Whey_Pigeon.png",
-#		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png"
-#	},
-#	"winged":
-#		{"sprite":"res://resource/sprites/Winged_Pigeon.png",
-#		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png"
-#	},
-#	"winged2":
-#		{"sprite":"res://resource/sprites/Winged_Pigeon_With_Wings.png",
-#		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png"
-#	},
-#	"wizard":
-#		{"sprite":"res://resource/sprites/Wizard_Pigeon.png",
-#		"portrait":"res://resource/portraits/Wizard_Pigeon_Port.png"
-#	},
-#	"wyrm":
-#		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
-#		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png"
-#	},
-#	"platy":
-#		{"sprite":"res://resource/sprites/Platypigeon.png",
-#		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png"
-#	},
-#}
-# Classes
-var c_baker=Classes.Baker
-var c_batPigeon=Classes.Bat
-var c_charlie=Classes.Charlie
-var c_crusader=Classes.Crusader
-var c_egirl=Classes.Egirl
-var c_fridgeon=Classes.Fridgeon
-var c_godPigeon=Classes.GodPigeon
-var c_hatoshi=Classes.Hatoshi
-var c_infiltrator=Classes.Infiltrator
-var c_kawaii=Classes.Kawaii
-var c_knight=Classes.Knight
-var c_mimic=Classes.Mimic
-var c_normal=Classes.Normal
-var c_PIgeon=Classes.PIgeon
-var c_selfie=Classes.Selfie
-var c_sink=Classes.Sink
-var c_stronga=Classes.Stronga
-var c_whey=Classes.Whey
-var c_winged=Classes.Winged
-var c_winged2=Classes.Winged2
-var c_wizard=Classes.Wizard
-var c_wyrm=Classes.Wyrm
-var c_platy=Classes.Platy
-
-# Classes
-#var c_baker="baker"
-#var c_batPigeon="batPigeon"
-#var c_charlie="charlie"
-#var c_crusader="crusader"
-#var c_egirl="e-girl"
-#var c_fridgeon="fridgeon"
-#var c_godPigeon="godPigeon"
-#var c_hatoshi="hatoshi"
-#var c_infiltrator="infiltrator"
-#var c_kawaii="kawaii"
-#var c_knight="knight"
-#var c_mimic="mimic"
-#var c_normal="normal"
-#var c_PIgeon="PIgeon"
-#var c_selfie="selfie"
-#var c_sink="sink"
-#var c_stronga="stronga"
-#var c_whey="whey"
-#var c_winged="winged"
-#var c_winged2="winged2"
-#var c_wizard="wizard"
-#var c_wyrm="wyrm"
-#var c_platy="platy"
-#var c_bat="bat"
-
 var commonEnemyPigeons=[
-	self.c_baker,
-	self.c_charlie,
-	self.c_egirl,
-	self.c_wizard,
-	self.c_kawaii,
-	self.c_selfie,
-	self.c_sink,
-	self.c_wizard,
-	self.c_normal
+	self.Classes.Baker,
+	self.Classes.Charlie,
+	self.Classes.Egirl,
+	self.Classes.Wizard,
+	self.Classes.Kawaii,
+	self.Classes.Selfie,
+	self.Classes.Sink,
+	self.Classes.Wizard,
+	self.Classes.Normal,
+	self.Classes.Infiltrator,
+	self.Classes.PIgeon
 ]
 
 var firstEvoPigeons=[
-	self.c_winged,
-	self.c_PIgeon,
-	self.c_stronga,
-	self.c_knight,
-	self.c_platy
+	self.Classes.Winged,
+	self.Classes.PIgeon,
+	self.Classes.Stronga,
+	self.Classes.Knight,
+	self.Classes.Platy
 ]
 
 var secondEvoPigeons=[
-	self.c_winged2,
-	self.c_hatoshi,
-	self.c_whey,
-	self.c_wyrm,
-	self.c_crusader,
-	self.c_fridgeon,
-	self.c_batPigeon
+	self.Classes.Winged2,
+	self.Classes.Hatoshi,
+	self.Classes.Whey,
+	self.Classes.Wyrm,
+	self.Classes.Crusader,
+	self.Classes.Fridgeon,
+	self.Classes.Bat
 ]
 
 var uncommonEvoPigeons=[
-	self.c_hatoshi,
-	self.c_wyrm,
-	self.c_fridgeon,
-	self.c_batPigeon
+	self.Classes.Hatoshi,
+	self.Classes.Wyrm,
+	self.Classes.Fridgeon,
+	self.Classes.Bat
 ]
 
 # Player pigeon object
@@ -338,7 +247,7 @@ var player={
 	"strength":1,"extraStrength":0,
 	"defense":1,"extraDefense":0,
 	"speed":1,"extraSpeed":0,
-	"class":self.c_normal
+	"class":self.Classes.Normal
 }
 # Current enemy object
 var enemy={
@@ -347,10 +256,10 @@ var enemy={
 	"hp":5,"maxHp":5,
 	"energy":10,"maxEnergy":10,
 	"pointsLeft":3,
-	"strength":1,
-	"defense":0,
-	"speed":1.0,
-	"class":"normal"
+	"strength":1,"extraStrength":0,
+	"defense":0,"extraDefense":0,
+	"speed":1.0,"extraSpeed":0,
+	"class":self.Classes.Normal
 }
 
 var level=1
@@ -368,27 +277,31 @@ var limits={
 	"defense":30
 }
 var currentItem
-var evolvePanel=preload("res://scenes/evolvePannel.tscn")
+const evolvePanel:=preload("res://scenes/evolvePannel.tscn")
+const musicEvolution:=preload("res://scenes/musics/musicEvolution.tscn")
 signal PlayerEvolved
 func createEvolvePanel():
 	get_tree().root.get_node("/root/root").add_child(evolvePanel.instance())
+func addEvolutionMusic():
+	pass
 func firstEvolution():
 	if self.player.strength>self.player.defense and self.player.strength>self.player.speed:
-		self.player["class"]=self.c_stronga
+		self.player["class"]=self.Classes.Stronga
 	elif self.player.defense>self.player.strength and self.player.defense>self.player.speed:
-		self.player["class"]=self.c_knight
+		self.player["class"]=self.Classes.Knight
 	elif self.player.speed>self.player.strength and self.player.speed>self.player.defense:
-		self.player["class"]=self.c_winged
+		self.player["class"]=self.Classes.Winged
 	else:
-		self.player["class"]=self.c_platy
+		self.player["class"]=self.Classes.Platy
 	emit_signal("PlayerEvolved")
+	add_child(musicEvolution.instance())
 func secondEvolution():
-	if self.player["class"]==self.c_stronga:
-		self.player["class"]=self.c_wyrm if self.hasWings else self.c_whey
-	elif self.player["class"]==self.c_knight:
-		self.player["class"]=self.c_fridgeon if self.hasIce else self.c_crusader
-	elif self.player["class"]==self.c_winged:
-		self.player["class"]=self.c_hatoshi if self.hasSword else self.c_winged2
+	if self.player["class"]==self.Classes.Stronga:
+		self.player["class"]=self.Classes.Wyrm if self.hasWings else self.Classes.Whey
+	elif self.player["class"]==self.Classes.Knight:
+		self.player["class"]=self.Classes.Fridgeon if self.hasIce else self.Classes.Crusader
+	elif self.player["class"]==self.Classes.Winged:
+		self.player["class"]=self.Classes.Hatoshi if self.hasSword else self.Classes.Winged2
 	emit_signal("PlayerEvolved")
 var hoverSfx=preload("res://scenes/polish/hoverSfx.tscn")
 var selectSfx=preload("res://scenes/polish/selectSfx.tscn")
@@ -430,43 +343,38 @@ func shouldIBeInvisible(node):node.visible=node.get_viewport_rect().size.x<OS.mi
 const resolution=Vector2(16,9)
 var currentUpgrade
 var shopDescription
-var opponents=preload("res://scenes/opponentPanel.tscn")
-var battleScene=preload("res://scenes/battleScene.tscn")
-var battleSceneNew=preload("res://scenes/battleSceneNew.tscn")
-var music=preload("res://scenes/music.tscn")
+const opponents=preload("res://scenes/opponentPanel.tscn")
+const battleScene=preload("res://scenes/battleScene.tscn")
+const battleSceneNew=preload("res://scenes/battleSceneNew.tscn")
+const music:=preload("res://scenes/music.tscn")
+const musicFireSword:=preload("res://scenes/musics/musicFireSword.tscn")
+const musicPartyCrasher:=preload("res://scenes/musics/musicPartyCrasher.tscn")
+const musicFinalBoss:=preload("res://scenes/musics/musicLastOpponent.tscn")
 var enemiesForBattle=[]
 
-var GAs=load("res://GameAnalytics.gd")
-var GA = GAs.new()
-
 func _ready():
-	print_debug(Classes.keys()[0])
-#	if OS.get_name()!="HTML5":
-#		GA.game_key="d3b54946a2375107f995a646cb21bcf0"
-#		GA.secret_key="6eb93d985446293c6af4642926bb8c87bbc22875"
-#		GA.base_url = "http://api.gameanalytics.com"
-#		var init_response = GA.request_init()
-	if not OS.is_debug_build():add_child(music.instance())
+#	if not OS.is_debug_build():
+#		add_child(music.instance())
 	set_process(true)
 var muted=false
-var t=Thread.new()
-func sendData(eventId="",value=0):
-	if OS.get_name()!="HTML5":
-		t.start(self,"_sendData",[eventId,value])
-func _sendData(array=["",0]):
-	print_debug("Global thread: Sending data")
-	GA.add_to_event_queue(GA.get_test_design_event(array[0],array[1]))
-	var returned = GA.submit_events()
-func _exit_tree():
-	t.wait_to_finish()
-	
+func addMusicPartyCrasher():
+	var i:=musicPartyCrasher.instance()
+	i.name='music'
+	self.nCurrentMusic=i
+	add_child(i)
+func addMusicFireSword():
+	var i:=musicFireSword.instance()
+	i.name='music'
+	self.nCurrentMusic=i
+	add_child(i)
+func addMusicLastOpponent():
+	var i:=musicFinalBoss.instance()
+	i.name='music'
+	self.nCurrentMusic=i
+	add_child(i)
 func _process(_delta):
-#	GA.add_to_event_queue(GA.get_test_design_event("TEST_TAG", 1233123123))
-#	var returned = GA.submit_events()
-#	print_debug(global.enemiesForBattle.size())
 	player.energy=max(player.energy,0)
-	if Input.is_action_just_pressed("ui_debug"):
-		debugInput()
+	if Input.is_action_just_pressed("ui_debug"):debugInput()
 	if Input.is_action_just_pressed("ui_mute"):
 		muted=!muted
 		AudioServer.set_bus_mute(0,muted)
@@ -483,23 +391,63 @@ func battle(nextEnemyDict):
 func debugInput():
 	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
 		global.player.pointsLeft+=10
-		global.level=int(clamp(global.level+1,0,10))
+		global.player.strength+=10
+		global.player.defense+=10
+		global.incrementLevel()
+		#global.level=int(clamp(global.level+1,0,10))
 		global.player.gold+=1000
-
+func fadeMusicAway():
+	var t:=Tween.new()
+	add_child(t)
+	t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+	t.start()
+	yield(t,"tween_all_completed")
+	self.nCurrentMusic.queue_free()
+	t.queue_free()
+func incrementLevel():
+	print_debug('Level: '+str(self.level))
+	self.level+=1
+	if self.level==5:
+		var t:=Tween.new()
+		add_child(t)
+		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		t.start()
+		yield(t,"tween_all_completed")
+		self.nCurrentMusic.queue_free()
+		t.queue_free()
+		addMusicFireSword()
+	elif self.level==10:
+		var t:=Tween.new()
+		add_child(t)
+		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		t.start()
+		yield(t,"tween_all_completed")
+		self.nCurrentMusic.queue_free()
+		t.queue_free()
+		addMusicLastOpponent()
+	elif self.level==11:
+		var t:=Tween.new()
+		add_child(t)
+		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		t.start()
+		yield(t,"tween_all_completed")
+		self.nCurrentMusic.queue_free()
+		t.queue_free()
+		
 func getBgTexture():
 	var playerClass=global.player["class"]
 	var newTexture
-	if playerClass==global.c_normal:newTexture=load("res://resource/BG_Stats_N1.png")
-	elif playerClass==global.c_platy:newTexture=load("res://resource/BG_Stats_N2.png")
-	elif playerClass==global.c_stronga:newTexture=load("res://resource/BG_Stats_R1.png")
-	elif playerClass==global.c_whey:newTexture=load("res://resource/BG_Stats_R2.png")
-	elif playerClass==global.c_wyrm:newTexture=load("res://resource/BG_Stats_R3.png")
-	elif playerClass==global.c_knight:newTexture=load("res://resource/BG_Stats_B1.png")
-	elif playerClass==global.c_crusader:newTexture=load("res://resource/BG_Stats_B2.png")
-	elif playerClass==global.c_fridgeon:newTexture=load("res://resource/BG_Stats_B3.png")
-	elif playerClass==global.c_winged:newTexture=load("res://resource/BG_Stats_G1.png")
-	elif playerClass==global.c_winged2:newTexture=load("res://resource/BG_Stats_G2.png")
-	elif playerClass==global.c_hatoshi:newTexture=load("res://resource/BG_Stats_G3.png")
+	if playerClass==global.Classes.Normal:newTexture=load("res://resource/BG_Stats_N1.png")
+	elif playerClass==global.Classes.Platy:newTexture=load("res://resource/BG_Stats_N2.png")
+	elif playerClass==global.Classes.Stronga:newTexture=load("res://resource/BG_Stats_R1.png")
+	elif playerClass==global.Classes.Whey:newTexture=load("res://resource/BG_Stats_R2.png")
+	elif playerClass==global.Classes.Wyrm:newTexture=load("res://resource/BG_Stats_R3.png")
+	elif playerClass==global.Classes.Knight:newTexture=load("res://resource/BG_Stats_B1.png")
+	elif playerClass==global.Classes.Crusader:newTexture=load("res://resource/BG_Stats_B2.png")
+	elif playerClass==global.Classes.Fridgeon:newTexture=load("res://resource/BG_Stats_B3.png")
+	elif playerClass==global.Classes.Winged:newTexture=load("res://resource/BG_Stats_G1.png")
+	elif playerClass==global.Classes.Winged2:newTexture=load("res://resource/BG_Stats_G2.png")
+	elif playerClass==global.Classes.Hatoshi:newTexture=load("res://resource/BG_Stats_G3.png")
 	return newTexture
 	
 var listOfNames=[

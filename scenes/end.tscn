@@ -40,12 +40,12 @@ func _ready():
 		\"strength\":1,\"extraStrength\":0,
 		\"defense\":1,\"extraDefense\":0,
 		\"speed\":1,\"extraSpeed\":0,
-		\"class\":global.c_normal
+		\"class\":global.Classes.Normal
 	}
 	global.level=1
 	connect(\"pressed\",self,\"startGame\")
 func startGame():
-	get_tree().change_scene(\"res://scenes/root.tscn\")
+	get_tree().change_scene(\"res://scenes/intro.tscn\")
 "
 
 [node name="intro" type="Control"]
@@ -75,9 +75,9 @@ __meta__ = {
 }
 
 [node name="label2" type="Label" parent="marginContainer2"]
-margin_top = 436.0
-margin_right = 896.0
-margin_bottom = 484.0
+margin_top = 532.0
+margin_right = 1024.0
+margin_bottom = 580.0
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 6 )
 text = "Thanks a whole bunch for finishing our game!
@@ -103,14 +103,14 @@ __meta__ = {
 [node name="vBoxContainer" type="VBoxContainer" parent="marginContainer"]
 margin_left = 100.0
 margin_top = 50.0
-margin_right = 796.0
-margin_bottom = 404.0
+margin_right = 924.0
+margin_bottom = 500.0
 alignment = 1
 
 [node name="label" type="Label" parent="marginContainer/vBoxContainer"]
-margin_top = 129.0
-margin_right = 696.0
-margin_bottom = 171.0
+margin_top = 177.0
+margin_right = 824.0
+margin_bottom = 219.0
 custom_fonts/font = ExtResource( 7 )
 align = 1
 autowrap = true
@@ -146,9 +146,9 @@ margin_bottom = 150.0
 
 [node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
 modulate = Color( 0.898039, 0.898039, 0.898039, 1 )
-margin_top = 175.0
-margin_right = 696.0
-margin_bottom = 225.0
+margin_top = 223.0
+margin_right = 824.0
+margin_bottom = 273.0
 rect_min_size = Vector2( 120, 50 )
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 3 )

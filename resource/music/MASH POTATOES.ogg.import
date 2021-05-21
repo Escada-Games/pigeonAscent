@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MASH POTATOES.ogg-f6241d8da0aedb1e2217d16ebaf3d29d.oggstr"
+
+[deps]
+
+source_file="res://resource/music/MASH POTATOES.ogg"
+dest_files=[ "res://.import/MASH POTATOES.ogg-f6241d8da0aedb1e2217d16ebaf3d29d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

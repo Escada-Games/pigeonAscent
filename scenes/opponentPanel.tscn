@@ -93,11 +93,11 @@ func createEnemy(level,handicap=0,boss=false):
 			points-=usedPoints
 			addedPoints[focus]=usedPoints
 			if focus==0:#Str
-				i.enemyClass=global.c_stronga
+				i.enemyClass=global.Classes.Stronga
 			elif focus==1:#Def
-				i.enemyClass=global.c_knight
+				i.enemyClass=global.Classes.Knight
 			elif focus==2:#Agi
-				i.enemyClass=global.c_winged
+				i.enemyClass=global.Classes.Winged
 		else:
 			i.enemyClass=global.commonEnemyPigeons[randi()%global.commonEnemyPigeons.size()]
 	elif level in [7,8,9,10,11,12] and not boss:
@@ -110,29 +110,29 @@ func createEnemy(level,handicap=0,boss=false):
 			points-=usedPoints
 			addedPoints[focus]=usedPoints
 			if focus==0:#Str
-				i.enemyClass=global.c_wyrm if(randomFactor) else global.c_whey
+				i.enemyClass=global.Classes.Wyrm if(randomFactor) else global.Classes.Whey
 			elif focus==1:#Def
-				i.enemyClass=global.c_fridgeon if(randomFactor) else global.c_crusader
+				i.enemyClass=global.Classes.Fridgeon if(randomFactor) else global.Classes.Crusader
 			elif focus==2:#Agi
-				i.enemyClass=global.c_hatoshi if(randomFactor) else global.c_winged2
+				i.enemyClass=global.Classes.Hatoshi if(randomFactor) else global.Classes.Winged2
 		else:
 			var focus=randi()%3
 			var usedPoints=ceil(points/2.0)
 			points-=usedPoints
 			addedPoints[focus]=usedPoints
 			if focus==0:#Str
-				i.enemyClass=global.c_stronga
+				i.enemyClass=global.Classes.Stronga
 			elif focus==1:#Def
-				i.enemyClass=global.c_knight
+				i.enemyClass=global.Classes.Knight
 			elif focus==2:#Agi
-				i.enemyClass=global.c_winged
+				i.enemyClass=global.Classes.Winged
 	elif level in [10] and boss:
 		points+=3
 		addedPoints+=[2,2,2]
 		i.enemyName=\"Pigod\"
 		i.enemyLevel=\"???\"
 		i.enemyGold=9999
-		i.enemyClass=global.c_godPigeon
+		i.enemyClass=global.Classes.GodPigeon
 	distributePoints(i,points,addedPoints)
 	i.enemyGold=100+120*(level-handicap)#100+200*(level-handicap)
 	return i
@@ -240,16 +240,20 @@ var thoughts=\"\"\"
 \"\"\"
 "
 
-[sub_resource type="StyleBoxLine" id=4]
+[sub_resource type="StyleBoxLine" id=2]
 color = Color( 1, 1, 1, 1 )
 grow_begin = 4.0
 grow_end = 4.0
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Button
 func _ready():
 	var _s1=connect(\"pressed\",self,\"reroll\")
-	self.text=\"REROLL: $\" + str(global.rerollPrice*global.rerolls)
+	if global.level==10:
+		self.text='Nope'
+		self.disabled=true
+	else:
+		self.text=\"REROLL: $\" + str(global.rerollPrice*global.rerolls)
 func reroll():
 	if global.player.gold>=global.rerollPrice:
 		global.rerolls+=1
@@ -260,7 +264,7 @@ func reroll():
 		global.createClickUnableSfx()
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Button
 const duration=0.3
 func _ready():
@@ -356,7 +360,7 @@ align = 1
 margin_top = 32.0
 margin_right = 628.0
 margin_bottom = 36.0
-custom_styles/separator = SubResource( 4 )
+custom_styles/separator = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -373,7 +377,7 @@ alignment = 1
 margin_top = 385.0
 margin_right = 628.0
 margin_bottom = 389.0
-custom_styles/separator = SubResource( 4 )
+custom_styles/separator = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -392,7 +396,7 @@ custom_styles/disabled = ExtResource( 5 )
 custom_styles/normal = ExtResource( 5 )
 custom_fonts/font = ExtResource( 4 )
 text = "     REROLL     "
-script = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="btnExit" type="Button" parent="marginContainer/opponentPanel"]
 margin_left = 626.0
@@ -405,7 +409,7 @@ size_flags_vertical = 0
 custom_fonts/font = ExtResource( 8 )
 text = "X"
 flat = true
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="twnPosition" type="Tween" parent="marginContainer/opponentPanel/btnExit"]
 

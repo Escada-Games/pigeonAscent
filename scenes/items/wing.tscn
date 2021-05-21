@@ -83,6 +83,7 @@ script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+itemDescription = "A wyvern wing. Only great STRENGTH might make it useful."
 
 [node name="twnScale" type="Tween" parent="."]
 

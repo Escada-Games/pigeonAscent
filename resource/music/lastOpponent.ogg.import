@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lastOpponent.ogg-35aaa5de09212a676df8a91ac18777a2.oggstr"
+
+[deps]
+
+source_file="res://resource/music/lastOpponent.ogg"
+dest_files=[ "res://.import/lastOpponent.ogg-35aaa5de09212a676df8a91ac18777a2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=10.674
