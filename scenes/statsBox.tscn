@@ -293,7 +293,8 @@ margin_bottom = 96.0
 hint_tooltip = "Each attack uses a bit of food. At zero food, the pigeon:
 -Takes only critical hits (except when prevented);
 -Their damage is halved;
--Their attack speed is slightly slower."
+-Their attack speed is slightly slower.
+If they get even hungrier, more bad things will happen!"
 mouse_default_cursor_shape = 16
 alignment = 1
 

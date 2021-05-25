@@ -13,7 +13,8 @@ var durationShake:=0.5
 var turn:=1
 var fighting:=true
 var ended:=false
-
+var iPlayerHpLoss:=-2
+var iEnemyHpLoss:=-2
 var goldToWin:=0
 var offset:=0
 var arenaFiles:=[
@@ -89,7 +90,7 @@ func _process(delta):
 				global.incrementLevel()
 				global.player.pointsLeft+=3
 				registerSameTurn("[center][wave amp=100 freq=5]\n"+global.player.name + " won! [/wave][/center]\n")
-				registerSameTurn("[center]You got [color=#ffe478]" + String(goldToWin) + "[/color] gold.[/center]")#
+				registerSameTurn("[center]You got [color=#ffe478][u]" + String(goldToWin) + "[/u][/color] gold.[/center]")#
 				ended=true
 				exitButton.modulate.a=0
 				exitButton.visible=true
@@ -133,13 +134,13 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 		damageModifier*=1.1
 	elif myself.class==global.Classes.GodPigeon:
 		doubleStrike=true
-		damageModifier*=1.2
+		damageModifier*=1.05
 		
 	# Defense bonuses
 	if target.class==global.Classes.Normal:canCritical=false
 	elif target.class==global.Classes.Fridgeon:myself['extraSpeed']=-myself['speed']*0.33
 	elif target.class==global.Classes.Crusader:
-		damageModifier*=0.5
+		damageModifier*=0.66
 		canCritical=false
 	elif target.class==global.Classes.Knight:damageModifier*=0.75
 	elif target.class==global.Classes.Winged:
@@ -149,29 +150,51 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 	elif target.class==global.Classes.Platy:
 		damageModifier*=0.9
 	elif target.class==global.Classes.GodPigeon:
-		damageModifier*=0.9
+		damageModifier*=0.85
 	damage=int(ceil(damage))
 	var bIsCritical=(randf()<criticalChance or target.energy<=0) and canCritical
+	
+	# Check for damage every turn
+	var iMyselfHpLoss:=0
+	if myself.energy<=0:
+		if strOrigin=="Player":
+			self.iPlayerHpLoss+=1
+			iMyselfHpLoss=self.iPlayerHpLoss
+		elif strOrigin=="Enemy":
+			self.iEnemyHpLoss+=1
+			iMyselfHpLoss=self.iEnemyHpLoss
+	if iMyselfHpLoss>=1:
+		registerSameTurn("\n\n" + bbName + " takes " + str(self.iPlayerHpLoss) + " damage from being hungry...", Color.yellow)
+		myself.hp-=int(iPlayerHpLoss)
+	
+	# Finally, attack stuff
 	if dodged:
 		createDamageNumbers(enemySpr.global_position,1,"Miss",false,strOrigin)
 		register(bbName + " misses an attack!")
 	else:
 		if bIsCritical:
-			damage*=2*(1.0 if global.player.energy>0 else 0.5)
+			#damage*=2*(1.0 if global.player.energy>0 else 0.5)
+			damage*=2*(1.0 if myself.energy>0 else 0.5)
 			damage*=damageModifier
+			damage = max(damage,1)
 			damage=int(damage)
-			registerFast("[shake rate=20 level=10]A CRITICAL HIT![/shake]")
+			registerFast("[shake rate=20 level=10]A CRITICAL HIT![/shake]", Color.green if strOrigin=="Player" else Color.red)
 			if foodDamage>0:
 				registerSameTurnNoLineBreak(bbName + " attacks for " +String(damage)+ " damage")
 				registerSameTurn("and " +String(foodDamage)+ " food damage")
+				turn+=1
 			else:
 				registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
+				turn+=1
 			shakeHpBar(strOrigin)
 		else:
-			damage*=1.0 if global.player.energy>0 else 0.5
+#			damage*=1.0 if global.player.energy>0 else 0.5
+			damage*=1.0 if myself.energy>0 else 0.5
 			damage*=damageModifier
+			damage = max(damage,1)
+			damage=int(damage)
 			register(bbName + " attacks for " +String(damage)+ " damage")
-			if foodDamage>0:registerSameTurnNoLineBreak(" and " +String(foodDamage)+ " food damage")
+			if foodDamage>0:registerSameTurnNoLineBreak("and " +String(foodDamage)+ " food damage")
 			shakeHpBar(strOrigin)
 			sprTarget.hit()
 			
@@ -179,7 +202,6 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 			target.hp-=int(damage*0.66)
 			createDamageNumbers(sprTarget.global_position+Vector2(16,-16),1,damage/2,isCritical,strOrigin)
 			registerSameTurn("and also attacks again for "+str(int(damage/2))+" damage!")
-
 		target.hp-=int(damage)
 		target.energy-=int(foodDamage)
 		createDamageNumbers(sprTarget.global_position,1 if strOrigin=='Player' else -1,damage,isCritical,strOrigin)
@@ -194,22 +216,43 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 			return
 
 # Messages
-func register(string):
-	var message="\n\n#"+String(turn)+"> "+string#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
-	battleLogText.bbcode_text+=message
-	turn+=1
-func registerFast(string):
-	var message="\n\n#"+String(turn)+"> "+string
-	battleLogText.bbcode_text+=message
-func registerWithoutLineEnd(string):
-	var message="\n\n#"+String(turn)+"> "+string
-	battleLogText.bbcode_text+=message
-func registerSameTurn(string):
-	var message= " "+string#+"\n"
-	battleLogText.bbcode_text+=message
-func registerSameTurnNoLineBreak(string):
-	var message= " "+string
-	battleLogText.bbcode_text+=message
+func register(string,color:=Color.white):
+	if color==Color.white:
+		var message="\n\n#"+String(turn)+"> "+string#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
+		battleLogText.bbcode_text+=message
+		turn+=1
+	else:
+		var message= "\n\n#"+String(turn)+"> " + "[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
+		battleLogText.bbcode_text+=message
+		turn+=1
+func registerFast(string,color:=Color.white):
+	if color==Color.white:
+		var message="\n\n#"+String(turn)+"> "+string
+		battleLogText.bbcode_text+=message
+	else:
+		var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
+		battleLogText.bbcode_text+=message
+func registerWithoutLineEnd(string,color:=Color.white):
+	if color==Color.white:
+		var message="\n\n#"+String(turn)+"> "+string
+		battleLogText.bbcode_text+=message
+	else:
+		var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
+		battleLogText.bbcode_text+=message
+func registerSameTurn(string,color:=Color.white):
+	if color==Color.white:
+		var message= " "+string#+"\n"
+		battleLogText.bbcode_text+=message
+	else:
+		var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
+		battleLogText.bbcode_text+=message
+func registerSameTurnNoLineBreak(string,color:=Color.white):
+	if color==Color.white:
+		var message= " "+string
+		battleLogText.bbcode_text+=message
+	else:
+		var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
+		battleLogText.bbcode_text+=message
 
 # Anims, effects, etc
 func playerAttackAnim():
