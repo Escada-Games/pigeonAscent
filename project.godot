@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Pigeon Ascent"
+config/description="Take care of your own pigeon as they fight increasingly stronger foes"
 run/main_scene="res://scenes/intro.tscn"
 boot_splash/image="res://resource/scaledSplash.png"
 config/icon="res://icon.png"

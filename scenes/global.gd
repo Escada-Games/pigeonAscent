@@ -397,13 +397,14 @@ func debugInput():
 		#global.level=int(clamp(global.level+1,0,10))
 		global.player.gold+=1000
 func fadeMusicAway():
-	var t:=Tween.new()
-	add_child(t)
-	t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
-	t.start()
-	yield(t,"tween_all_completed")
-	self.nCurrentMusic.queue_free()
-	t.queue_free()
+	if OS.has_feature("standalone"):
+		var t:=Tween.new()
+		add_child(t)
+		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		t.start()
+		yield(t,"tween_all_completed")
+		self.nCurrentMusic.queue_free()
+		t.queue_free()
 func incrementLevel():
 	print_debug('Level: '+str(self.level))
 	self.level+=1

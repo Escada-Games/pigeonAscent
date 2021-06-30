@@ -53,6 +53,10 @@ func fadeInBgDarken():
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
 	$twnColorRectTransparency.start()
 func _ready():
+#	if not OS.has_feature("standalone"): # debug stuff
+#		global.player.energy=0
+#		global.enemy.energy=0
+#		pass
 	randomize()
 	changeBgTexture()
 	fadeInBgDarken()
@@ -60,8 +64,21 @@ func _ready():
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
+	$twnPlayer.connect("tween_all_completed",self,'checkPlayerTween')
+	$twnEnemy.connect("tween_all_completed",self,'checkEnemyTween')
 	goldToWin=global.enemy.gold
 	set_process(true)
+
+func checkPlayerTween():
+	if playerSpr.global_position!=playerDefaultPos:
+		$twnPlayer.stop_all()
+		$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position,playerDefaultPos,durationRecoil*rand_range(1.2,1.6),Tween.TRANS_BACK,Tween.EASE_IN_OUT)
+		$twnPlayer.start()
+func checkEnemyTween():
+	if enemySpr.global_position!=enemyDefaultPos:
+		$twnEnemy.stop_all()
+		$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position,enemyDefaultPos,durationRecoil*rand_range(1.2,1.6),Tween.TRANS_BACK,Tween.EASE_IN_OUT)
+		$twnEnemy.start()
 
 func _process(delta):
 	global.player.energy=clamp(global.player.energy,0,global.player.maxEnergy)
@@ -219,40 +236,50 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 func register(string,color:=Color.white):
 	if color==Color.white:
 		var message="\n\n#"+String(turn)+"> "+string#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
-		battleLogText.bbcode_text+=message
+		#battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 		turn+=1
 	else:
 		var message= "\n\n#"+String(turn)+"> " + "[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 		turn+=1
 func registerFast(string,color:=Color.white):
 	if color==Color.white:
 		var message="\n\n#"+String(turn)+"> "+string
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 	else:
 		var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 func registerWithoutLineEnd(string,color:=Color.white):
 	if color==Color.white:
 		var message="\n\n#"+String(turn)+"> "+string
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 	else:
 		var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 func registerSameTurn(string,color:=Color.white):
 	if color==Color.white:
 		var message= " "+string#+"\n"
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 	else:
 		var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 func registerSameTurnNoLineBreak(string,color:=Color.white):
 	if color==Color.white:
 		var message= " "+string
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 	else:
 		var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-		battleLogText.bbcode_text+=message
+#		battleLogText.bbcode_text+=message
+		battleLogText.appendMessage(message)
 
 # Anims, effects, etc
 func playerAttackAnim():
@@ -261,6 +288,7 @@ func playerAttackAnim():
 		var localDurationAttack=durationAttack*(1+global.player.speed/30)
 		var isAtEnemy=is_equal_approx(playerSpr.global_position.x,enemyDefaultPos.x)
 		var targetPosition=enemyDefaultPos if not isAtEnemy else playerDefaultPos#enemyDefaultPos if not isAtEnemy else playerDefaultPos
+		$twnPlayer.stop_all()
 		$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnPlayer.start()
 func enemyAttackAnim():
@@ -269,6 +297,7 @@ func enemyAttackAnim():
 		var localDurationAttack=durationAttack*(1+global.enemy.speed/30)
 		var isAtPlayer=is_equal_approx(playerSpr.global_position.x,enemyDefaultPos.x)
 		var targetPosition=playerDefaultPos if not isAtPlayer else enemyDefaultPos
+		$twnEnemy.stop_all()
 		$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnEnemy.start()
 func shakeHpBar(origin='Player'):
@@ -316,18 +345,21 @@ func knockback():
 	randomize()
 	playerSpr.global_position.y*=rand_range(0.8,1.2)
 	enemySpr.global_position.y*=rand_range(0.8,1.2)
+	$twnPlayer.stop_all()
 	$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position*Vector2(rand_range(0.9,1.1),rand_range(0.9,1.1)),playerDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnPlayer.start()
+	$twnEnemy.stop_all()
 	$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position*Vector2(rand_range(0.9,1.1),rand_range(0.9,1.1)),enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnEnemy.start()
 func particlesAndWindowshake(area):
 	createHitSfx()
 	particles(area)
-	windowShake()
+	windowShake(16)
 func createHitSfx():self.add_child(hitSfx.instance())
-func particles(_area):
+func particles(_area:Area2D):
 	var i=particlesImpact.instance()
-	i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
+	i.global_position=_area.global_position
+	#i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
 	i.emitting=true
 	add_child(i)
 func windowShake(newOffset=32):
