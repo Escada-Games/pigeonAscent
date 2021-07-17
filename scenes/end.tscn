@@ -146,11 +146,13 @@ margin_bottom = 150.0
 
 [node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
 modulate = Color( 0.898039, 0.898039, 0.898039, 1 )
+margin_left = 352.0
 margin_top = 223.0
-margin_right = 824.0
+margin_right = 472.0
 margin_bottom = 273.0
 rect_min_size = Vector2( 120, 50 )
 mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 2 )
 texture_hover = ExtResource( 4 )

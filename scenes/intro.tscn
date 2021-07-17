@@ -147,11 +147,13 @@ margin_right = 1024.0
 margin_bottom = 319.0
 
 [node name="texBtnStartGame" type="TextureButton" parent="marginContainer/vBoxContainer"]
+margin_left = 452.0
 margin_top = 323.0
-margin_right = 1024.0
+margin_right = 572.0
 margin_bottom = 373.0
 rect_min_size = Vector2( 120, 50 )
 mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 6 )
