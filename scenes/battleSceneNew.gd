@@ -181,8 +181,8 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 			self.iEnemyHpLoss+=1
 			iMyselfHpLoss=self.iEnemyHpLoss
 	if iMyselfHpLoss>=1:
-		registerSameTurn("\n\n" + bbName + " takes " + str(self.iPlayerHpLoss) + " damage from being hungry...", Color.yellow)
-		myself.hp-=int(iPlayerHpLoss)
+		registerSameTurn("\n\n" + bbName + " takes " + str(iMyselfHpLoss) + " damage from being hungry...", Color.yellow)
+		myself.hp-=int(iMyselfHpLoss)
 	
 	# Finally, attack stuff
 	if dodged:
