@@ -67,7 +67,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="label2" type="Label" parent="marginContainer2"]
+[node name="strMuteInfo" type="Label" parent="marginContainer2"]
 margin_left = 20.0
 margin_top = 552.0
 margin_right = 1004.0
@@ -82,14 +82,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="version" type="Label" parent="marginContainer2"]
+[node name="strVersion" type="Label" parent="marginContainer2"]
 margin_left = 20.0
 margin_top = 552.0
 margin_right = 1004.0
 margin_bottom = 580.0
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 7 )
-text = "V1.5.1"
+text = "V1.5.2"
 align = 2
 valign = 2
 autowrap = true
