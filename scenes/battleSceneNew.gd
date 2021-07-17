@@ -183,6 +183,15 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 	if iMyselfHpLoss>=1:
 		registerSameTurn("\n\n" + bbName + " takes " + str(iMyselfHpLoss) + " damage from being hungry...", Color.yellow)
 		myself.hp-=int(iMyselfHpLoss)
+		if myself.hp<=0:
+			exitButton.rect_global_position.y=OS.window_size.y*1.2
+			fighting=false
+			myself.dead=true
+#			if strOrigin=='Player':
+#				$twnEnemy.stop_all()
+#			if strOrigin=='Enemy':
+#				$twnPlayer.stop_all()
+			return
 	
 	# Finally, attack stuff
 	if dodged:

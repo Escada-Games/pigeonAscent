@@ -146,7 +146,6 @@ func addEnemies(enemyArray=[]):
 #	for enemy in enemyArray:$marginContainer/vbox/vboxOpponents.add_child(enemy)
 
 func addSameEnemies():
-	print_debug(\"ASDASD\")
 	for e in global.enemiesForBattle:
 		var i=enemyPanel.instance()
 		i.enemyName=e.name

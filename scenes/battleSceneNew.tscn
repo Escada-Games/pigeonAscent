@@ -63,6 +63,7 @@ func _process(_delta):
 		$area2D.queue_free()
 		$twnHit.stop_all()
 		$twnDead.interpolate_property(self,\"modulate\",self.modulate,Color(\"#00888888\"),3.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		$twnDead.interpolate_property(self,\"modulate:a\",self.modulate,Color(\"#00888888\"),3.0,Tween.TRANS_QUINT,Tween.EASE_IN)
 		$twnDead.interpolate_property(self,\"global_position:x\",self.global_position.x,self.global_position.x+rand_range(400,600),3,Tween.TRANS_SINE,Tween.EASE_IN_OUT)
 		$twnDead.interpolate_property(self,\"global_position:y\",self.global_position.y,self.global_position.y+rand_range(500,600),1,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnDead.interpolate_property($pigeon,\"rotation\",$pigeon.rotation,12*PI,6,Tween.TRANS_QUINT,Tween.EASE_OUT)
@@ -181,7 +182,7 @@ func _process(delta):
 		self.z_index=555555
 		$area2D.queue_free()
 		$twnHit.stop_all()
-		$twnDead.interpolate_property(self,\"modulate\",self.modulate,Color(\"#00aaaaaa\"),1.0,Tween.TRANS_QUINT,Tween.EASE_IN,1.0)
+		$twnDead.interpolate_property(self,\"modulate\",self.modulate,Color(\"#00aaaaaa\"),1.0,Tween.TRANS_QUINT,Tween.EASE_IN,0.33)
 		$twnDead.interpolate_property(self,\"global_position:x\",self.global_position.x,self.global_position.x+rand_range(400,600),3,Tween.TRANS_SINE,Tween.EASE_IN_OUT)
 		$twnDead.interpolate_property(self,\"global_position:y\",self.global_position.y,self.global_position.y+rand_range(500,600),1,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnDead.interpolate_property($pigeon,\"rotation\",$pigeon.rotation,-12*PI,6,Tween.TRANS_QUINT,Tween.EASE_OUT)

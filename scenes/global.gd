@@ -321,11 +321,11 @@ func createSelectSfx(type=""):
 	add_child(i)
 func calculateHp(strength,defense):
 	strength-=1;defense-=1
-	return 5+self.scaling.hp*(strength+2*defense)
+	return int(5+self.scaling.hp*(strength+2*defense))
 func calculateFood(strength,speed):
 	strength-=1
 	speed-=1
-	return 10+self.scaling.food*(strength+2*speed)
+	return int(10+self.scaling.food*(strength+2*speed))
 func updatePlayerHp():
 	var oldMaxHp=self.player.maxHp
 	self.player.maxHp=calculateHp(self.player.strength,self.player.defense)
@@ -390,9 +390,10 @@ func battle(nextEnemyDict):
 	get_tree().root.add_child(i)
 func debugInput():
 	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
-		global.player.pointsLeft+=10
-		global.player.strength+=10
+#		global.player.pointsLeft+=10
+#		global.player.strength+=10
 		global.player.defense+=10
+		global.player.speed+=10
 		global.incrementLevel()
 		#global.level=int(clamp(global.level+1,0,10))
 		global.player.gold+=1000
