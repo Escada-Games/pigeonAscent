@@ -14,7 +14,7 @@ script/source = "extends PanelContainer
 
 export(String) var itemName=\"Ice\"
 export(int) var itemPrice=1000
-export(String) var itemDescription=\"A strange ice cube. It ressonates when near a high DEFENSE.\"
+export(String) var itemDescription=\"A strange ice cube. Only the highest DEFENSE might make it useful.\"#\"A strange ice cube. It ressonates when near a high DEFENSE.\"
 export(bool) var unique=true
 export(bool) var clickable=false
 

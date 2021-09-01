@@ -156,6 +156,7 @@ script/source = "extends Sprite
 var targetPos=Vector2()
 var duration=1.0
 var dead=false
+var died:=false
 
 func _ready():
 	randomize()
@@ -175,10 +176,12 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	if self.global_position.y>OS.window_size.y and died:self.visible=false
 	if dead:
 		$pigeon/animationPlayer.stop()
 		self.modulate=Color(\"#aaaaaa\")
 		dead=false
+		died=true
 		self.z_index=555555
 		$area2D.queue_free()
 		$twnHit.stop_all()

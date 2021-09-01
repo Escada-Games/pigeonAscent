@@ -351,7 +351,7 @@ func knockback():
 		attack(global.enemy,global.player,enemySpr,playerSpr)
 		enemyAttacked=false
 		enemyAttacking=false
-	randomize()
+	#randomize()
 	playerSpr.global_position.y*=rand_range(0.8,1.2)
 	enemySpr.global_position.y*=rand_range(0.8,1.2)
 	$twnPlayer.stop_all()

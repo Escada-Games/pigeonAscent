@@ -105,7 +105,8 @@ const pigeonDict={
 		{"sprite":"res://resource/sprites/Hatoshi.png",
 		"portrait":"res://resource/portraits/Hatoshi_Port.png",
 		'skill':'Ancient arts',
-		'skillDescription':'Better not be in the path of its blade'
+		'skillDescription':'While other ate crumbs, this one trained the blade'
+		#'skillDescription':'Better not be in the path of its blade'
 	},
 	Classes.Infiltrator:
 		{"sprite":"res://resource/sprites/Infiltrator.png",

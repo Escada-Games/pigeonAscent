@@ -314,8 +314,9 @@ bIsPlayerStats = true
 
 [node name="playerStats" parent="." instance=ExtResource( 5 )]
 visible = false
+margin_top = 176.0
 margin_right = 307.0
-margin_bottom = 172.0
+margin_bottom = 348.0
 
 [node name="perks" type="PanelContainer" parent="."]
 margin_top = 176.0

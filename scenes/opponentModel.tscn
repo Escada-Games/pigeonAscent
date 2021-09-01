@@ -29,7 +29,7 @@ var enemyGold:=100
 
 const tweenParameters={
 	\"duration\":0.3,
-	\"rect_scale_max\":1.1*Vector2(1,1),
+	\"rect_scale_max\":1.05*Vector2(1,1),
 	\"type\":Tween.TRANS_QUINT,
 	\"easing\":Tween.EASE_OUT
 }
