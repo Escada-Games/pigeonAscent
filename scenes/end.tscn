@@ -43,7 +43,9 @@ func _ready():
 		\"class\":global.Classes.Normal
 	}
 	global.level=1
-	connect(\"pressed\",self,\"startGame\")
+	self.connect(\"pressed\",self,\"startGame\")
+	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	self.connect(\"button_down\",global,\"createSelectSfx\")
 func startGame():
 	get_tree().change_scene(\"res://scenes/intro.tscn\")
 "
@@ -108,9 +110,8 @@ margin_bottom = 500.0
 alignment = 1
 
 [node name="label" type="Label" parent="marginContainer/vBoxContainer"]
-margin_top = 177.0
 margin_right = 824.0
-margin_bottom = 219.0
+margin_bottom = 42.0
 custom_fonts/font = ExtResource( 7 )
 align = 1
 autowrap = true
@@ -119,9 +120,9 @@ script = SubResource( 1 )
 [node name="hSeparator" type="HSeparator" parent="marginContainer/vBoxContainer"]
 visible = false
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 142.0
-margin_right = 496.0
-margin_bottom = 146.0
+margin_top = 219.0
+margin_right = 824.0
+margin_bottom = 223.0
 
 [node name="textEdit" type="TextEdit" parent="marginContainer/vBoxContainer"]
 visible = false
@@ -138,11 +139,11 @@ __meta__ = {
 }
 
 [node name="hSeparator2" type="HSeparator" parent="marginContainer/vBoxContainer"]
-visible = false
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 146.0
-margin_right = 496.0
-margin_bottom = 150.0
+margin_top = 46.0
+margin_right = 824.0
+margin_bottom = 219.0
+size_flags_vertical = 3
 
 [node name="textureButton" type="TextureButton" parent="marginContainer/vBoxContainer"]
 modulate = Color( 0.898039, 0.898039, 0.898039, 1 )
@@ -162,3 +163,10 @@ script = SubResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
+
+[node name="hSeparator3" type="HSeparator" parent="marginContainer/vBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 277.0
+margin_right = 824.0
+margin_bottom = 450.0
+size_flags_vertical = 3
