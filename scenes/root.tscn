@@ -13,7 +13,7 @@ const speed:=0.5
 func _ready():
 	defaultRectPosition=self.rect_position
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.rect_position+=Vector2(speed,speed)
 	if is_equal_approx(self.rect_position.x,0):self.rect_position=defaultRectPosition
 	self.texture=global.getBgTexture()
@@ -29,7 +29,7 @@ var state=\"centerScreen\"
 func _ready():
 	$twnEnter.connect(\"tween_completed\",self,\"checkForDeletion\")
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	if state==\"centerScreen\":
 		if Input.is_action_just_pressed(\"ui_left\") and global.isGameCompact():
 			state=\"leftScreen\"
@@ -65,7 +65,7 @@ func tweenToOutside(node,side):
 	var endPos=side*node.rect_size.x if side<0 else side*node.rect_size.x+OS.window_size.x
 	$twnEnter.interpolate_property(node,\"rect_global_position:x\",0,endPos,0.5,Tween.TRANS_QUAD,Tween.EASE_IN)
 	$twnEnter.start()
-func checkForDeletion(h,m):
+func checkForDeletion(_h,_m):
 	if self.state==\"centerScreen\":
 		newContainer.queue_free()
 "

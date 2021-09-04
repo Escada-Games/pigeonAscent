@@ -16,8 +16,21 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends VBoxContainer
 var updateable=true
-func _ready():set_process(true if updateable else false)
-func _process(delta):self.visible=!global.isGameCompact()
+func _ready():
+	self.rect_pivot_offset=self.rect_size/2
+#	self.connect(\"mouse_entered\",self,'_on_vboxR_mouse_entered')
+#	self.connect(\"mouse_exited\",self,'_on_vboxR_mouse_exited')
+	
+	set_process(true if updateable else false)
+func _process(_delta):self.visible=!global.isGameCompact()
+
+func _on_vboxR_mouse_entered()->void:
+	var _v1=$twn.interpolate_property(self,'rect_scale',self.rect_scale,Vector2(1.01,1.01),0.33,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	var _v2=$twn.start()
+
+func _on_vboxR_mouse_exited()->void:
+	var _v1=$twn.interpolate_property(self,'rect_scale',self.rect_scale,Vector2(1,1),0.33,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	var _v2=$twn.start()
 "
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -167,9 +180,9 @@ func _ready():self.text=\"\"
 script/source = "extends TextureButton
 
 func _ready():
-	connect(\"pressed\",self,\"buy\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\")
+	var _v1=connect(\"pressed\",self,\"buy\")
+	var _v2=self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _v3=self.connect(\"button_down\",global,\"createSelectSfx\")
 func buy():
 	global.currentItem.buy()
 		#Effect here
@@ -186,9 +199,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="twn" type="Tween" parent="."]
+
 [node name="panelRContainer" type="PanelContainer" parent="."]
 margin_right = 360.0
 margin_bottom = 600.0
+mouse_filter = 1
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 2 )
 
@@ -206,6 +222,7 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 356.0
 margin_bottom = 596.0
+mouse_filter = 1
 custom_constants/margin_top = 10
 custom_constants/margin_bottom = 10
 
@@ -297,22 +314,26 @@ size_flags_stretch_ratio = 8.0
 [node name="panelContainer" type="PanelContainer" parent="panelRContainer/vbox/vboxShop"]
 margin_right = 352.0
 margin_bottom = 45.0
+mouse_filter = 1
 custom_styles/panel = SubResource( 3 )
 
 [node name="panelShadow" type="PanelContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 modulate = Color( 0, 0, 0, 0.5 )
 margin_right = 352.0
 margin_bottom = 45.0
+mouse_filter = 1
 custom_styles/panel = SubResource( 4 )
 
 [node name="panel" type="PanelContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 352.0
 margin_bottom = 45.0
+mouse_filter = 1
 custom_styles/panel = SubResource( 3 )
 
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/panelContainer"]
 margin_right = 352.0
 margin_bottom = 45.0
+mouse_filter = 1
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -323,6 +344,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 342.0
 margin_bottom = 35.0
+mouse_filter = 1
 custom_fonts/font = ExtResource( 2 )
 text = "Shop!"
 align = 1
@@ -335,6 +357,7 @@ margin_top = 49.0
 margin_right = 352.0
 margin_bottom = 424.0
 rect_clip_content = true
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 4
@@ -348,13 +371,15 @@ margin_top = 4.0
 margin_right = 348.0
 margin_bottom = 371.0
 rect_clip_content = false
+mouse_filter = 1
 size_flags_vertical = 3
 theme = SubResource( 9 )
 
 [node name="marginCtn" type="MarginContainer" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop"]
 margin_right = 336.0
-margin_bottom = 706.0
+margin_bottom = 934.0
 rect_clip_content = true
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 20
@@ -366,9 +391,10 @@ custom_constants/margin_bottom = 5
 margin_left = 20.0
 margin_top = 5.0
 margin_right = 316.0
-margin_bottom = 701.0
+margin_bottom = 929.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 16
 script = SubResource( 10 )
 
 [node name="itemModel" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
@@ -376,104 +402,105 @@ margin_right = 296.0
 margin_bottom = 31.0
 
 [node name="itemModel2" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 35.0
+margin_top = 47.0
 margin_right = 296.0
-margin_bottom = 66.0
+margin_bottom = 78.0
 
 [node name="itemModel3" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 70.0
+margin_top = 94.0
 margin_right = 296.0
-margin_bottom = 101.0
+margin_bottom = 125.0
 
 [node name="itemModel4" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 105.0
+margin_top = 141.0
 margin_right = 296.0
-margin_bottom = 136.0
+margin_bottom = 172.0
 
 [node name="itemModel5" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 140.0
+margin_top = 188.0
 margin_right = 296.0
-margin_bottom = 171.0
+margin_bottom = 219.0
 
 [node name="itemModel16" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 175.0
+margin_top = 235.0
 margin_right = 296.0
-margin_bottom = 206.0
+margin_bottom = 266.0
 
 [node name="itemModel17" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 210.0
+margin_top = 282.0
 margin_right = 296.0
-margin_bottom = 241.0
+margin_bottom = 313.0
 
 [node name="itemModel18" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 245.0
+margin_top = 329.0
 margin_right = 296.0
-margin_bottom = 276.0
+margin_bottom = 360.0
 
 [node name="itemModel19" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 280.0
+margin_top = 376.0
 margin_right = 296.0
-margin_bottom = 311.0
+margin_bottom = 407.0
 
 [node name="itemModel20" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 315.0
+margin_top = 423.0
 margin_right = 296.0
-margin_bottom = 346.0
+margin_bottom = 454.0
 
 [node name="itemModel6" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 350.0
+margin_top = 470.0
 margin_right = 296.0
-margin_bottom = 381.0
+margin_bottom = 501.0
 
 [node name="itemModel7" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 385.0
+margin_top = 517.0
 margin_right = 296.0
-margin_bottom = 416.0
+margin_bottom = 548.0
 
 [node name="itemModel8" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 420.0
+margin_top = 564.0
 margin_right = 296.0
-margin_bottom = 451.0
+margin_bottom = 595.0
 
 [node name="itemModel9" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 455.0
+margin_top = 611.0
 margin_right = 296.0
-margin_bottom = 486.0
+margin_bottom = 642.0
 
 [node name="itemModel10" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 490.0
+margin_top = 658.0
 margin_right = 296.0
-margin_bottom = 521.0
+margin_bottom = 689.0
 
 [node name="itemModel11" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 525.0
+margin_top = 705.0
 margin_right = 296.0
-margin_bottom = 556.0
+margin_bottom = 736.0
 
 [node name="itemModel12" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 560.0
+margin_top = 752.0
 margin_right = 296.0
-margin_bottom = 591.0
+margin_bottom = 783.0
 
 [node name="itemModel13" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 595.0
+margin_top = 799.0
 margin_right = 296.0
-margin_bottom = 626.0
+margin_bottom = 830.0
 
 [node name="itemModel14" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 630.0
+margin_top = 846.0
 margin_right = 296.0
-margin_bottom = 661.0
+margin_bottom = 877.0
 
 [node name="itemModel15" parent="panelRContainer/vbox/vboxShop/marginContainer/panelShop/marginCtn/vboxShop" instance=ExtResource( 12 )]
-margin_top = 665.0
+margin_top = 893.0
 margin_right = 296.0
-margin_bottom = 696.0
+margin_bottom = 924.0
 
 [node name="descriptionContainer" type="PanelContainer" parent="panelRContainer/vbox"]
 margin_top = 428.0
 margin_right = 352.0
 margin_bottom = 592.0
+mouse_filter = 1
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 custom_styles/panel = SubResource( 11 )
@@ -482,6 +509,7 @@ script = SubResource( 12 )
 [node name="marginContainer" type="MarginContainer" parent="panelRContainer/vbox/descriptionContainer"]
 margin_right = 352.0
 margin_bottom = 164.0
+mouse_filter = 1
 custom_constants/margin_right = 25
 custom_constants/margin_top = 10
 custom_constants/margin_left = 25
@@ -496,6 +524,7 @@ margin_bottom = 160.0
 [node name="label" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer"]
 margin_right = 302.0
 margin_bottom = 117.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
@@ -517,6 +546,7 @@ size_flags_vertical = 3
 [node name="price" type="Label" parent="panelRContainer/vbox/descriptionContainer/marginContainer/vBoxContainer/hBoxContainer"]
 margin_right = 302.0
 margin_bottom = 29.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 custom_fonts/font = ExtResource( 3 )
@@ -532,6 +562,7 @@ visible = false
 margin_left = 566.0
 margin_right = 960.0
 margin_bottom = 36.0
+mouse_filter = 1
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.4

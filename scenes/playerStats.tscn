@@ -64,7 +64,7 @@ func resetProcess():
 [sub_resource type="GDScript" id=2]
 script/source = "extends TextureRect
 func _ready():set_process(true)
-func _process(delta):self.texture=global.getBgTexture()
+func _process(_delta):self.texture=global.getBgTexture()
 "
 
 [sub_resource type="GDScript" id=3]
@@ -100,17 +100,16 @@ colors = PoolColorArray( 0.235294, 0.639216, 0.439216, 1, 0.560784, 0.870588, 0.
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
+func _process(_delta):self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
 "
 
 [sub_resource type="GDScript" id=8]
 script/source = "extends TextureProgress
 
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.max_value=global.player.maxEnergy
 	self.value=lerp(self.value,global.player.energy,0.25)
-#	self.hint_tooltip=String(int(self.value))+\"/\"+String(int(self.max_value))
 "
 
 [sub_resource type="GDScript" id=9]

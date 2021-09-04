@@ -21,10 +21,13 @@ func _ready():
 	$twnMov.interpolate_property(target,\"rect_global_position:x\",target.rect_global_position.x,1.0*OS.window_size.x,1.0,Tween.TRANS_BACK,Tween.EASE_IN,2.0)
 	$twnMov.start()
 	var _s1=$twnMov.connect(\"tween_completed\",self,\"loopEvo\")
-	if global.level<6:
-		global.firstEvolution()
+	if not global.bHasItem:
+		if global.level<6:
+			global.firstEvolution()
+		else:
+			global.secondEvolution()
 	else:
-		global.secondEvolution()
+		global.evolveByItem()
 
 func loopEvo(_h,_m):
 	if counter<=5:#25:

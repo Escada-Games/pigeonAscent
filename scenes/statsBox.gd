@@ -1,6 +1,6 @@
 extends PanelContainer
 var offset:=0
-var duration:=1
+var duration:=1.0
 var defaultPos:=Vector2()
 export(bool) var entering:=false
 export(bool) var showStats:=false

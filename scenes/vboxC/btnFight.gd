@@ -1,5 +1,5 @@
 extends TextureButton
 func _ready():
-	self.connect("pressed",global,"fight")
-	self.connect("mouse_entered",global,"createHoverSfx")
-	self.connect("button_down",global,"createSelectSfx")
+	var _v1=self.connect("pressed",global,"fight")
+	var _v2=self.connect("mouse_entered",global,"createHoverSfx")
+	var _v3=self.connect("button_down",global,"createSelectSfx")

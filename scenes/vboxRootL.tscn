@@ -20,21 +20,33 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends VBoxContainer
 var updateable=true
-func _ready():set_process(true if updateable else false)
-func _process(delta):self.visible=!global.isGameCompact()
+func _ready():
+	self.rect_pivot_offset=self.rect_size/2
+	set_process(true if updateable else false)
+func _process(_delta):self.visible=!global.isGameCompact()
+
+
+func _on_vboxL_mouse_entered()->void:
+	var _v1=$twn.interpolate_property(self,'rect_scale',self.rect_scale,Vector2(1.01,1.01),0.33,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	var _v2=$twn.start()
+
+
+func _on_vboxL_mouse_exited()->void:
+	var _v1=$twn.interpolate_property(self,'rect_scale',self.rect_scale,Vector2(1,1),0.33,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	var _v2=$twn.start()
 "
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends TextureRect
 
 func _ready():set_process(true)
-func _process(delta):self.texture=global.getBgTexture()
+func _process(_delta):self.texture=global.getBgTexture()
 "
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends RichTextLabel
-var waveAmp=50
-const maxWaveAmp=50
+var waveAmp:=50.0
+const maxWaveAmp:=50.0
 var stringNormal=\"[center]Stat points \\nleft[/center]\"
 var stringWavy=\"[center][wave amp=50 freq=5]Stat points \\nleft[/wave][/center]\"
 var stringWavySlowed
@@ -42,9 +54,9 @@ var slowing=false
 func _ready():
 	self.bbcode_text=stringWavy
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	stringWavy=\"[center][wave amp=\"+str(waveAmp)+\"freq=5]Stat points \\nleft[/wave][/center]\"
-	waveAmp=lerp(waveAmp,0 if slowing else maxWaveAmp,0.1 if slowing else 1)
+	waveAmp=lerp(waveAmp,0.0 if slowing else maxWaveAmp,0.1 if slowing else 1.0)
 	if global.player.pointsLeft==0:
 		slowing=true
 	else:
@@ -67,7 +79,7 @@ font_data = ExtResource( 8 )
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):self.text=String(global.player.pointsLeft)
+func _process(_delta):self.text=String(global.player.pointsLeft)
 "
 
 [sub_resource type="GDScript" id=7]
@@ -76,8 +88,8 @@ const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
 func _ready():
 	set_process(true)
-	self.connect(\"mouse_entered\",self,\"twnGrow\")
-	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v1=self.connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v2=self.connect(\"mouse_exited\",self,\"twnShrink\")
 #	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,maximumScale,duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
@@ -85,14 +97,14 @@ func twnGrow():
 func twnShrink():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()
-func _process(delta):self.rect_pivot_offset=self.rect_size/2
+func _process(_delta):self.rect_pivot_offset=self.rect_size/2
 "
 
 [sub_resource type="GDScript" id=8]
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 #	self.rect_scale=Vector2(2,2) if OS.window_size.x>1024*1.5 else Vector2(1,1)
 	self.text=String(global.player.strength)
 	if global.player.extraStrength!=0: self.text+= \" + \" + String(global.player.extraStrength)
@@ -113,13 +125,13 @@ func _ready():
 	twn.name=\"twnScale\"
 	add_child(twn)
 	#self.rect_pivot_offset=self.rect_size/2
-	self.connect(\"pressed\",self,\"upgrade\")
-	self.connect(\"mouse_entered\",self,\"twnGrow\")
-	self.connect(\"mouse_exited\",self,\"twnShrink\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\",[\"attack\"])
+	var _v1=self.connect(\"pressed\",self,\"upgrade\")
+	var _v2=self.connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v3=self.connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v4=self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _v5=self.connect(\"button_down\",global,\"createSelectSfx\",[\"attack\"])
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.disabled=global.player.pointsLeft==0
 func upgrade():
 	if global.player.pointsLeft>0:
@@ -155,8 +167,8 @@ const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
 func _ready():
 	set_process(true)
-	self.connect(\"mouse_entered\",self,\"twnGrow\")
-	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v1=self.connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v2=self.connect(\"mouse_exited\",self,\"twnShrink\")
 #	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,maximumScale,duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
@@ -164,7 +176,7 @@ func twnGrow():
 func twnShrink():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()
-func _process(delta):self.rect_pivot_offset=self.rect_size/2
+func _process(_delta):self.rect_pivot_offset=self.rect_size/2
 "
 
 [sub_resource type="StyleBoxEmpty" id=12]
@@ -173,7 +185,7 @@ func _process(delta):self.rect_pivot_offset=self.rect_size/2
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 #	self.rect_scale=Vector2(2,2) if OS.window_size.x>1024*1.5 else Vector2(1,1)
 	self.text=String(global.player.defense)
 	if global.player.extraDefense!=0: self.text+= \" + \" + String(global.player.extraDefense)
@@ -194,13 +206,13 @@ func _ready():
 	twn.name=\"twnScale\"
 	add_child(twn)
 	#self.rect_pivot_offset=self.rect_size/2
-	self.connect(\"pressed\",self,\"upgrade\")
-	self.connect(\"mouse_entered\",self,\"twnGrow\")
-	self.connect(\"mouse_exited\",self,\"twnShrink\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\",[\"defense\"])
+	var _v1=self.connect(\"pressed\",self,\"upgrade\")
+	var _v2=self.connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v3=self.connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v4=self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _v5=self.connect(\"button_down\",global,\"createSelectSfx\",[\"defense\"])
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.disabled=global.player.pointsLeft==0
 func upgrade():
 	if global.player.pointsLeft>0:
@@ -236,8 +248,8 @@ const duration=0.3
 const maximumScale=1.1*Vector2(1,1)
 func _ready():
 	set_process(true)
-	self.connect(\"mouse_entered\",self,\"twnGrow\")
-	self.connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v1=self.connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v2=self.connect(\"mouse_exited\",self,\"twnShrink\")
 #	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
 func twnGrow():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,maximumScale,duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
@@ -245,14 +257,14 @@ func twnGrow():
 func twnShrink():
 	$twnScale.interpolate_property(self,\"rect_scale\",self.rect_scale,Vector2(1,1),duration,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnScale.start()
-func _process(delta):self.rect_pivot_offset=self.rect_size/2
+func _process(_delta):self.rect_pivot_offset=self.rect_size/2
 "
 
 [sub_resource type="GDScript" id=17]
 script/source = "extends Label
 
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 #	self.rect_scale=Vector2(2,2) if OS.window_size.x>1024*1.5 else Vector2(1,1)
 	self.text=String(global.player.speed)
 	if global.player.extraSpeed!=0: self.text+= \" + \" + String(global.player.extraSpeed)
@@ -273,13 +285,13 @@ func _ready():
 	twn.name=\"twnScale\"
 	add_child(twn)
 	#self.rect_pivot_offset=self.rect_size/2
-	self.connect(\"pressed\",self,\"upgrade\")
-	self.connect(\"mouse_entered\",self,\"twnGrow\")
-	self.connect(\"mouse_exited\",self,\"twnShrink\")
-	self.connect(\"mouse_entered\",global,\"createHoverSfx\")
-	self.connect(\"button_down\",global,\"createSelectSfx\",[\"speed\"])
+	var _v1=self.connect(\"pressed\",self,\"upgrade\")
+	var _v2=self.connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v3=self.connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v4=self.connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _v5=self.connect(\"button_down\",global,\"createSelectSfx\",[\"speed\"])
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	self.disabled=global.player.pointsLeft==0
 func upgrade():
 	if global.player.pointsLeft>0:
@@ -307,21 +319,110 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="twn" type="Tween" parent="."]
+
 [node name="stats" parent="." instance=ExtResource( 15 )]
 margin_right = 307.0
 margin_bottom = 172.0
 bIsPlayerStats = true
+
+[node name="texBg" parent="stats" index="1"]
+margin_right = 303.0
+
+[node name="marginContainer" parent="stats" index="2"]
+margin_right = 303.0
+
+[node name="vbox" parent="stats/marginContainer" index="0"]
+margin_right = 294.0
+
+[node name="strName" parent="stats/marginContainer/vbox" index="0"]
+margin_right = 289.0
+
+[node name="invSep" parent="stats/marginContainer/vbox" index="1"]
+margin_right = 289.0
+
+[node name="vboxBars" parent="stats/marginContainer/vbox" index="2"]
+margin_right = 289.0
+
+[node name="hpBox" parent="stats/marginContainer/vbox/vboxBars" index="0"]
+margin_right = 289.0
+
+[node name="vbox" parent="stats/marginContainer/vbox/vboxBars/hpBox" index="2"]
+margin_right = 253.0
+
+[node name="lifebar" parent="stats/marginContainer/vbox/vboxBars/hpBox/vbox" index="0"]
+margin_right = 189.0
+
+[node name="strLife" parent="stats/marginContainer/vbox/vboxBars/hpBox/vbox" index="1"]
+margin_right = 189.0
+
+[node name="info" type="TextureRect" parent="stats/marginContainer/vbox/vboxBars/hpBox" index="3"]
+margin_left = 257.0
+margin_right = 289.0
+margin_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 32, 32 )
+hint_tooltip = "Every attack your pigeon takes lowers their HP.
+At zero, you lose your pigeon!"
+mouse_default_cursor_shape = 16
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = ExtResource( 9 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="foodBox" parent="stats/marginContainer/vbox/vboxBars" index="1"]
+margin_right = 289.0
+
+[node name="vbox" parent="stats/marginContainer/vbox/vboxBars/foodBox" index="2"]
+margin_right = 253.0
+
+[node name="foodBar" parent="stats/marginContainer/vbox/vboxBars/foodBox/vbox" index="0"]
+margin_right = 189.0
+
+[node name="strFood" parent="stats/marginContainer/vbox/vboxBars/foodBox/vbox" index="1"]
+margin_right = 189.0
+
+[node name="info" type="TextureRect" parent="stats/marginContainer/vbox/vboxBars/foodBox" index="3"]
+margin_left = 257.0
+margin_right = 289.0
+margin_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 32, 32 )
+hint_tooltip = "Each attack uses a bit of food. At zero food, the pigeon:
+-Takes only critical hits (except when prevented);
+-Their damage is halved;
+-Their attack speed is slightly slower.
+If they get even hungrier, more bad things will happen!"
+mouse_default_cursor_shape = 16
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = ExtResource( 9 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="strSkill" parent="stats/marginContainer/vbox" index="3"]
+margin_left = 120.0
+margin_right = 169.0
 
 [node name="playerStats" parent="." instance=ExtResource( 5 )]
 visible = false
 margin_top = 176.0
 margin_right = 307.0
 margin_bottom = 348.0
+mouse_filter = 1
 
 [node name="perks" type="PanelContainer" parent="."]
 margin_top = 176.0
 margin_right = 307.0
 margin_bottom = 600.0
+mouse_filter = 1
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 custom_styles/panel = ExtResource( 3 )
@@ -346,6 +447,7 @@ margin_bottom = 420.0
 [node name="ctnStatPoints" type="MarginContainer" parent="perks/vbox"]
 margin_right = 299.0
 margin_bottom = 45.0
+mouse_filter = 1
 custom_constants/margin_right = 0
 custom_constants/margin_top = 5
 custom_constants/margin_left = 10
@@ -366,6 +468,7 @@ margin_right = 142.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 125, 30 )
 rect_clip_content = false
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 4 )
@@ -387,6 +490,7 @@ script = SubResource( 3 )
 margin_left = 146.0
 margin_right = 289.0
 margin_bottom = 30.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 4 )
@@ -394,6 +498,7 @@ custom_styles/panel = SubResource( 4 )
 [node name="points" type="Label" parent="perks/vbox/ctnStatPoints/hboxStatPoints/intContainer"]
 margin_right = 143.0
 margin_bottom = 30.0
+mouse_filter = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 5 )
 text = "0123"
@@ -406,6 +511,7 @@ self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 49.0
 margin_right = 299.0
 margin_bottom = 67.0
+mouse_filter = 1
 custom_constants/separation = 18
 
 [node name="vboxStats" type="VBoxContainer" parent="perks/vbox"]
@@ -434,17 +540,17 @@ margin_left = 20.0
 margin_right = 279.0
 margin_bottom = 103.0
 mouse_filter = 1
-custom_constants/margin_right = 50
+custom_constants/margin_right = 32
 custom_constants/margin_top = 0
-custom_constants/margin_left = 50
+custom_constants/margin_left = 32
 custom_constants/margin_bottom = 0
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="strHbox" type="HBoxContainer" parent="perks/vbox/vboxStats/strPanel/marginCtn"]
-margin_left = 50.0
-margin_right = 209.0
+margin_left = 32.0
+margin_right = 227.0
 margin_bottom = 103.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -453,7 +559,8 @@ alignment = 1
 [node name="intContainer" type="MarginContainer" parent="perks/vbox/vboxStats/strPanel/marginCtn/strHbox"]
 margin_right = 105.0
 margin_bottom = 103.0
-size_flags_horizontal = 2
+mouse_filter = 1
+size_flags_horizontal = 0
 size_flags_stretch_ratio = 2.0
 custom_constants/margin_left = 0
 
@@ -461,6 +568,7 @@ custom_constants/margin_left = 0
 margin_top = 30.0
 margin_right = 105.0
 margin_bottom = 72.0
+mouse_filter = 1
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -472,12 +580,20 @@ align = 1
 valign = 1
 script = SubResource( 8 )
 
-[node name="btnContainer" type="MarginContainer" parent="perks/vbox/vboxStats/strPanel/marginCtn/strHbox"]
+[node name="vSeparator" type="VSeparator" parent="perks/vbox/vboxStats/strPanel/marginCtn/strHbox"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 109.0
-margin_right = 159.0
-margin_bottom = 103.0
+margin_right = 141.0
+margin_bottom = 3.0
 mouse_filter = 1
 size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/vboxStats/strPanel/marginCtn/strHbox"]
+margin_left = 145.0
+margin_right = 195.0
+margin_bottom = 103.0
+mouse_filter = 1
 size_flags_vertical = 3
 custom_constants/margin_right = 0
 custom_constants/margin_top = 33
@@ -511,13 +627,13 @@ custom_constants/margin_right = -25
 custom_constants/margin_top = -25
 
 [node name="info" type="TextureRect" parent="perks/vbox/vboxStats/strPanel/infoCtn"]
-margin_left = 236.0
+margin_left = 252.0
 margin_top = -25.0
 margin_right = 284.0
-margin_bottom = 23.0
+margin_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 48, 48 )
+rect_min_size = Vector2( 32, 32 )
 hint_tooltip = "Strength makes your pigeon deal more damage,
 and also raises both their HP and FOOD a bit."
 mouse_default_cursor_shape = 16
@@ -530,6 +646,7 @@ stretch_mode = 5
 margin_top = 107.0
 margin_right = 299.0
 margin_bottom = 117.0
+mouse_filter = 1
 custom_constants/separation = 10
 
 [node name="defPanel" type="PanelContainer" parent="perks/vbox/vboxStats"]
@@ -549,12 +666,12 @@ margin_left = 20.0
 margin_right = 279.0
 margin_bottom = 103.0
 mouse_filter = 1
-custom_constants/margin_right = 50
-custom_constants/margin_left = 50
+custom_constants/margin_right = 32
+custom_constants/margin_left = 32
 
 [node name="defHbox" type="HBoxContainer" parent="perks/vbox/vboxStats/defPanel/marginCtn"]
-margin_left = 50.0
-margin_right = 209.0
+margin_left = 32.0
+margin_right = 227.0
 margin_bottom = 103.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -564,7 +681,6 @@ alignment = 1
 margin_right = 105.0
 margin_bottom = 103.0
 mouse_filter = 1
-size_flags_horizontal = 2
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = SubResource( 12 )
 
@@ -585,12 +701,20 @@ align = 1
 valign = 1
 script = SubResource( 13 )
 
-[node name="btnContainer" type="MarginContainer" parent="perks/vbox/vboxStats/defPanel/marginCtn/defHbox"]
+[node name="vSeparator" type="VSeparator" parent="perks/vbox/vboxStats/defPanel/marginCtn/defHbox"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 109.0
-margin_right = 159.0
-margin_bottom = 103.0
+margin_right = 141.0
+margin_bottom = 3.0
 mouse_filter = 1
 size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/vboxStats/defPanel/marginCtn/defHbox"]
+margin_left = 145.0
+margin_right = 195.0
+margin_bottom = 103.0
+mouse_filter = 1
 size_flags_vertical = 3
 custom_constants/margin_top = 33
 custom_constants/margin_bottom = 33
@@ -622,13 +746,13 @@ custom_constants/margin_right = -25
 custom_constants/margin_top = -25
 
 [node name="info" type="TextureRect" parent="perks/vbox/vboxStats/defPanel/infoCtn"]
-margin_left = 236.0
+margin_left = 252.0
 margin_top = -25.0
 margin_right = 284.0
-margin_bottom = 23.0
+margin_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 48, 48 )
+rect_min_size = Vector2( 32, 32 )
 hint_tooltip = "Defense makes the pigeon take less damage,
 reducing it and blocking part of it.
 It also raises their maximum HP."
@@ -642,6 +766,7 @@ stretch_mode = 5
 margin_top = 228.0
 margin_right = 299.0
 margin_bottom = 238.0
+mouse_filter = 1
 custom_constants/separation = 10
 
 [node name="spdPanel" type="PanelContainer" parent="perks/vbox/vboxStats"]
@@ -661,12 +786,12 @@ margin_left = 20.0
 margin_right = 279.0
 margin_bottom = 103.0
 mouse_filter = 1
-custom_constants/margin_right = 50
-custom_constants/margin_left = 50
+custom_constants/margin_right = 32
+custom_constants/margin_left = 32
 
 [node name="spdHbox" type="HBoxContainer" parent="perks/vbox/vboxStats/spdPanel/marginCtn"]
-margin_left = 50.0
-margin_right = 209.0
+margin_left = 32.0
+margin_right = 227.0
 margin_bottom = 103.0
 alignment = 1
 
@@ -674,7 +799,7 @@ alignment = 1
 margin_right = 105.0
 margin_bottom = 103.0
 mouse_filter = 1
-size_flags_horizontal = 2
+size_flags_horizontal = 0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_styles/panel = SubResource( 12 )
@@ -696,12 +821,21 @@ align = 1
 valign = 1
 script = SubResource( 17 )
 
-[node name="btnContainer" type="MarginContainer" parent="perks/vbox/vboxStats/spdPanel/marginCtn/spdHbox"]
+[node name="vSeparator" type="VSeparator" parent="perks/vbox/vboxStats/spdPanel/marginCtn/spdHbox"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 109.0
-margin_right = 159.0
-margin_bottom = 103.0
+margin_right = 141.0
+margin_bottom = 3.0
 mouse_filter = 1
 size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="btnContainer" type="MarginContainer" parent="perks/vbox/vboxStats/spdPanel/marginCtn/spdHbox"]
+margin_left = 145.0
+margin_right = 195.0
+margin_bottom = 103.0
+mouse_filter = 1
+size_flags_horizontal = 0
 size_flags_vertical = 3
 custom_constants/margin_top = 33
 custom_constants/margin_bottom = 33
@@ -733,13 +867,13 @@ custom_constants/margin_right = -25
 custom_constants/margin_top = -25
 
 [node name="info" type="TextureRect" parent="perks/vbox/vboxStats/spdPanel/infoCtn"]
-margin_left = 236.0
+margin_left = 252.0
 margin_top = -25.0
 margin_right = 284.0
-margin_bottom = 23.0
+margin_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 48, 48 )
+rect_min_size = Vector2( 32, 32 )
 hint_tooltip = "Speed makes the pigeon attack faster,
 raises their maximum FOOD,
 and makes their opponents lose FOOD faster as well."
@@ -748,3 +882,5 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 texture = ExtResource( 9 )
 stretch_mode = 5
+
+[editable path="stats"]

@@ -278,9 +278,19 @@ var limits={
 	"defense":30
 }
 var currentItem
+var bHasItem:=false
 const evolvePanel:=preload("res://scenes/evolvePannel.tscn")
 const musicEvolution:=preload("res://scenes/musics/musicEvolution.tscn")
 signal PlayerEvolved
+signal PlayerEvolvedStr
+signal PlayerEvolvedDef
+signal PlayerEvolvedSpd
+func evolveByItem():
+	if self.hasWings:self.player["class"]=self.Classes.Wyrm
+	elif self.hasIce:self.player["class"]=self.Classes.Fridgeon
+	elif self.hasSword:self.player["class"]=self.Classes.Hatoshi
+	emit_signal("PlayerEvolved")
+	add_child(musicEvolution.instance())
 func createEvolvePanel():
 	get_tree().root.get_node("/root/root").add_child(evolvePanel.instance())
 func addEvolutionMusic():
@@ -288,10 +298,13 @@ func addEvolutionMusic():
 func firstEvolution():
 	if self.player.strength>self.player.defense and self.player.strength>self.player.speed:
 		self.player["class"]=self.Classes.Stronga
+		emit_signal("PlayerEvolvedStr")
 	elif self.player.defense>self.player.strength and self.player.defense>self.player.speed:
 		self.player["class"]=self.Classes.Knight
+		emit_signal("PlayerEvolvedDef")
 	elif self.player.speed>self.player.strength and self.player.speed>self.player.defense:
 		self.player["class"]=self.Classes.Winged
+		emit_signal("PlayerEvolvedSpd")
 	else:
 		self.player["class"]=self.Classes.Platy
 	emit_signal("PlayerEvolved")
@@ -402,8 +415,8 @@ func fadeMusicAway():
 	if OS.has_feature("standalone"):
 		var t:=Tween.new()
 		add_child(t)
-		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
-		t.start()
+		var _v1=t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		var _v2=t.start()
 		yield(t,"tween_all_completed")
 		self.nCurrentMusic.queue_free()
 		t.queue_free()
@@ -413,8 +426,8 @@ func incrementLevel():
 	if self.level==5:
 		var t:=Tween.new()
 		add_child(t)
-		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
-		t.start()
+		var _v1=t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		var _v2=t.start()
 		yield(t,"tween_all_completed")
 		self.nCurrentMusic.queue_free()
 		t.queue_free()
@@ -422,8 +435,8 @@ func incrementLevel():
 	elif self.level==10:
 		var t:=Tween.new()
 		add_child(t)
-		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
-		t.start()
+		var _v1=t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		var _v2=t.start()
 		yield(t,"tween_all_completed")
 		self.nCurrentMusic.queue_free()
 		t.queue_free()
@@ -431,8 +444,8 @@ func incrementLevel():
 	elif self.level==11:
 		var t:=Tween.new()
 		add_child(t)
-		t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
-		t.start()
+		var _v1=t.interpolate_property(self.nCurrentMusic,'volume_db',self.nCurrentMusic.volume_db,-100,4.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+		var _v2=t.start()
 		yield(t,"tween_all_completed")
 		self.nCurrentMusic.queue_free()
 		t.queue_free()
@@ -538,5 +551,21 @@ var listOfNames=[
 	"PigeonCase",
 	"Chi-Boon",
 	"Peckinton",
-	"Tim"
+	"Tim",
+	"Jolyne", #New entries for 1.5.3
+	"Fly rat",
+	"Ladder fan",
+	"Carlos",
+	"Xx-Shadow-xX",
+	"Rag",
+	"Diber",
+	"Birb of Steel",
+	"Wallker",
+	"Tekoner",
+	"Lootbox Pigeon",
+	"Rumble",
+	"Jose Luiz",
+	"Emperor Red",
+	"Silver Line",
+	"Drak"
 ]

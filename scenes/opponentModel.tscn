@@ -35,11 +35,6 @@ const tweenParameters={
 }
 
 func _ready():
-#	if self.enemyClass==global.Classes.GodPigeon:
-#		self.enemyStr='?'
-#		self.enemyDef='?'
-#		self.enemySpd='?'
-#		self.enemyLevel='???'
 	if self.enemyClass!=global.Classes.GodPigeon:
 		enemyDescription=\"Strength: \"+String(self.enemyStr)+\", Defense: \"+String(self.enemyDef)+\", Speed: \"+String(self.enemySpd)+\"\\n Gold: \"+String(self.enemyGold)
 		$marginContainer/hboxEnemy/vboxDescription/name.text=self.enemyName
@@ -47,18 +42,21 @@ func _ready():
 		$marginContainer/hboxEnemy/vboxDescription/hBoxContainer/skill.text=global.pigeonDict[self.enemyClass]['skill']
 		$marginContainer/hboxEnemy/vboxDescription/hBoxContainer/skill.hint_tooltip=global.pigeonDict[self.enemyClass]['skillDescription']
 		$marginContainer/hboxEnemy/vboxDescription/description.text=self.enemyDescription
+		$marginContainer/hboxEnemy/vboxDescription/hboxStats/descStr.text=\"Attack: \"+String(self.enemyStr)
+		$marginContainer/hboxEnemy/vboxDescription/hboxStats/descDef.text=\"Defense: \"+String(self.enemyDef)
+		$marginContainer/hboxEnemy/vboxDescription/hboxStats/descSpd.text=\"Speed: \"+String(self.enemySpd)
 		$marginContainer/hboxEnemy/icon.texture=load(global.pigeonDict[self.enemyClass].portrait)
 	else:
 		self.enemyStr*=0.8
-#		self.enemyDef*=2
-#		self.enemySpd*=2
-#		self.enemyHp=int(1.5*self.enemyHp)
 		enemyDescription=\"Strength: \"+String('?')+\", Defense: \"+String('?')+\", Speed: \"+String('?')+\"\\n Gold: \"+String('?')
 		$marginContainer/hboxEnemy/vboxDescription/name.text=self.enemyName
 		$marginContainer/hboxEnemy/vboxDescription/hBoxContainer/title.text=global.Classes.keys()[self.enemyClass]+\", Lv.\"+String('???')
 		$marginContainer/hboxEnemy/vboxDescription/hBoxContainer/skill.text=global.pigeonDict[self.enemyClass]['skill']
 		$marginContainer/hboxEnemy/vboxDescription/hBoxContainer/skill.hint_tooltip=global.pigeonDict[self.enemyClass]['skillDescription']
 		$marginContainer/hboxEnemy/vboxDescription/description.text=self.enemyDescription
+		$marginContainer/hboxEnemy/vboxDescription/hboxStats/descStr.text=\"Attack: \"+String(self.enemyStr)
+		$marginContainer/hboxEnemy/vboxDescription/hboxStats/descDef.text=\"Defense: \"+String(self.enemyDef)
+		$marginContainer/hboxEnemy/vboxDescription/hboxStats/descSpd.text=\"Speed: \"+String(self.enemySpd)
 		$marginContainer/hboxEnemy/icon.texture=load(global.pigeonDict[self.enemyClass].portrait)
 		
 #	$hboxEnemy/vboxDescription/name.name=self.enemyName
@@ -96,7 +94,6 @@ func battle():
 	}
 	global.listOfNames.erase(enemyDict.name)
 	global.battle(enemyDict)
-#	get_tree().root.get_node(\"/root/opponentControl/marginContainer/opponentPanel/btnExit\").exit()
 	get_parent().get_parent().get_parent().get_parent().get_node(\"btnExit\").exit()
 
 func generateEnemyDict():
@@ -147,16 +144,19 @@ margin_top = 4.0
 margin_right = 586.0
 margin_bottom = 89.0
 mouse_filter = 1
+custom_constants/margin_right = 8
 custom_constants/margin_top = 5
+custom_constants/margin_left = 8
 custom_constants/margin_bottom = 5
 
 [node name="hboxEnemy" type="HBoxContainer" parent="marginContainer"]
+margin_left = 8.0
 margin_top = 5.0
-margin_right = 582.0
+margin_right = 574.0
 margin_bottom = 80.0
 
 [node name="icon" type="TextureRect" parent="marginContainer/hboxEnemy"]
-margin_right = 95.0
+margin_right = 93.0
 margin_bottom = 75.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -167,8 +167,8 @@ expand = true
 stretch_mode = 6
 
 [node name="vboxDescription" type="VBoxContainer" parent="marginContainer/hboxEnemy"]
-margin_left = 99.0
-margin_right = 481.0
+margin_left = 97.0
+margin_right = 469.0
 margin_bottom = 75.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -176,7 +176,7 @@ size_flags_stretch_ratio = 8.0
 alignment = 1
 
 [node name="name" type="Label" parent="marginContainer/hboxEnemy/vboxDescription"]
-margin_right = 382.0
+margin_right = 372.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
@@ -187,11 +187,11 @@ valign = 1
 
 [node name="hBoxContainer" type="HBoxContainer" parent="marginContainer/hboxEnemy/vboxDescription"]
 margin_top = 32.0
-margin_right = 382.0
+margin_right = 372.0
 margin_bottom = 49.0
 
 [node name="title" type="Label" parent="marginContainer/hboxEnemy/vboxDescription/hBoxContainer"]
-margin_right = 174.0
+margin_right = 169.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
@@ -202,14 +202,14 @@ valign = 1
 
 [node name="vSeparator" type="VSeparator" parent="marginContainer/hboxEnemy/vboxDescription/hBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 178.0
-margin_right = 202.0
+margin_left = 173.0
+margin_right = 197.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
 
 [node name="skill" type="Label" parent="marginContainer/hboxEnemy/vboxDescription/hBoxContainer"]
-margin_left = 206.0
-margin_right = 382.0
+margin_left = 201.0
+margin_right = 372.0
 margin_bottom = 17.0
 mouse_filter = 1
 mouse_default_cursor_shape = 16
@@ -223,11 +223,12 @@ valign = 1
 [node name="hSeparator" type="HSeparator" parent="marginContainer/hboxEnemy/vboxDescription"]
 modulate = Color( 1, 1, 1, 0 )
 margin_top = 53.0
-margin_right = 382.0
+margin_right = 372.0
 margin_bottom = 57.0
 mouse_filter = 2
 
 [node name="description" type="Label" parent="marginContainer/hboxEnemy/vboxDescription"]
+visible = false
 margin_top = 61.0
 margin_right = 382.0
 margin_bottom = 75.0
@@ -239,9 +240,76 @@ align = 1
 valign = 1
 autowrap = true
 
+[node name="hboxStats" type="HBoxContainer" parent="marginContainer/hboxEnemy/vboxDescription"]
+margin_top = 61.0
+margin_right = 372.0
+margin_bottom = 75.0
+
+[node name="vSeparator" type="VSeparator" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 39.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="descStr" type="Label" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+margin_left = 43.0
+margin_right = 107.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0.69, 0.19, 0.36, 0.66 )
+text = "Attack: 99"
+
+[node name="vSeparator2" type="VSeparator" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 111.0
+margin_right = 150.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="descDef" type="Label" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+margin_left = 154.0
+margin_right = 225.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0.29, 0.36, 0.67, 0.66 )
+custom_constants/shadow_as_outline = 0
+text = "Defense: 99"
+
+[node name="vSeparator3" type="VSeparator" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 229.0
+margin_right = 268.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="descSpd" type="Label" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+margin_left = 272.0
+margin_right = 329.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0.24, 0.64, 0.44, 0.66 )
+custom_constants/shadow_as_outline = 0
+text = "Speed: 99"
+
+[node name="vSeparator4" type="VSeparator" parent="marginContainer/hboxEnemy/vboxDescription/hboxStats"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 333.0
+margin_right = 372.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="marginContainer" type="MarginContainer" parent="marginContainer/hboxEnemy"]
+visible = false
+margin_left = 312.0
+margin_right = 518.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.0
+
 [node name="btn" type="TextureButton" parent="marginContainer/hboxEnemy"]
-margin_left = 485.0
-margin_right = 582.0
+margin_left = 473.0
+margin_right = 566.0
 margin_bottom = 75.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2

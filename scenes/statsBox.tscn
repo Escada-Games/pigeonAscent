@@ -20,7 +20,7 @@
 script/source = "extends TextureRect
 func _ready():
 	if get_parent().bIsPlayerStats:set_process(true)
-func _process(delta):
+func _process(_delta):
 	if get_parent().bIsPlayerStats:self.texture=global.getBgTexture()
 "
 
@@ -28,7 +28,7 @@ func _process(delta):
 script/source = "extends Label
 var bIsPlayerStats:=false
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 	if bIsPlayerStats:
 		self.text=global.player.name
 	else:
@@ -72,7 +72,7 @@ colors = PoolColorArray( 0.560784, 0.870588, 0.364706, 1, 0.235294, 0.639216, 0.
 script/source = "extends Label
 var bIsPlayerStats:=false
 func _ready():set_process(true)
-func _process(delta):
+func _process(_delta):
 	if bIsPlayerStats:
 		self.text=String(global.player.hp)+\"/\"+String(global.player.maxHp)
 	else:
@@ -136,6 +136,7 @@ func _process(_delta):
 margin_right = 175.0
 margin_bottom = 155.0
 rect_min_size = Vector2( 175, 0 )
+mouse_filter = 1
 size_flags_stretch_ratio = 4.0
 theme = ExtResource( 13 )
 custom_styles/panel = ExtResource( 3 )
@@ -163,6 +164,7 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 171.0
 margin_bottom = 168.0
+mouse_filter = 1
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
@@ -387,11 +389,13 @@ valign = 1
 script = SubResource( 9 )
 
 [node name="strSkill" type="Label" parent="marginContainer/vbox"]
+margin_left = 54.0
 margin_top = 141.0
-margin_right = 157.0
+margin_right = 103.0
 margin_bottom = 154.0
 mouse_filter = 1
 mouse_default_cursor_shape = 16
+size_flags_horizontal = 4
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 5 )
 custom_constants/shadow_offset_x = 2
@@ -400,7 +404,6 @@ custom_constants/shadow_as_outline = 2
 text = "Skill name"
 align = 1
 valign = 1
-clip_text = true
 script = ExtResource( 8 )
 
 [node name="twn" type="Tween" parent="marginContainer/vbox/strSkill"]

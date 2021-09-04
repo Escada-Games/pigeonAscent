@@ -8,11 +8,11 @@ func _ready():
 	$tween.interpolate_property(self,'fMusicVolume',self.fMusicVolume,-20,1.0,Tween.TRANS_QUINT,Tween.EASE_IN)
 	$tween.start()
 	
-	yield(get_tree().create_timer(1.0),'timeout')
+	yield(get_tree().create_timer(0.8),'timeout')
 	self.play()
 	yield(self,"finished")
 	
-	$tween.interpolate_property(self,'fMusicVolume',self.fMusicVolume,0,1.0,Tween.TRANS_QUINT,Tween.EASE_IN)
+	$tween.interpolate_property(self,'fMusicVolume',self.fMusicVolume,0,0.3,Tween.TRANS_QUINT,Tween.EASE_IN)
 	$tween.start()
 	yield($tween,"tween_all_completed")
 	self.queue_free()

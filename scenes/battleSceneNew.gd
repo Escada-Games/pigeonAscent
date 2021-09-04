@@ -59,8 +59,8 @@ func _ready():
 	$marginCtn.rect_global_position.y=-$marginCtn.rect_size.y
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",-$marginCtn.rect_size.y,pos.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
-	$twnPlayer.connect("tween_all_completed",self,'checkPlayerTween')
-	$twnEnemy.connect("tween_all_completed",self,'checkEnemyTween')
+	var _s1=$twnPlayer.connect("tween_all_completed",self,'checkPlayerTween')
+	var _s2=$twnEnemy.connect("tween_all_completed",self,'checkEnemyTween')
 	goldToWin=global.enemy.gold
 	set_process(true)
 
@@ -122,7 +122,7 @@ func _process(delta):
 			exitButton.modulate.a=1
 			resetButton.modulate.a=1
 
-func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarget=enemySpr):
+func attack(myself=global.player,target=global.enemy,_sprMyself=playerSpr,sprTarget=enemySpr):
 	var block=(1-(global.scaling.defenseBlock*target.defense/global.limits.defense)) # Is a value between 0.5 and 1
 	var damage=calculateDamage(myself.strength+myself.extraStrength,target.defense)
 	damage=max(ceil(damage*block),1)
@@ -283,10 +283,11 @@ func exitBattle():
 	global.player.extraDefense=0
 	global.player.extraSpeed=0
 	self.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	if(global.level==4):
-		global.createEvolvePanel()
-	elif(global.level==7):
-		global.createEvolvePanel()
+	if not global.bHasItem:
+		if(global.level==4):
+			global.createEvolvePanel()
+		elif(global.level==7):
+			global.createEvolvePanel()
 	var _s1=$twnSelfPos.connect("tween_completed",self,"killMe")
 	$twnSelfPos.interpolate_property($marginCtn,"rect_global_position:y",$marginCtn.rect_global_position.y,-$marginCtn.rect_size.y,0.4,Tween.TRANS_QUINT,Tween.EASE_OUT)
 	$twnSelfPos.start()
@@ -341,8 +342,8 @@ func windowShake(newOffset=32):
 	$twnShake.start()
 func calculateDamage(strength,defense,minDamage=1):return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
 func colorizeString(string,color="#ffffff"):return "[color="+color+"]"+String(string)+"[/color]"
-func shakePlayerHpBar(intensity=5):self.nPlayerStatBox.shakeHp()
-func shakeEnemyHpBar(intensity=5):self.nEnemyStatBox.shakeHp()
+func shakePlayerHpBar(_intensity=5):self.nPlayerStatBox.shakeHp()
+func shakeEnemyHpBar(_intensity=5):self.nEnemyStatBox.shakeHp()
 func gameOver():
 	global.level=1
 	var _sc1=get_tree().change_scene("res://scenes/intro.tscn")

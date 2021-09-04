@@ -29,10 +29,10 @@ func _ready():
 	$marginContainer/hboxItem/label.text=self.itemName
 	self.rect_pivot_offset=self.rect_size/2
 #	self.rect_scale=0.9*Vector2(1,1)
-	connect(\"mouse_entered\",self,\"updateDescription\")
-	connect(\"mouse_entered\",self,\"twnGrow\")
-	connect(\"mouse_exited\",self,\"twnShrink\")
-	connect(\"mouse_entered\",global,\"createHoverSfx\")
+	var _v1=connect(\"mouse_entered\",self,\"updateDescription\")
+	var _v2=connect(\"mouse_entered\",self,\"twnGrow\")
+	var _v3=connect(\"mouse_exited\",self,\"twnShrink\")
+	var _v4=connect(\"mouse_entered\",global,\"createHoverSfx\")
 #	$hboxItem/btn.connect(\"pressed\",self,\"buy\")
 	
 func updateDescription():

@@ -105,7 +105,7 @@ func _process(delta):
 [sub_resource type="GDScript" id=7]
 script/source = "extends MarginContainer
 func _ready():set_process(true)
-func _process(delta):self.rect_global_position=get_parent().get_node(\"actionBar\").rect_global_position
+func _process(_delta):self.rect_global_position=get_parent().get_node(\"actionBar\").rect_global_position
 "
 
 [sub_resource type="StyleBoxTexture" id=8]
@@ -129,7 +129,7 @@ func _ready():
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	twnEnter.start()
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	$cPUParticles2D.position.x=self.value*115/50
 	if global.enemy.hp<=0 or global.player.hp<=0:
 		$cPUParticles2D.one_shot=true
@@ -148,7 +148,7 @@ colors = PoolColorArray( 0.45098, 0.152941, 0.360784, 1, 0.690196, 0.188235, 0.3
 [sub_resource type="GDScript" id=12]
 script/source = "extends Position2D
 func _ready():set_process(true)
-func _process(delta):get_tree().root.get_node(\"/root/battleScene\").playerDefaultPos=self.global_position
+func _process(_delta):get_tree().root.get_node(\"/root/battleScene\").playerDefaultPos=self.global_position
 "
 
 [sub_resource type="GDScript" id=13]
@@ -171,11 +171,11 @@ func _ready():
 	$twnHit.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	$twnHit.start()
 	
-	$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
-	$area2D.connect(\"area_entered\",self,\"hit\")
+	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	var _s2=$area2D.connect(\"area_entered\",self,\"hit\")
 	set_process(true)
 	
-func _process(delta):
+func _process(_delta):
 	if self.global_position.y>OS.window_size.y and died:self.visible=false
 	if dead:
 		$pigeon/animationPlayer.stop()
@@ -233,7 +233,7 @@ func _ready():
 	self.percent_visible=0
 	$twn.interpolate_property(self,\"percent_visible\",0,1,duration,Tween.TRANS_LINEAR,Tween.EASE_OUT,delay)
 	$twn.start()
-	$twn.connect(\"tween_all_completed\",self,\"delete\")
+	var _s1=$twn.connect(\"tween_all_completed\",self,\"delete\")
 func delete():
 	yield(get_tree().create_timer(2),\"timeout\")
 	get_parent().get_parent().queue_free()
@@ -253,7 +253,7 @@ func _ready():
 	twnEnter.interpolate_property(self,\"rect_global_position:y\",self.rect_global_position.y,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	twnEnter.start()
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	$cPUParticles2D.position.x=self.value*115/50
 	if global.enemy.hp<=0 or global.player.hp<=0:
 		$cPUParticles2D.one_shot=true
@@ -298,6 +298,7 @@ func _ready():
 	self.visible_characters=0
 	var _sc1=get_tree().get_root().connect(\"size_changed\", self, \"updateSize\")
 	self.bbcode_text=\"\"
+	self.appendMessage(\"[center]- BATTLE LOG -[/center]\")
 	set_process(true)
 func _process(_delta):
 	if bufferedMessage!=\"\":
