@@ -45,18 +45,13 @@ func changeBgTexture():
 	elif global.level in [10]:
 		bgNode.texture=load(arenaFiles[2])
 		enemySpr.get_node('pigeon').scale.x=-1
-#		enemySpr.self_modulate.a=0
-#		enemySpr.get_node("sprite").visible=true
-	pass
+		
 func fadeInBgDarken():
 	$colorRect.modulate.a=0
 	$twnColorRectTransparency.interpolate_property($colorRect,"modulate:a",0,0.85,0.6,Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
 	$twnColorRectTransparency.start()
+	
 func _ready():
-#	if not OS.has_feature("standalone"): # debug stuff
-#		global.player.energy=0
-#		global.enemy.energy=0
-#		pass
 	randomize()
 	changeBgTexture()
 	fadeInBgDarken()
@@ -106,7 +101,9 @@ func _process(delta):
 				global.player.gold+=goldToWin
 				global.incrementLevel()
 				global.player.pointsLeft+=3
+				registerSameTurn("")
 				registerSameTurn("[center][wave amp=100 freq=5]\n"+global.player.name + " won! [/wave][/center]\n")
+				registerSameTurn("")
 				registerSameTurn("[center]You got [color=#ffe478][u]" + String(goldToWin) + "[/u][/color] gold.[/center]")#
 				ended=true
 				exitButton.modulate.a=0
@@ -168,7 +165,8 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 		damageModifier*=0.9
 	elif target.class==global.Classes.GodPigeon:
 		damageModifier*=0.85
-	damage=int(ceil(damage))
+	#damage=int(ceil(damage))
+	damage*=damageModifier*(1.0 if myself.energy>0 else 0.5)
 	var bIsCritical=(randf()<criticalChance or target.energy<=0) and canCritical
 	
 	# Check for damage every turn
@@ -187,10 +185,6 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 			exitButton.rect_global_position.y=OS.window_size.y*1.2
 			fighting=false
 			myself.dead=true
-#			if strOrigin=='Player':
-#				$twnEnemy.stop_all()
-#			if strOrigin=='Enemy':
-#				$twnPlayer.stop_all()
 			return
 	
 	# Finally, attack stuff
@@ -199,11 +193,7 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 		register(bbName + " misses an attack!")
 	else:
 		if bIsCritical:
-			#damage*=2*(1.0 if global.player.energy>0 else 0.5)
-			damage*=2*(1.0 if myself.energy>0 else 0.5)
-			damage*=damageModifier
-			damage = max(damage,1)
-			damage=int(damage)
+			damage = max(int(2*damage),1)
 			registerFast("[shake rate=20 level=10]A CRITICAL HIT![/shake]", Color.green if strOrigin=="Player" else Color.red)
 			if foodDamage>0:
 				registerSameTurnNoLineBreak(bbName + " attacks for " +String(damage)+ " damage")
@@ -213,12 +203,11 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 				registerSameTurn(bbName + " attacks for " +String(damage)+ " damage")
 				turn+=1
 			shakeHpBar(strOrigin)
+			sprTarget.hit()
 		else:
-#			damage*=1.0 if global.player.energy>0 else 0.5
-			damage*=1.0 if myself.energy>0 else 0.5
-			damage*=damageModifier
-			damage = max(damage,1)
-			damage=int(damage)
+			#damage*=1.0 if myself.energy>0 else 0.5
+			#damage = int(max(damage*damageModifier,1))
+			damage = max(int(damage),1)
 			register(bbName + " attacks for " +String(damage)+ " damage")
 			if foodDamage>0:registerSameTurnNoLineBreak("and " +String(foodDamage)+ " food damage")
 			shakeHpBar(strOrigin)
@@ -243,52 +232,25 @@ func attack(myself=global.player,target=global.enemy,sprMyself=playerSpr,sprTarg
 
 # Messages
 func register(string,color:=Color.white):
-	if color==Color.white:
-		var message="\n\n#"+String(turn)+"> "+string#colorizeString("#"+String(turn)+"> "+string,"#3ca370")+"\n"
-		#battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
-		turn+=1
-	else:
-		var message= "\n\n#"+String(turn)+"> " + "[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
-		turn+=1
+	var message= "\n\n#"+String(turn)+"> " + "[color=#" + color.to_html(false) + "]"+string+"[/color]"
+	battleLogText.appendMessage(message)
+	turn+=1
+
 func registerFast(string,color:=Color.white):
-	if color==Color.white:
-		var message="\n\n#"+String(turn)+"> "+string
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
-	else:
-		var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
+	var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"
+	battleLogText.appendMessage(message)
+
 func registerWithoutLineEnd(string,color:=Color.white):
-	if color==Color.white:
-		var message="\n\n#"+String(turn)+"> "+string
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
-	else:
-		var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
+	var message="\n\n#"+String(turn)+"> "+"[color=#" + color.to_html(false) + "]"+string+"[/color]"
+	battleLogText.appendMessage(message)
+
 func registerSameTurn(string,color:=Color.white):
-	if color==Color.white:
-		var message= " "+string#+"\n"
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
-	else:
-		var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
+	var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"
+	battleLogText.appendMessage(message)
+	
 func registerSameTurnNoLineBreak(string,color:=Color.white):
-	if color==Color.white:
-		var message= " "+string
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
-	else:
-		var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"#+"\n"
-#		battleLogText.bbcode_text+=message
-		battleLogText.appendMessage(message)
+	var message= " [color=#" + color.to_html(false) + "]"+string+"[/color]"
+	battleLogText.appendMessage(message)
 
 # Anims, effects, etc
 func playerAttackAnim():
@@ -310,6 +272,7 @@ func enemyAttackAnim():
 		$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnEnemy.start()
 func shakeHpBar(origin='Player'):
+	print_debug(origin)
 	if origin=='Player':shakeEnemyHpBar(25)
 	else:shakePlayerHpBar(25)
 func exitBattle():

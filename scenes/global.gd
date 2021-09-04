@@ -389,12 +389,12 @@ func battle(nextEnemyDict):
 	self.enemy=nextEnemyDict
 	var i=battleSceneNew.instance()
 	get_tree().root.add_child(i)
-func debugInput():
+func debugInput()->void:
 	if not OS.has_feature("standalone"): #if OS.is_debug_build()...
 #		global.player.pointsLeft+=10
-#		global.player.strength+=10
-		global.player.defense+=10
-		global.player.speed+=10
+		global.player.strength+=10
+#		global.player.defense+=10
+#		global.player.speed+=10
 		global.incrementLevel()
 		#global.level=int(clamp(global.level+1,0,10))
 		global.player.gold+=1000

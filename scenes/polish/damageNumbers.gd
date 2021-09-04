@@ -5,7 +5,7 @@ var damage=1
 var origin=""
 var critical=false
 func _ready():
-	print_debug(self.origin)
+	#print_debug(self.origin)
 	if critical:
 		$label.text=$label.text+"!"
 		self.scale*=1.5

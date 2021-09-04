@@ -3,7 +3,7 @@ var bIsPlayerStats:=false
 func _ready():
 	self.rect_pivot_offset=self.rect_size/2
 	set_process(true)
-func _process(delta):
+func _process(_delta):
 	if bIsPlayerStats:
 		self.text=global.pigeonDict[global.player['class']]['skill']
 		self.hint_tooltip=global.pigeonDict[global.player['class']]['skillDescription']
