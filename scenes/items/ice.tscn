@@ -30,7 +30,7 @@ func appear()->void:
 
 func _ready():
 	self.visible=false
-	global.connect(\"PlayerEvolvedDef\",self,'appear')
+	var _s1=global.connect(\"PlayerEvolvedDef\",self,'appear')
 	$marginContainer/hboxItem/label.text=self.itemName
 	self.rect_pivot_offset=self.rect_size/2
 #	self.rect_scale=0.9*Vector2(1,1)

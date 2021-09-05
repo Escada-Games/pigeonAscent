@@ -48,5 +48,5 @@ func shakeHp(newOffset=32):
 									Tween.EASE_OUT)
 	$twnOffset.start()
 	set_process(true)
-func resetProcess():
+func resetProcess(_a=0,_b=0):
 	set_process(false)
