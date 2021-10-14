@@ -81,6 +81,8 @@ func _process(delta):
 	if self.offset!=0:
 		self.rect_position=offset*Vector2(randf(),randf())
 	if fighting:
+		var fTargetScalePlayer = 1 if playerSpr.global_position.x<enemySpr.global_position.x else -1
+		playerSpr.scale.x = lerp(playerSpr.scale.x,fTargetScalePlayer,0.2)
 		playerStamina+=calculateStaminaIncrement(global.player.speed+global.player.extraSpeed,global.player.energy<=0)*delta*global.scaling.speed
 		if playerStamina>100:
 			playerStamina=0
@@ -89,6 +91,8 @@ func _process(delta):
 			playerAttacked=true
 			playerAttackAnim()
 		enemyStamina+=calculateStaminaIncrement(global.enemy.speed,global.enemy.energy<=0)*delta*global.scaling.speed
+		var fTargetScaleEnemy = -1 if playerSpr.global_position.x>enemySpr.global_position.x else 1
+		enemySpr.scale.x = lerp(enemySpr.scale.x,fTargetScaleEnemy,0.2)
 		if enemyStamina>100:
 			enemyStamina=0
 			global.enemy.energy-=global.level
@@ -257,20 +261,39 @@ func playerAttackAnim():
 	if not playerAttacking:
 		playerAttacking=true
 		var localDurationAttack=durationAttack*(1+global.player.speed/30)
-		var isAtEnemy=is_equal_approx(playerSpr.global_position.x,enemyDefaultPos.x)
+		var isAtEnemy=abs(playerSpr.global_position.x - enemyDefaultPos.x)<5
 		var targetPosition=enemyDefaultPos if not isAtEnemy else playerDefaultPos#enemyDefaultPos if not isAtEnemy else playerDefaultPos
 		$twnPlayer.stop_all()
 		$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnPlayer.start()
+	else:
+		var isAtEnemy=abs(playerSpr.global_position.x - enemyDefaultPos.x)<5
+		if isAtEnemy:
+			playerAttacking=false
+			var localDurationAttack=durationAttack*(1+global.player.speed/30)
+			var targetPosition=playerDefaultPos#enemyDefaultPos if not isAtEnemy else playerDefaultPos
+			$twnPlayer.stop_all()
+			$twnPlayer.interpolate_property(playerSpr,"global_position",playerSpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+			$twnPlayer.start()
 func enemyAttackAnim():
 	if not enemyAttacking:
 		enemyAttacking=true
 		var localDurationAttack=durationAttack*(1+global.enemy.speed/30)
-		var isAtPlayer=is_equal_approx(playerSpr.global_position.x,enemyDefaultPos.x)
+		var isAtPlayer=abs(enemySpr.global_position.x - playerDefaultPos.x)<5
 		var targetPosition=playerDefaultPos if not isAtPlayer else enemyDefaultPos
 		$twnEnemy.stop_all()
 		$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
 		$twnEnemy.start()
+	else:
+		var isAtPlayer=abs(enemySpr.global_position.x - playerDefaultPos.x)<5
+		if isAtPlayer:
+			enemyAttacking=false
+			var localDurationAttack=durationAttack*(1+global.enemy.speed/30)
+			var targetPosition=enemyDefaultPos
+			$twnEnemy.stop_all()
+			$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position,targetPosition,localDurationAttack,Tween.TRANS_BACK,Tween.EASE_IN)
+			$twnEnemy.start()
+			
 func shakeHpBar(origin='Player'):
 	print_debug(origin)
 	if origin=='Player':shakeEnemyHpBar(25)
