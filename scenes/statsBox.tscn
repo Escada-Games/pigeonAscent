@@ -65,7 +65,7 @@ func _process(_delta):
 _data = [ Vector2( 0, 1 ), 0.0, -0.0902597, 0, 0, Vector2( 1, 0 ), -5.24895, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=5]
-offsets = PoolRealArray( 0, 0.553846, 1 )
+offsets = PoolRealArray( 0.090379, 0.376093, 1 )
 colors = PoolColorArray( 0.560784, 0.870588, 0.364706, 1, 0.235294, 0.639216, 0.439216, 1, 1, 1, 1, 0 )
 
 [sub_resource type="GDScript" id=6]
@@ -118,7 +118,7 @@ func _process(_delta):
 "
 
 [sub_resource type="Gradient" id=8]
-offsets = PoolRealArray( 0.461538, 0.728205, 1 )
+offsets = PoolRealArray( 0.303207, 0.41691, 1 )
 colors = PoolColorArray( 1, 0.568627, 0.4, 1, 1, 0.4, 0.4, 1, 0, 0, 0, 0 )
 
 [sub_resource type="GDScript" id=9]
@@ -181,11 +181,11 @@ alignment = 1
 margin_right = 157.0
 margin_bottom = 28.0
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 custom_constants/shadow_as_outline = 2
+custom_fonts/font = ExtResource( 6 )
 text = "NOME"
 align = 1
 valign = 1
@@ -221,9 +221,9 @@ rect_min_size = Vector2( 60, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.3
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 7 )
 text = "HP"
 align = 1
 valign = 1
@@ -283,11 +283,11 @@ __meta__ = {
 margin_top = 29.0
 margin_right = 93.0
 margin_bottom = 46.0
-custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
 custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 4 )
 text = "5/5"
 align = 1
 valign = 1
@@ -315,8 +315,8 @@ rect_min_size = Vector2( 60, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.3
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "FOOD"
 align = 1
 valign = 1
@@ -378,11 +378,11 @@ __meta__ = {
 margin_top = 29.0
 margin_right = 93.0
 margin_bottom = 46.0
-custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
 custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 4 )
 text = "10/10"
 align = 1
 valign = 1
@@ -397,16 +397,17 @@ mouse_filter = 1
 mouse_default_cursor_shape = 16
 size_flags_horizontal = 4
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 custom_constants/shadow_as_outline = 2
+custom_fonts/font = ExtResource( 5 )
 text = "Skill name"
 align = 1
 valign = 1
 script = ExtResource( 8 )
 
 [node name="twn" type="Tween" parent="marginContainer/vbox/strSkill"]
+
 [connection signal="mouse_entered" from="marginContainer/vbox/vboxBars/hpBox" to="marginContainer/vbox/vboxBars/hpBox" method="_on_hpBox_mouse_entered"]
 [connection signal="mouse_exited" from="marginContainer/vbox/vboxBars/hpBox" to="marginContainer/vbox/vboxBars/hpBox" method="_on_hpBox_mouse_exited"]
 [connection signal="mouse_entered" from="marginContainer/vbox/vboxBars/foodBox" to="marginContainer/vbox/vboxBars/foodBox" method="_on_foodBox_mouse_entered"]

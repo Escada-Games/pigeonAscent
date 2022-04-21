@@ -128,7 +128,7 @@ func _process(delta):
 
 func attack(myself=global.player,target=global.enemy,_sprMyself=playerSpr,sprTarget=enemySpr):
 	var block=(1-(global.scaling.defenseBlock*target.defense/global.limits.defense)) # Is a value between 0.5 and 1
-	var damage=calculateDamage(myself.strength+myself.extraStrength,target.defense)
+	var damage=calculateDamage(myself.strength+myself.extraStrength,target.defense+target.extraDefense,target.speed+target.extraSpeed)
 	damage=max(ceil(damage*block),1)
 	var strOrigin='Player' if myself==global.player else 'Enemy'
 	var foodDamage=ceil(max(0,myself.speed+myself.extraSpeed-target.speed)*global.scaling.foodDamage)
@@ -326,8 +326,8 @@ func createDamageNumbers(position,direction,damage,critical=false,origin=""):
 	i.critical=critical
 	i.origin=origin
 	add_child(i)
-func effects(area):
-	particlesAndWindowshake(area)
+func effects(area:Area2D,strOrigin:='') -> void:
+	particlesAndWindowshake(area,strOrigin)
 	knockback()
 func knockback():
 	if playerAttacked:
@@ -347,15 +347,27 @@ func knockback():
 	$twnEnemy.stop_all()
 	$twnEnemy.interpolate_property(enemySpr,"global_position",enemySpr.global_position*Vector2(rand_range(0.9,1.1),rand_range(0.9,1.1)),enemyDefaultPos,durationRecoil*rand_range(0.8,1.2),Tween.TRANS_BACK,Tween.EASE_OUT)
 	$twnEnemy.start()
-func particlesAndWindowshake(area):
+func particlesAndWindowshake(area:Area2D,strOrigin) -> void:
 	createHitSfx()
-	particles(area)
+	particles(area,strOrigin)
 	windowShake(16)
-func createHitSfx():self.add_child(hitSfx.instance())
-func particles(_area:Area2D):
+func createHitSfx() -> void:self.add_child(hitSfx.instance())
+func particles(_area:Area2D,strOrigin) -> void:
+	var strClass:=-1
+	if strOrigin == 'Player':strClass=global.player.class
+	else:strClass=global.enemy.class
+	
 	var i=particlesImpact.instance()
 	i.global_position=_area.global_position
 	#i.global_position=0.5*(playerSpr.get_node("area2D").global_position+enemySpr.get_node("area2D").global_position)
+	if strClass in [global.Classes.Stronga, global.Classes.Whey]:i.modulate = Color.crimson
+	elif strClass in [global.Classes.Winged, global.Classes.Winged2]:i.modulate = Color.greenyellow
+	elif strClass in [global.Classes.Knight, global.Classes.Crusader]:i.modulate = Color.darkturquoise
+	elif strClass in [global.Classes.Wyrm]:i.modulate = Color.orangered
+	elif strClass in [global.Classes.Hatoshi]:i.modulate = Color.silver
+	elif strClass in [global.Classes.Fridgeon]:i.modulate = Color.cyan
+	elif strClass in [global.Classes.Platy]:i.modulate = Color.burlywood
+	
 	i.emitting=true
 	add_child(i)
 func windowShake(newOffset=32):
@@ -363,7 +375,9 @@ func windowShake(newOffset=32):
 	self.durationShake=self.defaultDurationShake*rand_range(0.7,1.0)
 	$twnShake.interpolate_property(self,"offset",self.offset,0,self.durationShake,Tween.TRANS_QUAD,Tween.EASE_OUT)
 	$twnShake.start()
-func calculateDamage(strength,defense,minDamage=1):return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
+func calculateDamage(strength,defense,speed,minDamage=1) -> int:
+	#return int(max(rand_range(1.0,1.2)*strength*global.scaling.strength-defense*global.scaling.defense,minDamage))
+	return int(max(rand_range(1.0,1.2)*strength*(1+global.scaling.strength)/(1+speed/2+defense*global.scaling.defense),minDamage))
 func colorizeString(string,color="#ffffff"):return "[color="+color+"]"+String(string)+"[/color]"
 func shakePlayerHpBar(_intensity=5):self.nPlayerStatBox.shakeHp()
 func shakeEnemyHpBar(_intensity=5):self.nEnemyStatBox.shakeHp()

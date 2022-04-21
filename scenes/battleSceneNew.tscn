@@ -43,17 +43,10 @@ func _ready():
 	targetPos=self.global_position
 	var twnEnter=Tween.new()
 	add_child(twnEnter)
-	#twnEnter.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
-#	twnEnter.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
-#	twnEnter.start()
-	
-	#$twnHit.interpolate_property(self,\"rect_global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
-#	$twnHit.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
-#	$twnHit.start()
 	
 	get_tree().root.get_node(\"/root/battleScene\").enemySpr=self
-	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
-	var _s2=$area2D.connect(\"area_entered\",self,\"hit\")
+	var _s1:=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\",['Enemy'])
+	var _s2:=$area2D.connect(\"area_entered\",self,\"hit\")
 	set_process(true)
 	
 func _process(_delta):
@@ -173,7 +166,7 @@ func _ready():
 	$twnHit.interpolate_property(self,\"global_position:y\",OS.window_size.y*2,targetPos.y,duration,Tween.TRANS_QUART,Tween.EASE_OUT)
 	$twnHit.start()
 	
-	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\")
+	var _s1=$area2D.connect(\"area_entered\",get_tree().root.get_node(\"/root/battleScene\"),\"effects\",['Player'])
 	var _s2=$area2D.connect(\"area_entered\",self,\"hit\")
 	set_process(true)
 	
@@ -848,12 +841,12 @@ margin_bottom = 520.0
 mouse_filter = 2
 size_flags_horizontal = 3
 theme = ExtResource( 18 )
-custom_fonts/italics_font = SubResource( 20 )
-custom_fonts/bold_font = SubResource( 21 )
-custom_fonts/normal_font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
+custom_fonts/italics_font = SubResource( 20 )
+custom_fonts/bold_font = SubResource( 21 )
+custom_fonts/normal_font = ExtResource( 2 )
 bbcode_enabled = true
 bbcode_text = "#123> TESTE
 
@@ -918,10 +911,10 @@ __meta__ = {
 margin_right = 88.0
 margin_bottom = 35.0
 mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 15 )
 custom_styles/hover = SubResource( 23 )
 custom_styles/pressed = SubResource( 23 )
 custom_styles/normal = SubResource( 24 )
-custom_fonts/font = ExtResource( 15 )
 text = "Return"
 script = SubResource( 25 )
 
@@ -930,9 +923,9 @@ margin_left = 2.0
 margin_right = 86.0
 margin_bottom = 35.0
 mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 15 )
 custom_styles/hover = SubResource( 26 )
 custom_styles/pressed = SubResource( 26 )
 custom_styles/normal = SubResource( 27 )
-custom_fonts/font = ExtResource( 15 )
 text = "Retry!"
 script = SubResource( 28 )

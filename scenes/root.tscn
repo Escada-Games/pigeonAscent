@@ -27,7 +27,7 @@ var vboxLeft=preload(\"res://scenes/vboxRootL.tscn\")
 var vboxRight=preload(\"res://scenes/vboxRootR.tscn\")
 var state=\"centerScreen\"
 func _ready():
-	$twnEnter.connect(\"tween_completed\",self,\"checkForDeletion\")
+	var _s1:=$twnEnter.connect(\"tween_completed\",self,\"checkForDeletion\")
 	set_process(true)
 func _process(_delta):
 	if state==\"centerScreen\":
@@ -137,20 +137,21 @@ margin_bottom = 594.0
 custom_constants/separation = 8
 
 [node name="vboxC" parent="marginContainer/hbox" instance=ExtResource( 1 )]
+margin_right = 649.0
 margin_bottom = 594.0
 
 [node name="vsep1" type="VSeparator" parent="marginContainer/hbox"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 652.0
-margin_right = 660.0
+margin_left = 653.0
+margin_right = 661.0
 margin_bottom = 594.0
 custom_constants/separation = 8
 
 [node name="vboxRootR" parent="marginContainer/hbox" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 664.0
-margin_right = 987.0
+margin_left = 665.0
+margin_right = 988.0
 margin_bottom = 594.0
 rect_min_size = Vector2( 323, 0 )
 

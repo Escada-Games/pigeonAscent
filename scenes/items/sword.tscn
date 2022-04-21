@@ -30,7 +30,7 @@ func appear()->void:
 
 func _ready():
 	self.visible=false
-	global.connect(\"PlayerEvolvedSpd\",self,'appear')
+	var _s1:=global.connect(\"PlayerEvolvedSpd\",self,'appear')
 	$marginContainer/hboxItem/label.text=self.itemName
 	self.rect_pivot_offset=self.rect_size/2
 #	self.rect_scale=0.9*Vector2(1,1)
@@ -131,8 +131,8 @@ margin_right = 297.0
 margin_bottom = 63.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
-custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
 text = "GODOTINHO"
 align = 1
 valign = 1

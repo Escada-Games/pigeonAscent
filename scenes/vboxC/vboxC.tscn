@@ -28,6 +28,9 @@ __meta__ = {
 [node name="ctnFight" parent="." instance=ExtResource( 4 )]
 
 [node name="ctnPlayer" parent="." instance=ExtResource( 3 )]
+visible = false
 custom_styles/panel = SubResource( 1 )
+
+[node name="ctnPlayerNew" parent="." instance=ExtResource( 3 )]
 
 [node name="ctnGold" parent="." instance=ExtResource( 5 )]

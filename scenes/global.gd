@@ -50,7 +50,7 @@ enum Classes{
 	Wyrm,
 	Platy,
 }
-var nCurrentMusic:AudioStreamPlayer
+var nCurrentMusic:AudioStreamPlayer=null
 #const pigeonClassesAndSprites={
 const pigeonDict={
 	Classes.Baker:
@@ -75,19 +75,19 @@ const pigeonDict={
 		{"sprite":"res://resource/sprites/Crusader_Pigeon.png",
 		"portrait":"res://resource/portraits/Crusader_Pigeon_Port.png",
 		'skill':'Pigod VULT',
-		'skillDescription':'Nothing can stop it\'s quest for Pigeoralem'
+		'skillDescription':'Nothing can stop it\'s quest for Pigeoralem.\nIt is protected from critical damage and blocks 33% of all damage.'
 	},
 	Classes.Egirl:
 		{"sprite":"res://resource/sprites/E-girl_Pigeon.png",
 		"portrait":"res://resource/portraits/E-girl_Pigeon_Port.png",
 		'skill':'Support from the fans',
-		'skillDescription':'"Hey, thanks for the superchat, anonymous!"'
+		'skillDescription':'"Hey, thanks for the superchat!"'
 	},
 	Classes.Fridgeon:
 		{"sprite":"res://resource/sprites/Fridgeon.png",
 		"portrait":"res://resource/portraits/Fridgeon_Port.png",
 		'skill':'The cold shoulder',
-		'skillDescription':'Its insides are also cold as ice'
+		'skillDescription':'Has a ice-cold heart...\nIt slows down enemies when they damage it.'
 	},
 	Classes.GodPigeon:
 		{"sprite":"res://resource/sprites/God_Pigeon_Mirrored.png",
@@ -105,7 +105,7 @@ const pigeonDict={
 		{"sprite":"res://resource/sprites/Hatoshi.png",
 		"portrait":"res://resource/portraits/Hatoshi_Port.png",
 		'skill':'Ancient arts',
-		'skillDescription':'While other ate crumbs, this one trained the blade'
+		'skillDescription':'While other ate crumbs, this one trained the blade.\nThis pigeon now attacks twice.'
 		#'skillDescription':'Better not be in the path of its blade'
 	},
 	Classes.Infiltrator:
@@ -124,7 +124,7 @@ const pigeonDict={
 		{"sprite":"res://resource/sprites/Knight_Pigeon.png",
 		"portrait":"res://resource/portraits/Knight_Pigeon_Port.png",
 		'skill':'Magic wall',
-		'skillDescription':'Adevo grav tera'
+		'skillDescription':'ADEVO GRAV TERA\nBlocks 25% of all damage'
 	},
 #	Classes.Mimic:
 #		{"sprite":"res://resource/sprites/Mimic_Pigeon.png",
@@ -159,25 +159,25 @@ const pigeonDict={
 		{"sprite":"res://resource/sprites/Stronga_Pigeon.png",
 		"portrait":"res://resource/portraits/Stronga_Pigeon_Port.png",
 		'skill':'The strongest survives',
-		'skillDescription':'Well, actually the most adaptable survives...'
+		'skillDescription':'Well, actually the most adaptable survives...\nThis pigeon deals 25% more damage.'
 	},
 	Classes.Whey:
 		{"sprite":"res://resource/sprites/Whey_Pigeon.png",
 		"portrait":"res://resource/portraits/Whey_Pigeon_Port.png",
 		'skill':'BIRL',
-		'skillDescription':'Be strong IRL too'
+		'skillDescription':'Not a bird, but a BIRL! This pigeon deals 50% more damage.'
 	},
 	Classes.Winged:
 		{"sprite":"res://resource/sprites/Winged_Pigeon.png",
 		"portrait":"res://resource/portraits/Winged_Pigeon_Port.png",
 		'skill':'Winged creature',
-		'skillDescription':'More wings = better flight'
+		'skillDescription':'More wings = better flight.\nThis pigeon has a 20% chance to dodge attacks.'
 	},
 	Classes.Winged2:
 		{"sprite":"res://resource/sprites/Winged_Pigeon_With_Wings.png",
 		"portrait":"res://resource/portraits/Winged_Pigeon_With_Wings_Port.png",
 		'skill':'Winged wings',
-		'skillDescription':'Wings with wings = even better flight somehow'
+		'skillDescription':'Wings with wings = even better flight somehow\nThis pigeon has a 40% chance to dodge attacks.'
 	},
 	Classes.Wizard:
 		{"sprite":"res://resource/sprites/Wizard_Pigeon.png",
@@ -189,13 +189,13 @@ const pigeonDict={
 		{"sprite":"res://resource/sprites/Wrym_Pigeon.png",
 		"portrait":"res://resource/portraits/Wrym_Pigeon_Port.png",
 		'skill':'Mythical dragon creature',
-		'skillDescription':'Dragons are actually quite small'
+		'skillDescription':'Dragons are actually quite small This pigeon can\'t deal critical hits, but hits harder and twice.'
 	},
 	Classes.Platy:
 		{"sprite":"res://resource/sprites/Platypigeon.png",
 		"portrait":"res://resource/portraits/Selfie_Pigeon_Port.png",
 		'skill':'Trade of all jacks',
-		'skillDescription':'Master of all jacks too, idk'
+		'skillDescription':'Master of all jacks too, idk\nThis pigeon balanced hits harder and takes less damage.'
 	},
 }
 
@@ -266,7 +266,7 @@ var enemy={
 var level=1
 var rerolls=1
 var scaling={
-	"strength":1.12,
+	"strength":2,#1.12,
 	"defense":1,
 	"speed":64,#64,#30,#33
 	"hp":1,
@@ -285,6 +285,7 @@ signal PlayerEvolved
 signal PlayerEvolvedStr
 signal PlayerEvolvedDef
 signal PlayerEvolvedSpd
+signal PlayerStatsUpdated
 func evolveByItem():
 	if self.hasWings:self.player["class"]=self.Classes.Wyrm
 	elif self.hasIce:self.player["class"]=self.Classes.Fridgeon
@@ -349,6 +350,7 @@ func updatePlayerFood():
 	self.player.maxEnergy=calculateFood(self.player.strength,self.player.speed)
 	self.player.energy=int(1.0*self.player.energy*self.player.maxEnergy/oldMaxEnergy)
 func updatePlayerHpAndFood():
+	emit_signal('PlayerStatsUpdated')
 	self.updatePlayerHp()
 	self.updatePlayerFood()
 func isGameCompact():return OS.window_size.x<OS.min_window_size.y
@@ -372,10 +374,11 @@ func _ready():
 	set_process(true)
 var muted=false
 func addMusicPartyCrasher():
-	var i:=musicPartyCrasher.instance()
-	i.name='music'
-	self.nCurrentMusic=i
-	add_child(i)
+	if self.nCurrentMusic == null:
+		var i:=musicPartyCrasher.instance()
+		i.name='music'
+		self.nCurrentMusic=i
+		add_child(i)
 func addMusicFireSword():
 	var i:=musicFireSword.instance()
 	i.name='music'

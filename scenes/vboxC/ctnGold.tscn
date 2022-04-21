@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resource/tres/goldPanel.tres" type="StyleBox" id=1]
 [ext_resource path="res://resource/fonts/m6x11-48.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resource/Panel_Gold.png" type="Texture" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Label
@@ -21,6 +22,17 @@ margin_right = 316.0
 margin_bottom = 569.0
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.33 )
+position = Vector2( 4, 6 )
+scale = Vector2( 4.1039, 2.9375 )
+z_index = -5
+texture = ExtResource( 3 )
+centered = false
 
 [node name="hbox" type="HBoxContainer" parent="."]
 margin_top = 25.0
@@ -35,11 +47,11 @@ margin_right = 316.0
 margin_bottom = 69.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 0.894118, 0.470588, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 3
 custom_constants/shadow_offset_y = 3
+custom_fonts/font = ExtResource( 2 )
 text = "0123456789"
 align = 1
 valign = 1

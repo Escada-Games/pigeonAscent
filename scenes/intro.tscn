@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://resource/BG_Stats.png" type="Texture" id=1]
 [ext_resource path="res://resource/fonts/m6x11-32Tiny.tres" type="DynamicFont" id=2]
@@ -14,13 +14,41 @@
 script/source = "extends TextureRect
 var defaultRectPosition:=Vector2()
 const speed:=0.5
-func _ready():
+func _ready() -> void:
 	defaultRectPosition=self.rect_position
-	set_process(true)
-func _process(_delta):
-	self.rect_position+=Vector2(speed,speed)
-	if is_equal_approx(self.rect_position.x,0):self.rect_position=defaultRectPosition
+	set_process(false)
 "
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -96, -96 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "bgIdle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -96, -96 ), Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends Sprite
@@ -43,10 +71,10 @@ __meta__ = {
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -94.2183
+margin_left = -96.0
 margin_top = -96.0
-margin_right = 97.7817
-margin_bottom = 96.0001
+margin_right = 5216.0
+margin_bottom = 3096.0
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 2
@@ -56,7 +84,14 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="animationPlayer" type="AnimationPlayer" parent="textureRect"]
+autoplay = "bgIdle"
+playback_speed = 0.33
+anims/RESET = SubResource( 4 )
+anims/bgIdle = SubResource( 3 )
+
 [node name="marginContainer2" type="MarginContainer" parent="."]
+modulate = Color( 1, 1, 1, 0.66 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 20
@@ -89,7 +124,7 @@ margin_right = 1004.0
 margin_bottom = 580.0
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 7 )
-text = "V1.5.4"
+text = "V1.5.5"
 align = 2
 valign = 2
 autowrap = true

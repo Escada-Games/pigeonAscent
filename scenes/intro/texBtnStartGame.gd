@@ -1,6 +1,7 @@
-extends TextureButton
+extends ReactiveTextureButton
 
-func _ready():
+func ready() -> void:
+	global.level=1
 	global.player={
 		"name":"Pombo",
 		"gold":100,
@@ -12,10 +13,10 @@ func _ready():
 		"speed":1,"extraSpeed":0,
 		"class":global.Classes.Normal
 	}
-	global.level=1
-	var _s1=self.connect("pressed",self,"startGame")
-	var _s2=self.connect("mouse_entered",global,"createHoverSfx")
-func startGame():
+	var _s1:=self.connect("pressed",self,"startGame")
+func startGame() -> void:
 	global.player.name=get_parent().get_node("lineEdit").text
 	global.addMusicPartyCrasher()
 	var _sc1=get_tree().change_scene("res://scenes/root.tscn")
+func mouseEnter() -> void:
+	global.createHoverSfx()
